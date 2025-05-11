@@ -1,0 +1,24 @@
+{
+    "name": "ai-code-monorepo",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev:blog": "pnpm --filter blog dev",
+        "dev:lowcode": "pnpm --filter lowcode dev",
+        "dev:server": "pnpm --filter server dev",
+        "dev": "pnpm -r --parallel dev",
+        "build": "pnpm -r build",
+        "test": "pnpm -r test",
+        "lint": "pnpm -r lint",
+        "prepare": "husky install"
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "pnpm": ">=7.0.0"
+    },
+    "devDependencies": {
+        "husky": "^8.0.3",
+        "lint-staged": "^13.2.2",
+        "prettier": "^2.8.8"
+    }
+}

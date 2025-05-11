@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: bloguser
+      POSTGRES_PASSWORD: blogpassword
+      POSTGRES_DB: blogdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://bloguser:blogpassword@postgres:5432/blogdb
+      JWT_SECRET: ${JWT_SECRET}
+      NODE_ENV: production
+    ports:
+      - "3001:3001"
+    networks:
+      - app_network
+
+  blog:
+    build:
+      context: .
+      dockerfile: apps/blog/Dockerfile
+    depends_on:
+      - server
+    environment:
+      NEXT_PUBLIC_API_URL: http://server:3001
+    ports:
+      - "3000:3000"
+    networks:
+      - app_network
+
+  lowcode:
+    build:
+      context: .
+      dockerfile: apps/lowcode/Dockerfile
+    depends_on:
+      - server
+    environment:
+      VITE_API_URL: http://server:3001
+    ports:
+      - "3002:3002"
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/certs:/etc/nginx/certs
+    depends_on:
+      - blog
+      - lowcode
+      - server
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
