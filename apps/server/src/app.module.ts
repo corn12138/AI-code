@@ -17,8 +17,8 @@ import { UserModule } from './user/user.module';
         ConfigModule.forRoot({
             isGlobal: true,
             load: [configuration],
-            // 确保这里有正确的envFilePath配置
-            envFilePath: '.env',
+            // 根据环境变量选择配置文件
+            envFilePath: process.env.NODE_ENV === 'production' ? '.env.prod' : '.env',
         }),
 
         // 数据库模块

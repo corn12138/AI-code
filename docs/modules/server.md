@@ -8,9 +8,11 @@
 
 - **用户管理**: 注册、登录、权限控制
 - **文章管理**: 创建、查询、更新、删除
-- **低代码平台**: 页面保存、发布
+- **低代码平台**: 页面保存、发布、模板管理
 - **数据存储**: 使用PostgreSQL存储业务数据
 - **安全保障**: XSS防护、CSRF防护、权限控制
+- **日志系统**: 使用Winston实现多级别日志记录
+- **API文档**: 集成Swagger提供在线API文档
 
 ## 模块设计
 
@@ -18,8 +20,10 @@
 - **UserModule**: 用户管理
 - **ArticleModule**: 文章管理
 - **CommentModule**: 评论管理
-- **LowCodeModule**: 低代码平台
+- **LowcodeModule**: 低代码平台
 - **CommonModule**: 通用功能
+- **HealthModule**: 健康检查
+- **DatabaseModule**: 数据库连接和配置
 
 ## 数据模型
 
@@ -29,9 +33,12 @@
 USER {
   UUID id PK
   VARCHAR username UNIQUE
+  VARCHAR email UNIQUE
   VARCHAR password_hash
-  VARCHAR role
+  VARCHAR fullName
+  VARCHAR[] roles
   TIMESTAMP created_at
+  TIMESTAMP updated_at
 }
 
 ARTICLE {
@@ -39,18 +46,48 @@ ARTICLE {
   VARCHAR title
   TEXT content
   UUID author_id FK
+  UUID[] category_ids FK
+  UUID[] tag_ids FK
   BOOLEAN is_published
+  TIMESTAMP created_at
+  TIMESTAMP updated_at
+}
+
+CATEGORY {
+  UUID id PK
+  VARCHAR name
+  VARCHAR description
+  VARCHAR slug
+  TIMESTAMP created_at
+  TIMESTAMP updated_at
+}
+
+TAG {
+  UUID id PK
+  VARCHAR name
+  TIMESTAMP created_at
+  TIMESTAMP updated_at
+}
+
+COMMENT {
+  UUID id PK
+  TEXT content
+  UUID article_id FK
+  UUID author_id FK
   TIMESTAMP created_at
   TIMESTAMP updated_at
 }
 
 LOWCODE_PAGE {
   UUID id PK
-  VARCHAR name
-  JSONB data
+  VARCHAR title
+  VARCHAR description
+  JSONB content
   UUID owner_id FK
+  BOOLEAN published
   TIMESTAMP created_at
   TIMESTAMP updated_at
+  TIMESTAMP published_at
 }
 ```
 
@@ -58,40 +95,68 @@ LOWCODE_PAGE {
 
 ### 认证
 
-- `POST /auth/login` - 用户登录
-- `POST /auth/register` - 用户注册
-- `POST /auth/refresh` - 刷新令牌
+- `POST /api/auth/login` - 用户登录
+- `POST /api/auth/register` - 用户注册
+- `POST /api/auth/refresh` - 刷新令牌
+- `POST /api/auth/logout` - 用户退出
 
 ### 用户
 
-- `GET /users/me` - 获取当前用户信息
-- `PUT /users/me` - 更新用户信息
-- `GET /users/:id` - 获取指定用户信息
+- `GET /api/users/me` - 获取当前用户信息
+- `PUT /api/users/me` - 更新用户信息
+- `GET /api/users/:id` - 获取指定用户信息
+- `GET /api/users` - 获取用户列表（管理员）
 
 ### 文章
 
-- `GET /articles` - 获取文章列表
-- `GET /articles/:id` - 获取单篇文章
-- `POST /articles` - 创建文章
-- `PUT /articles/:id` - 更新文章
-- `DELETE /articles/:id` - 删除文章
+- `GET /api/articles` - 获取文章列表
+- `GET /api/articles/:id` - 获取单篇文章
+- `POST /api/articles` - 创建文章
+- `PUT /api/articles/:id` - 更新文章
+- `DELETE /api/articles/:id` - 删除文章
+- `GET /api/articles/categories` - 获取分类列表
+- `GET /api/articles/tags` - 获取标签列表
 
 ### 低代码平台
 
-- `GET /lowcode/pages` - 获取页面列表
-- `GET /lowcode/pages/:id` - 获取页面配置
-- `POST /lowcode/pages` - 创建页面
-- `PUT /lowcode/pages/:id` - 更新页面
-- `DELETE /lowcode/pages/:id` - 删除页面
+- `GET /api/lowcode/pages` - 获取当前用户的页面列表
+- `GET /api/lowcode/pages/:id` - 获取页面配置
+- `POST /api/lowcode/pages` - 创建页面
+- `PUT /api/lowcode/pages/:id` - 更新页面
+- `DELETE /api/lowcode/pages/:id` - 删除页面
+- `POST /api/lowcode/pages/:id/publish` - 发布页面
+- `GET /api/lowcode/templates` - 获取模板列表
+- `POST /api/lowcode/templates/:id` - 基于模板创建页面
+- `GET /api/lowcode/published/:id` - 获取已发布页面（无需认证）
+
+## 低代码平台详情
+
+低代码平台允许用户创建、编辑和发布自定义页面。主要功能包括：
+
+### 页面管理
+- 创建、编辑、删除和查询页面
+- 页面内容以JSON格式存储，支持复杂的页面结构
+- 页面访问权限控制，确保用户只能访问自己的页面
+
+### 模板系统
+- 提供多种预定义页面模板
+- 支持博客首页、产品展示、个人简介等常见场景
+- 用户可基于模板快速创建新页面
+
+### 发布流程
+- 页面支持草稿和发布两种状态
+- 发布后的页面有独立的访问链接
+- 记录发布时间，支持版本管理
 
 ## 安全措施
 
-- 使用BCrypt加密密码
+- 使用BCrypt和BCryptJS加密密码
 - JWT认证与授权
 - CSRF保护
 - XSS过滤
-- 请求速率限制
+- 请求速率限制（使用ThrottlerModule）
 - 敏感数据脱敏
+- Helmet中间件提供安全HTTP头
 
 ## 环境配置
 
@@ -129,6 +194,16 @@ BCRYPT_SALT_ROUNDS=12
 CSRF_ENABLED=false
 ```
 
+## 日志系统
+
+系统使用Winston日志库实现多级别日志记录：
+
+- **控制台日志**: 彩色输出，包含时间戳和日志级别
+- **错误日志文件**: 存储所有错误级别日志到`logs/error.log`
+- **组合日志文件**: 存储所有级别日志到`logs/combined.log`
+
+日志格式包含时间戳、日志级别和详细消息，方便调试和问题排查。
+
 ## 启动流程
 
 ### 开发环境启动
@@ -165,12 +240,17 @@ CSRF_ENABLED=false
 
 5. **初始化数据库**（首次运行）：
    ```bash
-   # 使用NestJS CLI执行数据库迁移
-   cd apps/server
-   npx typeorm migration:run
+   # 检查数据库连接
+   npm run db:check
    
-   # 或使用自定义脚本初始化数据
-   npm run seed
+   # 运行迁移脚本
+   npm run migration:run
+   
+   # 填充种子数据
+   npm run db:seed
+   
+   # 或使用一键设置脚本
+   npm run db:full-setup
    ```
 
 ### 生产环境启动
@@ -181,7 +261,11 @@ CSRF_ENABLED=false
    pnpm build:server
    ```
 
-2. **配置环境变量**：确保生产环境的环境变量已正确设置
+2. **配置环境变量**：
+   ```bash
+   cp apps/server/.env apps/server/.env.prod
+   # 编辑.env.prod设置生产环境参数
+   ```
 
 3. **启动服务**：
    ```bash
@@ -192,85 +276,65 @@ CSRF_ENABLED=false
    # 或使用PM2
    pm2 start dist/main.js --name api-server
    
-   # 或通过Docker
-   docker-compose up -d server
+   # 生产环境数据库初始化
+   npm run migrate:prod
+   npm run seed:prod
    ```
 
 ## 打包和部署流程
 
-### 构建应用
-
-```bash
-# 仅构建服务端
-pnpm build:server
-
-# 构建所有应用
-pnpm build
-```
-
 ### Docker部署
 
-1. **构建Docker镜像**：
-   ```bash
-   docker build -t my-blog-api:latest -f apps/server/Dockerfile .
-   ```
+Docker部署使用多阶段构建优化镜像大小和构建效率：
 
-2. **运行容器**：
-   ```bash
-   docker run -d -p 3001:3001 --env-file ./apps/server/.env.prod my-blog-api:latest
-   ```
+1. **依赖阶段**: 安装所有依赖
+2. **构建阶段**: 编译TypeScript代码
+3. **运行阶段**: 只包含生产环境所需的文件
 
-3. **使用Docker Compose**：
-   ```bash
-   # 启动所有服务
-   docker-compose up -d
-   
-   # 仅启动服务端
-   docker-compose up -d server
-   ```
+```bash
+# 构建镜像
+docker build -t blog-api:latest -f apps/server/Dockerfile .
 
-### CI/CD流程
+# 运行容器
+docker run -d -p 3001:3001 --env-file ./apps/server/.env.prod blog-api:latest
+```
 
-项目支持通过GitHub Actions自动化部署：
+### 华为云部署
 
-1. 当代码推送到`main`分支时，触发测试和构建
-2. 测试通过后自动构建Docker镜像
-3. 将镜像推送到容器仓库
-4. 触发服务器上的部署脚本
+项目提供华为云部署脚本：
 
-## 调试和监控
+```bash
+# 部署到华为云
+npm run deploy:huaweicloud
+```
 
-### 日志系统
+## API文档
 
-服务使用Winston日志库，日志保存在`logs/`目录下：
+系统集成Swagger API文档，可通过以下方式访问：
 
-- `combined.log` - 所有级别的日志
-- `error.log` - 仅错误日志
+- 开发环境: http://localhost:3001/api/docs
+- 生产环境: https://你的域名/api/docs
 
-### 性能监控
-
-- 集成Prometheus指标收集
-- 支持通过`/metrics`端点暴露监控数据
-- 可与Grafana配合实现可视化监控
-
-### 健康检查
-
-- `GET /health` - 检查服务健康状态
-- `GET /health/db` - 检查数据库连接状态
+文档包含所有API端点的详细说明、请求参数、响应格式和认证要求。
 
 ## 故障排除
 
 常见问题及解决方法：
 
 1. **数据库连接错误**：
+   - 运行`npm run db:check`诊断连接问题
    - 检查`.env`文件中的数据库配置
-   - 确认PostgreSQL服务已启动
-   - 检查网络防火墙设置
+   - 验证数据库用户权限：`npm run db:verify-access`
 
-2. **认证问题**：
-   - 确保JWT_SECRET已正确配置
-   - 检查token过期时间设置
+2. **BCrypt编译问题**：
+   - 项目同时支持`bcrypt`和`bcryptjs`
+   - 如遇编译问题，运行`npm run fix:bcrypt`切换到纯JavaScript实现
 
-3. **API返回500错误**：
-   - 查看服务日志找出具体错误
-   - 开发环境启用详细日志：`LOG_LEVEL=debug`
+3. **日志问题排查**：
+   - 检查`logs/`目录下的日志文件
+   - 错误详情记录在`logs/error.log`中
+   - 开发环境控制台输出彩色日志
+
+4. **API文档无法访问**：
+   - 确认应用正常运行：`curl localhost:3001/api/health`
+   - 检查Swagger配置在`main.ts`中是否正确

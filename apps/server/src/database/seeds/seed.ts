@@ -1,4 +1,5 @@
-import * as bcrypt from 'bcrypt';
+// 使用bcryptjs代替bcrypt，因为bcryptjs是纯JavaScript实现，没有本地依赖
+import * as bcryptjs from 'bcryptjs';
 import { Category } from '../../article/entities/category.entity';
 import { Tag } from '../../article/entities/tag.entity';
 import { User } from '../../user/entities/user.entity';
@@ -12,7 +13,9 @@ async function seed() {
         console.log('数据库连接已初始化');
 
         // 添加默认管理员用户
-        const hashedPassword = await bcrypt.hash('Admin@123', 12);
+        // 使用bcryptjs而不是bcrypt
+        const hashedPassword = await bcryptjs.hash('Admin@123', 12); // 使用bcryptjs进行密码哈希
+        // 创建管理员用户
         const adminUser = new User();
         adminUser.username = 'admin';
         adminUser.email = 'admin@example.com';

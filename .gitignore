@@ -18,6 +18,8 @@ build
 .env.development.local
 .env.test.local
 .env.production.local
+.env.development
+.env.prod
 
 # 日志
 npm-debug.log*
