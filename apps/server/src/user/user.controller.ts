@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
@@ -12,14 +13,17 @@ export class UserController {
     @Get('me')
     @ApiOperation({ summary: '获取当前用户信息' })
     @ApiResponse({ status: 200, description: '成功返回用户信息' })
-    async getProfile(@Req() req) {
+    async getProfile(@Req() req: Request & { user: { id: string } }) {
         return this.userService.findById(req.user.id);
     }
 
     @Patch('me')
     @ApiOperation({ summary: '更新当前用户信息' })
     @ApiResponse({ status: 200, description: '成功更新用户信息' })
-    async updateProfile(@Req() req, @Body() updateUserDto: UpdateUserDto) {
+    async updateProfile(
+        @Req() req: Request & { user: { id: string } },
+        @Body() updateUserDto: UpdateUserDto
+    ) {
         return this.userService.update(req.user.id, updateUserDto);
     }
 
@@ -34,7 +38,7 @@ export class UserController {
     @Delete('me')
     @ApiOperation({ summary: '删除当前用户' })
     @ApiResponse({ status: 200, description: '成功删除用户' })
-    async remove(@Req() req) {
+    async remove(@Req() req: Request & { user: { id: string } }) {
         await this.userService.remove(req.user.id);
         return { message: '用户删除成功' };
     }

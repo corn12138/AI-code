@@ -1,20 +1,21 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { Public } from '../auth/decorators/public.decorator';
-import { LowcodeService } from './lowcode.service';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
+import { LowcodeService } from './lowcode.service';
 
 @ApiTags('lowcode')
 @Controller('lowcode')
 export class LowcodeController {
-  constructor(private readonly lowcodeService: LowcodeService) {}
+  constructor(private readonly lowcodeService: LowcodeService) { }
 
   @Get('pages')
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取当前用户的所有页面' })
   @ApiResponse({ status: 200, description: '成功获取页面列表' })
-  async getMyPages(@Req() req) {
+  async getMyPages(@Req() req: Request & { user: { id: string } }) {
     return this.lowcodeService.findAllByUser(req.user.id);
   }
 
@@ -23,7 +24,7 @@ export class LowcodeController {
   @ApiOperation({ summary: '获取特定页面' })
   @ApiResponse({ status: 200, description: '成功获取页面' })
   @ApiResponse({ status: 404, description: '页面不存在' })
-  async getPage(@Req() req, @Param('id') id: string) {
+  async getPage(@Req() req: Request & { user: { id: string } }, @Param('id') id: string) {
     return this.lowcodeService.findOne(id, req.user.id);
   }
 
@@ -31,7 +32,10 @@ export class LowcodeController {
   @ApiBearerAuth()
   @ApiOperation({ summary: '创建新页面' })
   @ApiResponse({ status: 201, description: '成功创建页面' })
-  async createPage(@Req() req, @Body() createPageDto: CreatePageDto) {
+  async createPage(
+    @Req() req: Request & { user: { id: string } },
+    @Body() createPageDto: CreatePageDto
+  ) {
     return this.lowcodeService.create(req.user.id, createPageDto);
   }
 
@@ -41,8 +45,8 @@ export class LowcodeController {
   @ApiResponse({ status: 200, description: '成功更新页面' })
   @ApiResponse({ status: 404, description: '页面不存在' })
   async updatePage(
-    @Req() req, 
-    @Param('id') id: string, 
+    @Req() req: Request & { user: { id: string } },
+    @Param('id') id: string,
     @Body() updatePageDto: UpdatePageDto
   ) {
     return this.lowcodeService.update(id, req.user.id, updatePageDto);
@@ -53,7 +57,7 @@ export class LowcodeController {
   @ApiOperation({ summary: '删除页面' })
   @ApiResponse({ status: 200, description: '成功删除页面' })
   @ApiResponse({ status: 404, description: '页面不存在' })
-  async deletePage(@Req() req, @Param('id') id: string) {
+  async deletePage(@Req() req: Request & { user: { id: string } }, @Param('id') id: string) {
     await this.lowcodeService.remove(id, req.user.id);
     return { message: '页面已成功删除' };
   }
@@ -63,7 +67,7 @@ export class LowcodeController {
   @ApiOperation({ summary: '发布页面' })
   @ApiResponse({ status: 200, description: '成功发布页面' })
   @ApiResponse({ status: 404, description: '页面不存在' })
-  async publishPage(@Req() req, @Param('id') id: string) {
+  async publishPage(@Req() req: Request & { user: { id: string } }, @Param('id') id: string) {
     return this.lowcodeService.publish(id, req.user.id);
   }
 
@@ -89,7 +93,7 @@ export class LowcodeController {
   @ApiOperation({ summary: '从模板创建页面' })
   @ApiResponse({ status: 201, description: '成功从模板创建页面' })
   async createFromTemplate(
-    @Req() req, 
+    @Req() req: Request & { user: { id: string } },
     @Param('templateId') templateId: string,
     @Body() createPageDto: CreatePageDto
   ) {

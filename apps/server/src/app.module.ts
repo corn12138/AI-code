@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ArticleModule } from './article/article.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
 import configuration from './config/configuration';
+import { DatabaseModule } from './database/database.module';
+import { HealthModule } from './health/health.module';
 import { LowcodeModule } from './lowcode/lowcode.module';
 import { UserModule } from './user/user.module';
 
@@ -16,27 +17,12 @@ import { UserModule } from './user/user.module';
         ConfigModule.forRoot({
             isGlobal: true,
             load: [configuration],
+            // 确保这里有正确的envFilePath配置
+            envFilePath: '.env',
         }),
 
-        // 数据库连接
-        TypeOrmModule.forRootAsync({
-            imports: [ConfigModule],
-            inject: [ConfigService],
-            useFactory: (configService: ConfigService) => ({
-                type: 'postgres',
-                host: configService.get('database.host', 'localhost'),
-                port: configService.get('database.port', 5432),
-                username: configService.get('database.username', 'bloguser'),
-                password: configService.get('database.password', 'blogpassword'),
-                database: configService.get('database.name', 'blogdb'),
-                entities: [__dirname + '/**/*.entity{.ts,.js}'],
-                synchronize: configService.get('database.synchronize', false),
-                logging: configService.get('database.logging', false),
-                ssl: configService.get('database.ssl', false)
-                    ? { rejectUnauthorized: false }
-                    : false,
-            }),
-        }),
+        // 数据库模块
+        DatabaseModule,
 
         // 请求限流
         ThrottlerModule.forRootAsync({
@@ -54,6 +40,7 @@ import { UserModule } from './user/user.module';
         ArticleModule,
         LowcodeModule,
         CommonModule,
+        HealthModule,
     ],
     providers: [
         // 全局限流守卫

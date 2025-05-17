@@ -1,12 +1,19 @@
 import { Body, Controller, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+
+interface RequestWithUser extends Request {
+    user: {
+        id: string;
+        refreshToken?: string;
+    };
+}
 
 @ApiTags('auth')
 @Controller('auth')
@@ -31,7 +38,8 @@ export class AuthController {
     @ApiResponse({ status: 401, description: '登录失败' })
     async login(
         @Body() loginDto: LoginDto,
-        @Res({ passthrough: true }) res: Response
+        @Res({ passthrough: true }) res: Response,
+        @Req() req: RequestWithUser
     ) {
         const { accessToken, refreshToken, user } = await this.authService.login(loginDto);
 
@@ -56,10 +64,10 @@ export class AuthController {
     @ApiOperation({ summary: '刷新访问令牌' })
     @ApiResponse({ status: 200, description: '令牌刷新成功' })
     @ApiResponse({ status: 401, description: '刷新令牌无效' })
-    async refresh(@Req() req, @Res({ passthrough: true }) res: Response) {
+    async refresh(@Req() req: RequestWithUser, @Res({ passthrough: true }) res: Response) {
         const { accessToken, refreshToken, user } = await this.authService.refreshTokens(
             req.user.id,
-            req.user.refreshToken,
+            req.user.refreshToken || '',
         );
 
         // 更新refreshToken cookie
@@ -81,7 +89,7 @@ export class AuthController {
     @ApiBearerAuth()
     @ApiOperation({ summary: '用户登出' })
     @ApiResponse({ status: 200, description: '登出成功' })
-    async logout(@Req() req, @Res({ passthrough: true }) res: Response) {
+    async logout(@Req() req: RequestWithUser, @Res({ passthrough: true }) res: Response) {
         await this.authService.logout(req.user.id);
 
         // 清除refreshToken cookie

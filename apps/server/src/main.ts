@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AppModule } from './app.module';
@@ -48,7 +48,7 @@ async function bootstrap() {
     app.useGlobalFilters(new HttpExceptionFilter());
 
     // 使用cookie-parser中间件
-    app.use(cookieParser());
+    app.use(cookieParser.default());
 
     // 全局前缀
     app.setGlobalPrefix('api');

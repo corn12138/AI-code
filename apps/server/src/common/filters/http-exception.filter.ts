@@ -1,12 +1,18 @@
 import {
-  ExceptionFilter,
-  Catch,
   ArgumentsHost,
+  Catch,
+  ExceptionFilter,
   HttpException,
   HttpStatus,
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+
+interface HttpExceptionResponse {
+  statusCode?: number;
+  message?: string | string[];
+  error?: string;
+}
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -18,16 +24,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = '服务器内部错误';
+    let message: string | string[] = '服务器内部错误';
     let error = 'Internal Server Error';
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
-      const exceptionResponse = exception.getResponse();
-      
+      const exceptionResponse = exception.getResponse() as string | HttpExceptionResponse;
+
       if (typeof exceptionResponse === 'object') {
-        message = (exceptionResponse as any).message || exception.message;
-        error = (exceptionResponse as any).error || error;
+        message = exceptionResponse.message || exception.message;
+        error = exceptionResponse.error || error;
       } else {
         message = exceptionResponse || exception.message;
       }
@@ -35,7 +41,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     // 记录错误信息
     this.logger.error(
-      `${request.method} ${request.url} - ${status}: ${message}`,
+      `${request.method} ${request.url} - ${status}: ${Array.isArray(message) ? message.join(', ') : message
+      }`,
       exception instanceof Error ? exception.stack : String(exception),
     );
 

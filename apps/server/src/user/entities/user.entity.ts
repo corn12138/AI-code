@@ -12,47 +12,43 @@ export enum UserRole {
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id!: string;
 
     @Column({ unique: true })
-    username: string;
+    email!: string;
 
-    @Column({ unique: true })
-    email: string;
+    @Column()
+    username!: string;
+
+    @Column({ nullable: true })
+    fullName!: string;
 
     @Column()
     @Exclude({ toPlainOnly: true })
-    passwordHash: string;
-
-    @Column({
-        type: 'enum',
-        enum: UserRole,
-        default: UserRole.USER,
-    })
-    role: UserRole;
-
-    @Column({ default: false })
-    isVerified: boolean;
+    password!: string;
 
     @Column({ nullable: true })
-    bio: string;
+    avatar!: string;
 
     @Column({ nullable: true })
-    avatar: string;
+    bio!: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
-
-    @UpdateDateColumn()
-    updatedAt: Date;
+    @Column({ type: 'jsonb', default: ['user'] })
+    roles!: string[];
 
     @Column({ nullable: true })
     @Exclude({ toPlainOnly: true })
-    refreshToken?: string;
+    refreshToken!: string;
 
     @OneToMany(() => Article, (article) => article.author)
-    articles: Article[];
+    articles!: Article[];
 
     @OneToMany(() => LowcodePage, (page) => page.owner)
-    lowcodePages: LowcodePage[];
+    lowcodePages!: LowcodePage[];
+
+    @CreateDateColumn()
+    createdAt!: Date;
+
+    @UpdateDateColumn()
+    updatedAt!: Date;
 }

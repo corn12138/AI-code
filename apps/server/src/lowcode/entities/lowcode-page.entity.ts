@@ -4,39 +4,45 @@ import { User } from '../../user/entities/user.entity';
 @Entity('lowcode_pages')
 export class LowcodePage {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
-  @Column({ nullable: true })
-  description: string;
+  @Column({ unique: true })
+  slug!: string;
 
   @Column({ type: 'jsonb' })
-  components: object;
+  content!: Record<string, any>;
 
-  @Column({ default: '1.0.0' })
-  version: string;
+  @Column({ nullable: true })
+  description!: string;
 
   @Column({ default: false })
-  isPublished: boolean;
+  isHomePage!: boolean;
 
-  @Column({ nullable: true })
-  publishedUrl: string;
+  @Column({ default: false })
+  published!: boolean;
 
-  @Column({ nullable: true })
-  thumbnail: string;
+  @Column({ type: 'jsonb', nullable: true })
+  config!: Record<string, any>;
+
+  @Column({ type: 'jsonb', nullable: true })
+  meta!: Record<string, any>;
 
   @ManyToOne(() => User, user => user.lowcodePages)
   @JoinColumn({ name: 'ownerId' })
-  owner: User;
+  owner!: User;
 
   @Column()
-  ownerId: string;
+  ownerId!: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
+
+  @Column({ nullable: true })
+  publishedAt!: Date;
 }

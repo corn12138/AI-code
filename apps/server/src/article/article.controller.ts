@@ -1,15 +1,31 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
+interface RequestWithUser extends Request {
+  user: {
+    id: string;
+    roles?: string[];
+  };
+}
+
+interface ArticleQueryParams {
+  page: number;
+  limit: number;
+  category?: string;
+  tag?: string;
+  search?: string;
+}
+
 @ApiTags('articles')
 @Controller('articles')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(private readonly articleService: ArticleService) { }
 
   @Get()
   @ApiOperation({ summary: '获取文章列表' })
@@ -20,19 +36,21 @@ export class ArticleController {
   @ApiQuery({ name: 'search', required: false, type: String })
   @ApiResponse({ status: 200, description: '成功获取文章列表' })
   async findAll(
-    @Query('page') page: number = 1,
-    @Query('limit') limit: number = 10,
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '10',
     @Query('category') category?: string,
     @Query('tag') tag?: string,
     @Query('search') search?: string,
   ) {
-    return this.articleService.findAll({
-      page,
-      limit,
+    const queryParams: ArticleQueryParams = {
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
       category,
       tag,
       search,
-    });
+    };
+
+    return this.articleService.findAll(queryParams);
   }
 
   @Get(':id')
@@ -49,7 +67,7 @@ export class ArticleController {
   @Roles('admin', 'editor')
   @ApiOperation({ summary: '创建文章' })
   @ApiResponse({ status: 201, description: '成功创建文章' })
-  async create(@Req() req, @Body() createArticleDto: CreateArticleDto) {
+  async create(@Req() req: RequestWithUser, @Body() createArticleDto: CreateArticleDto) {
     return this.articleService.create(req.user.id, createArticleDto);
   }
 
@@ -61,7 +79,7 @@ export class ArticleController {
   @ApiResponse({ status: 200, description: '成功更新文章' })
   @ApiResponse({ status: 404, description: '文章不存在' })
   async update(
-    @Req() req,
+    @Req() req: RequestWithUser,
     @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
@@ -75,7 +93,7 @@ export class ArticleController {
   @ApiOperation({ summary: '删除文章' })
   @ApiResponse({ status: 200, description: '成功删除文章' })
   @ApiResponse({ status: 404, description: '文章不存在' })
-  async remove(@Req() req, @Param('id') id: string) {
+  async remove(@Req() req: RequestWithUser, @Param('id') id: string) {
     await this.articleService.remove(req.user.id, id);
     return { message: '文章已成功删除' };
   }
@@ -87,7 +105,7 @@ export class ArticleController {
   @ApiOperation({ summary: '发布文章' })
   @ApiResponse({ status: 200, description: '成功发布文章' })
   @ApiResponse({ status: 404, description: '文章不存在' })
-  async publish(@Req() req, @Param('id') id: string) {
+  async publish(@Req() req: RequestWithUser, @Param('id') id: string) {
     return this.articleService.publish(req.user.id, id);
   }
 
@@ -98,7 +116,7 @@ export class ArticleController {
   @ApiOperation({ summary: '取消发布文章' })
   @ApiResponse({ status: 200, description: '成功取消发布文章' })
   @ApiResponse({ status: 404, description: '文章不存在' })
-  async unpublish(@Req() req, @Param('id') id: string) {
+  async unpublish(@Req() req: RequestWithUser, @Param('id') id: string) {
     return this.articleService.unpublish(req.user.id, id);
   }
 }

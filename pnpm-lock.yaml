@@ -281,6 +281,9 @@ importers:
       '@types/cookie-parser':
         specifier: ^1.4.3
         version: 1.4.8(@types/express@4.17.21)
+      '@types/dotenv':
+        specifier: ^8.2.3
+        version: 8.2.3
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.21
@@ -305,6 +308,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^5.59.7
         version: 5.62.0(eslint@8.57.1)(typescript@5.8.3)
+      dotenv:
+        specifier: ^16.5.0
+        version: 16.5.0
       eslint:
         specifier: ^8.41.0
         version: 8.57.1
@@ -1435,6 +1441,10 @@ packages:
 
   '@types/doctrine@0.0.3':
     resolution: {integrity: sha512-w5jZ0ee+HaPOaX25X2/2oGR/7rgAQSYII7X7pp0m9KgBfMP7uKfMfTvcpl5Dj+eDBbpxKGiqE+flqDr6XTd2RA==}
+
+  '@types/dotenv@8.2.3':
+    resolution: {integrity: sha512-g2FXjlDX/cYuc5CiQvyU/6kkbP1JtmGzh0obW50zD7OKeILVL0NSpPWLXVfqoAGQjom2/SLLx9zHq0KXvD6mbw==}
+    deprecated: This is a stub types definition. dotenv provides its own type definitions, so you do not need this installed.
 
   '@types/escodegen@0.0.6':
     resolution: {integrity: sha512-AjwI4MvWx3HAOaZqYsjKWyEObT9lcVV0Y0V8nXo6cXzN8ZiMxVhf6F3d/UNvXVGKrEzL/Dluc5p+y9GkzlTWig==}
@@ -7200,6 +7210,10 @@ snapshots:
       '@types/ms': 2.1.0
 
   '@types/doctrine@0.0.3': {}
+
+  '@types/dotenv@8.2.3':
+    dependencies:
+      dotenv: 16.5.0
 
   '@types/escodegen@0.0.6': {}
 

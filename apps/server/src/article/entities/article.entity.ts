@@ -7,42 +7,42 @@ import { Tag } from './tag.entity';
 @Entity('articles')
 export class Article {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column({ type: 'text' })
-  content: string;
+  content!: string;
 
   @Column({ type: 'text', nullable: true })
-  summary: string;
+  summary!: string;
 
   @Column({ default: false })
-  published: boolean;
+  published: boolean = false;
 
   @Column({ nullable: true })
-  featuredImage: string;
+  featuredImage!: string;
 
   @Column({ nullable: true })
-  slug: string;
+  slug!: string;
 
   @Column({ type: 'int', default: 0 })
-  viewCount: number;
+  viewCount!: number;
 
   @ManyToOne(() => User, user => user.articles)
   @JoinColumn({ name: 'authorId' })
-  author: User;
+  author: User = new User;
 
   @Column()
-  authorId: string;
+  authorId!: string;
 
   @ManyToOne(() => Category, category => category.articles)
   @JoinColumn({ name: 'categoryId' })
-  category: Category;
+  category: Category = new Category;
 
   @Column({ nullable: true })
-  categoryId: string;
+  categoryId!: string;
 
   @ManyToMany(() => Tag, tag => tag.articles)
   @JoinTable({
@@ -50,14 +50,14 @@ export class Article {
     joinColumn: { name: 'articleId', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'tagId', referencedColumnName: 'id' }
   })
-  tags: Tag[];
+  tags: Tag[] = [];
 
   @OneToMany(() => Comment, comment => comment.article)
-  comments: Comment[];
+  comments: Comment[] = [];
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }
