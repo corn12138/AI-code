@@ -1,7 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
@@ -48,22 +48,43 @@ async function bootstrap() {
     app.useGlobalFilters(new HttpExceptionFilter());
 
     // 使用cookie-parser中间件
-    app.use(cookieParser.default());
+    app.use(cookieParser());
 
     // 全局前缀
     app.setGlobalPrefix('api');
 
     // 安全headers
-    app.use(helmet());
+    app.use(
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+            defaultSrc: [`'self'`],
+            scriptSrc: [`'self'`, `'unsafe-inline'`, 'https://cdn.jsdelivr.net'], // 按需调整
+            styleSrc: [`'self'`, `'unsafe-inline'`, 'https://cdn.jsdelivr.net'],
+            imgSrc: [`'self'`, 'data:', 'https://cdn.jsdelivr.net'],
+            connectSrc: [`'self'`, process.env.NODE_ENV === 'production' 
+              ? 'https://api.yourdomain.com' 
+              : 'http://localhost:3001'],
+            fontSrc: [`'self'`, 'https://cdn.jsdelivr.net'],
+            objectSrc: [`'none'`],
+            mediaSrc: [`'self'`],
+            frameSrc: [`'none'`],
+          },
+        },
+        crossOriginResourcePolicy: { policy: 'cross-origin' },
+        xssFilter: true,
+      })
+    );
 
-    // CORS配置
+    // CORS配置 - 确保包含credentials选项
     app.enableCors({
         origin: [
             'http://localhost:3000',
             'http://localhost:3002',
             // 生产环境下的域名
         ],
-        credentials: true,
+        credentials: true, // 允许携带cookies
+        exposedHeaders: ['X-CSRF-Token'],
     });
 
     // 全局验证管道

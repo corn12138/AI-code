@@ -7,6 +7,7 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { CsrfService } from '../common/services/csrf.service';
 
 interface RequestWithUser extends Request {
     user: {
@@ -18,7 +19,10 @@ interface RequestWithUser extends Request {
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) { }
+    constructor(
+      private readonly authService: AuthService,
+      private readonly csrfService: CsrfService
+    ) { }
 
     @Public()
     @Post('register')
@@ -51,6 +55,17 @@ export class AuthController {
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
         });
 
+        // 生成CSRF令牌
+        const csrfToken = this.csrfService.generateToken(user.id);
+        
+        // 设置CSRF令牌到cookie - 前端可读但不可通过JavaScript修改
+        res.cookie('XSRF-TOKEN', csrfToken, {
+            httpOnly: false, // 允许JavaScript读取
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000, // 1天
+        });
+
         return {
             accessToken,
             user
@@ -78,9 +93,20 @@ export class AuthController {
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
         });
 
+        // 生成CSRF令牌
+        const csrfToken = this.csrfService.generateToken(user.id);
+        
+        // 设置CSRF令牌到cookie
+        res.cookie('XSRF-TOKEN', csrfToken, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000, // 1天
+        });
+
         return {
             accessToken,
-            user,
+            user
         };
     }
 
@@ -94,6 +120,9 @@ export class AuthController {
 
         // 清除refreshToken cookie
         res.clearCookie('refresh_token');
+        
+        // 清除CSRF token cookie
+        res.clearCookie('XSRF-TOKEN');
 
         return { message: '登出成功' };
     }

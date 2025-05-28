@@ -12,11 +12,13 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
+import { CommonModule } from '../common/common.module';
 
 @Module({
     imports: [
         UserModule,
         PassportModule,
+        CommonModule,
         JwtModule.registerAsync({
             imports: [ConfigModule],
             inject: [ConfigService],

@@ -4,12 +4,16 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import DOMPurify from 'dompurify';
 
 interface MarkdownRendererProps {
     content: string;
 }
 
 export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
+    // 首先净化原始内容防止XSS攻击
+    const sanitizedContent = DOMPurify.sanitize(content);
+    
     return (
         <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -35,11 +39,18 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 },
                 // 图片优化
                 img({ node, ...props }) {
+                    // 验证src是否为安全URL
+                    const src = props.src || '';
+                    // 只允许http, https或相对路径
+                    const isSafe = !src.match(/^(javascript|data):/i);
+                    
+                    if (!isSafe) return null;
+                    
                     // 使用Next.js的Image组件优化图片
                     return (
                         <span className="block relative min-h-[200px] my-4">
                             <Image
-                                src={props.src || ''}
+                                src={src}
                                 alt={props.alt || ''}
                                 fill
                                 style={{ objectFit: 'contain' }}
@@ -50,8 +61,16 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 },
                 // 链接在新标签页打开
                 a({ node, ...props }) {
+                    // 验证href是否为安全URL
+                    const href = props.href || '';
+                    // 只允许http, https或相对路径
+                    const isSafe = !href.match(/^(javascript|data):/i);
+                    
+                    if (!isSafe) return <span>{props.children}</span>;
+                    
                     return (
                         <a
+                            href={href}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:underline"
@@ -63,7 +82,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                 },
             }}
         >
-            {content}
+            {sanitizedContent}
         </ReactMarkdown>
     );
 }

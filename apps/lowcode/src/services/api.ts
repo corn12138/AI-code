@@ -2,7 +2,8 @@ import axios from 'axios';
 import { CreatePageDTO, PageResponse, UpdatePageDTO } from '@/types';
 
 const api = axios.create({
-  baseURL: '/api'
+  baseURL: '/api',
+  withCredentials: true // 确保包含Cookie
 });
 
 // 请求拦截器：添加认证令牌
@@ -11,6 +12,10 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  
+  // 对于非安全方法，axios会自动获取名为XSRF-TOKEN的cookie并设置为X-XSRF-TOKEN头
+  // 这是一种行业标准做法，无需手动处理
+  
   return config;
 });
 
@@ -20,6 +25,13 @@ api.interceptors.response.use(
   (error) => {
     const message = error.response?.data?.message || '请求失败';
     console.error('API Error:', message);
+    
+    // 特殊处理CSRF错误
+    if (error.response?.status === 401 && error.response?.data?.message?.includes('CSRF')) {
+      console.error('CSRF token validation failed.');
+      // 这里可以添加额外处理，如跳转到登录页
+    }
+    
     throw error;
   }
 );

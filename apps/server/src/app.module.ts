@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
@@ -10,6 +10,7 @@ import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
 import { LowcodeModule } from './lowcode/lowcode.module';
 import { UserModule } from './user/user.module';
+import { XssProtectionMiddleware } from './common/middleware/xss-protection.middleware';
 
 @Module({
     imports: [
@@ -50,4 +51,11 @@ import { UserModule } from './user/user.module';
         },
     ],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // 应用XSS防护中间件到所有路由
+    consumer
+      .apply(XssProtectionMiddleware)
+      .forRoutes('*');
+  }
+}

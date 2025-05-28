@@ -34,7 +34,7 @@ interface AuthState {
 // 创建axios实例
 const api = axios.create({
   baseURL: '/api',
-  withCredentials: true, // 允许跨域请求携带凭证
+  withCredentials: true, // 确保请求包含Cookie
 });
 
 // 请求拦截器
@@ -99,7 +99,7 @@ export const useAuth = create<AuthState>()(
             isAuthenticated: true,
             accessToken,
             refreshToken,
-            user,
+            user
           });
         } catch (error) {
           console.error('Login failed:', error);
@@ -122,7 +122,7 @@ export const useAuth = create<AuthState>()(
             isAuthenticated: true,
             accessToken,
             refreshToken,
-            user,
+            user
           });
         } catch (error) {
           console.error('Registration failed:', error);
@@ -187,7 +187,7 @@ export const useAuth = create<AuthState>()(
             user: { ...user, ...userData }
           });
         }
-      }
+      },
     }),
     {
       name: 'auth-storage',
