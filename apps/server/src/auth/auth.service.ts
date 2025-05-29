@@ -149,17 +149,14 @@ export class AuthService {
     // 辅助方法 - 创建用户
     private async createUser(userData: DeepPartial<User>): Promise<any> {
         // 实际实现中需要调用用户仓库或服务
-        // 这里为了示例，简化实现
-        const repository = this.userService['userRepository'];
-        const newUser = repository.create(userData);
-        return repository.save(newUser);
+        return this.userService.create(userData as any);
     }
 
     // 辅助方法 - 更新用户的refreshToken
     private async updateUserRefreshToken(userId: string, refreshToken: string | null): Promise<void> {
         // 实际实现中需要调用用户仓库或服务
-        // 这里为了示例，简化实现
-        const repository = this.userService['userRepository'];
-        await repository.update(userId, { refreshToken: refreshToken === null ? undefined : refreshToken });
+        await this.userService.update(userId, { 
+            refreshToken: refreshToken === null ? undefined : refreshToken 
+        });
     }
 }

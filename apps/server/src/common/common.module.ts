@@ -3,11 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { CsrfMiddleware } from './middleware/csrf.middleware';
 import { CsrfService } from './services/csrf.service';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { UploadService } from './upload/upload.service';
 
 @Module({
   imports: [ConfigModule],
-  providers: [CsrfService, HttpExceptionFilter],
-  exports: [CsrfService, HttpExceptionFilter],
+  providers: [CsrfService, HttpExceptionFilter, UploadService],
+  exports: [CsrfService, HttpExceptionFilter, UploadService],
 })
 export class CommonModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

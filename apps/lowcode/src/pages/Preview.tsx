@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { lowcodeApi } from '@/services/api';
-import { PageModel } from '@/types';
 import { Canvas } from '@/components/Editor/Canvas';
+import { lowcodeApi } from '@/services/api';
 import { useEditorStore } from '@/store/editorStore';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
 
 const Preview: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(true);
   const { initPage, setMode } = useEditorStore();
-  
+
   useEffect(() => {
     // 设置为预览模式
     setMode('preview');
-    
+
     const loadPage = async () => {
       if (!id) return;
-      
+
       try {
         const page = await lowcodeApi.getPageById(id);
         initPage(page);
@@ -28,10 +27,10 @@ const Preview: React.FC = () => {
         setIsLoading(false);
       }
     };
-    
+
     loadPage();
   }, [id, initPage, setMode]);
-  
+
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -39,7 +38,7 @@ const Preview: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="min-h-screen bg-white">
       <Canvas />

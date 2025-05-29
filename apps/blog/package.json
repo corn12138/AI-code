@@ -9,35 +9,35 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@headlessui/react": "^1.7.15",
+        "@shared/auth": "workspace:*",
         "@shared/ui": "workspace:*",
         "@shared/utils": "workspace:*",
-        "@shared/auth": "workspace:*",
+        "axios": "^1.4.0",
+        "dayjs": "^1.11.7",
         "next": "^13.4.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "axios": "^1.4.0",
+        "react-hot-toast": "^2.5.2",
         "react-markdown": "^8.0.7",
-        "dayjs": "^1.11.7",
-        "zustand": "^4.3.8",
-        "react-hot-toast": "^2.4.1",
         "react-syntax-highlighter": "^15.5.0",
-        "remark-gfm": "^3.0.1",
         "rehype-raw": "^6.1.1",
-        "@headlessui/react": "^1.7.15"
+        "remark-gfm": "^3.0.1",
+        "zustand": "^4.3.8"
     },
     "devDependencies": {
+        "@tailwindcss/forms": "^0.5.3",
+        "@tailwindcss/line-clamp": "^0.4.4",
+        "@tailwindcss/typography": "^0.5.9",
         "@types/node": "^20.2.5",
         "@types/react": "^18.2.7",
         "@types/react-dom": "^18.2.4",
         "@types/react-syntax-highlighter": "^15.5.7",
-        "typescript": "^5.0.4",
         "autoprefixer": "^10.4.14",
+        "eslint": "^8.41.0",
+        "eslint-config-next": "^13.4.4",
         "postcss": "^8.4.24",
         "tailwindcss": "^3.3.2",
-        "@tailwindcss/typography": "^0.5.9",
-        "@tailwindcss/forms": "^0.5.3",
-        "@tailwindcss/line-clamp": "^0.4.4",
-        "eslint": "^8.41.0",
-        "eslint-config-next": "^13.4.4"
+        "typescript": "^5.0.4"
     }
 }

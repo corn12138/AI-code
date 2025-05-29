@@ -29,4 +29,9 @@ export class UpdateUserDto {
     @IsString()
     @ApiProperty({ description: '头像URL', required: false })
     avatar?: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ description: '刷新令牌', required: false })
+    refreshToken?: string;
 }

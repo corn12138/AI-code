@@ -19,13 +19,13 @@ export class UploadController {
     FileInterceptor('file', {
       storage: diskStorage({
         destination: './uploads/images',
-        filename: (_, file, callback) => {
+        filename: (_req: Express.Request, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) => {
           const fileHash = crypto.randomBytes(16).toString('hex');
           const fileName = `${fileHash}${path.extname(file.originalname)}`;
           callback(null, fileName);
         },
       }),
-      fileFilter: (_, file, callback) => {
+      fileFilter: (_req: Express.Request, file: Express.Multer.File, callback: (error: Error | null, acceptFile: boolean) => void) => {
         if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
           return callback(new Error('只允许上传图片文件!'), false);
         }
@@ -61,7 +61,7 @@ export class UploadController {
     FileInterceptor('file', {
       storage: diskStorage({
         destination: './uploads/files',
-        filename: (_, file, callback) => {
+        filename: (_req: Express.Request, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) => {
           const fileHash = crypto.randomBytes(16).toString('hex');
           const fileName = `${fileHash}${path.extname(file.originalname)}`;
           callback(null, fileName);

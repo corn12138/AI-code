@@ -9,7 +9,7 @@ const nextConfig = {
         return [
             {
                 source: '/api/:path*',
-                destination: process.env.NEXT_PUBLIC_API_URL + '/:path*',
+                destination: '/api/:path*', // 修复：添加正确的目标路径，而不是undefined
             },
         ];
     },

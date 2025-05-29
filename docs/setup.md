@@ -66,10 +66,10 @@ yarn migration:run
 
 ```bash
 # 在项目根目录
-npm run start:server
+npm run dev:server
 
 # 或使用yarn
-yarn start:server
+yarn dev:server
 ```
 
 服务将在 http://localhost:3001 上运行，API文档可通过 http://localhost:3001/api/docs 访问。
@@ -78,10 +78,10 @@ yarn start:server
 
 ```bash
 # 在项目根目录
-npm run start:blog
+npm run dev:blog
 
 # 或使用yarn
-yarn start:blog
+yarn dev:blog
 ```
 
 博客应用将在 http://localhost:3000 上运行。
@@ -90,10 +90,10 @@ yarn start:blog
 
 ```bash
 # 在项目根目录
-npm run start:lowcode
+npm run dev:lowcode
 
 # 或使用yarn
-yarn start:lowcode
+yarn dev:lowcode
 ```
 
 低代码平台将在 http://localhost:3002 上运行。

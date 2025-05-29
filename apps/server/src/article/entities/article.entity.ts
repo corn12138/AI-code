@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Category } from './category.entity';
 import { Comment } from './comment.entity';
@@ -45,15 +45,10 @@ export class Article {
   categoryId!: string;
 
   @ManyToMany(() => Tag, tag => tag.articles)
-  @JoinTable({
-    name: 'article_tags',
-    joinColumn: { name: 'articleId', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'tagId', referencedColumnName: 'id' }
-  })
-  tags: Tag[] = [];
+  tags!: Tag[];  // 使用非空断言操作符
 
   @OneToMany(() => Comment, comment => comment.article)
-  comments: Comment[] = [];
+  comments!: Comment[];  // 使用非空断言操作符，并移除 = [] 初始化
 
   @CreateDateColumn()
   createdAt!: Date;

@@ -1,0 +1,61 @@
+.searchContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 8px 12px;
+    padding-right: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #0070f3;
+}
+
+.searchButton {
+    position: absolute;
+    right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    color: #666;
+}
+
+.searchButton:hover {
+    color: #0070f3;
+}
+
+/* 确保SVG图标大小合适 */
+.searchButton svg {
+    width: 16px;
+    height: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .searchInput {
+        background-color: #222;
+        border-color: #444;
+        color: #f0f0f0;
+    }
+
+    .searchButton {
+        color: #aaa;
+    }
+
+    .searchButton:hover {
+        color: #3291ff;
+    }
+}

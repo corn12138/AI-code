@@ -1,0 +1,27 @@
+.container {
+    padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2rem;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.searchWrapper {
+    margin: 1.5rem auto;
+    max-width: 500px;
+    width: 100%;
+}
+
+.content {
+    margin-top: 2rem;
+}
+
+/* 确保任何图标都不会过大 */
+.container svg {
+    max-width: 24px;
+    max-height: 24px;
+}

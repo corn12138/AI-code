@@ -13,7 +13,7 @@ async function checkDatabaseData() {
     const client = new Client({
         host: process.env.DATABASE_HOST || 'localhost',
         port: parseInt(process.env.DATABASE_PORT || '6543', 10),
-        user: process.env.DATABASE_USER || 'postgres',
+        user: process.env.DATABASE_USER || 'app_user',
         password: process.env.DATABASE_PASSWORD || 'postgres',
         database: process.env.DATABASE_NAME || 'blogdb',
         ssl: process.env.DATABASE_SSL === 'true' ? {
@@ -22,7 +22,7 @@ async function checkDatabaseData() {
     });
 
     try {
-        console.log(`连接到数据库: ${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`);
+        console.log(`连接到数据库: ${process.env.DATABASE_HOST || 'localhost'}:${process.env.DATABASE_PORT || '6543'}/${process.env.DATABASE_NAME || 'blogdb'}`);
         await client.connect();
         console.log('数据库连接成功');
 
@@ -42,7 +42,7 @@ async function checkDatabaseData() {
         // 用户数据
         const userCount = await client.query('SELECT COUNT(*) FROM users');
         console.log(`- 用户数量: ${userCount.rows[0].count}`);
-        if (parseInt(userCount.rows[0].count) > 0) {
+        if (parseInt(userCount.rows[0].count as string, 10) > 0) {
             const adminUser = await client.query("SELECT * FROM users WHERE email = 'admin@example.com'");
             console.log(`- 管理员用户: ${adminUser.rows.length > 0 ? '存在' : '不存在'}`);
         }
@@ -50,7 +50,7 @@ async function checkDatabaseData() {
         // 分类数据
         const categoryCount = await client.query('SELECT COUNT(*) FROM categories');
         console.log(`- 分类数量: ${categoryCount.rows[0].count}`);
-        if (parseInt(categoryCount.rows[0].count) > 0) {
+        if (parseInt(categoryCount.rows[0].count as string, 10) > 0) {
             const categories = await client.query('SELECT name FROM categories');
             console.log(`- 分类列表: ${categories.rows.map(c => c.name).join(', ')}`);
         }
@@ -58,9 +58,9 @@ async function checkDatabaseData() {
         // 标签数据
         const tagCount = await client.query('SELECT COUNT(*) FROM tags');
         console.log(`- 标签数量: ${tagCount.rows[0].count}`);
-        if (parseInt(tagCount.rows[0].count) > 0) {
+        if (parseInt(tagCount.rows[0].count as string, 10) > 0) {
             const sampleTags = await client.query('SELECT name FROM tags LIMIT 5');
-            console.log(`- 部分标签: ${sampleTags.rows.map(t => t.name).join(', ')}${parseInt(tagCount.rows[0].count) > 5 ? '...' : ''}`);
+            console.log(`- 部分标签: ${sampleTags.rows.map(t => t.name).join(', ')}${parseInt(tagCount.rows[0].count as string, 10) > 5 ? '...' : ''}`);
         }
 
         console.log('\n数据检查完成');

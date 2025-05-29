@@ -4,13 +4,13 @@ services:
   postgres:
     image: postgres:14-alpine
     environment:
-      POSTGRES_USER: bloguser
+      POSTGRES_USER: app_user
       POSTGRES_PASSWORD: blogpassword
       POSTGRES_DB: blogdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "6543:5432"
     networks:
       - app_network
 

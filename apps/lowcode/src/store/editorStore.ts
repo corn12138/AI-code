@@ -165,7 +165,7 @@ export const useEditorStore = create<EditorStore>()(
           // 如果是根组件的直接子组件
           if (component.parent === undefined) {
             const rootChildren = components.children || [];
-            const index = rootChildren.findIndex(c => c.id === id);
+            const index = rootChildren.findIndex((c: { id: string; }) => c.id === id);
             
             return {
               currentPage: {

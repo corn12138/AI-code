@@ -1,0 +1,6 @@
+module.exports = {
+  // ...existing code...
+  port: 6543,
+  username: 'app_user',
+  // ...existing code...
+}

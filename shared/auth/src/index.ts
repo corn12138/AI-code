@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface User {
   id: string;
@@ -51,7 +51,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
+
     // 如果是401错误且不是刷新token的请求，尝试刷新token
     if (
       error.response?.status === 401 &&
@@ -59,7 +59,7 @@ api.interceptors.response.use(
       error.config.url !== '/auth/refresh'
     ) {
       originalRequest._retry = true;
-      
+
       try {
         await useAuth.getState().refreshAuth();
         // 刷新成功后重试之前失败的请求
@@ -72,7 +72,7 @@ api.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-    
+
     return Promise.reject(error);
   }
 );
@@ -152,11 +152,11 @@ export const useAuth = create<AuthState>()(
       // 刷新token方法
       refreshAuth: async () => {
         const { refreshToken } = get();
-        
+
         if (!refreshToken) {
           throw new Error('No refresh token available');
         }
-        
+
         try {
           const response = await api.post('/auth/refresh', { refreshToken });
           const { accessToken, user } = response.data;
@@ -229,7 +229,9 @@ export function withAuth<P extends object>(
       }
     }, [isAuthenticated, refreshAuth]);
 
-    return isAuthenticated ? <Component {...props} /> : null;
+    return isAuthenticated ? (
+      React.createElement(Component, props)
+    ) : null;
   };
 }
 

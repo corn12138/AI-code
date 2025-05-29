@@ -37,24 +37,21 @@ export interface Article {
 }
 
 export interface CreateArticleDto {
-    [x: string]: string;
-    summary: any;
-    [x: string]: string;
-    summary: any;
     title: string;
     content: string;
     tagIds: string[];
     isPublished: boolean;
     coverImage?: string;
+    summary?: string;
 }
 
 export interface UpdateArticleDto {
-    summary: any;
     title?: string;
     content?: string;
     tagIds?: string[];
     isPublished?: boolean;
     coverImage?: string;
+    summary?: string;
 }
 
 export interface ArticleFilters {

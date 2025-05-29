@@ -35,11 +35,11 @@ interface AppConfig {
 }
 
 export default (): AppConfig => ({
-    port: parseInt(process.env.PORT, 10) || 3001,
+    port: parseInt(process.env.PORT || '3001', 10),
     database: {
         host: process.env.DATABASE_HOST || 'localhost',
-        port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
-        username: process.env.DATABASE_USER || 'bloguser',
+        port: parseInt(process.env.DATABASE_PORT || '6543', 10),
+        username: process.env.DATABASE_USER || 'app_user',
         password: process.env.DATABASE_PASSWORD || 'blogpassword',
         name: process.env.DATABASE_NAME || 'blogdb',
         synchronize: process.env.NODE_ENV !== 'production',
@@ -52,11 +52,11 @@ export default (): AppConfig => ({
         refreshTokenExpiration: process.env.JWT_REFRESH_EXPIRATION || '7d',
     },
     throttle: {
-        ttl: parseInt(process.env.THROTTLE_TTL, 10) || 60,
-        limit: parseInt(process.env.THROTTLE_LIMIT, 10) || 100,
+        ttl: parseInt(process.env.THROTTLE_TTL || '60', 10),
+        limit: parseInt(process.env.THROTTLE_LIMIT || '100', 10),
     },
     security: {
-        bcryptSaltRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS, 10) || 12,
+        bcryptSaltRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS || '12', 10),
         csrfEnabled: process.env.CSRF_ENABLED === 'true',
         csrfSecret: process.env.CSRF_SECRET || 'csrf-secret-key',
     },

@@ -15,18 +15,18 @@ async function runSqlScript(scriptPath: string) {
     const sqlScript = fs.readFileSync(scriptPath, 'utf8');
 
     const client = new Client({
-        host: process.env.DATABASE_HOST,
-        port: parseInt(process.env.DATABASE_PORT || '5432', 10),
-        user: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE_NAME,
+        host: process.env.DATABASE_HOST || 'localhost',
+        port: parseInt(process.env.DATABASE_PORT || '6543', 10),
+        user: process.env.DATABASE_USER || 'app_user',
+        password: process.env.DATABASE_PASSWORD || 'postgres',
+        database: process.env.DATABASE_NAME || 'blogdb',
         ssl: process.env.DATABASE_SSL === 'true' ? {
             rejectUnauthorized: false
         } : false,
     });
 
     try {
-        console.log(`连接到数据库 ${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}...`);
+        console.log(`连接到数据库 ${process.env.DATABASE_HOST || 'localhost'}:${process.env.DATABASE_PORT || '6543'}/${process.env.DATABASE_NAME || 'blogdb'}...`);
         await client.connect();
         console.log('数据库连接成功！');
 

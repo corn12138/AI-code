@@ -1,23 +1,22 @@
-import React from 'react';
-import { useDrop } from 'react-dnd';
+import { useComponentsStore } from '@/store/componentsStore';
 import { useEditorStore } from '@/store/editorStore';
 import { ComponentModel } from '@/types';
-import { useComponentsStore } from '@/store/componentsStore';
-import { cloneComponent } from '@/utils/components';
+import React from 'react';
+import { useDrop } from 'react-dnd';
 
-const Canvas: React.FC = () => {
-  const { 
-    currentPage, 
-    addComponent, 
-    selectComponent, 
-    hoverComponent, 
-    hoveredId, 
+export const Canvas: React.FC = (props) => {
+  const {
+    currentPage,
+    addComponent,
+    selectComponent,
+    hoverComponent,
+    hoveredId,
     selectedId,
     mode,
     canvasScale,
     showGrid
   } = useEditorStore();
-  
+
   // 处理拖放组件
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'COMPONENT',
@@ -26,7 +25,7 @@ const Canvas: React.FC = () => {
       if (monitor.didDrop()) {
         return;
       }
-      
+
       // 将组件添加到根组件
       const componentModel: ComponentModel = {
         id: item.id,
@@ -36,18 +35,18 @@ const Canvas: React.FC = () => {
         style: item.style,
         children: item.component.initialChildren || []
       };
-      
+
       addComponent(componentModel);
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver({ shallow: true }),
     }),
   }), [addComponent]);
-  
+
   if (!currentPage) {
     return <div className="h-full flex items-center justify-center text-gray-500">没有加载页面数据</div>;
   }
-  
+
   // 创建根容器样式
   const rootStyle: React.CSSProperties = {
     width: '100%',
@@ -58,19 +57,19 @@ const Canvas: React.FC = () => {
     transformOrigin: 'top left',
     transition: 'transform 0.3s',
   };
-  
+
   return (
-    <div 
+    <div
       ref={drop}
       className={`canvas-container ${isOver ? 'bg-blue-50' : ''} ${mode === 'edit' ? 'p-4' : ''}`}
       style={{ height: '100%', overflow: 'auto' }}
     >
-      <div 
+      <div
         className={`canvas ${showGrid && mode === 'edit' ? 'bg-grid' : ''}`}
         style={rootStyle}
       >
-        <RenderComponent 
-          component={currentPage.components} 
+        <RenderComponent
+          component={currentPage.components}
           parentId={null}
           isRoot={true}
           isEditing={mode === 'edit'}
@@ -95,8 +94,8 @@ interface RenderComponentProps {
   hoveredId: string | null;
 }
 
-const RenderComponent: React.FC<RenderComponentProps> = ({ 
-  component, 
+const RenderComponent: React.FC<RenderComponentProps> = ({
+  component,
   parentId,
   isRoot = false,
   isEditing,
@@ -107,17 +106,17 @@ const RenderComponent: React.FC<RenderComponentProps> = ({
 }) => {
   const { getComponentByType } = useComponentsStore();
   const { addComponent, deleteComponent } = useEditorStore();
-  
+
   const { id, type, props, style, children } = component;
   const componentDef = getComponentByType(type);
-  
+
   if (!componentDef) {
     return <div>未知组件: {type}</div>;
   }
-  
+
   const Component = componentDef.Component;
   const allowChildren = componentDef.allowChildren;
-  
+
   // 处理嵌套组件的拖放
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'COMPONENT',
@@ -126,7 +125,7 @@ const RenderComponent: React.FC<RenderComponentProps> = ({
       if (!allowChildren) {
         return;
       }
-      
+
       // 将组件添加到当前组件的子组件中
       const componentModel: ComponentModel = {
         id: item.id,
@@ -137,41 +136,41 @@ const RenderComponent: React.FC<RenderComponentProps> = ({
         children: item.component.initialChildren || [],
         parent: id
       };
-      
+
       addComponent(componentModel, id);
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver({ shallow: true }),
     }),
   }), [id, allowChildren, addComponent]);
-  
+
   // 创建组件样式
   const componentStyle: React.CSSProperties = {
     ...style,
     position: 'relative',
   };
-  
+
   // 在编辑模式下添加额外的样式和事件处理
   if (isEditing) {
     const isSelected = selectedId === id;
     const isHovered = hoveredId === id && !isSelected;
-    
+
     Object.assign(componentStyle, {
-      outline: isSelected 
-        ? '2px solid #2563eb' 
-        : isHovered 
+      outline: isSelected
+        ? '2px solid #2563eb'
+        : isHovered
           ? '1px dashed #93c5fd'
           : 'none',
       cursor: 'pointer',
     });
   }
-  
+
   // 渲染组件内容
   const renderContent = () => {
     // 根组件特殊处理
     if (isRoot) {
       return (
-        <div 
+        <div
           className="root-component"
           ref={isEditing && allowChildren ? drop : null}
           style={componentStyle}
@@ -191,7 +190,7 @@ const RenderComponent: React.FC<RenderComponentProps> = ({
         </div>
       );
     }
-    
+
     // 普通组件
     return (
       <div
@@ -208,8 +207,8 @@ const RenderComponent: React.FC<RenderComponentProps> = ({
         onMouseLeave={() => isEditing && onHover(null)}
       >
         {/* 渲染组件 */}
-        <Component 
-          {...props} 
+        <Component
+          {...props}
           style={style}
         >
           {allowChildren && children?.map((child) => (
@@ -225,7 +224,7 @@ const RenderComponent: React.FC<RenderComponentProps> = ({
             />
           ))}
         </Component>
-        
+
         {/* 编辑模式下添加操作按钮 */}
         {isEditing && selectedId === id && (
           <div className="component-actions absolute top-0 right-0 bg-white border border-gray-200 rounded shadow-sm">
@@ -245,8 +244,10 @@ const RenderComponent: React.FC<RenderComponentProps> = ({
       </div>
     );
   };
-  
+
   return renderContent();
 };
 
+// 如果有默认导出但没有命名导出，添加命名导出
+// export { default as Canvas } from './ActualCanvasFile';
 export default Canvas;

@@ -16,14 +16,14 @@ const envPath = process.env.NODE_ENV === 'production'
 dotenv.config({ path: envPath });
 
 console.log(`数据库迁移配置使用环境: ${process.env.NODE_ENV || 'development'}`);
-console.log(`连接到数据库: ${process.env.DATABASE_HOST}:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`);
+console.log(`连接到数据库: ${process.env.DATABASE_HOST || 'localhost'}:${process.env.DATABASE_PORT || '6543'}/${process.env.DATABASE_NAME || 'blogdb'}`);
 
 // 创建 DataSource 实例用于迁移
 const dataSource = new DataSource({
     type: 'postgres',
     host: process.env.DATABASE_HOST || 'localhost',
-    port: parseInt(process.env.DATABASE_PORT ?? '5432', 10),
-    username: process.env.DATABASE_USER || 'postgres',
+    port: parseInt(process.env.DATABASE_PORT || '6543', 10),
+    username: process.env.DATABASE_USER || 'app_user',
     password: process.env.DATABASE_PASSWORD || 'postgres',
     database: process.env.DATABASE_NAME || 'blogdb',
     // 明确指定实体而不是使用通配符模式
