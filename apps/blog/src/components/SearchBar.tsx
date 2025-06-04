@@ -1,12 +1,21 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 
 interface SearchBarProps {
     onSearch: (query: string) => void;
     placeholder?: string;
+    initialValue?: string;
+    className?: string;
 }
 
-export default function SearchBar({ onSearch, placeholder = "搜索文章、标签或作者..." }: SearchBarProps) {
-    const [query, setQuery] = useState('');
+export default function SearchBar({
+    onSearch,
+    placeholder = "搜索文章、标签或作者...",
+    initialValue = "",
+    className = "",
+}: SearchBarProps) {
+    const [query, setQuery] = useState(initialValue);
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const searchTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -53,11 +62,16 @@ export default function SearchBar({ onSearch, placeholder = "搜索文章、标�
         };
     }, []);
 
+    // 设置初始值
+    useEffect(() => {
+        setQuery(initialValue);
+    }, [initialValue]);
+
     return (
-        <form onSubmit={handleSubmit} className="w-full">
+        <form onSubmit={handleSubmit} className={`w-full ${className}`}>
             <div className={`relative transition-all rounded-lg ${isFocused
-                    ? 'ring-2 ring-primary-300 shadow-sm'
-                    : 'ring-1 ring-secondary-200 hover:ring-secondary-300'
+                ? 'ring-2 ring-primary-300 shadow-sm'
+                : 'ring-1 ring-secondary-200 hover:ring-secondary-300'
                 }`}>
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg

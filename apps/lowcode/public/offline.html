@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>离线模式 - 低代码平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #1a4cbe;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 1.5rem;
+        }
+
+        .offline-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffa000;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #1a4cbe;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0d3aa9;
+        }
+
+        .info-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #1a4cbe;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .projects-list {
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .projects-list div {
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ffa000;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="offline-icon">⚠️</div>
+        <h1>您当前处于离线模式</h1>
+        <p>无法连接到网络，但您仍然可以访问之前编辑过的项目。</p>
+
+        <div class="info-box">
+            <p>离线模式功能：</p>
+            <ul>
+                <li>浏览和编辑已缓存的项目</li>
+                <li>使用已缓存的组件库</li>
+                <li>创建新设计并在网络恢复时同步</li>
+            </ul>
+        </div>
+
+        <h3>您的离线项目</h3>
+        <div class="projects-list" id="offlineProjects">
+            <p>加载中...</p>
+        </div>
+
+        <button class="button" id="refreshButton">重新连接</button>
+    </div>
+
+    <script>
+        // 尝试从IndexedDB加载项目列表
+        document.addEventListener('DOMContentLoaded', async function () {
+            const projectsContainer = document.getElementById('offlineProjects');
+            const refreshButton = document.getElementById('refreshButton');
+
+            refreshButton.addEventListener('click', function () {
+                window.location.reload();
+            });
+
+            try {
+                const request = indexedDB.open('LowCodeOfflineDB');
+
+                request.onerror = function () {
+                    projectsContainer.innerHTML = '<p>无法加载离线项目</p>';
+                };
+
+                request.onsuccess = function (event) {
+                    const db = event.target.result;
+
+                    if (!db.objectStoreNames.contains('designs')) {
+                        projectsContainer.innerHTML = '<p>暂无缓存的项目</p>';
+                        return;
+                    }
+
+                    const tx = db.transaction('designs', 'readonly');
+                    const store = tx.objectStore('designs');
+                    const request = store.getAll();
+
+                    request.onsuccess = function () {
+                        if (request.result && request.result.length > 0) {
+                            let html = '';
+                            request.result.forEach(design => {
+                                html += `
+                  <div>
+                    <span class="status-dot"></span>
+                    <strong>${design.name || '未命名项目'}</strong>
+                    <div>最后修改：${new Date(design.updatedAt).toLocaleString()}</div>
+                  </div>
+                `;
+                            });
+                            projectsContainer.innerHTML = html;
+                        } else {
+                            projectsContainer.innerHTML = '<p>暂无缓存的项目</p>';
+                        }
+                    };
+
+                    request.onerror = function () {
+                        projectsContainer.innerHTML = '<p>无法加载离线项目</p>';
+                    };
+                };
+            } catch (error) {
+                projectsContainer.innerHTML = '<p>无法加载离线项目</p>';
+            }
+        });
+
+        // 检查网络状态
+        window.addEventListener('online', function () {
+            window.location.reload();
+        });
+    </script>
+</body>
+
+</html>

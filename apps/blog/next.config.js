@@ -3,16 +3,34 @@ const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ['@shared/ui', '@shared/utils', '@shared/auth'],
     images: {
-        domains: ['placekitten.com', 'images.unsplash.com'],
+        domains: [
+            'images.unsplash.com',
+            'via.placeholder.com',
+            'avatars.githubusercontent.com',
+            'res.cloudinary.com',
+            'api.dicebear.com'
+        ],
     },
+    // 添加重写规则以便于开发环境中代理API请求
     async rewrites() {
         return [
             {
                 source: '/api/:path*',
-                destination: '/api/:path*', // 修复：添加正确的目标路径，而不是undefined
+                destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/:path*`,
             },
         ];
     },
+    webpack: (config, { isServer }) => {
+        // 修复SSR问题
+        if (!isServer) {
+            config.resolve.fallback = {
+                ...config.resolve.fallback,
+                fs: false,
+                path: false,
+            };
+        }
+        return config;
+    }
 }
 
 module.exports = nextConfig

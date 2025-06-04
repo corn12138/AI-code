@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 export default function SafeHydration({ children, fallback = null }) {
@@ -8,13 +10,8 @@ export default function SafeHydration({ children, fallback = null }) {
     }, []);
 
     if (!mounted) {
-        // 返回一个与children结构相似的skeleton或空div
         return fallback;
     }
 
-    return (
-        <div suppressHydrationWarning>
-            {children}
-        </div>
-    );
+    return <div suppressHydrationWarning>{children}</div>;
 }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { CacheInterceptor, Injectable, Logger, NotFoundException, UseInterceptors } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePageDto } from './dto/create-page.dto';
@@ -6,17 +6,29 @@ import { UpdatePageDto } from './dto/update-page.dto';
 import { LowcodePage } from './entities/lowcode-page.entity';
 
 @Injectable()
+@UseInterceptors(CacheInterceptor) // 自动缓存支持
 export class LowcodeService {
+    private readonly logger = new Logger(LowcodeService.name);
+
     constructor(
         @InjectRepository(LowcodePage)
         private readonly lowcodePageRepository: Repository<LowcodePage>,
     ) { }
 
-    async findAllByUser(userId: string): Promise<LowcodePage[]> {
-        return this.lowcodePageRepository.find({
-            where: { ownerId: userId },
-            order: { updatedAt: 'DESC' },
-        });
+    async findAllByUser(userId: string, page = 1, limit = 10): Promise<{ pages: LowcodePage[], total: number }> {
+        try {
+            const [pages, total] = await this.lowcodePageRepository.findAndCount({
+                where: { ownerId: userId },
+                order: { updatedAt: 'DESC' },
+                take: limit,
+                skip: (page - 1) * limit,
+            });
+
+            return { pages, total };
+        } catch (error) {
+            this.logger.error(`获取用户页面失败: ${error.message}`, error.stack);
+            throw error;
+        }
     }
 
     async findOne(id: string, userId: string): Promise<LowcodePage> {
@@ -76,31 +88,58 @@ export class LowcodeService {
     }
 
     async getTemplates(): Promise<any[]> {
-        // 这里返回预定义的模板列表
-        // 实际实现可能会从数据库或文件系统中加载模板
-        return [
-            {
-                id: 'template-1',
-                name: '博客首页模板',
-                description: '适合博客网站的首页布局',
-                thumbnail: '/templates/blog-home.png',
-                content: {/* 模板内容结构 */ },
-            },
-            {
-                id: 'template-2',
-                name: '产品展示模板',
-                description: '适合展示产品信息的页面布局',
-                thumbnail: '/templates/product-showcase.png',
-                content: {/* 模板内容结构 */ },
-            },
-            {
-                id: 'template-3',
-                name: '个人简介模板',
-                description: '适合个人介绍的简洁布局',
-                thumbnail: '/templates/personal-profile.png',
-                content: {/* 模板内容结构 */ },
-            },
-        ];
+        try {
+            // 这里可以考虑使用缓存装饰器或内存缓存
+            // 实际实现可能会从数据库或文件系统中加载模板
+            return [
+                {
+                    id: 'template-1',
+                    name: '博客首页模板',
+                    description: '适合博客网站的首页布局',
+                    thumbnail: '/templates/blog-home.png',
+                    // 避免在这里存储完整内容，可以在选择模板时再加载详细内容
+                    contentPreview: { /* 模板预览结构 */ },
+                },
+                {
+                    id: 'template-2',
+                    name: '产品展示模板',
+                    description: '适合展示产品信息的页面布局',
+                    thumbnail: '/templates/product-showcase.png',
+                    contentPreview: { /* 模板预览结构 */ },
+                },
+                {
+                    id: 'template-3',
+                    name: '个人简介模板',
+                    description: '适合个人介绍的简洁布局',
+                    thumbnail: '/templates/personal-profile.png',
+                    contentPreview: { /* 模板预览结构 */ },
+                },
+            ];
+        } catch (error) {
+            this.logger.error(`获取模板失败: ${error.message}`, error.stack);
+            throw error;
+        }
+    }
+
+    async getTemplateContent(templateId: string): Promise<any> {
+        // 单独获取模板内容的方法，避免一次性加载所有模板内容
+        try {
+            // 这里可以从文件系统或数据库中加载特定模板的详细内容
+            const templates = {
+                'template-1': { /* 模板1的完整内容 */ },
+                'template-2': { /* 模板2的完整内容 */ },
+                'template-3': { /* 模板3的完整内容 */ },
+            };
+
+            if (!templates[templateId]) {
+                throw new NotFoundException('模板不存在');
+            }
+
+            return templates[templateId];
+        } catch (error) {
+            this.logger.error(`获取模板内容失败: ${error.message}`, error.stack);
+            throw error;
+        }
     }
 
     async createFromTemplate(
@@ -108,21 +147,21 @@ export class LowcodeService {
         templateId: string,
         createPageDto: CreatePageDto
     ): Promise<LowcodePage> {
-        // 获取模板
-        const templates = await this.getTemplates();
-        const template = templates.find(t => t.id === templateId);
+        try {
+            // 获取模板内容
+            const templateContent = await this.getTemplateContent(templateId);
 
-        if (!template) {
-            throw new NotFoundException('模板不存在');
+            // 创建新页面，继承模板内容
+            const page = this.lowcodePageRepository.create({
+                ...createPageDto,
+                content: templateContent,
+                ownerId: userId,
+            });
+
+            return this.lowcodePageRepository.save(page);
+        } catch (error) {
+            this.logger.error(`从模板创建页面失败: ${error.message}`, error.stack);
+            throw error;
         }
-
-        // 创建新页面，继承模板内容
-        const page = this.lowcodePageRepository.create({
-            ...createPageDto,
-            content: template.content,
-            ownerId: userId,
-        });
-
-        return this.lowcodePageRepository.save(page);
     }
 }

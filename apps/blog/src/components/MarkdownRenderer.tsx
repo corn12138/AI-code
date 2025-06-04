@@ -1,19 +1,32 @@
+'use client';
+
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
-import DOMPurify from 'dompurify';
 
 interface MarkdownRendererProps {
     content: string;
 }
 
 export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
-    // 首先净化原始内容防止XSS攻击
-    const sanitizedContent = DOMPurify.sanitize(content);
-    
+    const [sanitizedContent, setSanitizedContent] = useState(content);
+
+    // 客户端安全地使用DOMPurify
+    useEffect(() => {
+        const sanitizeContent = async () => {
+            if (typeof window !== 'undefined') {
+                const DOMPurify = (await import('dompurify')).default;
+                setSanitizedContent(DOMPurify.sanitize(content));
+            }
+        };
+
+        sanitizeContent();
+    }, [content]);
+
     return (
         <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -43,9 +56,9 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                     const src = props.src || '';
                     // 只允许http, https或相对路径
                     const isSafe = !src.match(/^(javascript|data):/i);
-                    
+
                     if (!isSafe) return null;
-                    
+
                     // 使用Next.js的Image组件优化图片
                     return (
                         <span className="block relative min-h-[200px] my-4">
@@ -65,9 +78,9 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
                     const href = props.href || '';
                     // 只允许http, https或相对路径
                     const isSafe = !href.match(/^(javascript|data):/i);
-                    
+
                     if (!isSafe) return <span>{props.children}</span>;
-                    
+
                     return (
                         <a
                             href={href}

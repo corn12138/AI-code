@@ -1,8 +1,12 @@
-import { useAuth } from '@shared/auth';
+// 更复杂的导航栏实现
+'use client';
+
+import { useAuth } from '@/hooks/useAuth';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { PrimaryButton } from './ui/ClientButton';
 
 interface NavbarProps {
     minimal?: boolean;
@@ -12,7 +16,7 @@ export default function Navbar({ minimal = false }: NavbarProps) {
     const { isAuthenticated, user, logout } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const router = useRouter();
+    const pathname = usePathname();
 
     // 监听滚动以改变导航栏样式
     useEffect(() => {
@@ -26,11 +30,15 @@ export default function Navbar({ minimal = false }: NavbarProps) {
 
     const handleLogout = async () => {
         await logout();
-        router.push('/');
+        window.location.href = '/';
+    };
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
 
     return (
-        <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md' : 'bg-white shadow-sm'
+        <nav className={`bg-white shadow-md py-4 sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md' : 'bg-white shadow-sm'
             }`}>
             <div className="container-content">
                 <div className="flex justify-between items-center h-16">
@@ -60,9 +68,9 @@ export default function Navbar({ minimal = false }: NavbarProps) {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${router.pathname === item.href
-                                            ? 'text-primary-700 bg-primary-50'
-                                            : 'text-secondary-600 hover:text-primary-600 hover:bg-gray-50'
+                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${pathname === item.href
+                                        ? 'text-primary-700 bg-primary-50'
+                                        : 'text-secondary-600 hover:text-primary-600 hover:bg-gray-50'
                                         }`}
                                 >
                                     {item.name}
@@ -71,9 +79,9 @@ export default function Navbar({ minimal = false }: NavbarProps) {
                             {isAuthenticated && (
                                 <Link
                                     href="/editor"
-                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${router.pathname === '/editor'
-                                            ? 'text-primary-700 bg-primary-50'
-                                            : 'text-secondary-600 hover:text-primary-600 hover:bg-gray-50'
+                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${pathname === '/editor'
+                                        ? 'text-primary-700 bg-primary-50'
+                                        : 'text-secondary-600 hover:text-primary-600 hover:bg-gray-50'
                                         }`}
                                 >
                                     写文章
@@ -158,55 +166,52 @@ export default function Navbar({ minimal = false }: NavbarProps) {
 
                     {/* 移动端菜单按钮 */}
                     <div className="md:hidden">
-                        <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="p-2 rounded-md text-secondary-700 hover:bg-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        <PrimaryButton
+                            onClick={toggleMenu}
+                            className="p-2 rounded-md"
                         >
-                            <svg
-                                className="h-6 w-6"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                {isMenuOpen ? (
+                            <span className="sr-only">打开菜单</span>
+                            {isMenuOpen ? (
+                                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                ) : (
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                )}
-                            </svg>
-                        </button>
+                                </svg>
+                            ) : (
+                                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                                </svg>
+                            )}
+                        </PrimaryButton>
                     </div>
                 </div>
 
                 {/* 移动端菜单 */}
                 {isMenuOpen && (
-                    <div className="md:hidden py-3 border-t border-secondary-100">
-                        <nav className="space-y-1 pb-3">
+                    <div className="absolute top-16 left-0 right-0 bg-white shadow-md py-2 md:hidden z-10">
+                        <div className="flex flex-col space-y-2 px-4">
                             <Link href="/"
-                                className="block px-3 py-2 rounded-md text-base font-medium text-secondary-700 hover:bg-secondary-100 hover:text-primary-600"
+                                className="text-gray-700 hover:text-blue-600 py-2 transition-colors"
                                 onClick={() => setIsMenuOpen(false)}>
                                 首页
                             </Link>
                             <Link href="/tags"
-                                className="block px-3 py-2 rounded-md text-base font-medium text-secondary-700 hover:bg-secondary-100 hover:text-primary-600"
+                                className="text-gray-700 hover:text-blue-600 py-2 transition-colors"
                                 onClick={() => setIsMenuOpen(false)}>
                                 标签
                             </Link>
                             <Link href="/topics"
-                                className="block px-3 py-2 rounded-md text-base font-medium text-secondary-700 hover:bg-secondary-100 hover:text-primary-600"
+                                className="text-gray-700 hover:text-blue-600 py-2 transition-colors"
                                 onClick={() => setIsMenuOpen(false)}>
                                 专题
                             </Link>
                             {isAuthenticated && (
                                 <>
                                     <Link href="/editor"
-                                        className="block px-3 py-2 rounded-md text-base font-medium text-secondary-700 hover:bg-secondary-100 hover:text-primary-600"
+                                        className="text-gray-700 hover:text-blue-600 py-2 transition-colors"
                                         onClick={() => setIsMenuOpen(false)}>
                                         写文章
                                     </Link>
                                     <Link href="/profile"
-                                        className="block px-3 py-2 rounded-md text-base font-medium text-secondary-700 hover:bg-secondary-100 hover:text-primary-600"
+                                        className="text-gray-700 hover:text-blue-600 py-2 transition-colors"
                                         onClick={() => setIsMenuOpen(false)}>
                                         个人中心
                                     </Link>
@@ -221,10 +226,10 @@ export default function Navbar({ minimal = false }: NavbarProps) {
                                     </button>
                                 </>
                             )}
-                        </nav>
+                        </div>
                     </div>
                 )}
             </div>
-        </header>
+        </nav>
     );
 }

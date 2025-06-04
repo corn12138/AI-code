@@ -1,3 +1,5 @@
+'use client';
+
 import { Tag } from '@/types';
 import { useState } from 'react';
 
@@ -21,8 +23,8 @@ export default function TagList({ tags, selectedTag, onTagSelect }: TagListProps
                         key={tag.id}
                         onClick={() => onTagSelect(tag.name)}
                         className={`px-3 py-1.5 rounded-full text-sm transition-all ${selectedTag === tag.name
-                                ? 'bg-primary-500 text-white font-medium shadow-sm'
-                                : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
+                            ? 'bg-primary-500 text-white font-medium shadow-sm'
+                            : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
                             }`}
                     >
                         {tag.name}

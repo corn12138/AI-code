@@ -1,3 +1,5 @@
+'use client';
+
 import { Article } from '@/types';
 import { formatDate } from '@/utils/date';
 import Image from 'next/image';

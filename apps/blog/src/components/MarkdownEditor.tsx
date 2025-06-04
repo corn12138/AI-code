@@ -1,3 +1,5 @@
+'use client';
+
 import { uploadImage } from '@/services/api';
 import { Tab } from '@headlessui/react';
 import dynamic from 'next/dynamic';
