@@ -263,24 +263,65 @@ export const uploadImage = async (file: File): Promise<string> => {
 
 ## 安全日志记录
 
-使用Winston进行安全日志记录：
+使用Winston进行安全日志记录，重点关注认证尝试、权限变更、关键操作等安全相关事件。
 
 ```typescript
-const logger = WinstonModule.createLogger({
+import * as winston from 'winston';
+import { WinstonModule } from 'nest-winston';
+import 'winston-daily-rotate-file'; // 用于日志轮转
+
+// 安全事件专用日志格式
+const securityLogFormat = winston.format.printf(({ level, message, timestamp, context, userId, ipAddress }) => {
+  return `${timestamp} [${level.toUpperCase()}] [${context || 'Security'}] UserID: ${userId || 'N/A'}, IP: ${ipAddress || 'N/A'} - ${message}`;
+});
+
+export const securityLogger = WinstonModule.createLogger({
+  format: winston.format.combine(
+    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.errors({ stack: true }), // 记录错误堆栈
+    winston.format.splat(),
+    securityLogFormat // 使用自定义安全日志格式
+  ),
   transports: [
-    // 控制台日志
-    new winston.transports.Console({/* 配置 */}),
-    // 错误日志文件
+    // 控制台输出 (可选, 开发环境可能需要)
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(), // 开发环境可添加颜色
+        securityLogFormat
+      ),
+      level: 'info', // 开发环境可以更详细
+    }),
+    // 安全事件日志文件 (轮转)
+    new winston.transports.DailyRotateFile({
+      filename: 'logs/security-%DATE%.log', // 按日期轮转
+      datePattern: 'YYYY-MM-DD',
+      zippedArchive: true, // 压缩旧日志
+      maxSize: '20m',      // 单个文件最大20MB
+      maxFiles: '14d',     // 保留14天日志
+      level: 'warn',       // 记录警告及以上级别，或根据需要调整为info
+      format: securityLogFormat, // 确保文件日志也使用此格式
+    }),
+    // 关键错误日志文件
     new winston.transports.File({
-      filename: 'logs/error.log',
-      level: 'error',
+      filename: 'logs/security-critical-error.log',
+      level: 'error', // 只记录错误及以上级别
       format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.json(),
+        winston.format.json() // 错误日志通常使用JSON格式便于机器解析
       ),
     }),
-    // 综合日志文件
-    new winston.transports.File({/* 配置 */}),
   ],
+  // 可以为特定上下文（如AuthService）配置不同的日志级别
+  // contextLevels: {
+  //   AuthService: 'debug',
+  // },
 });
+
+// 使用示例 (在服务中注入Logger)
+// import { Logger } from '@nestjs/common';
+// private readonly logger = new Logger(SecurityService.name);
+// this.logger.warn(`Failed login attempt for user: ${username}`, { userId: 'N/A', ipAddress: req.ip });
+// this.logger.error(`Critical security event: ${error.message}`, { stack: error.stack });
 ```
+
+确保对敏感信息（如密码、令牌）在记录前进行脱敏处理。
