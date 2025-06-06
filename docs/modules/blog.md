@@ -296,3 +296,89 @@ npm run build:blog
 ### 预览部署 (Pull Request Previews)
 
 Vercel和Netlify等平台通常会自动为每个Pull Request创建预览部署，方便在合并前审查更改。
+
+## 认证与用户管理
+
+### 认证集成
+
+博客系统集成了共享的Auth模块，实现了无缝的用户认证体验：
+
+1. **登录流程**:
+   - 使用共享的AuthContext管理认证状态
+   - 支持jwt令牌存储和刷新机制
+   - 登录状态持久化，页面刷新不丢失
+
+2. **登录页面实现**:
+   ```tsx
+   // Blog系统登录页面
+   const Login = () => {
+     const [usernameOrEmail, setUsernameOrEmail] = useState('');
+     const [password, setPassword] = useState('');
+     const { login } = useAuth();
+     const navigate = useNavigate();
+     
+     // 处理表单提交
+     const handleSubmit = async (e) => {
+       e.preventDefault();
+       try {
+         await login(usernameOrEmail, password);
+         navigate('/dashboard');
+       } catch (error) {
+         // 显示错误信息
+       }
+     };
+     
+     return (
+       // 登录表单UI
+     );
+   };
+   ```
+
+3. **导航栏用户状态**:
+   - 根据认证状态动态显示登录/登出选项
+   - 登录后显示用户信息和下拉菜单
+   - 提供快捷访问个人中心和创作中心的链接
+
+4. **权限控制**:
+   - 特定操作(如发布文章)需要用户登录
+   - 管理操作(如删除评论)需要特定权限
+   - 使用路由守卫保护需要认证的页面
+
+### 内容权限级别
+
+博客系统实现了不同级别的内容权限控制：
+
+1. **公开内容**: 无需登录即可访问，如公开文章列表
+
+2. **登录可见**: 需用户登录后访问，如全文阅读和评论
+
+3. **作者专属**: 仅内容作者可访问，如草稿和编辑功能
+
+4. **管理员权限**: 仅管理员可访问，如内容审核功能
+
+```tsx
+// 内容权限控制示例
+export function ArticleActions({ article }) {
+  const { user } = useAuth();
+  
+  const isAuthor = user && article.authorId === user.id;
+  const isAdmin = user && user.roles.includes('admin');
+  
+  return (
+    <div className="article-actions">
+      {/* 所有登录用户可见 */}
+      {user && (
+        <button className="like-button">点赞</button>
+      )}
+      
+      {/* 作者或管理员可见 */}
+      {(isAuthor || isAdmin) && (
+        <>
+          <button className="edit-button">编辑</button>
+          <button className="delete-button">删除</button>
+        </>
+      )}
+    </div>
+  );
+}
+```

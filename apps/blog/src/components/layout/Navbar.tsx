@@ -1,16 +1,19 @@
 'use client';
 
-import { useAuth } from '@shared/auth';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import Link from 'next/link';
-import { Fragment, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useAuth } from '@shared/auth';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { Fragment, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function Navbar() {
     const { isAuthenticated, user, logout } = useAuth();
     const pathname = usePathname();
     const [searchOpen, setSearchOpen] = useState(false);
+    const router = useRouter();
 
     const navigation = [
         { name: '首页', href: '/', current: pathname === '/' },
@@ -25,6 +28,17 @@ export default function Navbar() {
         { name: '我的评论', href: '/dashboard/comments' },
         { name: '账户设置', href: '/settings' },
     ];
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            toast.success('已成功退出登录');
+            router.push('/login');
+        } catch (error) {
+            console.error('退出登录失败:', error);
+            toast.error('退出登录时出现错误');
+        }
+    };
 
     return (
         <Disclosure as="nav" className="bg-white shadow-sm">
@@ -127,7 +141,7 @@ export default function Navbar() {
                                                         <Menu.Item>
                                                             {({ active }) => (
                                                                 <button
-                                                                    onClick={logout}
+                                                                    onClick={handleLogout}
                                                                     className={`${active ? 'bg-gray-100' : ''
                                                                         } block w-full text-left px-4 py-2 text-sm text-gray-700`}
                                                                 >
@@ -221,7 +235,7 @@ export default function Navbar() {
                                             </Link>
                                         ))}
                                         <button
-                                            onClick={logout}
+                                            onClick={handleLogout}
                                             className="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
                                         >
                                             退出登录

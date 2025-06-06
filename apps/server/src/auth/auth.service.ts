@@ -2,135 +2,97 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserService } from '../user/user.service';
+import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { User } from '@/user/entities/user.entity';
-import { DeepPartial } from 'typeorm';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private readonly userService: UserService,
-        private readonly jwtService: JwtService,
-        private readonly configService: ConfigService,
+        private usersService: UsersService,
+        private jwtService: JwtService,
+        private configService: ConfigService,
     ) { }
 
-    async validateUser(email: string, password: string): Promise<any> {
-        const user = await this.userService.findByEmail(email);
+    async validateUser(usernameOrEmail: string, pass: string): Promise<any> {
+        const user = await this.usersService.findByUsernameOrEmail(usernameOrEmail);
         if (!user) {
-            throw new UnauthorizedException('邮箱或密码不正确');
+            return null;
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            throw new UnauthorizedException('邮箱或密码不正确');
+        const isPasswordValid = await bcrypt.compare(pass, user.password);
+        if (isPasswordValid) {
+            const { password, refreshToken, ...result } = user;
+            return result;
         }
-
-        // 不返回密码等敏感字段
-        const { password: _, refreshToken: __, ...result } = user;
-        return result;
+        return null;
     }
 
     async login(loginDto: LoginDto) {
-        const user = await this.validateUser(loginDto.email, loginDto.password);
-        const tokens = await this.getTokens(user.id, user.email, user.roles);
-        await this.updateRefreshToken(user.id, tokens.refreshToken);
-        return {
-            ...tokens,
-            user
-        };
-    }
-
-    async refreshTokens(userId: string, refreshToken: string) {
-        const user = await this.userService.findById(userId);
-
-        if (!user || !user.refreshToken) {
-            throw new UnauthorizedException('刷新令牌已失效');
+        const user = await this.validateUser(loginDto.usernameOrEmail, loginDto.password);
+        if (!user) {
+            throw new UnauthorizedException('用户名或密码错误');
         }
 
-        const refreshTokenMatches = await bcrypt.compare(
-            refreshToken,
-            user.refreshToken,
-        );
-
-        if (!refreshTokenMatches) {
-            throw new UnauthorizedException('刷新令牌已失效');
-        }
-
-        const tokens = await this.getTokens(user.id, user.email, user.roles);
-        await this.updateRefreshToken(user.id, tokens.refreshToken);
-
-        // 不返回密码等敏感字段
-        const { password: _, refreshToken: __, ...userResult } = user;
+        const tokens = await this.getTokens(user.id, user.username, user.roles);
+        await this.usersService.updateRefreshToken(user.id, tokens.refreshToken);
 
         return {
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                fullName: user.fullName,
+                roles: user.roles,
+                avatar: user.avatar,
+            },
             ...tokens,
-            user: userResult
         };
-    }
-
-    async register(registerDto: RegisterDto) {
-        // 检查邮箱是否已存在
-        const existingUser = await this.userService.findByEmail(registerDto.email);
-        if (existingUser) {
-            throw new BadRequestException('该邮箱已被注册');
-        }
-
-        // 哈希密码
-        const hashedPassword = await this.hashData(registerDto.password);
-
-        // 创建新用户
-        // 注意：这里假设UserRepository或UserService中有create方法
-        // 实际实现时需要补充此方法
-        const newUser = await this.createUser({
-            ...registerDto,
-            password: hashedPassword,
-            roles: ['user'], // 默认角色
-        });
-
-        // 不返回密码等敏感字段
-        const { password: _, ...result } = newUser;
-        return result;
     }
 
     async logout(userId: string) {
-        // 清除用户的refreshToken
-        await this.updateRefreshToken(userId, null);
+        await this.usersService.updateRefreshToken(userId, null);
+        return { success: true };
     }
 
-    private async updateRefreshToken(userId: string, refreshToken: string | null) {
-        // 如果提供了refreshToken，则哈希后存储
-        const hashedRefreshToken = refreshToken
-            ? await this.hashData(refreshToken)
-            : null;
+    async refreshTokens(userId: string, refreshToken: string) {
+        const user = await this.usersService.findOne(userId);
+        if (!user || !user.refreshToken) {
+            throw new UnauthorizedException('Access Denied');
+        }
 
-        // 更新用户的refreshToken
-        await this.updateUserRefreshToken(userId, hashedRefreshToken);
+        const refreshTokenMatches = await bcrypt.compare(refreshToken, user.refreshToken);
+        if (!refreshTokenMatches) {
+            throw new UnauthorizedException('Access Denied');
+        }
+
+        const tokens = await this.getTokens(user.id, user.username, user.roles);
+        await this.usersService.updateRefreshToken(user.id, tokens.refreshToken);
+
+        return tokens;
     }
 
-    private async getTokens(userId: string, email: string, roles: string[]) {
+    async getTokens(userId: string, username: string, roles: string[]) {
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync(
                 {
                     sub: userId,
-                    email,
+                    username,
                     roles,
                 },
                 {
-                    secret: this.configService.get<string>('jwt.secret'),
-                    expiresIn: this.configService.get<string>('jwt.accessTokenExpiration'),
+                    secret: this.configService.get<string>('JWT_SECRET'),
+                    expiresIn: '15m',
                 },
             ),
             this.jwtService.signAsync(
                 {
                     sub: userId,
-                    email,
+                    username,
                     roles,
                 },
                 {
-                    secret: this.configService.get<string>('jwt.secret'),
-                    expiresIn: this.configService.get<string>('jwt.refreshTokenExpiration'),
+                    secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+                    expiresIn: '7d',
                 },
             ),
         ]);
@@ -141,22 +103,42 @@ export class AuthService {
         };
     }
 
-    private async hashData(data: string): Promise<string> {
-        const saltRounds = this.configService.get<number>('security.bcryptSaltRounds', 10);
-        return bcrypt.hash(data, saltRounds);
-    }
+    async register(registerDto: any): Promise<any> {
+        // 检查邮箱和用户名是否已存在
+        const existingEmail = await this.usersService.findByEmail(registerDto.email);
+        if (existingEmail) {
+            throw new BadRequestException('该电子邮件已被注册');
+        }
 
-    // 辅助方法 - 创建用户
-    private async createUser(userData: DeepPartial<User>): Promise<any> {
-        // 实际实现中需要调用用户仓库或服务
-        return this.userService.create(userData as any);
-    }
+        const existingUsername = await this.usersService.findByUsername(registerDto.username);
+        if (existingUsername) {
+            throw new BadRequestException('该用户名已被注册');
+        }
 
-    // 辅助方法 - 更新用户的refreshToken
-    private async updateUserRefreshToken(userId: string, refreshToken: string | null): Promise<void> {
-        // 实际实现中需要调用用户仓库或服务
-        await this.userService.update(userId, { 
-            refreshToken: refreshToken === null ? undefined : refreshToken 
+        // 加密密码
+        const hashedPassword = await bcrypt.hash(registerDto.password, 10);
+
+        // 创建用户
+        // 注意: 这里需要根据您的UserService实现创建用户的方法
+        // 这里假设有一个create方法
+        const newUser = await this.usersService.create({
+            ...registerDto,
+            password: hashedPassword,
+            roles: ['user']
         });
+
+        // 移除敏感信息
+        const { password, refreshToken, ...result } = newUser;
+
+        // 生成令牌
+        const tokens = await this.getTokens(newUser.id, newUser.username, newUser.roles);
+
+        // 更新刷新令牌
+        await this.usersService.updateRefreshToken(newUser.id, tokens.refreshToken);
+
+        return {
+            user: result,
+            ...tokens,
+        };
     }
 }

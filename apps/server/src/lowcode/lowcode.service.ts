@@ -1,4 +1,5 @@
-import { CacheInterceptor, Injectable, Logger, NotFoundException, UseInterceptors } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager'; // 正确导入CacheInterceptor
+import { Injectable, Logger, NotFoundException, UseInterceptors } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePageDto } from './dto/create-page.dto';
@@ -12,10 +13,11 @@ export class LowcodeService {
 
     constructor(
         @InjectRepository(LowcodePage)
-        private readonly lowcodePageRepository: Repository<LowcodePage>,
+        private lowcodePageRepository: Repository<LowcodePage>,
     ) { }
 
     async findAllByUser(userId: string, page = 1, limit = 10): Promise<{ pages: LowcodePage[], total: number }> {
+        // 处理错误类型问题
         try {
             const [pages, total] = await this.lowcodePageRepository.findAndCount({
                 where: { ownerId: userId },
@@ -25,7 +27,7 @@ export class LowcodeService {
             });
 
             return { pages, total };
-        } catch (error) {
+        } catch (error: any) {
             this.logger.error(`获取用户页面失败: ${error.message}`, error.stack);
             throw error;
         }
@@ -115,7 +117,7 @@ export class LowcodeService {
                     contentPreview: { /* 模板预览结构 */ },
                 },
             ];
-        } catch (error) {
+        } catch (error: any) {
             this.logger.error(`获取模板失败: ${error.message}`, error.stack);
             throw error;
         }
@@ -124,8 +126,15 @@ export class LowcodeService {
     async getTemplateContent(templateId: string): Promise<any> {
         // 单独获取模板内容的方法，避免一次性加载所有模板内容
         try {
-            // 这里可以从文件系统或数据库中加载特定模板的详细内容
-            const templates = {
+            // 添加索引签名或类型断言
+            interface Templates {
+                [key: string]: any; // 添加索引签名
+                'template-1': any;
+                'template-2': any;
+                'template-3': any;
+            }
+
+            const templates: Templates = {
                 'template-1': { /* 模板1的完整内容 */ },
                 'template-2': { /* 模板2的完整内容 */ },
                 'template-3': { /* 模板3的完整内容 */ },
@@ -136,7 +145,7 @@ export class LowcodeService {
             }
 
             return templates[templateId];
-        } catch (error) {
+        } catch (error: any) {
             this.logger.error(`获取模板内容失败: ${error.message}`, error.stack);
             throw error;
         }
@@ -159,7 +168,7 @@ export class LowcodeService {
             });
 
             return this.lowcodePageRepository.save(page);
-        } catch (error) {
+        } catch (error: any) {
             this.logger.error(`从模板创建页面失败: ${error.message}`, error.stack);
             throw error;
         }

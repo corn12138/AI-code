@@ -9,8 +9,9 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 
 interface RequestWithUser extends Request {
   user: {
-    id: string;
-    roles?: string[];
+    userId: string;
+    username: string;
+    roles: string[];
   };
 }
 
@@ -68,7 +69,7 @@ export class ArticleController {
   @ApiOperation({ summary: '创建文章' })
   @ApiResponse({ status: 201, description: '成功创建文章' })
   async create(@Req() req: RequestWithUser, @Body() createArticleDto: CreateArticleDto) {
-    return this.articleService.create(req.user.id, createArticleDto);
+    return this.articleService.create(req.user.userId, createArticleDto);
   }
 
   @Patch(':id')
@@ -83,7 +84,7 @@ export class ArticleController {
     @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
-    return this.articleService.update(req.user.id, id, updateArticleDto);
+    return this.articleService.update(req.user.userId, id, updateArticleDto);
   }
 
   @Delete(':id')
@@ -94,7 +95,7 @@ export class ArticleController {
   @ApiResponse({ status: 200, description: '成功删除文章' })
   @ApiResponse({ status: 404, description: '文章不存在' })
   async remove(@Req() req: RequestWithUser, @Param('id') id: string) {
-    await this.articleService.remove(req.user.id, id);
+    await this.articleService.remove(req.user.userId, id);
     return { message: '文章已成功删除' };
   }
 
@@ -106,7 +107,7 @@ export class ArticleController {
   @ApiResponse({ status: 200, description: '成功发布文章' })
   @ApiResponse({ status: 404, description: '文章不存在' })
   async publish(@Req() req: RequestWithUser, @Param('id') id: string) {
-    return this.articleService.publish(req.user.id, id);
+    return this.articleService.publish(req.user.userId, id);
   }
 
   @Post(':id/unpublish')
@@ -117,6 +118,6 @@ export class ArticleController {
   @ApiResponse({ status: 200, description: '成功取消发布文章' })
   @ApiResponse({ status: 404, description: '文章不存在' })
   async unpublish(@Req() req: RequestWithUser, @Param('id') id: string) {
-    return this.articleService.unpublish(req.user.id, id);
+    return this.articleService.unpublish(req.user.userId, id);
   }
 }

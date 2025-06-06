@@ -1,31 +1,69 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UserService } from '../../user/user.service';
+import { UsersService } from '../../users/users.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
+    private readonly logger = new Logger(JwtStrategy.name);
+
     constructor(
-        private readonly configService: ConfigService,
-        private readonly userService: UserService,
+        private usersService: UsersService,
+        private configService: ConfigService,
     ) {
+        const jwtSecret = configService.get<string>('JWT_SECRET');
+
+        if (!jwtSecret) {
+            throw new Error('JWT_SECRET environment variable is not set');
+        }
+
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: configService.get<string>('jwt.secret'),
+            secretOrKey: jwtSecret,
+            // 添加令牌过期时间检查
+            verifyOptions: {
+                ignoreExpiration: false,
+                // 允许的算法
+                algorithms: ['HS256'],
+                // JWT发行者
+                issuer: configService.get('JWT_ISSUER', 'blog-api'),
+                // JWT受众
+                audience: configService.get('JWT_AUDIENCE', 'blog-client'),
+            }
         });
+
+        this.logger.log('JWT策略已初始化');
     }
 
     async validate(payload: any) {
-        try {
-            // 从payload的sub中获取用户ID
-            const user = await this.userService.findById(payload.sub);
-            // 验证成功，返回用户信息（不含敏感数据）
-            const { password, refreshToken, ...result } = user;
-            return { ...result, id: payload.sub };
-        } catch (error) {
-            throw new UnauthorizedException('无效的认证令牌');
+        // 增强用户验证逻辑
+        const user = await this.usersService.findOne(payload.sub);
+
+        if (!user) {
+            this.logger.warn(`尝试使用无效用户ID访问: ${payload.sub}`);
+            throw new UnauthorizedException('用户不存在');
         }
+
+        // 修复：检查用户状态属性，使用带有默认值的可选链操作符
+        // 如果用户实体中没有isDisabled属性，默认为false
+        if (user.roles?.includes('disabled')) {
+            this.logger.warn(`禁用用户尝试访问: ${user.username}`);
+            throw new UnauthorizedException('账户已被禁用');
+        }
+
+        // 移除不存在的方法调用
+        // 如需实现最后活动时间更新功能，请先在UsersService中添加相应方法
+        // await this.usersService.updateLastActive(user.id);
+
+        return {
+            userId: payload.sub,
+            username: payload.username,
+            roles: payload.roles || ['user'],
+            // 添加其他上下文信息
+            email: payload.email,
+            permissions: payload.permissions || [],
+        };
     }
 }

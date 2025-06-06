@@ -3,6 +3,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Up
 import { Article } from '../../article/entities/article.entity';
 import { LowcodePage } from '../../lowcode/entities/lowcode-page.entity';
 
+// 用户角色枚举
 export enum UserRole {
     USER = 'user',
     ADMIN = 'admin',
@@ -30,15 +31,15 @@ export class User {
     @Column({ nullable: true })
     avatar!: string;
 
-    @Column({ nullable: true })
-    bio!: string;
+    @Column({ nullable: true, type: 'text' })
+    bio!: string | null;
 
     @Column({ type: 'jsonb', default: ['user'] })
     roles!: string[];
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'text' }) // 将类型从Object改为text
     @Exclude({ toPlainOnly: true })
-    refreshToken!: string;
+    refreshToken!: string | null;
 
     @OneToMany(() => Article, (article) => article.author)
     articles!: Article[];

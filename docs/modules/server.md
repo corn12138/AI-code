@@ -96,9 +96,22 @@ LOWCODE_PAGE {
 ### 认证
 
 - `POST /api/auth/login` - 用户登录
-- `POST /api/auth/register` - 用户注册
+  - 接收用户名/邮箱和密码
+  - 验证凭据，生成JWT访问令牌和刷新令牌
+  - 设置HTTP-Only Cookie存储刷新令牌
+  - 返回访问令牌和用户信息
 - `POST /api/auth/refresh` - 刷新令牌
+  - 验证请求中的刷新令牌
+  - 生成新的访问令牌和刷新令牌
+  - 更新HTTP-Only Cookie
+  - 返回新的访问令牌
 - `POST /api/auth/logout` - 用户退出
+  - 清除用户的刷新令牌
+  - 删除HTTP-Only Cookie
+  - 返回成功状态
+- `GET /api/auth/me` - 获取当前用户信息
+  - 根据JWT令牌获取当前登录用户信息
+  - 返回用户详情（不含敏感信息）
 
 ### 用户
 
@@ -349,3 +362,70 @@ npm run deploy:huaweicloud
 4. **API文档无法访问**：
    - 确认应用正常运行：`curl localhost:3001/api/health`
    - 检查Swagger配置在`main.ts`中是否正确
+
+## 认证模块详解
+
+认证模块(`AuthModule`)负责用户的身份验证和授权，是系统安全的核心组件。
+
+### 核心组件
+
+- **AuthService**: 提供登录、注销、令牌刷新等功能
+- **AuthController**: 处理认证相关HTTP请求
+- **JWT策略**: 实现基于JWT的身份验证
+- **刷新令牌策略**: 处理令牌刷新逻辑
+
+### 认证流程
+
+1. **登录流程**:
+   - 用户提交用户名/邮箱和密码
+   - 验证用户凭据并生成令牌
+   - 访问令牌作为响应返回
+   - 刷新令牌通过HTTP-Only Cookie存储
+
+2. **受保护资源访问**:
+   - 客户端在请求头中添加访问令牌
+   - JwtAuthGuard验证令牌有效性
+   - 请求通过后访问受保护资源
+
+3. **令牌刷新**:
+   - 访问令牌过期后，客户端通过刷新端点请求新令牌
+   - 服务器验证HTTP-Only Cookie中的刷新令牌
+   - 签发新的访问令牌和刷新令牌
+
+4. **登出流程**:
+   - 清除服务器端存储的用户刷新令牌
+   - 删除客户端的HTTP-Only Cookie
+   - 客户端移除本地存储的访问令牌
+
+### 安全措施
+
+- 密码使用BCrypt算法单向哈希
+- 刷新令牌在数据库中也进行哈希处理
+- 令牌设置适当的过期时间
+- 使用HTTP-Only Cookie防止XSS攻击
+- 实现CSRF保护
+
+### 技术实现
+
+```typescript
+// 登录端点示例
+@Post('login')
+@Public()
+@HttpCode(200)
+async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
+  const result = await this.authService.login(loginDto);
+  
+  // 设置HTTP-Only Cookie存储刷新令牌
+  res.cookie('refreshToken', result.refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+    path: '/',
+  });
+  
+  // 不在响应中返回refreshToken
+  const { refreshToken, ...response } = result;
+  return response;
+}
+```

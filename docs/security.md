@@ -325,3 +325,131 @@ export const securityLogger = WinstonModule.createLogger({
 ```
 
 确保对敏感信息（如密码、令牌）在记录前进行脱敏处理。
+
+## 认证安全实践
+
+### 双令牌认证系统
+
+项目使用双令牌系统（Access Token + Refresh Token）增强安全性：
+
+```typescript
+// 令牌生成与安全存储
+async getTokens(userId: string, username: string, roles: string[]) {
+  const [accessToken, refreshToken] = await Promise.all([
+    this.jwtService.signAsync(
+      {
+        sub: userId,
+        username,
+        roles,
+      },
+      {
+        secret: this.configService.get<string>('JWT_SECRET'),
+        expiresIn: '15m', // 短期访问令牌
+      },
+    ),
+    this.jwtService.signAsync(
+      {
+        sub: userId,
+        username,
+        roles,
+      },
+      {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        expiresIn: '7d', // 长期刷新令牌
+      },
+    ),
+  ]);
+
+  return {
+    accessToken,
+    refreshToken,
+  };
+}
+```
+
+### 刷新令牌安全存储
+
+刷新令牌通过HTTP-Only Cookie安全存储，减少XSS攻击风险：
+
+```typescript
+// Cookie安全配置
+res.cookie('refreshToken', refreshToken, {
+  httpOnly: true,        // 阻止JavaScript访问
+  secure: process.env.NODE_ENV === 'production', // 仅HTTPS传输
+  sameSite: 'strict',    // 防止CSRF攻击
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7天过期
+  path: '/',
+});
+```
+
+### 密码安全
+
+用户密码使用BCrypt算法进行单向加密：
+
+```typescript
+// 密码验证
+async validateUser(usernameOrEmail: string, pass: string): Promise<any> {
+  const user = await this.usersService.findByUsernameOrEmail(usernameOrEmail);
+  if (!user) {
+    return null;
+  }
+
+  // 安全比较密码哈希
+  const isPasswordValid = await bcrypt.compare(pass, user.password);
+  if (isPasswordValid) {
+    const { password, refreshToken, ...result } = user;
+    return result;
+  }
+  return null;
+}
+```
+
+### 客户端令牌处理
+
+客户端API请求拦截器负责安全地处理令牌：
+
+```typescript
+// API拦截器处理认证令牌
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// 响应拦截器处理令牌刷新
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && 
+        !originalRequest._retry && 
+        !originalRequest.url.includes('/auth/refresh')) {
+      originalRequest._retry = true;
+
+      try {
+        // 尝试刷新令牌
+        const { data } = await api.post('/auth/refresh');
+        localStorage.setItem('accessToken', data.accessToken);
+        api.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+        originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+        return api(originalRequest);
+      } catch (refreshError) {
+        // 刷新失败，清除认证状态
+        localStorage.removeItem('accessToken');
+        // 重定向到登录页
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+```

@@ -277,10 +277,111 @@ cp -r apps/lowcode/dist/* /usr/share/nginx/html/
 
 低代码平台使用共享的Auth模块处理用户认证：
 
-1. 用户访问平台时，检查本地存储的认证令牌
-2. 如果令牌不存在或已过期，重定向到登录页面
-3. 登录成功后，保存令牌并重定向回原始页面
-4. API请求时自动附加认证令牌
+1. **登录流程**:
+   - 用户访问受保护页面时检查认证状态
+   - 未认证用户重定向到登录页面(`/login`)
+   - 用户输入凭据(用户名/邮箱和密码)
+   - 认证成功后获取JWT访问令牌
+   - 访问令牌存储在localStorage，刷新令牌存储在HTTP-Only Cookie
+   - 重定向回原始请求页面
+
+2. **登录组件实现**:
+   ```tsx
+   // 登录页面核心逻辑
+   const handleSubmit = async (e: React.FormEvent) => {
+     e.preventDefault();
+     
+     if (!usernameOrEmail || !password) {
+       toast.error('请填写完整信息');
+       return;
+     }
+     
+     setIsLoading(true);
+     
+     try {
+       await login(usernameOrEmail, password);
+       toast.success('登录成功');
+       navigate(from, { replace: true });
+     } catch (error) {
+       console.error('Login failed:', error);
+       toast.error('登录失败，请检查账号密码');
+     } finally {
+       setIsLoading(false);
+     }
+   };
+   ```
+
+3. **导航栏登录状态处理**:
+   ```tsx
+   // 导航栏中的登录/登出按钮
+   {isAuthenticated ? (
+     <div className="flex items-center space-x-4">
+       <span className="text-sm text-gray-700">
+         欢迎，{user?.fullName || user?.username}
+       </span>
+       <button
+         onClick={handleLogout}
+         className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none"
+       >
+         退出登录
+       </button>
+     </div>
+   ) : (
+     <div className="flex items-center space-x-4">
+       <Link to="/login" className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+         登录
+       </Link>
+       <Link to="/register" className="bg-primary-600 text-white hover:bg-primary-700 px-3 py-2 rounded-md text-sm font-medium">
+         注册
+       </Link>
+     </div>
+   )}
+   ```
+
+4. **登出功能**:
+   - 用户点击"退出登录"按钮
+   - 清除本地存储的访问令牌
+   - 向服务器发送登出请求，清除刷新令牌
+   - 重定向到登录页或首页
+
+### 页面权限控制
+
+平台实现基于角色的页面访问控制：
+
+1. **页面级保护**:
+   ```tsx
+   // 受保护路由组件
+   const ProtectedRoute = ({ children }) => {
+     const { isAuthenticated, isLoading } = useAuth();
+     const location = useLocation();
+     
+     if (isLoading) {
+       return <LoadingSpinner />;
+     }
+     
+     if (!isAuthenticated) {
+       return <Navigate to="/login" state={{ from: location }} replace />;
+     }
+     
+     return children;
+   };
+   ```
+
+2. **路由配置**:
+   ```tsx
+   <Routes>
+     <Route path="/" element={<HomePage />} />
+     <Route path="/login" element={<Login />} />
+     <Route path="/register" element={<Register />} />
+     
+     {/* 受保护路由 */}
+     <Route element={<ProtectedRoute />}>
+       <Route path="/editor" element={<EditorPage />} />
+       <Route path="/projects" element={<ProjectsPage />} />
+       <Route path="/editor/:id" element={<EditorPage />} />
+     </Route>
+   </Routes>
+   ```
 
 ## 扩展和定制
 

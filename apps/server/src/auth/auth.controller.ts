@@ -1,129 +1,89 @@
-import { Body, Controller, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+    Body, Controller,
+    HttpCode, Post,
+    Req, Res, UnauthorizedException, UseGuards
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-import { CsrfService } from '../common/services/csrf.service';
-
-interface RequestWithUser extends Request {
-    user: {
-        id: string;
-        refreshToken?: string;
-    };
-}
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
     constructor(
-      private readonly authService: AuthService,
-      private readonly csrfService: CsrfService
+        private readonly authService: AuthService,
     ) { }
 
     @Public()
-    @Post('register')
-    @ApiOperation({ summary: '用户注册' })
-    @ApiResponse({ status: 201, description: '注册成功' })
-    @ApiResponse({ status: 400, description: '注册信息有误' })
-    async register(@Body() registerDto: RegisterDto) {
-        return this.authService.register(registerDto);
-    }
-
-    @Public()
-    @UseGuards(LocalAuthGuard)
     @Post('login')
     @HttpCode(200)
     @ApiOperation({ summary: '用户登录' })
     @ApiResponse({ status: 200, description: '登录成功' })
-    @ApiResponse({ status: 401, description: '登录失败' })
-    async login(
-        @Body() loginDto: LoginDto,
-        @Res({ passthrough: true }) res: Response,
-        @Req() req: RequestWithUser
-    ) {
-        const { accessToken, refreshToken, user } = await this.authService.login(loginDto);
+    @ApiResponse({ status: 401, description: '用户名或密码错误' })
+    async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
+        const result = await this.authService.login(loginDto);
 
-        // 设置refreshToken到httpOnly cookie
-        res.cookie('refresh_token', refreshToken, {
+        // 设置安全的HTTP Only Cookie
+        res.cookie('refreshToken', result.refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+            path: '/',
         });
 
-        // 生成CSRF令牌
-        const csrfToken = this.csrfService.generateToken(user.id);
-        
-        // 设置CSRF令牌到cookie - 前端可读但不可通过JavaScript修改
-        res.cookie('XSRF-TOKEN', csrfToken, {
-            httpOnly: false, // 允许JavaScript读取
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 24 * 60 * 60 * 1000, // 1天
-        });
-
-        return {
-            accessToken,
-            user
-        };
+        // 不在响应中返回refreshToken
+        const { refreshToken, ...response } = result;
+        return response;
     }
 
-    @Public()
-    @UseGuards(JwtRefreshGuard)
+    @UseGuards(JwtAuthGuard)
+    @Post('logout')
+    @HttpCode(200)
+    @ApiOperation({ summary: '用户登出' })
+    @ApiBearerAuth()
+    async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+        if (!req.user) {
+            throw new UnauthorizedException('用户未认证');
+        }
+
+        // 使用类型断言
+        const user = req.user as any;
+        await this.authService.logout(user.userId);
+
+        res.clearCookie('refreshToken');
+        return { success: true };
+    }
+
+    @UseGuards(JwtRefreshAuthGuard)
     @Post('refresh')
     @HttpCode(200)
     @ApiOperation({ summary: '刷新访问令牌' })
-    @ApiResponse({ status: 200, description: '令牌刷新成功' })
-    @ApiResponse({ status: 401, description: '刷新令牌无效' })
-    async refresh(@Req() req: RequestWithUser, @Res({ passthrough: true }) res: Response) {
-        const { accessToken, refreshToken, user } = await this.authService.refreshTokens(
-            req.user.id,
-            req.user.refreshToken || '',
-        );
+    async refreshTokens(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+        if (!req.user) {
+            throw new UnauthorizedException('无效的刷新令牌');
+        }
+
+        // 使用类型断言
+        const user = req.user as any;
+        const userId = user.userId;
+        const refreshToken = user.refreshToken;
+
+        const tokens = await this.authService.refreshTokens(userId, refreshToken);
 
         // 更新refreshToken cookie
-        res.cookie('refresh_token', refreshToken, {
+        res.cookie('refreshToken', tokens.refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            path: '/',
         });
 
-        // 生成CSRF令牌
-        const csrfToken = this.csrfService.generateToken(user.id);
-        
-        // 设置CSRF令牌到cookie
-        res.cookie('XSRF-TOKEN', csrfToken, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 24 * 60 * 60 * 1000, // 1天
-        });
-
-        return {
-            accessToken,
-            user
-        };
-    }
-
-    @Post('logout')
-    @HttpCode(200)
-    @ApiBearerAuth()
-    @ApiOperation({ summary: '用户登出' })
-    @ApiResponse({ status: 200, description: '登出成功' })
-    async logout(@Req() req: RequestWithUser, @Res({ passthrough: true }) res: Response) {
-        await this.authService.logout(req.user.id);
-
-        // 清除refreshToken cookie
-        res.clearCookie('refresh_token');
-        
-        // 清除CSRF token cookie
-        res.clearCookie('XSRF-TOKEN');
-
-        return { message: '登出成功' };
+        return { accessToken: tokens.accessToken };
     }
 }

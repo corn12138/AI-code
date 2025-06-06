@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
@@ -55,25 +55,25 @@ async function bootstrap() {
 
     // 安全headers
     app.use(
-      helmet({
-        contentSecurityPolicy: {
-          directives: {
-            defaultSrc: [`'self'`],
-            scriptSrc: [`'self'`, `'unsafe-inline'`, 'https://cdn.jsdelivr.net'], // 按需调整
-            styleSrc: [`'self'`, `'unsafe-inline'`, 'https://cdn.jsdelivr.net'],
-            imgSrc: [`'self'`, 'data:', 'https://cdn.jsdelivr.net'],
-            connectSrc: [`'self'`, process.env.NODE_ENV === 'production' 
-              ? 'https://api.yourdomain.com' 
-              : 'http://localhost:3001'],
-            fontSrc: [`'self'`, 'https://cdn.jsdelivr.net'],
-            objectSrc: [`'none'`],
-            mediaSrc: [`'self'`],
-            frameSrc: [`'none'`],
-          },
-        },
-        crossOriginResourcePolicy: { policy: 'cross-origin' },
-        xssFilter: true,
-      })
+        helmet({
+            contentSecurityPolicy: {
+                directives: {
+                    defaultSrc: [`'self'`],
+                    scriptSrc: [`'self'`, `'unsafe-inline'`, 'https://cdn.jsdelivr.net'], // 按需调整
+                    styleSrc: [`'self'`, `'unsafe-inline'`, 'https://cdn.jsdelivr.net'],
+                    imgSrc: [`'self'`, 'data:', 'https://cdn.jsdelivr.net'],
+                    connectSrc: [`'self'`, process.env.NODE_ENV === 'production'
+                        ? 'https://api.yourdomain.com'
+                        : 'http://localhost:3001'],
+                    fontSrc: [`'self'`, 'https://cdn.jsdelivr.net'],
+                    objectSrc: [`'none'`],
+                    mediaSrc: [`'self'`],
+                    frameSrc: [`'none'`],
+                },
+            },
+            crossOriginResourcePolicy: { policy: 'cross-origin' },
+            xssFilter: true,
+        })
     );
 
     // CORS配置 - 确保包含credentials选项
@@ -110,8 +110,15 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/docs', app, document);
 
-    await app.listen(3001);
-    console.log(`应用运行在: ${await app.getUrl()}`);
+    // 检查重要的环境变量
+    const bootstrapLogger = new Logger('Bootstrap');
+    if (!process.env.JWT_SECRET) {
+        bootstrapLogger.error('缺少环境变量: JWT_SECRET');
+        process.exit(1);
+    }
+
+    await app.listen(process.env.PORT || 3001);
+    bootstrapLogger.log(`应用已启动: ${await app.getUrl()}`);
 }
 
 bootstrap();

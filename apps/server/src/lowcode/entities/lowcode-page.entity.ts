@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
 @Entity('lowcode_pages')
@@ -7,42 +7,30 @@ export class LowcodePage {
   id!: string;
 
   @Column()
-  name!: string;
-
-  @Column({ unique: true })
-  slug!: string;
-
-  @Column({ type: 'jsonb' })
-  content!: Record<string, any>;
+  title!: string;
 
   @Column({ nullable: true })
   description!: string;
 
-  @Column({ default: false })
-  isHomePage!: boolean;
-
-  @Column({ default: false })
-  published!: boolean;
-
-  @Column({ type: 'jsonb', nullable: true })
-  config!: Record<string, any>;
-
-  @Column({ type: 'jsonb', nullable: true })
-  meta!: Record<string, any>;
-
-  @ManyToOne(() => User, user => user.lowcodePages)
-  @JoinColumn({ name: 'ownerId' })
-  owner!: User;
+  @Column({ type: 'jsonb', default: '{}' })
+  content!: Record<string, any>;
 
   @Column()
   ownerId!: string;
 
-  @CreateDateColumn()
+  @Column({ default: false })
+  published!: boolean;
+
+  @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, name: 'published_at' })
   publishedAt!: Date;
+
+  // 添加与User的关系
+  @ManyToOne(() => User, user => user.lowcodePages)
+  owner!: User;
 }
