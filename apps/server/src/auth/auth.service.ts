@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 
-@Injectable()
+@Injectable() // 
 export class AuthService {
     constructor(
         private usersService: UsersService,
@@ -33,8 +33,8 @@ export class AuthService {
             throw new UnauthorizedException('用户名或密码错误');
         }
 
-        const tokens = await this.getTokens(user.id, user.username, user.roles);
-        await this.usersService.updateRefreshToken(user.id, tokens.refreshToken);
+        const tokens = await this.getTokens(user!.id, user!.username, user!.roles);
+        await this.usersService.updateRefreshToken(user!.id, tokens.refreshToken);
 
         return {
             user: {
@@ -47,6 +47,30 @@ export class AuthService {
             },
             ...tokens,
         };
+    }
+
+    // 令牌刷新方法
+    async refreshToken(refreshToken: string): Promise<{ accessToken: string, refreshToken: string }> {
+        try {
+            // 验证刷新令牌
+            const payload = this.jwtService.verify(refreshToken, {
+                secret: this.configService.get('JWT_REFRESH_SECRET')
+            });
+
+            // 确保令牌未被撤销
+            const isRevoked = await this.isTokenRevoked(refreshToken);
+            if (isRevoked) {
+                throw new UnauthorizedException('刷新令牌已被撤销');
+            }
+
+            // 生成新的令牌对
+            const user = await this.usersService.findOne(payload.sub);
+            const tokens = await this.getTokens(user!.id, user!.username, user!.roles);
+            await this.usersService.updateRefreshToken(user!.id, tokens.refreshToken);
+            return tokens;
+        } catch (error) {
+            throw new UnauthorizedException('无效的刷新令牌');
+        }
     }
 
     async logout(userId: string) {
@@ -69,6 +93,30 @@ export class AuthService {
         await this.usersService.updateRefreshToken(user.id, tokens.refreshToken);
 
         return tokens;
+    }
+    
+    async isTokenRevoked(refreshToken: string): Promise<boolean> {
+        try {
+            // Decode the token to get the user ID
+            const payload = this.jwtService.verify(refreshToken, {
+                secret: this.configService.get('JWT_REFRESH_SECRET')
+            });
+            
+            // Find the user
+            const user = await this.usersService.findOne(payload.sub);
+            
+            // If user doesn't exist or has no refresh token, consider the token revoked
+            if (!user || !user.refreshToken) {
+                return true;
+            }
+            
+            // Check if the current refresh token matches the one stored for the user
+            const isMatch = await bcrypt.compare(refreshToken, user.refreshToken);
+            return !isMatch; // If not a match, token is revoked
+        } catch (error) {
+            // Any error means the token is invalid, so consider it revoked
+            return true;
+        }
     }
 
     async getTokens(userId: string, username: string, roles: string[]) {

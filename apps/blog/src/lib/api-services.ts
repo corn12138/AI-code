@@ -6,7 +6,7 @@ import { Article, PaginatedResult, Tag } from '@/models/article';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
 // 创建axios实例
-const api = axios.create({
+export const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',

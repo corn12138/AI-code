@@ -1,11 +1,12 @@
 /**
  * 跨项目认证状态同步
- * 
- * 使用 localStorage events 实现多标签页和跨应用同步
  */
 
+// 定义回调函数类型
+type AuthCallback = () => void;
+
 // 监听存储变化事件
-export function initAuthSyncListener(onLogout: () => void, onLogin: () => void) {
+export function initAuthSyncListener(onLogout: AuthCallback, onLogin: AuthCallback): void {
     window.addEventListener('storage', (event) => {
         // 监听认证令牌变化
         if (event.key === 'auth-token') {
@@ -31,7 +32,12 @@ export function initAuthSyncListener(onLogout: () => void, onLogin: () => void) 
 }
 
 // 广播认证状态变化
-export function broadcastAuthChange(status: 'login' | 'logout') {
+export function broadcastAuthChange(status: 'login' | 'logout'): void {
+    // 如果是登出，清除localStorage中的token
+    if (status === 'logout') {
+        localStorage.removeItem('auth-token');
+    }
+
     // 触发自定义事件供当前应用使用
     window.dispatchEvent(new CustomEvent('app-auth-change', {
         detail: { status }

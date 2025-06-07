@@ -1,7 +1,8 @@
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import api from './api';
+// 修复导入路径
+import {api} from './api-services';
 
 // 登出函数
 export async function logout() {
@@ -35,11 +36,7 @@ export function useAuthCheck(requiredAuth = false) {
         const token = localStorage.getItem('auth-token');
 
         if (requiredAuth && !token) {
-            toast({
-                title: "需要登录",
-                description: "请先登录后再访问此页面",
-                variant: "destructive",
-            });
+            toast.error("请先登录后再访问此页面");
             router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
         }
 
