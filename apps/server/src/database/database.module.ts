@@ -27,7 +27,7 @@ import { HealthService } from './health.service';
                     password: configService.get<string>('DATABASE_PASSWORD'),
                     database: dbName,
                     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-                    synchronize: configService.get('NODE_ENV') !== 'production',
+                    synchronize: false, // 临时禁用同步
                     logging: configService.get('DATABASE_LOGGING') === 'true',
                     ssl: configService.get('DATABASE_SSL') === 'true'
                         ? { rejectUnauthorized: false }

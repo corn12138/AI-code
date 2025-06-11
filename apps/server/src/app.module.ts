@@ -13,6 +13,7 @@ import configuration from './config/configuration';
 import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
 import { LowcodeModule } from './lowcode/lowcode.module';
+import { TagsModule } from './tags/tags.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -45,6 +46,7 @@ import { UserModule } from './user/user.module';
         LowcodeModule,
         CommonModule,
         HealthModule,
+        TagsModule,
     ],
     providers: [
         // 全局限流守卫

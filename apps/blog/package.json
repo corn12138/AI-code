@@ -4,10 +4,13 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
+        "dev:with-server": "concurrently \"pnpm --filter server dev\" \"pnpm dev\"",
+        "start:server": "pnpm --filter server dev",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "clean": "rm -rf .next && rm -rf node_modules/.cache"
+        "clean": "rm -rf .next && rm -rf node_modules/.cache",
+        "dev:clean": "pnpm clean && pnpm dev"
     },
     "dependencies": {
         "@headlessui/react": "^1.7.15",
@@ -15,7 +18,7 @@
         "@shared/auth": "workspace:*",
         "@shared/ui": "workspace:*",
         "@shared/utils": "workspace:*",
-        "axios": "^1.4.0",
+        "@tanstack/react-query": "^5.80.6",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "dayjs": "^1.11.7",

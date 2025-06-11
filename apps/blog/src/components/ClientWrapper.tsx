@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { AuthProvider } from '../../../../shared/auth/src';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
@@ -97,4 +98,8 @@ export class ErrorBoundary extends React.Component<
         }
         return this.props.children;
     }
+}
+
+export function ClientWrapper({ children }: { children: React.ReactNode }) {
+    return <AuthProvider>{children}</AuthProvider>;
 }

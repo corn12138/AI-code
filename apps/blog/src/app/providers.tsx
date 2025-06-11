@@ -1,13 +1,37 @@
 'use client';
 
-import { useAuth } from '@shared/auth';
-import React from 'react';
+import { ThemeProvider } from '@/components/theme-provider';
+import { ToastProvider } from '@/components/ui/toast';
+import { toast } from '@/components/ui/use-toast';
+import { initSessionChecker, useSessionExpiryListener } from '@shared/auth/sessionChecker';
+import { initAuthSyncManager } from '@shared/auth/syncManager';
+import { PropsWithChildren, useEffect } from 'react';
 
-// 由于@shared/auth没有导出AuthProvider，我们创建自己的Provider包装器
-export default function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: PropsWithChildren) {
+    // 初始化会话检查
+    useEffect(() => {
+        const cleanupSessionChecker = initSessionChecker();
+        const cleanupAuthSync = initAuthSyncManager();
+
+        return () => {
+            cleanupSessionChecker();
+            cleanupAuthSync();
+        };
+    }, []);
+
+    // 会话过期监听
+    useSessionExpiryListener(() => {
+        toast({
+            title: "会话已过期",
+            description: "请重新登录以继续",
+            variant: "destructive",
+        });
+        // 可以跳转到登录页面
+    });
+
     return (
-        <>
-            {children}
-        </>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <ToastProvider>{children}</ToastProvider>
+        </ThemeProvider>
     );
 }

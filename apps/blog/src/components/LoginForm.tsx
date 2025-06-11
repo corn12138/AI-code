@@ -10,8 +10,8 @@ import ClientPageWrapper from './ClientPageWrapper';
 export default function LoginForm() {
     const router = useRouter();
     const { login, isLoading } = useAuth();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('admin@example.com'); // 预填充测试邮箱
+    const [password, setPassword] = useState('123456'); // 预填充测试密码
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,7 +25,8 @@ export default function LoginForm() {
                 toast.error('登录失败，请检查您的凭据');
             }
         } catch (error) {
-            toast.error('登录过程中出现错误');
+            const errorMessage = error instanceof Error ? error.message : '登录过程中出现错误';
+            toast.error(errorMessage);
             console.error('登录错误:', error);
         }
     };
@@ -44,6 +45,10 @@ export default function LoginForm() {
                                 立即注册
                             </Link>
                         </p>
+                        <div className="mt-4 p-3 bg-blue-50 rounded-md text-sm text-blue-700">
+                            <p>测试账户: admin@example.com</p>
+                            <p>测试密码: 123456</p>
+                        </div>
                     </div>
 
                     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

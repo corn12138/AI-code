@@ -1,5 +1,5 @@
-import { AuthProvider } from '@/hooks/useAuth';
 import type { Metadata } from 'next';
+import ClientProviders from '../components/ClientProviders';
 import '../styles/globals.css';
 
 export const metadata: Metadata = {
@@ -15,9 +15,9 @@ export default function RootLayout({
     return (
         <html lang="zh-CN">
             <body>
-                <AuthProvider>
+                <ClientProviders>
                     {children}
-                </AuthProvider>
+                </ClientProviders>
             </body>
         </html>
     );

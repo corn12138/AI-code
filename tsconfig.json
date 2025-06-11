@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "jsx": "react", // 或者使用 "react-jsx" 针对React 17+
+        "esModuleInterop": true,
+        // ...其他配置
+    }
+}

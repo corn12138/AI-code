@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@shared/auth';
+import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -10,32 +10,33 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // 获取重定向URL
   const from = location.state?.from?.pathname || '/';
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!usernameOrEmail || !password) {
       toast.error('请填写完整信息');
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       await login(usernameOrEmail, password);
       toast.success('登录成功');
       navigate(from, { replace: true });
     } catch (error) {
       console.error('Login failed:', error);
-      toast.error('登录失败，请检查账号密码');
+      const errorMessage = error instanceof Error ? error.message : '登录失败，请检查账号密码';
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -49,7 +50,7 @@ const Login: React.FC = () => {
           </Link>
         </p>
       </div>
-      
+
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
@@ -70,7 +71,7 @@ const Login: React.FC = () => {
                 />
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 密码
@@ -88,7 +89,7 @@ const Login: React.FC = () => {
                 />
               </div>
             </div>
-            
+
             <div>
               <button
                 type="submit"

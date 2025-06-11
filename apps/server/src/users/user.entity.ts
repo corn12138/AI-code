@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Article } from '../articles/article.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -35,6 +36,10 @@ export class User {
     @ApiProperty({ description: '用户角色' })
     @Column({ type: 'jsonb', default: '["user"]' })
     roles!: string[];
+
+    @ApiProperty({ description: '用户发布的文章' })
+    @OneToMany(() => Article, article => article.author)
+    articles!: Article[];
 
     @CreateDateColumn({ name: 'createdAt' })
     createdAt!: Date;

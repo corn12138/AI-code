@@ -1,6 +1,8 @@
 import {
     Body, Controller,
-    HttpCode, Post,
+    HttpCode,
+    Logger,
+    Post,
     Req, Res, UnauthorizedException, UseGuards
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -14,6 +16,8 @@ import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
+    private readonly logger = new Logger(AuthController.name);
+
     constructor(
         private readonly authService: AuthService,
     ) { }
@@ -25,20 +29,42 @@ export class AuthController {
     @ApiResponse({ status: 200, description: '登录成功' })
     @ApiResponse({ status: 401, description: '用户名或密码错误' })
     async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
-        const result = await this.authService.login(loginDto);
+        try {
+            this.logger.log(`登录尝试: ${loginDto.usernameOrEmail}`);
 
-        // 设置安全的HTTP Only Cookie
-        res.cookie('refreshToken', result.refreshToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
-            path: '/',
-        });
+            const result = await this.authService.login(loginDto);
 
-        // 不在响应中返回refreshToken
-        const { refreshToken, ...response } = result;
-        return response;
+            this.logger.log(`用户 ${loginDto.usernameOrEmail} 登录成功`);
+
+            // 设置安全的HTTP Only Cookie
+            res.cookie('refreshToken', result.refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+                path: '/',
+            });
+
+            // 设置CSRF令牌作为普通cookie（可被JavaScript访问）
+            if (result.csrfToken) {
+                res.cookie('XSRF-TOKEN', result.csrfToken, {
+                    httpOnly: false,
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'strict',
+                    maxAge: 24 * 60 * 60 * 1000, // 1天
+                    path: '/',
+                });
+            }
+
+            // 不在响应中返回refreshToken
+            const { refreshToken, ...response } = result;
+            return response;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            this.logger.error(`登录失败: ${loginDto.usernameOrEmail} - ${errorMessage}`, errorStack);
+            throw error;
+        }
     }
 
     @UseGuards(JwtAuthGuard)
@@ -56,6 +82,7 @@ export class AuthController {
         await this.authService.logout(user.userId);
 
         res.clearCookie('refreshToken');
+        res.clearCookie('XSRF-TOKEN');
         return { success: true };
     }
 

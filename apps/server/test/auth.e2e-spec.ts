@@ -5,6 +5,11 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/user.entity';
 
+// 在文件顶部正确模拟 bcrypt
+jest.mock('bcrypt', () => ({
+    compare: jest.fn().mockImplementation(() => Promise.resolve(true)),
+}));
+
 describe('AuthController (e2e)', () => {
     let app: INestApplication;
     let userRepository: any;
@@ -36,6 +41,8 @@ describe('AuthController (e2e)', () => {
     describe('/api/auth/login (POST)', () => {
         it('should return 401 on invalid credentials', () => {
             userRepository.findOne.mockResolvedValue(null);
+            // 设置 bcrypt.compare 为 false
+            require('bcrypt').compare.mockResolvedValueOnce(false);
 
             return request(app.getHttpServer())
                 .post('/api/auth/login')
@@ -53,11 +60,8 @@ describe('AuthController (e2e)', () => {
             };
 
             userRepository.findOne.mockResolvedValue(mockUser);
-
-            // 需要模拟 bcrypt.compare 返回 true
-            jest.mock('bcrypt', () => ({
-                compare: jest.fn().mockResolvedValue(true),
-            }));
+            // 设置 bcrypt.compare 为 true
+            require('bcrypt').compare.mockResolvedValueOnce(true);
 
             return request(app.getHttpServer())
                 .post('/api/auth/login')

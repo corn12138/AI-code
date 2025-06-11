@@ -55,7 +55,7 @@ export function ServerRenderInfo() {
             fontSize: '12px',
             color: '#666'
         }}>
-            服务器渲染时间: {renderTime}
+            服务器渲染时间===: {renderTime}
         </div>
     );
 }

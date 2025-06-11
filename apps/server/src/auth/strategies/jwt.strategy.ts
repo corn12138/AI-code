@@ -12,29 +12,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         private usersService: UsersService,
         private configService: ConfigService,
     ) {
-        const jwtSecret = configService.get<string>('JWT_SECRET');
-
-        if (!jwtSecret) {
-            throw new Error('JWT_SECRET environment variable is not set');
-        }
-
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: jwtSecret,
-            // 添加令牌过期时间检查
-            verifyOptions: {
-                ignoreExpiration: false,
-                // 允许的算法
-                algorithms: ['HS256'],
-                // JWT发行者
-                issuer: configService.get('JWT_ISSUER', 'blog-api'),
-                // JWT受众
-                audience: configService.get('JWT_AUDIENCE', 'blog-client'),
-            }
+            secretOrKey: configService.get<string>('JWT_SECRET'),
         });
-
-        this.logger.log('JWT策略已初始化');
     }
 
     async validate(payload: any) {
