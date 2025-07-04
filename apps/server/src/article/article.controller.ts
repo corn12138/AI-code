@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
+import { Public } from '../auth/decorators/public.decorator';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { ArticleService } from './article.service';
@@ -28,6 +29,7 @@ interface ArticleQueryParams {
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) { }
 
+  @Public()
   @Get()
   @ApiOperation({ summary: '获取文章列表' })
   @ApiQuery({ name: 'page', required: false, type: Number })
@@ -54,6 +56,7 @@ export class ArticleController {
     return this.articleService.findAll(queryParams);
   }
 
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: '获取单篇文章' })
   @ApiResponse({ status: 200, description: '成功获取文章' })

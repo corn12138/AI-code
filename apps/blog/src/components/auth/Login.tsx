@@ -1,4 +1,4 @@
-import { useAuth } from '@shared/auth';
+import { useAuth } from '@ai-code/hooks';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -7,8 +7,9 @@ const Login: React.FC = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -25,12 +26,12 @@ const Login: React.FC = () => {
         setIsLoading(true);
 
         try {
-            await login(usernameOrEmail, password);
+            await login({ username: usernameOrEmail, password });
             toast.success('登录成功');
             navigate(from, { replace: true });
         } catch (error) {
             console.error('Login failed:', error);
-            toast.error('登录失败，请检查账号密码');
+            setError('登录失败，请检查用户名和密码');
         } finally {
             setIsLoading(false);
         }

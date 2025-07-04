@@ -1,7 +1,57 @@
 {
+    "extends": "./config/typescript/tsconfig.base.json",
     "compilerOptions": {
-        "jsx": "react", // 或者使用 "react-jsx" 针对React 17+
+        "target": "ES2020",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "ES6"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
         "esModuleInterop": true,
-        // ...其他配置
-    }
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "baseUrl": ".",
+        "paths": {
+            "@shared/*": [
+                "./shared/*"
+            ],
+            "@shared/types": [
+                "./shared/types"
+            ],
+            "@shared/utils/*": [
+                "./shared/utils/src/*"
+            ],
+            "@shared/components/*": [
+                "./shared/components/*"
+            ],
+            "@shared/ui": [
+                "./shared/ui/src"
+            ],
+            "@shared/api": [
+                "./shared/api"
+            ],
+            "@shared/config": [
+                "./shared/config"
+            ]
+        }
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "shared/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
 }

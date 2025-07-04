@@ -1,14 +1,17 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
+import { defineConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': path.resolve(__dirname, './src'),
+      '@shared/auth': path.resolve(__dirname, '../../shared/auth/src'),
+      '@shared/ui': path.resolve(__dirname, '../../shared/ui/src'),
+      '@shared/utils': path.resolve(__dirname, '../../shared/utils/src')
     }
   },
   server: {

@@ -1,66 +1,33 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { API_BASE_PATH, AUTH_TOKEN_KEY } from '../auth/constants';
-import { refreshAuthToken } from '../auth/tokenManager';
+import axios from 'axios';
+import { config } from 'shared/config';
 
-export function createApiClient(
-    baseUrl?: string,
-    extraOptions?: AxiosRequestConfig
-): AxiosInstance {
-    const client = axios.create({
-        baseURL: baseUrl || `http://localhost:3001${API_BASE_PATH}`,
-        withCredentials: true,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        ...extraOptions
-    });
+const apiClient = axios.create({
+    baseURL: config.api.baseUrl,
+    timeout: config.api.timeout,
+    withCredentials: true
+});
 
-    // 请求拦截器
-    client.interceptors.request.use(
-        (config) => {
-            if (typeof window !== 'undefined') {
-                const token = localStorage.getItem(AUTH_TOKEN_KEY);
-                if (token) {
-                    config.headers.Authorization = `Bearer ${token}`;
-                }
-
-                // CSRF令牌
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                if (csrfToken) {
-                    config.headers['X-CSRF-Token'] = csrfToken;
-                }
-            }
-            return config;
-        },
-        (error) => Promise.reject(error)
-    );
-
-    // 响应拦截器
-    client.interceptors.response.use(
-        (response) => response,
-        async (error) => {
-            const originalRequest = error.config;
-
-            // 令牌刷新逻辑
-            if (error.response?.status === 401 &&
-                !originalRequest._retry &&
-                !originalRequest.url.includes('/auth/refresh')) {
-
-                originalRequest._retry = true;
-
-                try {
-                    const newToken = await refreshAuthToken();
-                    originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                    return client(originalRequest);
-                } catch (refreshError) {
-                    window.dispatchEvent(new CustomEvent('session-expired'));
-                    return Promise.reject(error);
-                }
-            }
-
-            return Promise.reject(error);
+// 添加请求拦截器
+apiClient.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('auth-token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
         }
-    );
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-    return client;
-}
+// 添加响应拦截器
+apiClient.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        if (error.response?.status === 401) {
+            // 处理 token 刷新逻辑
+        }
+        return Promise.reject(error);
+    }
+);
+
+export default apiClient;

@@ -1,7 +1,7 @@
 'use client';
 
 import ClientPageWrapper from '@/components/ClientPageWrapper';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Tag {
     id: string;
@@ -25,12 +25,53 @@ interface Article {
     tags: Tag[];
 }
 
+interface PerformanceMetrics {
+    componentMountTime: number;
+    tagsLoadTime: number;
+    articlesLoadTime: number;
+    totalRenderTime: number;
+}
+
 export default function TagsPage() {
     const [tags, setTags] = useState<Tag[]>([]);
     const [articles, setArticles] = useState<Article[]>([]);
     const [selectedTag, setSelectedTag] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // 性能监控状态
+    const [performanceMetrics, setPerformanceMetrics] = useState<PerformanceMetrics | null>(null);
+    const [showMetrics, setShowMetrics] = useState(false);
+
+    // 性能计时器引用
+    const performanceTimers = useRef({
+        componentStart: 0, // 组件开始挂载时间
+        tagsLoadStart: 0, // 标签开始加载时间
+        tagsLoadEnd: 0, // 标签加载完成时间
+        articlesLoadStart: 0, // 文章开始加载时间
+        articlesLoadEnd: 0, // 文章加载完成时间
+        renderComplete: 0 // 渲染完成时间
+    });
+
+    // 组件挂载时开始计时
+    useEffect(() => {
+        performanceTimers.current.componentStart = performance.now();
+        console.log('🚀 组件开始挂载:', performanceTimers.current.componentStart);
+
+        // 页面可见性变化监听
+        const handleVisibilityChange = () => {
+            if (!document.hidden && performanceTimers.current.componentStart > 0) {
+                const totalTime = performance.now() - performanceTimers.current.componentStart;
+                console.log('📊 页面总加载时间:', totalTime.toFixed(2), 'ms');
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
 
     useEffect(() => {
         fetchTags();
@@ -44,14 +85,40 @@ export default function TagsPage() {
         }
     }, [selectedTag]);
 
+    // 渲染完成后的性能统计
+    useEffect(() => {
+        if (!loading && performanceTimers.current.componentStart > 0) {
+            performanceTimers.current.renderComplete = performance.now();
+
+            const metrics: PerformanceMetrics = {
+                componentMountTime: performanceTimers.current.componentStart,
+                tagsLoadTime: performanceTimers.current.tagsLoadEnd - performanceTimers.current.tagsLoadStart,
+                articlesLoadTime: performanceTimers.current.articlesLoadEnd - performanceTimers.current.articlesLoadStart,
+                totalRenderTime: performanceTimers.current.renderComplete - performanceTimers.current.componentStart
+            };
+
+            setPerformanceMetrics(metrics);
+
+            // 控制台输出性能指标
+            console.log('📈 性能指标:', {
+                '标签加载时间': `${metrics.tagsLoadTime.toFixed(2)}ms`,
+                '文章加载时间': `${metrics.articlesLoadTime.toFixed(2)}ms`,
+                '总渲染时间': `${metrics.totalRenderTime.toFixed(2)}ms`,
+                '页面性能评级': metrics.totalRenderTime < 1000 ? '优秀' : metrics.totalRenderTime < 2000 ? '良好' : '需要优化'
+            });
+        }
+    }, [loading]);
+
     const fetchTags = async () => {
         try {
+            performanceTimers.current.tagsLoadStart = performance.now();
+            console.log('🏷️ 开始获取标签数据');
+
             const response = await fetch('/api/tags');
             if (response.ok) {
                 const data = await response.json();
-                console.log('API返回的标签数据:', data.data); // 调试日志
+                console.log('API返回的标签数据:', data.data);
 
-                // 确保data是数组
                 if (Array.isArray(data.data)) {
                     setTags(data.data);
                 } else {
@@ -64,9 +131,15 @@ export default function TagsPage() {
                 console.error('获取标签失败:', response.status, errorText);
                 setError('获取标签失败');
             }
+
+            performanceTimers.current.tagsLoadEnd = performance.now();
+            const tagsLoadTime = performanceTimers.current.tagsLoadEnd - performanceTimers.current.tagsLoadStart;
+            console.log('✅ 标签数据加载完成，耗时:', tagsLoadTime.toFixed(2), 'ms');
+
         } catch (err) {
             console.error('网络错误:', err);
             setError('网络错误');
+            performanceTimers.current.tagsLoadEnd = performance.now();
         } finally {
             setLoading(false);
         }
@@ -74,12 +147,14 @@ export default function TagsPage() {
 
     const fetchArticlesByTag = async (tagSlug: string) => {
         try {
+            performanceTimers.current.articlesLoadStart = performance.now();
+            console.log('📄 开始获取文章数据');
+
             const response = await fetch(`/api/articles?tag=${tagSlug}`);
             if (response.ok) {
                 const data = await response.json();
-                console.log('API返回的文章数据:', data); // 调试日志
+                console.log('API返回的文章数据:', data);
 
-                // 确保articles字段存在且是数组
                 if (data && Array.isArray(data.articles)) {
                     setArticles(data.articles);
                 } else {
@@ -90,9 +165,15 @@ export default function TagsPage() {
                 console.error('获取文章失败:', response.status);
                 setArticles([]);
             }
+
+            performanceTimers.current.articlesLoadEnd = performance.now();
+            const articlesLoadTime = performanceTimers.current.articlesLoadEnd - performanceTimers.current.articlesLoadStart;
+            console.log('✅ 文章数据加载完成，耗时:', articlesLoadTime.toFixed(2), 'ms');
+
         } catch (err) {
             console.error('获取文章失败:', err);
             setArticles([]);
+            performanceTimers.current.articlesLoadEnd = performance.now();
         }
     };
 
@@ -123,6 +204,32 @@ export default function TagsPage() {
     return (
         <ClientPageWrapper>
             <div className="container mx-auto px-4 py-8">
+                {/* 性能指标显示 */}
+                {performanceMetrics && (
+                    <div className="mb-4">
+                        <button
+                            onClick={() => setShowMetrics(!showMetrics)}
+                            className="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full hover:bg-blue-200"
+                        >
+                            📊 性能指标 {showMetrics ? '隐藏' : '显示'}
+                        </button>
+
+                        {showMetrics && (
+                            <div className="mt-2 p-3 bg-gray-50 rounded-lg text-sm">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                    <div>标签加载: {performanceMetrics.tagsLoadTime.toFixed(0)}ms</div>
+                                    <div>文章加载: {performanceMetrics.articlesLoadTime.toFixed(0)}ms</div>
+                                    <div>总渲染时间: {performanceMetrics.totalRenderTime.toFixed(0)}ms</div>
+                                    <div>性能评级: {
+                                        performanceMetrics.totalRenderTime < 1000 ? '🟢优秀' :
+                                            performanceMetrics.totalRenderTime < 2000 ? '🟡良好' : '🔴需要优化'
+                                    }</div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">文章标签</h1>
                     <p className="text-gray-600">浏览所有标签，点击标签查看相关文章</p>

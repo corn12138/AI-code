@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { ComponentRegistration } from '@/types';
 import { basicComponents } from '@/components/LowCodeComponents/Basic';
-import { layoutComponents } from '@/components/LowCodeComponents/Layout';
 import { formComponents } from '@/components/LowCodeComponents/Form';
+import { layoutComponents } from '@/components/LowCodeComponents/Layout';
+import { ComponentRegistration } from '@/types';
+import { create } from 'zustand';
 
 interface ComponentsStore {
   components: ComponentRegistration[];
@@ -18,19 +18,19 @@ export const useComponentsStore = create<ComponentsStore>((set, get) => {
     ...layoutComponents,
     ...formComponents,
   ];
-  
+
   // 所有分类的集合
   const allCategories = Array.from(new Set(allComponents.map(comp => comp.category)));
-  
+
   return {
     components: allComponents,
-    
+
     getComponentByType: (type) => {
       return get().components.find(c => c.type === type);
     },
-    
+
     categories: allCategories,
-    
+
     getComponentsByCategory: (category) => {
       return get().components.filter(c => c.category === category);
     }

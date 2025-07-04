@@ -1,19 +1,19 @@
+import { useComponentsStore } from '@/store/componentsStore';
+import { ComponentRegistration } from '@/types';
 import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
-import { useComponentsStore } from '@/store/componentsStore';
 import { v4 as uuidv4 } from 'uuid';
-import { ComponentRegistration } from '@/types';
 
 const ComponentPanel: React.FC = () => {
   const { categories, getComponentsByCategory } = useComponentsStore();
   const [activeCategory, setActiveCategory] = useState(categories[0] || 'basic');
-  
+
   return (
     <div className="h-full flex flex-col">
       <div className="p-4 border-b border-editor-border">
         <h2 className="text-lg font-semibold">组件库</h2>
       </div>
-      
+
       {/* 分类选项卡 */}
       <div className="flex border-b border-editor-border">
         {categories.map((category) => (
@@ -26,7 +26,7 @@ const ComponentPanel: React.FC = () => {
           </button>
         ))}
       </div>
-      
+
       {/* 组件列表 */}
       <div className="flex-1 overflow-y-auto p-4">
         <div className="grid grid-cols-2 gap-2">
@@ -41,10 +41,10 @@ const ComponentPanel: React.FC = () => {
 
 const ComponentItem: React.FC<{ component: ComponentRegistration }> = ({ component }) => {
   const { type, name, icon, defaultProps, defaultStyle } = component;
-  
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'COMPONENT',
-    item: { 
+    item: {
       id: uuidv4(),
       type,
       component,
@@ -55,7 +55,7 @@ const ComponentItem: React.FC<{ component: ComponentRegistration }> = ({ compone
       isDragging: !!monitor.isDragging(),
     }),
   }), [type, defaultProps, defaultStyle]);
-  
+
   return (
     <div
       ref={drag}

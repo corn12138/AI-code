@@ -1,0 +1,16 @@
+{
+    "extends": "../../config/typescript/tsconfig.base.json",
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "declaration": true,
+        "outDir": "./dist"
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "docs-dist"
+    ]
+}

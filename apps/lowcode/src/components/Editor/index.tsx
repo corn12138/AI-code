@@ -1,5 +1,6 @@
 'use client';
 
+import { useEditor } from '@ai-code/hooks';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import {
@@ -14,6 +15,21 @@ interface EditorProps {
 }
 
 export default function Editor({ designId }: EditorProps) {
+    const {
+        components,
+        selectedComponentId,
+        mode,
+        addComponent,
+        removeComponent,
+        updateComponent,
+        selectComponent,
+        toggleMode,
+        undo,
+        redo,
+        canUndo,
+        canRedo
+    } = useEditor();
+
     const [design, setDesign] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -163,6 +179,15 @@ export default function Editor({ designId }: EditorProps) {
             config: updatedConfig,
             isDirty: true
         }));
+    };
+
+    const handleAddComponent = (componentType: string) => {
+        const newComponent = {
+            id: `${componentType}-${Date.now()}`,
+            type: componentType,
+            props: getDefaultProps(componentType),
+        };
+        addComponent(newComponent);
     };
 
     if (isLoading) {

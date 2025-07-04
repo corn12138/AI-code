@@ -10,6 +10,7 @@ interface AuthContextType {
     login: (credentials: { usernameOrEmail?: string; email?: string; password: string }) => Promise<any>;
     logout: () => Promise<void>;
     register: (userData: any) => Promise<any>;
+    refreshToken: () => Promise<any>; // 添加refreshToken方法
     loading: boolean;
     isLoading: boolean; // 添加别名以兼容不同的命名约定
 }
@@ -149,12 +150,40 @@ function useAuthBase(): AuthContextType {
         }
     };
 
+    // 刷新token函数
+    const refreshToken = async () => {
+        try {
+            const response = await fetch('/api/auth/refresh', {
+                method: 'POST',
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.accessToken) {
+                    localStorage.setItem(AUTH_TOKEN_KEY, data.accessToken);
+                }
+                if (data.user) {
+                    localStorage.setItem(USER_DATA_KEY, JSON.stringify(data.user));
+                    setUser(data.user);
+                    setIsAuthenticated(true);
+                }
+                return data;
+            }
+            throw new Error('Refresh token failed');
+        } catch (error) {
+            console.error('Refresh token error:', error);
+            throw error;
+        }
+    };
+
     return {
         isAuthenticated,
         user,
         login,
         logout,
         register,
+        refreshToken,
         loading,
         isLoading: loading, // 添加别名
     };
@@ -177,3 +206,11 @@ export function useAuth(): AuthContextType {
     }
     return auth;
 }
+
+// 为了兼容性，也导出AuthContext和AuthProvider
+export { AuthContext, AuthProviderWrapper as AuthProvider };
+
+// 导出常量
+export * from './constants';
+
+// refreshToken现在已经在useAuth hook中提供了

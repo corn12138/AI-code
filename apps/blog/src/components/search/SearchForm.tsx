@@ -1,7 +1,8 @@
 'use client';
 
+import { useDebounce } from '@ai-code/hooks';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SearchFormProps {
     initialQuery?: string;
@@ -10,6 +11,7 @@ interface SearchFormProps {
 export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
     const [query, setQuery] = useState(initialQuery);
     const router = useRouter();
+    const debouncedSearchTerm = useDebounce(query, 300);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,6 +21,12 @@ export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
         // 跳转到带有搜索查询的搜索页面
         router.push(`/search?q=${encodeURIComponent(query.trim())}`);
     };
+
+    useEffect(() => {
+        if (debouncedSearchTerm) {
+            handleSearch(debouncedSearchTerm);
+        }
+    }, [debouncedSearchTerm]);
 
     return (
         <form onSubmit={handleSearch} className="relative">

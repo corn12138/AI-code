@@ -11,7 +11,18 @@
         "test": "pnpm -r test",
         "lint": "pnpm -r lint",
         "prepare": "husky install",
-        "security-audit": "node scripts/security-audit.js"
+        "security-audit": "node scripts/security-audit.js",
+        "dev:all": "pnpm run --parallel dev",
+        "build:all": "pnpm run --parallel build",
+        "lint:all": "pnpm run --parallel lint",
+        "type-check": "tsc --noEmit --project tsconfig.json",
+        "type-check:apps": "pnpm --filter './apps/*' run type-check",
+        "lint:shared": "eslint shared/ --ext .ts,.tsx",
+        "build:shared": "pnpm --filter './shared/*' run build",
+        "clean": "pnpm run --parallel clean && rm -rf node_modules",
+        "deps:check": "pnpm outdated --recursive",
+        "deps:update": "pnpm update --recursive --interactive",
+        "cleanup": "bash scripts/cleanup-duplicates.sh"
     },
     "engines": {
         "node": ">=16.0.0",

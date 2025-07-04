@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  blog:
+    build: ./apps/blog
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=https://api.yourdomain.com
+    ports:
+      - "3000:3000"
+  
+  server:
+    build: ./apps/server
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=mysql://user:pass@db:3306/dbname
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+  
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=yourpassword
+      - MYSQL_DATABASE=ai_code_db
+    volumes:
+      - db_data:/var/lib/mysql
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+    depends_on:
+      - blog
+      - server
+
+volumes:
+  db_data: 

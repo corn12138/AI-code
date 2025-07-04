@@ -1,5 +1,6 @@
 import { ClientTagPage } from '@/components/tags/ClientTagPage';
 import { fetchArticles, fetchTags } from '@/services/api';
+import { Tag } from '@/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -26,7 +27,7 @@ export default async function TagPage({ params }: Props) {
     const allTags = await fetchTags();
 
     // 获取当前标签详细信息
-    const currentTag = allTags.find(t => t.name.toLowerCase() === decodedTag.toLowerCase());
+    const currentTag = allTags.find((t: Tag) => t.name.toLowerCase() === decodedTag.toLowerCase());
 
     if (!currentTag) {
         notFound();

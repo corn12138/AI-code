@@ -19,3 +19,8 @@ export * from './storage';
 // 通用助手函数
 export * from './helpers';
 
+// 重新导出所有工具函数
+export * from './api-helpers';
+export * from './dom-safety';
+export * from './format';
+

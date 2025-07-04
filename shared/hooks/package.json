@@ -1,0 +1,41 @@
+{
+    "name": "@ai-code/hooks",
+    "version": "1.0.0",
+    "description": "AI-Code项目通用Hooks库",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "father build",
+        "dev": "dumi dev",
+        "docs:build": "dumi build",
+        "docs:preview": "dumi preview",
+        "prepare": "father build"
+    },
+    "keywords": [
+        "react",
+        "hooks",
+        "typescript",
+        "ai-code"
+    ],
+    "author": "your-name",
+    "license": "MIT",
+    "peerDependencies": {
+        "react": ">=16.8.0",
+        "react-dom": ">=16.8.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.0.0",
+        "@types/react-dom": "^18.0.0",
+        "dumi": "^2.2.0",
+        "father": "^4.1.0",
+        "typescript": "^5.0.0"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://your-private-registry.com"
+    }
+}

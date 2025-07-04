@@ -14,6 +14,7 @@ export class TagsController {
     @ApiOperation({ summary: '获取所有标签' })
     @ApiResponse({ status: 200, description: '成功获取标签列表', type: [Tag] })
     async findAll(): Promise<Tag[]> {
+        console.log('findAll', this.tagsService.findAll()); 
         return await this.tagsService.findAll();
     }
 

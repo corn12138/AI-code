@@ -1,0 +1,14 @@
+:root {
+    /* 颜色系统 */
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+
+    /* 间距系统 */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+
+    /* 字体系统 */
+    --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+}

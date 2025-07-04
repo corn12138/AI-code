@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
@@ -29,6 +31,11 @@ const nextConfig = {
                 path: false,
             };
         }
+        config.resolve.alias = {
+            ...config.resolve.alias,
+            '@': path.resolve(__dirname, './src'),
+            '@shared': path.resolve(__dirname, '../../shared'),
+        };
         return config;
     }
 }
