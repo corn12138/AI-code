@@ -6,8 +6,8 @@
 
 延迟更新值，常用于搜索输入等场景。
 
-```tsx
-import { useState } from 'react';
+```javascript
+import { useState, useEffect } from 'react';
 import { useDebounce } from '@ai-code/hooks';
 
 function SearchComponent() {
@@ -18,7 +18,9 @@ function SearchComponent() {
   useEffect(() => {
     if (debouncedSearchTerm) {
       // 执行搜索
-      searchApi(debouncedSearchTerm);
+      console.log('搜索:', debouncedSearchTerm);
+      // 这里可以调用实际的搜索API
+      // fetch(`/api/search?q=${debouncedSearchTerm}`)
     }
   }, [debouncedSearchTerm]);
 
@@ -37,14 +39,16 @@ function SearchComponent() {
 
 防抖回调函数。
 
-```tsx
+```javascript
 import { useDebouncedCallback } from '@ai-code/hooks';
 
 function FormComponent() {
   const debouncedSave = useDebouncedCallback(
     (formData) => {
       // 保存表单数据
-      saveFormData(formData);
+      console.log('保存表单数据:', formData);
+      // 这里可以调用实际的保存API
+      // fetch('/api/save', { method: 'POST', body: JSON.stringify(formData) })
     },
     1000
   );

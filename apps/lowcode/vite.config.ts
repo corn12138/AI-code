@@ -9,6 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@ai-code/hooks': path.resolve(__dirname, '../../shared/hooks/src'),
       '@shared/auth': path.resolve(__dirname, '../../shared/auth/src'),
       '@shared/ui': path.resolve(__dirname, '../../shared/ui/src'),
       '@shared/utils': path.resolve(__dirname, '../../shared/utils/src')

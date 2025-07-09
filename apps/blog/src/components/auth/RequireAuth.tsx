@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@shared/auth';
+import { useAuth } from '@ai-code/hooks';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, ReactNode } from 'react';
 

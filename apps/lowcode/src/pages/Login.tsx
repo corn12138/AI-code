@@ -1,4 +1,4 @@
-import { useAuth } from '@shared/auth';
+import { useAuth } from '@ai-code/hooks';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';

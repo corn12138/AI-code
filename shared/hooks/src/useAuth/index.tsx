@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 export interface User {
@@ -33,9 +35,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAuthenticated: false,
     });
 
-    // 初始化认证状态
+    // 只在客户端执行初始化
     useEffect(() => {
         const initAuth = () => {
+            if (typeof window === 'undefined') return;
+
             const token = localStorage.getItem('token');
             const userStr = localStorage.getItem('user');
 
@@ -65,7 +69,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setAuthState(prev => ({ ...prev, isLoading: true }));
 
         try {
-            // 这里调用实际的登录API
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -76,8 +79,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             const { user, token } = await response.json();
 
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+            }
 
             setAuthState({
                 user,
@@ -92,8 +97,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const logout = useCallback(() => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+        }
         setAuthState({
             user: null,
             token: null,
@@ -116,8 +123,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             const { user, token } = await response.json();
 
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+            }
 
             setAuthState({
                 user,
@@ -136,7 +145,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (!prev.user) return prev;
 
             const updatedUser = { ...prev.user, ...userData };
-            localStorage.setItem('user', JSON.stringify(updatedUser));
+
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+            }
 
             return {
                 ...prev,

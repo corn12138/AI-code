@@ -1,4 +1,4 @@
-import { AuthProvider } from '@shared/auth';
+import { AuthProvider } from '@ai-code/hooks';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';

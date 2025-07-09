@@ -2,7 +2,7 @@
 
 import { Comment } from '@/types';
 import { formatDate } from '@/utils/date';
-import { useAuth } from '@shared/auth';
+import { useAuth } from '@ai-code/hooks';
 import Image from 'next/image';
 import { FC, useEffect, useState } from 'react';
 

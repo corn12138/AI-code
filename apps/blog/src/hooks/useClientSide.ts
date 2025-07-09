@@ -1,11 +1,2 @@
-import { useEffect, useState } from 'react';
-
-export default function useClientSide() {
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    return isClient;
-}
+// 重新导出 shared/hooks 中的 useClientSide
+export { useClientSide as default } from '@ai-code/hooks';

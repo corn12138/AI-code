@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { lowcodeApi } from '@/services/api';
 import { PageResponse } from '@/types';
-import { useAuth } from '@shared/auth';
+import { useAuth } from '@ai-code/hooks';
 import { formatRelativeTime } from '@/utils/date';
 import { toast } from 'react-hot-toast';
 

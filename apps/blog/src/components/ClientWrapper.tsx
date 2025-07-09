@@ -1,7 +1,7 @@
 'use client';
 
+import { AuthProvider } from '@ai-code/hooks';
 import React, { useEffect, useState } from 'react';
-import { AuthProvider } from '../../../../shared/auth/src';
 import Footer from './Footer';
 import Navbar from './Navbar';
 

@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
-import { AuthProviderWrapper } from '../../../../shared/auth/src';
+import { AuthProvider } from '@ai-code/hooks';
 
 export default function ClientProviders({
     children,
@@ -13,9 +13,9 @@ export default function ClientProviders({
 
     return (
         <QueryClientProvider client={queryClient}>
-            <AuthProviderWrapper>
+            <AuthProvider>
                 {children}
-            </AuthProviderWrapper>
+            </AuthProvider>
         </QueryClientProvider>
     );
 }

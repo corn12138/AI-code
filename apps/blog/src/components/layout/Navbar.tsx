@@ -1,7 +1,7 @@
 'use client';
 
+import { useAuth } from '@ai-code/hooks';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { useAuth } from '@shared/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

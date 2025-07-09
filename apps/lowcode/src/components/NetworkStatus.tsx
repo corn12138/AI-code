@@ -1,30 +1,25 @@
 'use client';
 
+import { useNetworkStatus } from '@ai-code/hooks';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { trySyncNow } from '../utils/offlineStorage';
 
 export default function NetworkStatus() {
-    const [isOnline, setIsOnline] = useState(true);
     const [hasPendingChanges, setHasPendingChanges] = useState(false);
     const [isSyncing, setIsSyncing] = useState(false);
 
-    useEffect(() => {
-        // 检查初始网络状态
-        setIsOnline(navigator.onLine);
-
-        // 添加网络状态监听
-        const handleOnline = () => {
-            setIsOnline(true);
+    const { isOnline } = useNetworkStatus({
+        onOnline: () => {
             toast.success('网络连接已恢复，正在同步更改...');
             syncChanges();
-        };
-
-        const handleOffline = () => {
-            setIsOnline(false);
+        },
+        onOffline: () => {
             toast.warning('网络连接已断开，您现在处于离线模式');
-        };
+        }
+    });
 
+    useEffect(() => {
         // 监听同步状态的事件
         const handleStorage = (e: StorageEvent) => {
             if (e.key === 'lowcode_sync_pending') {
@@ -32,16 +27,12 @@ export default function NetworkStatus() {
             }
         };
 
-        window.addEventListener('online', handleOnline);
-        window.addEventListener('offline', handleOffline);
         window.addEventListener('storage', handleStorage);
 
         // 检查是否有待同步的更改
         checkPendingChanges();
 
         return () => {
-            window.removeEventListener('online', handleOnline);
-            window.removeEventListener('offline', handleOffline);
             window.removeEventListener('storage', handleStorage);
         };
     }, []);

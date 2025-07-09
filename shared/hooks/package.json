@@ -5,15 +5,24 @@
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
     "types": "dist/index.d.ts",
+    "license": "MIT",
     "files": [
-        "dist"
+        "dist",
+        "LICENSE",
+        "README.md"
     ],
     "scripts": {
         "build": "father build",
         "dev": "dumi dev",
         "docs:build": "dumi build",
         "docs:preview": "dumi preview",
-        "prepare": "father build"
+        "prepare": "father build",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "lint": "eslint src --ext .ts,.tsx",
+        "lint:fix": "eslint src --ext .ts,.tsx --fix",
+        "type-check": "tsc --noEmit"
     },
     "keywords": [
         "react",
@@ -21,21 +30,36 @@
         "typescript",
         "ai-code"
     ],
-    "author": "your-name",
-    "license": "MIT",
     "peerDependencies": {
         "react": ">=16.8.0",
         "react-dom": ">=16.8.0"
     },
     "devDependencies": {
+        "@testing-library/react": "^14.0.0",
+        "@testing-library/react-hooks": "^8.0.1",
+        "@testing-library/jest-dom": "^6.0.0",
+        "@types/jest": "^29.5.0",
         "@types/react": "^18.0.0",
         "@types/react-dom": "^18.0.0",
-        "dumi": "^2.2.0",
-        "father": "^4.1.0",
-        "typescript": "^5.0.0"
+        "dumi": "^2.1.0",
+        "father": "^4.3.0",
+        "jest": "^29.5.0",
+        "jest-environment-jsdom": "^29.5.0",
+        "ts-jest": "^29.1.0",
+        "typescript": "^5.0.0",
+        "eslint": "^8.40.0",
+        "@typescript-eslint/eslint-plugin": "^5.59.0",
+        "@typescript-eslint/parser": "^5.59.0"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ai-code-project/hooks.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ai-code-project/hooks/issues"
+    },
+    "homepage": "https://ai-code-hooks.netlify.app",
     "publishConfig": {
-        "access": "public",
-        "registry": "https://your-private-registry.com"
+        "access": "public"
     }
 }

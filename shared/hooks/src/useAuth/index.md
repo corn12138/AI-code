@@ -4,10 +4,14 @@
 
 ## 基础用法
 
-```tsx
+```javascript
+// 1. 安装
+npm install @ai-code/hooks
+
+// 2. 导入
 import { useAuth, AuthProvider } from '@ai-code/hooks';
 
-// 1. 在应用根部包裹AuthProvider
+// 3. 在应用根部包裹AuthProvider
 function App() {
   return (
     <AuthProvider>
@@ -16,7 +20,7 @@ function App() {
   );
 }
 
-// 2. 在组件中使用useAuth
+// 4. 在组件中使用useAuth
 function LoginComponent() {
   const { login, logout, user, isAuthenticated, isLoading } = useAuth();
 

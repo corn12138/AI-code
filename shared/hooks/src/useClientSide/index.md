@@ -6,7 +6,7 @@
 
 检测当前是否在客户端环境。
 
-```tsx
+```javascript
 import { useClientSide } from '@ai-code/hooks';
 
 function MyComponent() {
@@ -15,7 +15,10 @@ function MyComponent() {
   return (
     <div>
       {isClient ? (
-        <ClientOnlyComponent />
+        <div>
+          <p>这是客户端组件</p>
+          <button onClick={() => alert('客户端交互')}>点击我</button>
+        </div>
       ) : (
         <div>服务端渲染占位符</div>
       )}
@@ -28,7 +31,7 @@ function MyComponent() {
 
 只在客户端执行副作用。
 
-```tsx
+```javascript
 import { useClientSideEffect } from '@ai-code/hooks';
 
 function MyComponent() {
@@ -49,7 +52,7 @@ function MyComponent() {
 
 客户端状态管理。
 
-```tsx
+```javascript
 import { useClientState } from '@ai-code/hooks';
 
 function MyComponent() {

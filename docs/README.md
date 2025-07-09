@@ -59,6 +59,12 @@
   - [安全最佳实践](./security.md) - 项目实施的安全措施。
   - [离线功能实现](./offline-features.md) - Service Worker与离线功能详解。
   - [华为云数据库创建指南](./modules/华为云数据库创建.md) - 在华为云上部署PostgreSQL的教程。
+- **Hooks独立化文档**
+  - [📋 Hooks项目总结](./hooks-project-summary.md) - 完整项目成果、技术架构和未来规划总结。
+  - [📚 Hooks独立化指南](./hooks-independence-guide.md) - Hooks提取和Dumi文档化完整流程。
+  - [🔧 Hooks独立化实现总结](./hooks-independence-implementation.md) - 技术实现细节和项目集成情况。
+  - [🚨 Hooks迁移问题与解决方案](./hooks-migration-issues-solutions.md) - 迁移过程中遇到的问题和解决方案。
+  - [🔍 Hooks问题快速索引](./hooks-troubleshooting-index.md) - 快速定位和解决hooks相关问题的索引。
 - **详细模块文档**
   - [服务端模块细化](./modules/server.md)
   - [博客模块细化](./modules/blog.md)
