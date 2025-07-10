@@ -17,6 +17,7 @@
 - `apps/server`: NestJS后端服务，为博客和低代码平台提供API支持
 - `apps/blog`: Next.js实现的博客前端应用
 - `apps/lowcode`: React实现的低代码开发平台应用，支持离线编辑功能
+- `shared/hooks`: 通用React Hooks库 (**已发布到NPM**: [`@corn12138/hooks`](https://www.npmjs.com/package/@corn12138/hooks))
 
 ## 技术栈
 
@@ -59,7 +60,8 @@
   - [安全最佳实践](./security.md) - 项目实施的安全措施。
   - [离线功能实现](./offline-features.md) - Service Worker与离线功能详解。
   - [华为云数据库创建指南](./modules/华为云数据库创建.md) - 在华为云上部署PostgreSQL的教程。
-- **Hooks独立化文档**
+- **Hooks独立化文档** 🎉 **已成功发布**: [`@corn12138/hooks`](https://www.npmjs.com/package/@corn12138/hooks)
+  - [📦 NPM发包完整流程总结](./npm-publishing-complete-guide.md) - **最详细**的发包流程记录，包含所有问题和解决方案。
   - [📋 Hooks项目总结](./hooks-project-summary.md) - 完整项目成果、技术架构和未来规划总结。
   - [📚 Hooks独立化指南](./hooks-independence-guide.md) - Hooks提取和Dumi文档化完整流程。
   - [🔧 Hooks独立化实现总结](./hooks-independence-implementation.md) - 技术实现细节和项目集成情况。
@@ -74,6 +76,8 @@
 
 - [后端API文档 (Swagger)](http://localhost:3001/api/docs) - (服务启动后访问)
 - [GitHub仓库](https://github.com/yourusername/AI-code) - (请替换为实际链接)
+- [NPM包: @corn12138/hooks](https://www.npmjs.com/package/@corn12138/hooks) - 已发布的通用React Hooks库
+- [Hooks文档站点](https://corn12138.github.io/ai-code-hooks) - 在线Hooks使用文档
 
 ## 开发人员指南
 
