@@ -1,0 +1,38 @@
+[
+    {
+        "name": "ESM Bundle",
+        "path": "dist/index.esm.js",
+        "limit": "15 KB",
+        "gzip": true
+    },
+    {
+        "name": "CommonJS Bundle",
+        "path": "dist/index.js",
+        "limit": "16 KB",
+        "gzip": true
+    },
+    {
+        "name": "UMD Bundle",
+        "path": "dist/index.umd.js",
+        "limit": "18 KB",
+        "gzip": true
+    },
+    {
+        "name": "Individual Hook - useAuth",
+        "path": "dist/index.esm.js",
+        "import": "{ useAuth }",
+        "limit": "3 KB"
+    },
+    {
+        "name": "Individual Hook - useAsync",
+        "path": "dist/index.esm.js",
+        "import": "{ useAsync }",
+        "limit": "2 KB"
+    },
+    {
+        "name": "Individual Hook - useDebounce",
+        "path": "dist/index.esm.js",
+        "import": "{ useDebounce }",
+        "limit": "1 KB"
+    }
+]

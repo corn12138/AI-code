@@ -713,7 +713,7 @@ MIT License - 详情请查看 [LICENSE](./LICENSE) 文件
 
 - 📧 邮箱: hooks@ai-code.dev
 - 💬 讨论: [GitHub Discussions](https://github.com/ai-code-project/hooks/discussions)
-- 🐛 问题: [GitHub Issues](https://github.com/ai-code-project/hooks/issues)
+- 🐛 问题: [GitHub Issues](https://github.com/corn12138/AI-code/issues)
 - 📱 微信群: 扫码加入开发者交流群
 
 ---
@@ -722,6 +722,6 @@ MIT License - 详情请查看 [LICENSE](./LICENSE) 文件
 
 **⭐ 如果这个项目对你有帮助，请给我们一个 Star！**
 
-Made with ❤️ by [AI-Code Team](https://github.com/ai-code-project)
+Made with ❤️ by [AI-Code Team](https://github.com/corn12138/AI-code)
 
 </div> 

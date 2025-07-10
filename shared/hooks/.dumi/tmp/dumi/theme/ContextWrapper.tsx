@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useOutlet, history } from 'dumi';
 import { warning } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/rc-util@5.44.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/rc-util';
-import { SiteContext, type ISiteContext } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._2750791a49e403c0ffe0268450ddaef5/node_modules/dumi/dist/client/theme-api/context.js';
+import { SiteContext, type ISiteContext } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/client/theme-api/context.js';
 import { components } from '../meta/atoms';
 import { locales } from '../locales/config';
 
@@ -14,10 +14,10 @@ const entryExports = {
 };
 
 // Static content
-const pkg = {"name":"@ai-code/hooks","description":"AI-Code项目通用Hooks库","version":"1.0.0","license":"MIT","repository":{"type":"git","url":"https://github.com/ai-code-project/hooks.git"}};
+const pkg = {"name":"@ai-code/hooks","description":"🎣 A collection of powerful React hooks for modern web development. Features authentication, debouncing, async operations, network status, form handling and more.","version":"1.0.0","license":"MIT","repository":{"type":"git","url":"https://github.com/corn12138/AI-code.git"},"author":{"name":"AI-Code Team","email":"team@ai-code-hooks.com","url":"https://github.com/ai-code-project"}};
 const historyType = "browser";
 const hostname = undefined;
-const themeConfig = {"footer":"Copyright © 2025 | Powered by <a href=\"https://d.umijs.org\" target=\"_blank\" rel=\"noreferrer\">dumi</a>","prefersColor":{"default":"light","switch":true},"nprogress":true,"lastUpdated":true,"name":"AI-Code Hooks","logo":false,"nav":[{"title":"🏠 首页","link":"/"},{"title":"🚀 快速开始","link":"/guide"},{"title":"🎮 交互示例","link":"/examples"},{"title":"📚 Hooks","link":"/hooks"}],"sidebar":{"/":[{"title":"开始使用","children":[{"title":"快速开始","link":"/guide"},{"title":"交互式示例","link":"/examples"}]},{"title":"Hooks API","children":[{"title":"useAuth","link":"/use-auth"},{"title":"useAsync","link":"/use-async"},{"title":"useForm","link":"/use-form"},{"title":"useNetworkStatus","link":"/use-network-status"},{"title":"useLocalStorage","link":"/use-local-storage"},{"title":"useWindowSize","link":"/use-window-size"},{"title":"useApi","link":"/use-api"},{"title":"useEditor","link":"/use-editor"},{"title":"useDebounce","link":"/use-debounce"},{"title":"useClientSide","link":"/use-client-side"}]}]},"sourceLink":"https://github.com/ai-code-project/hooks/tree/main/{fileName}#L{line}","editLink":"https://github.com/ai-code-project/hooks/edit/main/{filename}"};
+const themeConfig = {"footer":"Copyright © 2025 | Powered by <a href=\"https://d.umijs.org\" target=\"_blank\" rel=\"noreferrer\">dumi</a>","prefersColor":{"default":"light","switch":true},"nprogress":true,"lastUpdated":true,"name":"AI-Code Hooks","logo":false,"nav":[{"title":"🏠 首页","link":"/"},{"title":"🚀 快速开始","link":"/guide"},{"title":"🎮 交互示例","link":"/examples"},{"title":"📚 Hooks","link":"/hooks"}],"sidebar":{"/":[{"title":"开始使用","children":[{"title":"快速开始","link":"/guide"},{"title":"交互式示例","link":"/examples"}]},{"title":"Hooks API","children":[{"title":"useAuth","link":"/use-auth"},{"title":"useAsync","link":"/use-async"},{"title":"useForm","link":"/use-form"},{"title":"useNetworkStatus","link":"/use-network-status"},{"title":"useLocalStorage","link":"/use-local-storage"},{"title":"useWindowSize","link":"/use-window-size"},{"title":"useApi","link":"/use-api"},{"title":"useEditor","link":"/use-editor"},{"title":"useDebounce","link":"/use-debounce"},{"title":"useClientSide","link":"/use-client-side"}]}]},"sourceLink":"https://github.com/corn12138/AI-code/tree/main/{fileName}#L{line}","editLink":"https://github.com/corn12138/AI-code/edit/main/{filename}"};
 const _2_level_nav_available = false;
 
 export default function DumiContextWrapper() {

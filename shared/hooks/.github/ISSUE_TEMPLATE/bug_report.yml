@@ -1,0 +1,117 @@
+name: 🐛 Bug 报告
+description: 创建一个 Bug 报告来帮助我们改进
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间填写这个 bug 报告！
+
+  - type: input
+    id: version
+    attributes:
+      label: "@ai-code/hooks 版本"
+      description: 您使用的 @ai-code/hooks 版本是什么？
+      placeholder: "例如：1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "环境信息"
+      description: 请提供您的环境信息
+      placeholder: |
+        - React 版本：18.2.0
+        - Node.js 版本：18.17.0
+        - 浏览器：Chrome 115.0.0.0
+        - 操作系统：macOS 13.4
+        - 构建工具：Vite 4.4.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: "发生了什么？"
+      description: 详细描述遇到的问题
+      placeholder: 告诉我们发生了什么！
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "重现步骤"
+      description: 如何重现这个问题？
+      placeholder: |
+        1. 导入 '@ai-code/hooks'
+        2. 调用 '...'
+        3. 查看错误
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "期望行为"
+      description: 您期望发生什么？
+      placeholder: 描述期望的行为
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "实际行为"
+      description: 实际发生了什么？
+      placeholder: 描述实际的行为
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: "相关代码"
+      description: 如果适用，请添加代码片段来帮助解释您的问题
+      render: tsx
+      placeholder: |
+        import { useYourHook } from '@ai-code/hooks';
+
+        function MyComponent() {
+          const result = useYourHook();
+          // 问题出现在这里
+          return <div>{result}</div>;
+        }
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: "错误日志"
+      description: 如果有错误信息，请粘贴在这里
+      render: shell
+      placeholder: |
+        控制台错误信息...
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: "附加信息"
+      description: 任何其他有助于我们理解问题的信息
+      placeholder: 比如截图、相关链接等
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: "检查清单"
+      description: 在提交之前，请确认您已经：
+      options:
+        - label: 我已经搜索了现有的 issues，确认这不是重复报告
+          required: true
+        - label: 我已经阅读了文档和常见问题
+          required: true
+        - label: 我提供了完整的重现步骤
+          required: true
+        - label: 我使用的是支持的版本
+          required: true 

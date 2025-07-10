@@ -1,40 +1,77 @@
 {
     "name": "@ai-code/hooks",
     "version": "1.0.0",
-    "description": "AI-Code项目通用Hooks库",
+    "description": "🎣 A collection of powerful React hooks for modern web development. Features authentication, debouncing, async operations, network status, form handling and more.",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
     "types": "dist/index.d.ts",
     "license": "MIT",
+    "author": {
+        "name": "AI-Code Team",
+        "email": "team@ai-code-hooks.com",
+        "url": "https://github.com/ai-code-project"
+    },
     "files": [
         "dist",
         "LICENSE",
-        "README.md"
+        "README.md",
+        "CHANGELOG.md"
     ],
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "import": "./dist/index.esm.js",
+            "require": "./dist/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "unpkg": "dist/index.umd.js",
+    "jsdelivr": "dist/index.umd.js",
+    "sideEffects": false,
     "scripts": {
-        "build": "father build",
+        "build": "rollup -c rollup.config.cjs",
+        "build:prod": "NODE_ENV=production rollup -c rollup.config.cjs",
+        "build:analyze": "ANALYZE=true npm run build:prod",
         "dev": "dumi dev",
         "docs:build": "dumi build",
         "docs:preview": "dumi preview",
-        "prepare": "father build",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm run lint && npm run type-check && npm run test && npm run build:prod",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
         "lint": "eslint src --ext .ts,.tsx",
         "lint:fix": "eslint src --ext .ts,.tsx --fix",
-        "type-check": "tsc --noEmit"
+        "type-check": "tsc --noEmit",
+        "clean": "rimraf dist",
+        "size": "size-limit",
+        "release": "np --no-tests"
     },
     "keywords": [
         "react",
         "hooks",
         "typescript",
-        "ai-code"
+        "frontend",
+        "ui",
+        "authentication",
+        "debounce",
+        "async",
+        "network",
+        "form",
+        "storage",
+        "api",
+        "client-side",
+        "modern",
+        "web-development"
     ],
     "peerDependencies": {
         "react": ">=16.8.0",
         "react-dom": ">=16.8.0"
     },
     "devDependencies": {
+        "@rollup/plugin-commonjs": "^25.0.7",
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-typescript": "^11.1.5",
         "@testing-library/react": "^14.0.0",
         "@testing-library/react-hooks": "^8.0.1",
         "@testing-library/jest-dom": "^6.0.0",
@@ -42,21 +79,31 @@
         "@types/react": "^18.0.0",
         "@types/react-dom": "^18.0.0",
         "dumi": "^2.1.0",
-        "father": "^4.3.0",
-        "jest": "^29.5.0",
-        "jest-environment-jsdom": "^29.5.0",
-        "ts-jest": "^29.1.0",
-        "typescript": "^5.0.0",
         "eslint": "^8.40.0",
         "@typescript-eslint/eslint-plugin": "^5.59.0",
-        "@typescript-eslint/parser": "^5.59.0"
+        "@typescript-eslint/parser": "^5.59.0",
+        "jest": "^29.5.0",
+        "jest-environment-jsdom": "^29.5.0",
+        "np": "^9.2.0",
+        "rimraf": "^5.0.5",
+        "rollup": "^4.9.6",
+        "rollup-plugin-copy": "^3.5.0",
+        "rollup-plugin-filesize": "^10.0.0",
+        "rollup-plugin-peer-deps-external": "^2.2.4",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-visualizer": "^5.12.0",
+        "size-limit": "^11.0.1",
+        "@size-limit/preset-small-lib": "^11.0.1",
+        "ts-jest": "^29.1.0",
+        "tslib": "^2.6.2",
+        "typescript": "^5.0.0"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/ai-code-project/hooks.git"
+        "url": "https://github.com/corn12138/AI-code.git"
     },
     "bugs": {
-        "url": "https://github.com/ai-code-project/hooks/issues"
+        "url": "https://github.com/corn12138/AI-code/issues"
     },
     "homepage": "https://ai-code-hooks.netlify.app",
     "publishConfig": {
