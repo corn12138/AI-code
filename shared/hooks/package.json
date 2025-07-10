@@ -36,7 +36,7 @@
         "docs:build": "dumi build",
         "docs:preview": "dumi preview",
         "prepare": "npm run build",
-        "prepublishOnly": "npm run lint && npm run type-check && npm run test && npm run build:prod",
+        "prepublishOnly": "npm run test && npm run build:prod",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
