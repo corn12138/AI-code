@@ -13,7 +13,7 @@ nav:
 
 ```tsx
 import React, { useState } from 'react';
-import { useDebounce } from '@ai-code/hooks';
+import { useDebounce } from '../src';
 
 export default function DebounceDemo() {
   const [inputValue, setInputValue] = useState('');
@@ -67,7 +67,7 @@ export default function DebounceDemo() {
 
 ```tsx
 import React from 'react';
-import { useLocalStorage } from '@ai-code/hooks';
+import { useLocalStorage } from '../src';
 
 export default function LocalStorageDemo() {
   // 使用本地存储保存用户偏好
@@ -162,7 +162,7 @@ export default function LocalStorageDemo() {
 
 ```tsx
 import React from 'react';
-import { useWindowSize } from '@ai-code/hooks';
+import { useWindowSize } from '../src';
 
 export default function WindowSizeDemo() {
   const { width, height } = useWindowSize();
@@ -236,7 +236,7 @@ export default function WindowSizeDemo() {
 
 ```tsx
 import React from 'react';
-import { useAsync } from '@ai-code/hooks';
+import { useAsync } from '../src';
 
 // 模拟API函数
 const mockFetchUser = async (userId: number): Promise<{id: number, name: string, email: string}> => {

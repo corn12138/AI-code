@@ -32,7 +32,6 @@ export default defineConfig({
 
   // 站点信息
   title: 'AI-Code Hooks',
-  description: '🎣 强大的 React Hooks 库，助力现代 Web 开发',
 
   // 主题配置
   themeConfig: {
@@ -87,20 +86,6 @@ export default defineConfig({
 
     // 编辑链接
     editLink: false,
-
-    // 搜索功能
-    search: true,
-
-    // 多语言支持
-    locales: [
-      { id: 'zh-CN', name: '中文', base: '/' }
-    ],
-
-    // 代码高亮主题
-    prism: {
-      theme: 'github',
-      darkTheme: 'github-dark',
-    },
   },
 
   // 文档配置
@@ -111,27 +96,10 @@ export default defineConfig({
   // 禁用 MFSU 避免模块解析问题
   mfsu: false,
 
-  // 添加 PWA 支持
-  pwa: {
-    manifestPath: '/manifest.json',
-    themeColor: '#1677ff',
-  },
-
   // 分析工具
   analytics: {
     // 可以添加 Google Analytics
     // ga: 'G-XXXXXXXXXX',
-  },
-
-  // 站点地图
-  sitemap: {
-    hostname: isNetlify ? 'https://ai-code-hooks.netlify.app' : 'https://corn12138.github.io',
-  },
-
-  // 开发服务器配置
-  devServer: {
-    port: 8000,
-    host: '0.0.0.0',
   },
 
   // 构建优化
