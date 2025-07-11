@@ -1,11 +1,28 @@
 import { defineConfig } from 'dumi';
 
+// 环境判断
+const isProduction = process.env.NODE_ENV === 'production';
+const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
+const isNetlify = process.env.NETLIFY === 'true';
+
+// 根据部署环境设置基础路径
+let base = '/';
+let publicPath = '/';
+
+if (isGitHubPages) {
+  base = '/ai-code-hooks/';
+  publicPath = '/ai-code-hooks/';
+} else if (isNetlify || isProduction) {
+  base = '/';
+  publicPath = '/';
+}
+
 export default defineConfig({
   outputPath: 'docs-dist',
 
-  // 生产环境基础路径
-  base: process.env.NODE_ENV === 'production' ? '/ai-code-hooks/' : '/',
-  publicPath: process.env.NODE_ENV === 'production' ? '/ai-code-hooks/' : '/',
+  // 动态设置基础路径
+  base,
+  publicPath,
 
   // 开启静态导出
   exportStatic: {},
@@ -28,7 +45,8 @@ export default defineConfig({
       { title: '🚀 快速开始', link: '/guide' },
       { title: '🎮 交互示例', link: '/examples' },
       { title: '📚 Hooks', link: '/hooks' },
-      { title: '🌟 GitHub', link: 'https://github.com/corn12138/ai-code-hooks' }
+      { title: '🌟 GitHub', link: 'https://github.com/corn12138/ai-code-hooks' },
+      { title: '📦 NPM', link: 'https://www.npmjs.com/package/@corn12138/hooks' }
     ],
 
     // 侧边栏
@@ -65,10 +83,10 @@ export default defineConfig({
     },
 
     // 页脚
-    footer: 'Copyright © 2024 AI-Code Hooks. Built with ❤️ using Dumi.',
+    footer: `Copyright © ${new Date().getFullYear()} AI-Code Hooks. Built with ❤️ using Dumi.`,
 
     // 编辑链接
-    editLink: false, // 暂时关闭编辑链接
+    editLink: false,
 
     // 搜索功能
     search: true,
@@ -107,12 +125,30 @@ export default defineConfig({
 
   // 站点地图
   sitemap: {
-    hostname: 'https://corn12138.github.io',
+    hostname: isNetlify ? 'https://ai-code-hooks.netlify.app' : 'https://corn12138.github.io',
   },
 
   // 开发服务器配置
   devServer: {
     port: 8000,
     host: '0.0.0.0',
+  },
+
+  // 构建优化
+  chainWebpack(config) {
+    // 生产环境优化
+    if (isProduction) {
+      config.optimization.minimize(true);
+      config.optimization.splitChunks({
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      });
+    }
   },
 }); 

@@ -52,7 +52,15 @@
         "audit:dev": "npm audit --audit-level=moderate --dev",
         "security:check": "npm run audit:production && npm run lint:security",
         "security:full": "npm audit --audit-level=moderate && npm run lint:security",
-        "lint:security": "eslint src --ext .ts,.tsx --config .eslintrc.security.js"
+        "lint:security": "eslint src --ext .ts,.tsx --config .eslintrc.security.js",
+        "deploy:local": "./deploy.sh local",
+        "deploy:docker": "./deploy.sh docker",
+        "deploy:build": "./deploy.sh build",
+        "deploy:clean": "./deploy.sh clean",
+        "docker:build": "docker build -t ai-code-hooks-docs .",
+        "docker:run": "docker run -p 8080:80 ai-code-hooks-docs",
+        "docker:logs": "docker-compose logs -f docs",
+        "docker:stop": "docker-compose down"
     },
     "keywords": [
         "react",

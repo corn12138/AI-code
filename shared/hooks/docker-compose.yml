@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # 主文档服务
+  docs:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-code-hooks-docs
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - nginx_logs:/var/log/nginx
+    networks:
+      - docs_network
+    labels:
+      - "com.docker.compose.service=docs"
+      - "description=AI-Code Hooks Documentation Site"
+
+  # 可选：反向代理和SSL（使用Caddy）
+  caddy:
+    image: caddy:2-alpine
+    container_name: ai-code-hooks-caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: unless-stopped
+    depends_on:
+      - docs
+    networks:
+      - docs_network
+    labels:
+      - "com.docker.compose.service=caddy"
+      - "description=Reverse proxy and SSL termination"
+    profiles:
+      - ssl  # 使用 docker-compose --profile ssl up 启用
+
+  # 可选：监控服务
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: ai-code-hooks-monitoring
+    ports:
+      - "9113:9113"
+    command:
+      - -nginx.scrape-uri=http://docs/nginx_status
+    depends_on:
+      - docs
+    restart: unless-stopped
+    networks:
+      - docs_network
+    profiles:
+      - monitoring
+
+volumes:
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+  nginx_logs:
+    driver: local
+
+networks:
+  docs_network:
+    driver: bridge
+    name: ai-code-hooks-network 
