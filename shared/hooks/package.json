@@ -1,6 +1,6 @@
 {
     "name": "@corn12138/hooks",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "🎣 A collection of powerful React hooks for modern web development. Features authentication, debouncing, async operations, network status, form handling and more.",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
