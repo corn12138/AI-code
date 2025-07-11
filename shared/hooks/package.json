@@ -117,10 +117,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/corn12138/AI-code.git"
+        "url": "https://github.com/corn12138/ai-code-hooks"
     },
     "bugs": {
-        "url": "https://github.com/corn12138/AI-code/issues"
+        "url": "https://github.com/corn12138/ai-code-hooks/issues"
     },
     "homepage": "https://corn12138.github.io/ai-code-hooks",
     "publishConfig": {
