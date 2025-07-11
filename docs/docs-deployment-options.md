@@ -350,7 +350,7 @@ docs.your-domain.com {
 # 7. 获得新的访问地址！
 ```
 
-**结果**: 你将获得类似 `https://ai-code-hooks.netlify.app` 的URL，访问速度更快！
+**结果**: 你将获得类似 `https://corn12138.github.io/ai-code-hooks` 的URL，访问速度更快！
 
 ---
 
