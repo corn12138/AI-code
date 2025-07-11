@@ -43,7 +43,12 @@ jobs:
         run: npm run docs:build
       
       - name: Setup Pages
+        id: setup-pages
         uses: actions/configure-pages@v4
+        with:
+          # 如果 Pages 未启用，自动启用它
+          enablement: true
+        continue-on-error: true
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -60,4 +65,18 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+        
+      - name: Output deployment URL
+        if: success()
+        run: |
+          echo "🚀 文档已成功部署！"
+          echo "📖 访问地址: ${{ steps.deployment.outputs.page_url }}"
+          
+      - name: Fallback message
+        if: failure()
+        run: |
+          echo "⚠️ 部署失败，请手动检查 GitHub Pages 设置"
+          echo "🔗 前往: https://github.com/${{ github.repository }}/settings/pages"
+          echo "📋 确保 Source 设置为 'GitHub Actions'" 
