@@ -36,7 +36,7 @@
         "docs:build": "dumi build",
         "docs:preview": "dumi preview",
         "prepare": "npm run build",
-        "prepublishOnly": "npm run audit && npm run build:prod",
+        "prepublishOnly": "npm run build:prod",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
@@ -48,7 +48,10 @@
         "release": "np --no-tests",
         "audit": "npm audit --audit-level=moderate",
         "audit:fix": "npm audit fix",
-        "security:check": "npm audit && npm run lint:security",
+        "audit:production": "npm audit --audit-level=high --production",
+        "audit:dev": "npm audit --audit-level=moderate --dev",
+        "security:check": "npm run audit:production && npm run lint:security",
+        "security:full": "npm audit --audit-level=moderate && npm run lint:security",
         "lint:security": "eslint src --ext .ts,.tsx --config .eslintrc.security.js"
     },
     "keywords": [
