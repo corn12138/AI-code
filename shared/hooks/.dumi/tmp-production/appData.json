@@ -124,7 +124,7 @@
     "bugs": {
       "url": "https://github.com/corn12138/AI-code/issues"
     },
-    "homepage": "https://ai-code-hooks.netlify.app",
+    "homepage": "https://corn12138.github.io/ai-code-hooks",
     "publishConfig": {
       "access": "public"
     }
