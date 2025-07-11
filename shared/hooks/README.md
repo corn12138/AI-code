@@ -1,4 +1,4 @@
-# @ai-code/hooks
+# @corn12138/hooks
 
 🚀 **专为现代 React 应用设计的全功能 Hooks 库**
 
@@ -23,13 +23,13 @@
 
 ```bash
 # 使用 npm
-npm install @ai-code/hooks
+npm install @corn12138/hooks
 
 # 使用 yarn
-yarn add @ai-code/hooks
+yarn add @corn12138/hooks
 
 # 使用 pnpm
-pnpm add @ai-code/hooks
+pnpm add @corn12138/hooks
 ```
 
 ## 🚀 快速开始
@@ -39,7 +39,7 @@ pnpm add @ai-code/hooks
 快速集成完整的用户认证系统：
 
 ```tsx
-import { useAuth, AuthProvider } from '@ai-code/hooks';
+import { useAuth, AuthProvider } from '@corn12138/hooks';
 
 // 1. 在应用根部包裹 AuthProvider
 function App() {
@@ -98,7 +98,7 @@ function Dashboard() {
 优雅处理异步操作和状态管理：
 
 ```tsx
-import { useAsync } from '@ai-code/hooks';
+import { useAsync } from '@corn12138/hooks';
 import { useEffect } from 'react';
 
 function UserProfile({ userId }) {
@@ -154,7 +154,7 @@ function UserProfile({ userId }) {
 强大的表单状态管理和验证：
 
 ```tsx
-import { useForm } from '@ai-code/hooks';
+import { useForm } from '@corn12138/hooks';
 
 function ContactForm() {
   const form = useForm({
@@ -294,7 +294,7 @@ function ContactForm() {
 实时网络连接检测和离线处理：
 
 ```tsx
-import { useNetworkStatus } from '@ai-code/hooks';
+import { useNetworkStatus } from '@corn12138/hooks';
 
 function NetworkAwareApp() {
   const { 
@@ -360,7 +360,7 @@ function OfflineContent({ onReconnect }) {
 类型安全的本地存储管理：
 
 ```tsx
-import { useLocalStorage } from '@ai-code/hooks';
+import { useLocalStorage } from '@corn12138/hooks';
 
 function UserPreferences() {
   const [theme, setTheme, removeTheme] = useLocalStorage('app-theme', 'light', {
@@ -466,7 +466,7 @@ import {
   useApi, 
   useLocalStorage, 
   useNetworkStatus 
-} from '@ai-code/hooks';
+} from '@corn12138/hooks';
 
 function TodoApp() {
   const { user, isAuthenticated } = useAuth();
@@ -531,7 +531,7 @@ function TodoApp() {
 ### 🎨 响应式设计
 
 ```tsx
-import { useWindowSize, useDebounce } from '@ai-code/hooks';
+import { useWindowSize, useDebounce } from '@corn12138/hooks';
 
 function ResponsiveLayout() {
   const { width, height } = useWindowSize({
@@ -655,7 +655,7 @@ npm publish
 ### ⚡ 最佳实践
 1. **按需导入**: 只导入你需要的 hooks
    ```tsx
-   import { useAuth } from '@ai-code/hooks/useAuth';
+   import { useAuth } from '@corn12138/hooks/useAuth';
    ```
 
 2. **合理使用防抖**: 对于频繁变化的值使用 `useDebounce`
