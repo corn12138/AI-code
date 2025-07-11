@@ -3,14 +3,51 @@ const commonjs = require('@rollup/plugin-commonjs');
 const typescript = require('@rollup/plugin-typescript');
 const terser = require('@rollup/plugin-terser');
 const peerDepsExternal = require('rollup-plugin-peer-deps-external');
-const { visualizer } = require('rollup-plugin-visualizer');
-const filesize = require('rollup-plugin-filesize');
-const copy = require('rollup-plugin-copy');
 
 const packageJson = require('./package.json');
+const fs = require('fs');
+const path = require('path');
 
 // 是否为生产构建
 const isProduction = process.env.NODE_ENV === 'production';
+
+// 简单的文件大小显示插件
+const filesizePlugin = () => ({
+    name: 'filesize',
+    generateBundle(options, bundle) {
+        Object.keys(bundle).forEach(fileName => {
+            const file = bundle[fileName];
+            if (file.type === 'chunk' || file.type === 'asset') {
+                const size = Buffer.byteLength(file.type === 'chunk' ? file.code : file.source);
+                const gzippedSize = require('zlib').gzipSync(file.type === 'chunk' ? file.code : file.source).length;
+                console.log(`📦 ${fileName}: ${(size / 1024).toFixed(2)} KB (${(gzippedSize / 1024).toFixed(2)} KB gzipped)`);
+            }
+        });
+    }
+});
+
+// 复制文件插件
+const copyPlugin = () => ({
+    name: 'copy',
+    writeBundle() {
+        // 确保 dist 目录存在
+        if (!fs.existsSync('dist')) {
+            fs.mkdirSync('dist', { recursive: true });
+        }
+
+        // 复制 README.md
+        if (fs.existsSync('README.md')) {
+            fs.copyFileSync('README.md', 'dist/README.md');
+            console.log('📄 Copied README.md to dist/');
+        }
+
+        // 复制 LICENSE
+        if (fs.existsSync('LICENSE')) {
+            fs.copyFileSync('LICENSE', 'dist/LICENSE');
+            console.log('📄 Copied LICENSE to dist/');
+        }
+    }
+});
 
 // 基础配置
 const baseConfig = {
@@ -39,15 +76,10 @@ const baseConfig = {
         }),
 
         // 复制必要文件
-        copy({
-            targets: [
-                { src: 'README.md', dest: 'dist' },
-                { src: 'LICENSE', dest: 'dist' },
-            ],
-        }),
+        copyPlugin(),
 
         // 显示文件大小
-        filesize(),
+        filesizePlugin(),
 
         // 生产环境压缩
         ...(isProduction ? [terser({
@@ -58,12 +90,6 @@ const baseConfig = {
             mangle: {
                 reserved: ['useAuth', 'useDebounce', 'useAsync'], // 保留 hook 名称
             },
-        })] : []),
-
-        // 构建分析（仅在需要时启用）
-        ...(process.env.ANALYZE ? [visualizer({
-            filename: 'dist/bundle-analysis.html',
-            open: true,
         })] : []),
     ],
 };
