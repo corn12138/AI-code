@@ -1,6 +1,6 @@
 # 📦 发布指南
 
-本文档详细说明如何将 `@ai-code/hooks` 发布到 NPM 和设置开源仓库。
+本文档详细说明如何将 `@corn12138/hooks` 发布到 NPM 和设置开源仓库。
 
 ## 🚀 发布前准备
 
@@ -136,7 +136,7 @@ npm run prepublishOnly
 npm publish
 
 # 验证发布
-npm view @ai-code/hooks
+npm view @corn12138/hooks
 ```
 
 ## 📊 发布后验证
@@ -145,20 +145,20 @@ npm view @ai-code/hooks
 
 ```bash
 # 查看包信息
-npm view @ai-code/hooks
+npm view @corn12138/hooks
 
 # 查看下载统计
-npm view @ai-code/hooks downloads
+npm view @corn12138/hooks downloads
 
 # 测试安装
-npm install @ai-code/hooks
+npm install @corn12138/hooks
 ```
 
 ### 2. CDN 验证
 
 ```html
 <!-- 验证 UMD 构建在 CDN 上可用 -->
-<script src="https://unpkg.com/@ai-code/hooks@latest/dist/index.umd.js"></script>
+<script src="https://unpkg.com/@corn12138/hooks@latest/dist/index.umd.js"></script>
 <script>
   console.log(window.AiCodeHooks); // 应该能看到所有导出的 hooks
 </script>
@@ -174,11 +174,11 @@ npx create-react-app test-hooks --template typescript
 cd test-hooks
 
 # 安装你的包
-npm install @ai-code/hooks
+npm install @corn12138/hooks
 
 # 测试导入
 # src/App.tsx
-import { useAuth, useAsync, useDebounce } from '@ai-code/hooks';
+import { useAuth, useAsync, useDebounce } from '@corn12138/hooks';
 ```
 
 ## 🌐 GitHub 仓库设置
@@ -234,10 +234,10 @@ npm token create --read-only
 
 ```bash
 # 查看下载量
-npm view @ai-code/hooks
+npm view @corn12138/hooks
 
 # 使用 npm-stat 查看详细统计
-npx npm-stat @ai-code/hooks
+npx npm-stat @corn12138/hooks
 ```
 
 ### 2. 社区反馈
@@ -283,7 +283,7 @@ npx npm-stat @ai-code/hooks
 npm whoami
 
 # 检查包名是否已被占用
-npm view @ai-code/hooks
+npm view @corn12138/hooks
 
 # 检查网络连接
 npm ping
@@ -293,10 +293,10 @@ npm ping
 
 ```bash
 # 撤回特定版本（24小时内）
-npm unpublish @ai-code/hooks@1.0.0
+npm unpublish @corn12138/hooks@1.0.0
 
 # 废弃版本（推荐）
-npm deprecate @ai-code/hooks@1.0.0 "Please upgrade to 1.0.1"
+npm deprecate @corn12138/hooks@1.0.0 "Please upgrade to 1.0.1"
 ```
 
 ### Q: 如何处理安全漏洞？

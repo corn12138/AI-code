@@ -1,360 +1,210 @@
 # useWindowSize
 
-窗口尺寸监听 Hook，监听浏览器窗口大小变化，支持防抖和服务端渲染。
+用于获取窗口尺寸的 React Hook。
 
-## 基础用法
+## 基本用法
 
-```javascript
-import { useWindowSize } from '@ai-code/hooks';
+```tsx
+import { useWindowSize } from '@corn12138/hooks';
+
+function WindowInfo() {
+  const { width, height } = useWindowSize();
+  
+  return (
+    <div>
+      <p>Window Size: {width} x {height}</p>
+    </div>
+  );
+}
+```
+
+## 响应式组件
+
+```tsx
+import { useWindowSize } from '@corn12138/hooks';
 
 function ResponsiveComponent() {
-  const { width, height } = useWindowSize();
-
-  return (
-    <div>
-      <h2>窗口尺寸</h2>
-      <p>宽度: {width}px</p>
-      <p>高度: {height}px</p>
-      
-      {width < 768 && <p>移动端视图</p>}
-      {width >= 768 && width < 1024 && <p>平板视图</p>}
-      {width >= 1024 && <p>桌面视图</p>}
-    </div>
-  );
-}
-```
-
-## 高级用法
-
-### 自定义防抖时间
-
-```javascript
-import { useWindowSize } from '@ai-code/hooks';
-
-function CustomDebounce() {
-  // 自定义防抖时间为 500ms
-  const { width, height } = useWindowSize({
-    debounceMs: 500
-  });
-
-  return (
-    <div>
-      <h2>慢速响应组件</h2>
-      <p>当前尺寸: {width} x {height}</p>
-      <p>防抖延迟: 500ms</p>
-    </div>
-  );
-}
-```
-
-### 响应式布局
-
-```javascript
-import { useWindowSize } from '@ai-code/hooks';
-import React, { useMemo } from 'react';
-
-function ResponsiveLayout() {
   const { width } = useWindowSize();
-  
-  // 根据屏幕宽度计算布局
-  const layout = useMemo(() => {
-    if (width < 576) {
-      return { columns: 1, sidebar: false, compact: true };
-    } else if (width < 768) {
-      return { columns: 2, sidebar: false, compact: true };
-    } else if (width < 992) {
-      return { columns: 2, sidebar: true, compact: false };
-    } else if (width < 1200) {
-      return { columns: 3, sidebar: true, compact: false };
-    } else {
-      return { columns: 4, sidebar: true, compact: false };
-    }
-  }, [width]);
-
-  return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: `repeat(${layout.columns}, 1fr)`,
-      gap: layout.compact ? '8px' : '16px',
-      padding: layout.compact ? '8px' : '16px'
-    }}>
-      <div>内容区域</div>
-      <div>更多内容</div>
-      {layout.columns > 2 && <div>额外内容</div>}
-      {layout.columns > 3 && <div>更多额外内容</div>}
-      
-      {layout.sidebar && (
-        <div style={{
-          gridColumn: '1 / -1',
-          marginTop: '16px',
-          padding: '16px',
-          backgroundColor: '#f5f5f5'
-        }}>
-          侧边栏内容
-        </div>
-      )}
-    </div>
-  );
-}
-```
-
-### 条件渲染组件
-
-```javascript
-import { useWindowSize } from '@ai-code/hooks';
-
-function ConditionalRendering() {
-  const { width, height } = useWindowSize();
   
   const isMobile = width < 768;
   const isTablet = width >= 768 && width < 1024;
   const isDesktop = width >= 1024;
-  const isLandscape = width > height;
-
+  
   return (
     <div>
-      <h2>条件渲染示例</h2>
-      
-      {isMobile && (
-        <div>
-          <h3>移动端组件</h3>
-          <button style={{ width: '100%', padding: '12px' }}>
-            全宽按钮
-          </button>
-        </div>
-      )}
-      
-      {isTablet && (
-        <div style={{ display: 'flex', gap: '16px' }}>
-          <h3>平板组件</h3>
-          <button style={{ flex: 1, padding: '8px' }}>
-            弹性按钮
-          </button>
-        </div>
-      )}
-      
-      {isDesktop && (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px' }}>
-          <div>
-            <h3>桌面组件</h3>
-            <p>多列布局</p>
-          </div>
-          <div>
-            <h3>第二列</h3>
-            <p>更多内容</p>
-          </div>
-          <div>
-            <h3>第三列</h3>
-            <p>额外信息</p>
-          </div>
-        </div>
-      )}
-      
-      {isLandscape && (
-        <div style={{ 
-          position: 'fixed', 
-          top: '10px', 
-          right: '10px',
-          background: 'rgba(0,0,0,0.8)',
-          color: 'white',
-          padding: '8px',
-          borderRadius: '4px'
-        }}>
-          横屏模式
-        </div>
-      )}
+      {isMobile && <div>Mobile Layout</div>}
+      {isTablet && <div>Tablet Layout</div>}
+      {isDesktop && <div>Desktop Layout</div>}
     </div>
   );
 }
 ```
 
-### 图表自适应
+## 动态样式
 
-```javascript
-import { useWindowSize } from '@ai-code/hooks';
-import React, { useEffect, useRef } from 'react';
+```tsx
+import { useWindowSize } from '@corn12138/hooks';
 
-function ResponsiveChart() {
-  const { width, height } = useWindowSize({
-    debounceMs: 200 // 图表更新稍慢一些避免频繁重绘
-  });
-  
-  const chartRef = useRef(null);
-  
-  // 计算图表尺寸
-  const chartDimensions = {
-    width: Math.max(300, width - 40), // 最小宽度 300px，留出边距
-    height: Math.max(200, height * 0.6) // 最小高度 200px，占用 60% 屏幕高度
-  };
-
-  useEffect(() => {
-    // 模拟图表库初始化/更新
-    const initializeChart = () => {
-      if (chartRef.current) {
-        console.log('更新图表尺寸:', chartDimensions);
-        // 这里可以调用图表库的 resize 方法
-        // chart.resize(chartDimensions.width, chartDimensions.height);
-      }
-    };
-
-    initializeChart();
-  }, [chartDimensions.width, chartDimensions.height]);
-
-  return (
-    <div>
-      <h2>自适应图表</h2>
-      <div 
-        ref={chartRef}
-        style={{
-          width: chartDimensions.width,
-          height: chartDimensions.height,
-          border: '1px solid #ccc',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#f9f9f9'
-        }}
-      >
-        <div>
-          <p>图表区域</p>
-          <p>{chartDimensions.width} x {chartDimensions.height}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-```
-
-### 性能监控
-
-```javascript
-import { useWindowSize } from '@ai-code/hooks';
-import { useState, useEffect } from 'react';
-
-function PerformanceMonitor() {
-  const { width, height } = useWindowSize({
-    debounceMs: 50 // 快速响应用于监控
-  });
-  
-  const [resizeCount, setResizeCount] = useState(0);
-  const [lastResize, setLastResize] = useState(Date.now());
-
-  useEffect(() => {
-    setResizeCount(prev => prev + 1);
-    setLastResize(Date.now());
-  }, [width, height]);
-
-  return (
-    <div>
-      <h2>窗口变化监控</h2>
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '16px',
-        marginTop: '16px'
-      }}>
-        <div style={{ 
-          padding: '16px', 
-          border: '1px solid #ddd',
-          borderRadius: '8px'
-        }}>
-          <h3>当前尺寸</h3>
-          <p>宽度: {width}px</p>
-          <p>高度: {height}px</p>
-          <p>比例: {(width / height).toFixed(2)}</p>
-        </div>
-        
-        <div style={{ 
-          padding: '16px', 
-          border: '1px solid #ddd',
-          borderRadius: '8px'
-        }}>
-          <h3>变化统计</h3>
-          <p>调整次数: {resizeCount}</p>
-          <p>上次调整: {new Date(lastResize).toLocaleTimeString()}</p>
-        </div>
-        
-        <div style={{ 
-          padding: '16px', 
-          border: '1px solid #ddd',
-          borderRadius: '8px'
-        }}>
-          <h3>设备类型</h3>
-          <p>{width < 576 ? '超小屏幕' : 
-             width < 768 ? '小屏幕' :
-             width < 992 ? '中等屏幕' :
-             width < 1200 ? '大屏幕' : '超大屏幕'}</p>
-          <p>方向: {width > height ? '横屏' : '竖屏'}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-```
-
-### 自定义断点
-
-```javascript
-import { useWindowSize } from '@ai-code/hooks';
-import { useMemo } from 'react';
-
-// 自定义断点配置
-const breakpoints = {
-  xs: 0,
-  sm: 576,
-  md: 768,
-  lg: 992,
-  xl: 1200,
-  xxl: 1400
-};
-
-function useBreakpoint() {
+function DynamicGrid() {
   const { width } = useWindowSize();
   
-  return useMemo(() => {
-    const current = Object.entries(breakpoints)
-      .reverse()
-      .find(([, breakpoint]) => width >= breakpoint)?.[0] || 'xs';
-    
+  const getColumns = () => {
+    if (width < 600) return 1;
+    if (width < 900) return 2;
+    if (width < 1200) return 3;
+    return 4;
+  };
+  
+  return (
+    <div 
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${getColumns()}, 1fr)`,
+        gap: '20px'
+      }}
+    >
+      {Array.from({ length: 12 }).map((_, i) => (
+        <div key={i} style={{ 
+          height: '200px', 
+          backgroundColor: '#f0f0f0' 
+        }}>
+          Item {i + 1}
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## 性能优化
+
+```tsx
+import { useWindowSize } from '@corn12138/hooks';
+
+function OptimizedComponent() {
+  const { width, height } = useWindowSize();
+  
+  // 使用 useMemo 优化计算
+  const layout = useMemo(() => {
     return {
-      current,
-      isXs: current === 'xs',
-      isSm: current === 'sm',
-      isMd: current === 'md',
-      isLg: current === 'lg',
-      isXl: current === 'xl',
-      isXxl: current === 'xxl',
-      isSmUp: width >= breakpoints.sm,
-      isMdUp: width >= breakpoints.md,
-      isLgUp: width >= breakpoints.lg,
-      isXlUp: width >= breakpoints.xl,
-      isSmDown: width < breakpoints.md,
-      isMdDown: width < breakpoints.lg,
-      isLgDown: width < breakpoints.xl,
+      isMobile: width < 768,
+      columns: Math.floor(width / 300),
+      itemSize: Math.floor(width / Math.floor(width / 300)) - 20
     };
   }, [width]);
-}
-
-function BreakpointExample() {
-  const breakpoint = useBreakpoint();
   
   return (
     <div>
-      <h2>断点系统示例</h2>
-      <p>当前断点: <strong>{breakpoint.current}</strong></p>
+      <p>Device: {layout.isMobile ? 'Mobile' : 'Desktop'}</p>
+      <p>Columns: {layout.columns}</p>
+      <p>Item Size: {layout.itemSize}px</p>
+    </div>
+  );
+}
+```
+
+## 条件渲染
+
+```tsx
+import { useWindowSize } from '@corn12138/hooks';
+
+function ConditionalRender() {
+  const { width, height } = useWindowSize();
+  
+  // 只在大屏幕上显示侧边栏
+  const showSidebar = width > 1024;
+  
+  // 在小屏幕上显示简化版本
+  const showSimplified = width < 600;
+  
+  return (
+    <div style={{ display: 'flex' }}>
+      {showSidebar && (
+        <aside style={{ width: '250px', backgroundColor: '#f5f5f5' }}>
+          <h3>Sidebar</h3>
+          <nav>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+        </aside>
+      )}
       
-      <div style={{ marginTop: '16px' }}>
-        {breakpoint.isXs && <p>超小屏幕内容</p>}
-        {breakpoint.isSm && <p>小屏幕内容</p>}
-        {breakpoint.isMd && <p>中等屏幕内容</p>}
-        {breakpoint.isLg && <p>大屏幕内容</p>}
-        {breakpoint.isXl && <p>超大屏幕内容</p>}
-      </div>
-      
-      <div style={{ marginTop: '16px' }}>
-        {breakpoint.isMdUp && <p>中等屏幕及以上显示</p>}
-        {breakpoint.isSmDown && <p>小屏幕及以下显示</p>}
-      </div>
+      <main style={{ flex: 1, padding: '20px' }}>
+        {showSimplified ? (
+          <div>
+            <h1>Mobile View</h1>
+            <p>Simplified content for mobile</p>
+          </div>
+        ) : (
+          <div>
+            <h1>Desktop View</h1>
+            <p>Full content for desktop</p>
+            <div>Additional features...</div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+```
+
+## 图片响应式
+
+```tsx
+import { useWindowSize } from '@corn12138/hooks';
+
+function ResponsiveImage() {
+  const { width } = useWindowSize();
+  
+  const getImageSize = () => {
+    if (width < 600) return 'small';
+    if (width < 1200) return 'medium';
+    return 'large';
+  };
+  
+  return (
+    <img 
+      src={`/images/hero-${getImageSize()}.jpg`}
+      alt="Hero Image"
+      style={{
+        width: '100%',
+        height: 'auto',
+        maxWidth: width < 600 ? '100%' : '800px'
+      }}
+    />
+  );
+}
+```
+
+## 虚拟滚动
+
+```tsx
+import { useWindowSize } from '@corn12138/hooks';
+
+function VirtualList({ items }) {
+  const { height } = useWindowSize();
+  const itemHeight = 50;
+  const visibleItems = Math.ceil(height / itemHeight) + 2;
+  
+  return (
+    <div style={{ height: height - 100, overflow: 'auto' }}>
+      {items.slice(0, visibleItems).map((item, index) => (
+        <div 
+          key={index}
+          style={{ 
+            height: itemHeight,
+            borderBottom: '1px solid #eee',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 20px'
+          }}
+        >
+          {item.title}
+        </div>
+      ))}
     </div>
   );
 }

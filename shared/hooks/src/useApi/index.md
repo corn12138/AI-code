@@ -1,36 +1,23 @@
 # useApi
 
-API 请求管理 Hook，基于 useAsync 构建，提供简洁的 RESTful API 调用接口，支持请求取消、错误处理和数据转换。
+用于处理 API 请求的 React Hook。
 
-## 基础用法
+## 基本用法
 
-```javascript
-import { useApi } from '@ai-code/hooks';
+```tsx
+import { useApi } from '@corn12138/hooks';
 
-function UserList() {
-  const { data: users, loading, error, get } = useApi({
-    baseURL: 'https://api.example.com'
-  });
-
-  const loadUsers = () => {
-    get('/users');
-  };
-
-  if (loading) return <div>加载中...</div>;
-  if (error) return <div>错误: {error}</div>;
-
+function MyComponent() {
+  const { data, loading, error } = useApi('/api/users');
+  
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  
   return (
     <div>
-      <h2>用户列表</h2>
-      <button onClick={loadUsers}>加载用户</button>
-      
-      {users && (
-        <ul>
-          {users.map(user => (
-            <li key={user.id}>{user.name} - {user.email}</li>
-          ))}
-        </ul>
-      )}
+      {data.map(user => (
+        <div key={user.id}>{user.name}</div>
+      ))}
     </div>
   );
 }
@@ -38,139 +25,96 @@ function UserList() {
 
 ## 高级用法
 
-### CRUD 操作
+```tsx
+import { useApi } from '@corn12138/hooks';
 
-```javascript
-import { useApi } from '@ai-code/hooks';
-import { useState } from 'react';
-
-function UserManager() {
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [formData, setFormData] = useState({ name: '', email: '' });
-
-  const { 
-    data: users, 
-    loading, 
-    error, 
-    get, 
-    post, 
-    put, 
-    delete: deleteUser 
-  } = useApi({
-    baseURL: '/api',
-    onSuccess: (data) => {
-      console.log('请求成功:', data);
-      // 成功后重新加载用户列表
-      if (data && !Array.isArray(data)) {
-        loadUsers();
-      }
-    },
-    onError: (error) => {
-      console.error('请求失败:', error);
-      alert('操作失败: ' + error.message);
+function UserList() {
+  const { data, loading, error, refetch } = useApi('/api/users', {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer token'
     }
   });
-
-  const loadUsers = () => get('/users');
-
-  const createUser = async () => {
-    await post('/users', formData);
-    setFormData({ name: '', email: '' });
-  };
-
-  const updateUser = async () => {
-    if (!selectedUser) return;
-    await put(`/users/${selectedUser.id}`, formData);
-    setSelectedUser(null);
-    setFormData({ name: '', email: '' });
-  };
-
-  const removeUser = async (userId) => {
-    if (confirm('确定要删除这个用户吗？')) {
-      await deleteUser(`/users/${userId}`);
-    }
-  };
-
-  const selectUserForEdit = (user) => {
-    setSelectedUser(user);
-    setFormData({ name: user.name, email: user.email });
-  };
-
+  
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-      <div>
-        <h3>用户列表</h3>
-        <button onClick={loadUsers} disabled={loading}>
-          {loading ? '加载中...' : '刷新用户'}
-        </button>
-        
-        {error && <div style={{ color: 'red' }}>错误: {error}</div>}
-        
-        {users && (
-          <div style={{ marginTop: '16px' }}>
-            {users.map(user => (
-              <div key={user.id} style={{
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                marginBottom: '8px'
-              }}>
-                <div><strong>{user.name}</strong></div>
-                <div style={{ color: '#666' }}>{user.email}</div>
-                <div style={{ marginTop: '8px' }}>
-                  <button onClick={() => selectUserForEdit(user)}>编辑</button>
-                  <button 
-                    onClick={() => removeUser(user.id)}
-                    style={{ marginLeft: '8px', color: 'red' }}
-                  >
-                    删除
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+    <div>
+      <button onClick={refetch}>Refresh</button>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+      {data && data.map(user => (
+        <div key={user.id}>{user.name}</div>
+      ))}
+    </div>
+  );
+}
+```
 
-      <div>
-        <h3>{selectedUser ? '编辑用户' : '创建用户'}</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <input
-            type="text"
-            placeholder="姓名"
-            value={formData.name}
-            onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-          />
-          
-          <input
-            type="email"
-            placeholder="邮箱"
-            value={formData.email}
-            onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-          />
-          
-          <div>
-            <button 
-              onClick={selectedUser ? updateUser : createUser}
-              disabled={loading || !formData.name || !formData.email}
-            >
-              {loading ? '提交中...' : (selectedUser ? '更新' : '创建')}
-            </button>
-            
-            {selectedUser && (
-              <button 
-                onClick={() => {
-                  setSelectedUser(null);
-                  setFormData({ name: '', email: '' });
-                }}
-                style={{ marginLeft: '8px' }}
-              >
-                取消
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+## 与其他 Hook 结合
+
+```tsx
+import { useApi } from '@corn12138/hooks';
+
+function SearchComponent() {
+  const [query, setQuery] = useState('');
+  const { data, loading } = useApi(`/api/search?q=${query}`, {
+    enabled: query.length > 0
+  });
+  
+  return (
+    <div>
+      <input 
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+      />
+      {loading && <p>Searching...</p>}
+      {data && <p>Found {data.length} results</p>}
+    </div>
+  );
+}
+```
+
+## 实际应用示例
+
+```tsx
+import { useApi } from '@corn12138/hooks';
+
+function PostEditor({ postId }: { postId: string }) {
+  const { data: post, loading, error } = useApi(`/api/posts/${postId}`);
+  
+  if (loading) return <div>Loading post...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!post) return <div>Post not found</div>;
+  
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
+    </div>
+  );
+}
+```
+
+## 完整示例
+
+```tsx
+import { useApi } from '@corn12138/hooks';
+import { useLocalStorage } from '@corn12138/hooks';
+
+function UserProfile() {
+  const [userId] = useLocalStorage('currentUserId', null);
+  const { data: user, loading, error } = useApi(`/api/users/${userId}`, {
+    enabled: !!userId
+  });
+  
+  if (!userId) return <div>Please log in</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
     </div>
   );
 }
@@ -179,7 +123,7 @@ function UserManager() {
 ### 数据转换和验证
 
 ```javascript
-import { useApi } from '@ai-code/hooks';
+import { useApi } from '@corn12138/hooks';
 import { useState } from 'react';
 
 // 数据转换函数
@@ -274,7 +218,7 @@ function TransformedApiData() {
 ### 并发请求管理
 
 ```javascript
-import { useApi } from '@ai-code/hooks';
+import { useApi } from '@corn12138/hooks';
 import { useState, useEffect } from 'react';
 
 function ConcurrentRequests() {
@@ -424,8 +368,8 @@ function ConcurrentRequests() {
 ### 条件请求和缓存
 
 ```javascript
-import { useApi } from '@ai-code/hooks';
-import { useLocalStorage } from '@ai-code/hooks';
+import { useApi } from '@corn12138/hooks';
+import { useLocalStorage } from '@corn12138/hooks';
 import { useState, useEffect } from 'react';
 
 function CachedApiRequests() {

@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢您对 `@ai-code/hooks` 的关注！我们欢迎所有形式的贡献。
+感谢您对 `@corn12138/hooks` 的关注！我们欢迎所有形式的贡献。
 
 ## 🚀 快速开始
 
@@ -117,7 +117,7 @@ test: add tests for useAsync hook
    ## 基础用法
    
    \`\`\`tsx
-   import { useYourHook } from '@ai-code/hooks';
+   import { useYourHook } from '@corn12138/hooks';
    
    function MyComponent() {
      const result = useYourHook();

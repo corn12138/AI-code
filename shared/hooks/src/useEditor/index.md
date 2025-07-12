@@ -1,153 +1,127 @@
 # useEditor
 
-编辑器状态管理 Hook，专为低代码编辑器设计，提供组件管理、历史记录、撤销重做等完整的编辑器功能。
+用于编辑器功能的 React Hook。
 
-## 基础用法
+## 基本用法
 
-```javascript
-import { useEditor } from '@ai-code/hooks';
+```tsx
+import { useEditor } from '@corn12138/hooks';
 
-function SimpleEditor() {
-  const {
-    components,
-    selectedComponentId,
-    mode,
-    addComponent,
-    removeComponent,
-    selectComponent,
-    toggleMode,
-    undo,
-    redo,
-    canUndo,
-    canRedo
-  } = useEditor();
-
-  const addButton = () => {
-    addComponent({
-      id: `button-${Date.now()}`,
-      type: 'Button',
-      props: {
-        text: '新按钮',
-        color: 'primary',
-        size: 'medium'
-      }
-    });
-  };
-
-  const addText = () => {
-    addComponent({
-      id: `text-${Date.now()}`,
-      type: 'Text',
-      props: {
-        content: '新文本',
-        fontSize: 16,
-        color: '#333'
-      }
-    });
-  };
-
+function TextEditor() {
+  const { content, setContent, history, undo, redo, canUndo, canRedo } = useEditor('');
+  
   return (
-    <div style={{ display: 'flex', height: '600px' }}>
-      {/* 工具栏 */}
-      <div style={{ width: '200px', padding: '16px', borderRight: '1px solid #ddd' }}>
-        <h3>组件库</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <button onClick={addButton}>添加按钮</button>
-          <button onClick={addText}>添加文本</button>
-        </div>
-        
-        <hr style={{ margin: '16px 0' }} />
-        
-        <h3>操作</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <button onClick={undo} disabled={!canUndo}>撤销</button>
-          <button onClick={redo} disabled={!canRedo}>重做</button>
-          <button onClick={toggleMode}>
-            切换到{mode === 'design' ? '预览' : '设计'}模式
-          </button>
-        </div>
+    <div>
+      <div>
+        <button onClick={undo} disabled={!canUndo}>Undo</button>
+        <button onClick={redo} disabled={!canRedo}>Redo</button>
       </div>
+      <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        rows={10}
+        cols={50}
+      />
+    </div>
+  );
+}
+```
 
-      {/* 画布区域 */}
-      <div style={{ flex: 1, padding: '16px', backgroundColor: '#f5f5f5' }}>
-        <h3>画布 ({mode === 'design' ? '设计模式' : '预览模式'})</h3>
-        <div style={{ 
-          minHeight: '400px', 
-          backgroundColor: 'white', 
-          padding: '16px',
-          border: mode === 'design' ? '2px dashed #ccc' : '1px solid #ddd'
-        }}>
-          {components.map(component => (
-            <div
-              key={component.id}
-              onClick={() => mode === 'design' && selectComponent(component.id)}
-              style={{
-                padding: '8px',
-                margin: '8px 0',
-                border: selectedComponentId === component.id ? '2px solid #007bff' : '1px solid #eee',
-                cursor: mode === 'design' ? 'pointer' : 'default',
-                position: 'relative'
-              }}
-            >
-              {component.type === 'Button' && (
-                <button style={{
-                  backgroundColor: component.props.color === 'primary' ? '#007bff' : '#6c757d',
-                  color: 'white',
-                  padding: component.props.size === 'large' ? '12px 24px' : '8px 16px',
-                  border: 'none',
-                  borderRadius: '4px'
-                }}>
-                  {component.props.text}
-                </button>
-              )}
-              
-              {component.type === 'Text' && (
-                <p style={{
-                  fontSize: component.props.fontSize + 'px',
-                  color: component.props.color,
-                  margin: 0
-                }}>
-                  {component.props.content}
-                </p>
-              )}
-              
-              {mode === 'design' && selectedComponentId === component.id && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    removeComponent(component.id);
-                  }}
-                  style={{
-                    position: 'absolute',
-                    top: '-8px',
-                    right: '-8px',
-                    width: '20px',
-                    height: '20px',
-                    borderRadius: '50%',
-                    backgroundColor: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    fontSize: '12px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  ×
-                </button>
-              )}
+## 富文本编辑器
+
+```tsx
+import { useEditor } from '@corn12138/hooks';
+
+function RichTextEditor() {
+  const { content, setContent, insertText, formatText, getSelection } = useEditor('');
+  
+  const handleBold = () => {
+    const selection = getSelection();
+    formatText('bold', selection);
+  };
+  
+  const handleItalic = () => {
+    const selection = getSelection();
+    formatText('italic', selection);
+  };
+  
+  return (
+    <div>
+      <div>
+        <button onClick={handleBold}>Bold</button>
+        <button onClick={handleItalic}>Italic</button>
+        <button onClick={() => insertText('Hello World!')}>
+          Insert Text
+        </button>
+      </div>
+      <div
+        contentEditable
+        dangerouslySetInnerHTML={{ __html: content }}
+        onInput={(e) => setContent(e.target.innerHTML)}
+        style={{
+          border: '1px solid #ccc',
+          padding: '10px',
+          minHeight: '200px'
+        }}
+      />
+    </div>
+  );
+}
+```
+
+## 代码编辑器
+
+```tsx
+import { useEditor } from '@corn12138/hooks';
+
+function CodeEditor() {
+  const { 
+    content, 
+    setContent, 
+    insertText, 
+    autoComplete, 
+    formatCode,
+    validateSyntax,
+    errors 
+  } = useEditor('', {
+    language: 'javascript',
+    autoIndent: true,
+    autoComplete: true
+  });
+  
+  const handleTabKey = (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      insertText('  '); // 插入两个空格
+    }
+  };
+  
+  return (
+    <div>
+      <div>
+        <button onClick={formatCode}>Format Code</button>
+        <button onClick={validateSyntax}>Validate</button>
+      </div>
+      {errors.length > 0 && (
+        <div style={{ color: 'red' }}>
+          {errors.map(error => (
+            <div key={error.line}>
+              Line {error.line}: {error.message}
             </div>
           ))}
-          
-          {components.length === 0 && (
-            <div style={{ 
-              textAlign: 'center', 
-              color: '#666', 
-              paddingTop: '100px' 
-            }}>
-              从左侧添加组件开始设计
-            </div>
-          )}
         </div>
-      </div>
+      )}
+      <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        onKeyDown={handleTabKey}
+        style={{
+          fontFamily: 'monospace',
+          fontSize: '14px',
+          width: '100%',
+          height: '400px'
+        }}
+      />
     </div>
   );
 }
@@ -158,7 +132,7 @@ function SimpleEditor() {
 ### 属性编辑器
 
 ```javascript
-import { useEditor } from '@ai-code/hooks';
+import { useEditor } from '@corn12138/hooks';
 import React, { useState, useEffect } from 'react';
 
 function AdvancedEditor() {
@@ -537,7 +511,7 @@ function ComponentRenderer({ component, selectedId, onSelect, onAddToContainer }
 ### 拖拽功能
 
 ```javascript
-import { useEditor } from '@ai-code/hooks';
+import { useEditor } from '@corn12138/hooks';
 import { useState } from 'react';
 
 function DragDropEditor() {

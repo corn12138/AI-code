@@ -1,61 +1,67 @@
 # useDebounce
 
-防抖Hook，用于延迟执行值的更新或回调函数。
+用于防抖处理的 React Hook。
 
-## useDebounce
+## 基本用法
 
-延迟更新值，常用于搜索输入等场景。
+```tsx
+import { useDebounce } from '@corn12138/hooks';
 
-```javascript
-import { useState, useEffect } from 'react';
-import { useDebounce } from '@ai-code/hooks';
-
-function SearchComponent() {
+function SearchInput() {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-  // 只有当用户停止输入500ms后才会触发搜索
+  
   useEffect(() => {
     if (debouncedSearchTerm) {
-      // 执行搜索
+      // 执行搜索请求
       console.log('搜索:', debouncedSearchTerm);
-      // 这里可以调用实际的搜索API
-      // fetch(`/api/search?q=${debouncedSearchTerm}`)
     }
   }, [debouncedSearchTerm]);
-
+  
   return (
     <input
       type="text"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      placeholder="搜索..."
+      placeholder="输入搜索内容..."
     />
   );
 }
 ```
 
-## useDebouncedCallback
+## 防抖回调
 
-防抖回调函数。
-
-```javascript
-import { useDebouncedCallback } from '@ai-code/hooks';
+```tsx
+import { useDebouncedCallback } from '@corn12138/hooks';
 
 function FormComponent() {
-  const debouncedSave = useDebouncedCallback(
-    (formData) => {
-      // 保存表单数据
-      console.log('保存表单数据:', formData);
-      // 这里可以调用实际的保存API
-      // fetch('/api/save', { method: 'POST', body: JSON.stringify(formData) })
-    },
-    1000
-  );
-
+  const [formData, setFormData] = useState({ name: '', email: '' });
+  
+  const debouncedSave = useDebouncedCallback((data) => {
+    // 自动保存表单数据
+    console.log('保存表单:', data);
+  }, 1000);
+  
+  const handleChange = (field, value) => {
+    const newData = { ...formData, [field]: value };
+    setFormData(newData);
+    debouncedSave(newData);
+  };
+  
   return (
     <form>
-      <input onChange={(e) => debouncedSave({ field: e.target.value })} />
+      <input
+        type="text"
+        value={formData.name}
+        onChange={(e) => handleChange('name', e.target.value)}
+        placeholder="姓名"
+      />
+      <input
+        type="email"
+        value={formData.email}
+        onChange={(e) => handleChange('email', e.target.value)}
+        placeholder="邮箱"
+      />
     </form>
   );
 }

@@ -34,7 +34,7 @@ const LocalesContainer: FC<{ children: ReactNode }> = (props) => {
     // append internal message, for use intl as string template util
     localeMessages['$internal.edit.link'] = false;
 
-    localeMessages['$internal.api.sourceLink'] = "https://github.com/corn12138/AI-code/tree/main/{fileName}#L{line}";
+    localeMessages['$internal.api.sourceLink'] = "https://github.com/corn12138/ai-code-hooks/tree/main/{fileName}#L{line}";
 
     return createIntl({ locale, messages: localeMessages }, cache);
   }, []);

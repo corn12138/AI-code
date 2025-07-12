@@ -1,32 +1,28 @@
-name: 🚀 功能请求
-description: 建议一个新功能或改进
+name: 🚀 Feature Request
+description: 提出新功能建议
 title: "[Feature]: "
 labels: ["enhancement", "triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        感谢您的功能建议！我们很乐意听到您的想法。
+        感谢您的建议！请详细描述您希望添加的功能。
 
   - type: textarea
     id: problem
     attributes:
-      label: "问题描述"
-      description: 您遇到了什么问题？这个功能将解决什么问题？
-      placeholder: |
-        描述您当前遇到的问题或限制...
-        例如：我在使用 useLocalStorage 时，希望能够...
+      label: 问题描述
+      description: 这个功能是为了解决什么问题？
+      placeholder: 我总是需要...
     validations:
       required: true
 
   - type: textarea
     id: solution
     attributes:
-      label: "建议的解决方案"
-      description: 您希望我们如何解决这个问题？
-      placeholder: |
-        详细描述您建议的功能或改进...
-        例如：添加一个新的 hook useSessionStorage，它应该...
+      label: 解决方案
+      description: 您希望如何解决这个问题？
+      placeholder: 我希望能够...
     validations:
       required: true
 
@@ -44,24 +40,20 @@ body:
       required: true
 
   - type: textarea
-    id: api-design
+    id: api
     attributes:
-      label: "API 设计建议"
-      description: 如果您有具体的 API 设计想法，请分享
+      label: API 设计
+      description: 如果有想法，请描述 API 应该如何工作
       render: typescript
       placeholder: |
-        // 建议的 API 接口
-        interface UseNewHookOptions {
-          // 选项参数
+        import { useNewHook } from '@corn12138/hooks';
+        
+        function MyComponent() {
+          const { data, loading } = useNewHook(options);
+          // ...
         }
-
-        interface UseNewHookReturn {
-          // 返回值
-        }
-
-        function useNewHook(options?: UseNewHookOptions): UseNewHookReturn {
-          // 使用示例
-        }
+    validations:
+      required: false
 
   - type: textarea
     id: alternatives
@@ -104,7 +96,7 @@ body:
       description: 如果可能，提供一些使用示例
       render: tsx
       placeholder: |
-        import { useNewHook } from '@ai-code/hooks';
+        import { useNewHook } from '@corn12138/hooks';
 
         function MyComponent() {
           const { data, loading } = useNewHook({

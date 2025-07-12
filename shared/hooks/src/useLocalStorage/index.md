@@ -1,55 +1,21 @@
 # useLocalStorage
 
-本地存储管理 Hook，提供类型安全的 localStorage 操作，支持跨标签页同步和自定义序列化。
+用于在本地存储中存储和获取数据的 React Hook。
 
-## 基础用法
+## 基本用法
 
-```javascript
-import { useLocalStorage } from '@ai-code/hooks';
+```tsx
+import { useLocalStorage } from '@corn12138/hooks';
 
-function UserPreferences() {
-  const [theme, setTheme, removeTheme] = useLocalStorage('theme', 'light');
-  const [fontSize, setFontSize] = useLocalStorage('fontSize', 14);
-  const [userSettings, setUserSettings] = useLocalStorage('userSettings', {
-    notifications: true,
-    autoSave: false
-  });
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-  const increaseFontSize = () => {
-    setFontSize(prev => prev + 2);
-  };
-
-  const toggleNotifications = () => {
-    setUserSettings(prev => ({
-      ...prev,
-      notifications: !prev.notifications
-    }));
-  };
-
+function MyComponent() {
+  const [value, setValue] = useLocalStorage('myKey', 'defaultValue');
+  
   return (
     <div>
-      <h2>用户偏好设置</h2>
-      
-      <div>
-        <p>当前主题: {theme}</p>
-        <button onClick={toggleTheme}>切换主题</button>
-        <button onClick={removeTheme}>重置主题</button>
-      </div>
-      
-      <div>
-        <p>字体大小: {fontSize}px</p>
-        <button onClick={increaseFontSize}>增大字体</button>
-        <button onClick={() => setFontSize(14)}>重置字体</button>
-      </div>
-      
-      <div>
-        <p>通知: {userSettings.notifications ? '开启' : '关闭'}</p>
-        <button onClick={toggleNotifications}>切换通知</button>
-      </div>
+      <p>Stored value: {value}</p>
+      <button onClick={() => setValue('new value')}>
+        Update Value
+      </button>
     </div>
   );
 }
@@ -59,8 +25,8 @@ function UserPreferences() {
 
 ### 跨标签页同步
 
-```javascript
-import { useLocalStorage } from '@ai-code/hooks';
+```tsx
+import { useLocalStorage } from '@corn12138/hooks';
 
 function CrossTabSync() {
   // 跨标签页同步用户状态
@@ -114,8 +80,8 @@ function CrossTabSync() {
 
 ### 自定义序列化
 
-```javascript
-import { useLocalStorage } from '@ai-code/hooks';
+```tsx
+import { useLocalStorage } from '@corn12138/hooks';
 
 // 自定义日期序列化
 function DateStorage() {
@@ -185,8 +151,8 @@ function CompressedStorage() {
 
 ### 错误处理
 
-```javascript
-import { useLocalStorage } from '@ai-code/hooks';
+```tsx
+import { useLocalStorage } from '@corn12138/hooks';
 
 function ErrorHandling() {
   const [sensitiveData, setSensitiveData] = useLocalStorage(
@@ -230,8 +196,8 @@ function ErrorHandling() {
 
 ### 表单数据持久化
 
-```javascript
-import { useLocalStorage } from '@ai-code/hooks';
+```tsx
+import { useLocalStorage } from '@corn12138/hooks';
 import { useState, useEffect } from 'react';
 
 function PersistentForm() {
@@ -350,7 +316,7 @@ function PersistentForm() {
 
 ### 1. 用户偏好设置
 
-```javascript
+```tsx
 function UserSettings() {
   const [language, setLanguage] = useLocalStorage('language', 'zh-CN');
   const [theme, setTheme] = useLocalStorage('theme', 'light');
@@ -377,7 +343,7 @@ function UserSettings() {
 
 ### 2. 购物车管理
 
-```javascript
+```tsx
 function ShoppingCart() {
   const [items, setItems] = useLocalStorage('cartItems', []);
 
@@ -421,7 +387,7 @@ function ShoppingCart() {
 
 ### 3. 游戏存档
 
-```javascript
+```tsx
 function GameSave() {
   const [gameState, setGameState] = useLocalStorage('gameState', {
     level: 1,
@@ -465,7 +431,7 @@ function GameSave() {
 
 ### 1. 数据验证
 
-```javascript
+```tsx
 const [userProfile, setUserProfile] = useLocalStorage(
   'userProfile',
   { name: '', age: 0 },
@@ -491,7 +457,7 @@ const [userProfile, setUserProfile] = useLocalStorage(
 
 ### 2. 版本控制
 
-```javascript
+```tsx
 const STORAGE_VERSION = '1.0';
 
 const [appData, setAppData] = useLocalStorage(
@@ -515,9 +481,9 @@ const [appData, setAppData] = useLocalStorage(
 
 ### 3. 性能优化
 
-```javascript
+```tsx
 // 对于大对象，使用防抖优化写入
-import { useDebouncedCallback } from '@ai-code/hooks';
+import { useDebouncedCallback } from '@corn12138/hooks';
 
 function OptimizedStorage() {
   const [data, setData] = useLocalStorage('largeData', {});

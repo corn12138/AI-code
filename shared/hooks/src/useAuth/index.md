@@ -1,48 +1,40 @@
 # useAuth
 
-用户认证管理Hook，提供登录、注册、登出等功能。
+用于身份认证的 React Hook。
 
-## 基础用法
+## 安装
 
-```javascript
-// 1. 安装
-npm install @ai-code/hooks
+```bash
+npm install @corn12138/hooks
+```
 
-// 2. 导入
-import { useAuth, AuthProvider } from '@ai-code/hooks';
+```tsx
+import { useAuth, AuthProvider } from '@corn12138/hooks';
 
-// 3. 在应用根部包裹AuthProvider
 function App() {
   return (
     <AuthProvider>
-      <YourAppContent />
+      <MyComponent />
     </AuthProvider>
   );
 }
 
-// 4. 在组件中使用useAuth
-function LoginComponent() {
-  const { login, logout, user, isAuthenticated, isLoading } = useAuth();
-
-  const handleLogin = async () => {
-    try {
-      await login({ username: 'test', password: '123456' });
-    } catch (error) {
-      console.error('登录失败:', error);
-    }
-  };
-
-  if (isLoading) return <div>加载中...</div>;
-
+function MyComponent() {
+  const { user, login, logout, loading } = useAuth();
+  
+  if (loading) return <div>Loading...</div>;
+  
   return (
     <div>
-      {isAuthenticated ? (
+      {user ? (
         <div>
-          <p>欢迎, {user?.username}!</p>
-          <button onClick={logout}>登出</button>
+          <p>Welcome, {user.name}!</p>
+          <button onClick={logout}>Logout</button>
         </div>
       ) : (
-        <button onClick={handleLogin}>登录</button>
+        <button onClick={() => login('username', 'password')}>
+          Login
+        </button>
       )}
     </div>
   );

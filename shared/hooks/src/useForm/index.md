@@ -1,269 +1,221 @@
 # useForm
 
-强大的表单状态管理 Hook，提供完整的表单状态管理、验证和提交处理功能。
+用于表单处理的 React Hook。
 
-## 基础用法
+## 基本用法
 
-```javascript
-import { useForm } from '@ai-code/hooks';
+```tsx
+import { useForm } from '@corn12138/hooks';
 
-function LoginForm() {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      password: ''
-    },
-    validate: (values) => {
-      const errors = {};
-      
-      if (!values.email) {
-        errors.email = '邮箱不能为空';
-      } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-        errors.email = '邮箱格式不正确';
-      }
-      
-      if (!values.password) {
-        errors.password = '密码不能为空';
-      } else if (values.password.length < 6) {
-        errors.password = '密码长度至少6位';
-      }
-      
-      return errors;
-    },
-    onSubmit: async (values) => {
-      console.log('提交数据:', values);
-      // 调用登录 API
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values)
-        });
-        if (response.ok) {
-          alert('登录成功！');
-        } else {
-          throw new Error('登录失败');
-        }
-      } catch (error) {
-        alert('登录失败: ' + error.message);
-      }
-    }
+function ContactForm() {
+  const { values, errors, handleChange, handleSubmit } = useForm({
+    name: '',
+    email: '',
+    message: ''
   });
-
+  
   return (
-    <form onSubmit={form.handleSubmit}>
-      <div>
-        <input 
-          {...form.getFieldProps('email')}
-          type="email"
-          placeholder="邮箱"
-        />
-        {form.touched.email && form.errors.email && (
-          <div style={{color: 'red'}}>{form.errors.email}</div>
-        )}
-      </div>
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <input
+        name="name"
+        value={values.name}
+        onChange={handleChange}
+        placeholder="Your Name"
+      />
+      {errors.name && <span>{errors.name}</span>}
       
-      <div>
-        <input 
-          {...form.getFieldProps('password')}
-          type="password"
-          placeholder="密码"
-        />
-        {form.touched.password && form.errors.password && (
-          <div style={{color: 'red'}}>{form.errors.password}</div>
-        )}
-      </div>
+      <input
+        name="email"
+        type="email"
+        value={values.email}
+        onChange={handleChange}
+        placeholder="Your Email"
+      />
+      {errors.email && <span>{errors.email}</span>}
       
-      <button 
-        type="submit" 
-        disabled={form.isSubmitting || !form.isValid}
-      >
-        {form.isSubmitting ? '登录中...' : '登录'}
-      </button>
+      <textarea
+        name="message"
+        value={values.message}
+        onChange={handleChange}
+        placeholder="Your Message"
+      />
+      {errors.message && <span>{errors.message}</span>}
+      
+      <button type="submit">Submit</button>
     </form>
   );
 }
 ```
 
-## 高级用法
+## 带验证的表单
 
-### 字段级验证
+```tsx
+import { useForm } from '@corn12138/hooks';
 
-```javascript
-import { useForm } from '@ai-code/hooks';
-
-function RegistrationForm() {
-  const form = useForm({
-    initialValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    },
-    // 字段级验证器
-    fieldValidators: {
-      username: (value) => {
-        if (!value) return '用户名不能为空';
-        if (value.length < 3) return '用户名至少3个字符';
-        if (!/^[a-zA-Z0-9_]+$/.test(value)) return '用户名只能包含字母、数字和下划线';
-      },
+function ValidatedForm() {
+  const { values, errors, handleChange, handleSubmit, isValid } = useForm({
+    email: '',
+    password: ''
+  }, {
+    validate: {
       email: (value) => {
-        if (!value) return '邮箱不能为空';
-        if (!/\S+@\S+\.\S+/.test(value)) return '邮箱格式不正确';
+        if (!value) return 'Email is required';
+        if (!/\S+@\S+\.\S+/.test(value)) return 'Email is invalid';
       },
       password: (value) => {
-        if (!value) return '密码不能为空';
-        if (value.length < 8) return '密码至少8个字符';
-        if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(value)) {
-          return '密码必须包含大小写字母和数字';
-        }
-      },
-      confirmPassword: (value, values) => {
-        if (!value) return '请确认密码';
-        if (value !== values.password) return '两次密码不一致';
+        if (!value) return 'Password is required';
+        if (value.length < 8) return 'Password must be at least 8 characters';
       }
-    },
-    validateMode: 'onBlur', // 失焦时验证
-    onSubmit: async (values) => {
-      console.log('注册数据:', values);
     }
   });
-
+  
   return (
-    <form onSubmit={form.handleSubmit}>
-      <div>
-        <input {...form.getFieldProps('username')} placeholder="用户名" />
-        {form.touched.username && form.errors.username && (
-          <div className="error">{form.errors.username}</div>
-        )}
-      </div>
+    <form onSubmit={handleSubmit(handleLogin)}>
+      <input
+        name="email"
+        type="email"
+        value={values.email}
+        onChange={handleChange}
+        placeholder="Email"
+      />
+      {errors.email && <span>{errors.email}</span>}
       
-      <div>
-        <input {...form.getFieldProps('email')} placeholder="邮箱" />
-        {form.touched.email && form.errors.email && (
-          <div className="error">{form.errors.email}</div>
-        )}
-      </div>
+      <input
+        name="password"
+        type="password"
+        value={values.password}
+        onChange={handleChange}
+        placeholder="Password"
+      />
+      {errors.password && <span>{errors.password}</span>}
       
-      <div>
-        <input {...form.getFieldProps('password')} type="password" placeholder="密码" />
-        {form.touched.password && form.errors.password && (
-          <div className="error">{form.errors.password}</div>
-        )}
-      </div>
-      
-      <div>
-        <input {...form.getFieldProps('confirmPassword')} type="password" placeholder="确认密码" />
-        {form.touched.confirmPassword && form.errors.confirmPassword && (
-          <div className="error">{form.errors.confirmPassword}</div>
-        )}
-      </div>
-      
-      <button type="submit" disabled={form.isSubmitting || !form.isValid}>
-        {form.isSubmitting ? '注册中...' : '注册'}
+      <button type="submit" disabled={!isValid}>
+        Login
       </button>
     </form>
   );
 }
 ```
 
-### 动态表单
+## 复杂表单
 
-```javascript
-import { useForm } from '@ai-code/hooks';
+```tsx
+import { useForm } from '@corn12138/hooks';
 
-function DynamicForm() {
-  const form = useForm({
-    initialValues: {
-      name: '',
-      contacts: [{ type: 'email', value: '' }]
+function ComplexForm() {
+  const { values, handleChange, handleSubmit, reset } = useForm({
+    profile: {
+      firstName: '',
+      lastName: '',
+      age: ''
     },
-    validate: (values) => {
-      const errors = {};
-      
-      if (!values.name) {
-        errors.name = '姓名不能为空';
-      }
-      
-      // 验证联系方式
-      if (values.contacts.some(contact => !contact.value)) {
-        errors.contacts = '联系方式不能为空';
-      }
-      
-      return errors;
-    },
-    onSubmit: async (values) => {
-      console.log('提交:', values);
+    preferences: {
+      theme: 'light',
+      notifications: true
     }
   });
-
-  const addContact = () => {
-    const newContacts = [...form.values.contacts, { type: 'email', value: '' }];
-    form.setFieldValue('contacts', newContacts);
-  };
-
-  const removeContact = (index) => {
-    const newContacts = form.values.contacts.filter((_, i) => i !== index);
-    form.setFieldValue('contacts', newContacts);
-  };
-
-  const updateContact = (index, field, value) => {
-    const newContacts = [...form.values.contacts];
-    newContacts[index][field] = value;
-    form.setFieldValue('contacts', newContacts);
-  };
-
+  
   return (
-    <form onSubmit={form.handleSubmit}>
-      <div>
-        <input {...form.getFieldProps('name')} placeholder="姓名" />
-        {form.touched.name && form.errors.name && (
-          <div className="error">{form.errors.name}</div>
-        )}
-      </div>
+    <form onSubmit={handleSubmit(handleSave)}>
+      <h2>Profile</h2>
+      <input
+        name="profile.firstName"
+        value={values.profile.firstName}
+        onChange={handleChange}
+        placeholder="First Name"
+      />
+      <input
+        name="profile.lastName"
+        value={values.profile.lastName}
+        onChange={handleChange}
+        placeholder="Last Name"
+      />
+      <input
+        name="profile.age"
+        type="number"
+        value={values.profile.age}
+        onChange={handleChange}
+        placeholder="Age"
+      />
       
-      <div>
-        <h3>联系方式</h3>
-        {form.values.contacts.map((contact, index) => (
-          <div key={index} style={{display: 'flex', gap: '10px', marginBottom: '10px'}}>
-            <select 
-              value={contact.type}
-              onChange={(e) => updateContact(index, 'type', e.target.value)}
-            >
-              <option value="email">邮箱</option>
-              <option value="phone">电话</option>
-              <option value="wechat">微信</option>
-            </select>
-            
-            <input 
-              value={contact.value}
-              onChange={(e) => updateContact(index, 'value', e.target.value)}
-              placeholder="联系方式"
-            />
-            
-            {form.values.contacts.length > 1 && (
-              <button 
-                type="button" 
-                onClick={() => removeContact(index)}
-              >
-                删除
-              </button>
-            )}
-          </div>
-        ))}
-        
-        <button type="button" onClick={addContact}>
-          添加联系方式
-        </button>
-        
-        {form.errors.contacts && (
-          <div className="error">{form.errors.contacts}</div>
-        )}
-      </div>
+      <h2>Preferences</h2>
+      <select
+        name="preferences.theme"
+        value={values.preferences.theme}
+        onChange={handleChange}
+      >
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
       
-      <button type="submit" disabled={form.isSubmitting || !form.isValid}>
-        提交
+      <label>
+        <input
+          name="preferences.notifications"
+          type="checkbox"
+          checked={values.preferences.notifications}
+          onChange={handleChange}
+        />
+        Enable notifications
+      </label>
+      
+      <button type="submit">Save</button>
+      <button type="button" onClick={reset}>Reset</button>
+    </form>
+  );
+}
+```
+
+## 动态表单
+
+```tsx
+import { useForm } from '@corn12138/hooks';
+
+function DynamicForm() {
+  const { values, handleChange, handleSubmit, setValues } = useForm({
+    items: [{ name: '', quantity: 1 }]
+  });
+  
+  const addItem = () => {
+    setValues(prev => ({
+      ...prev,
+      items: [...prev.items, { name: '', quantity: 1 }]
+    }));
+  };
+  
+  const removeItem = (index) => {
+    setValues(prev => ({
+      ...prev,
+      items: prev.items.filter((_, i) => i !== index)
+    }));
+  };
+  
+  return (
+    <form onSubmit={handleSubmit(handleSave)}>
+      {values.items.map((item, index) => (
+        <div key={index}>
+          <input
+            name={`items.${index}.name`}
+            value={item.name}
+            onChange={handleChange}
+            placeholder="Item name"
+          />
+          <input
+            name={`items.${index}.quantity`}
+            type="number"
+            value={item.quantity}
+            onChange={handleChange}
+            min="1"
+          />
+          <button type="button" onClick={() => removeItem(index)}>
+            Remove
+          </button>
+        </div>
+      ))}
+      
+      <button type="button" onClick={addItem}>
+        Add Item
       </button>
+      <button type="submit">Save</button>
     </form>
   );
 }
@@ -272,7 +224,7 @@ function DynamicForm() {
 ### 异步验证
 
 ```javascript
-import { useForm } from '@ai-code/hooks';
+import { useForm } from '@corn12138/hooks';
 
 function UserForm() {
   const form = useForm({

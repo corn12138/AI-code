@@ -1,68 +1,55 @@
 # useClientSide
 
-客户端渲染相关的Hooks，主要用于解决SSR/SSG环境下的问题。
+用于在客户端环境中安全执行代码的 React Hook。
 
-## useClientSide
+## 基本用法
 
-检测当前是否在客户端环境。
-
-```javascript
-import { useClientSide } from '@ai-code/hooks';
+```tsx
+import { useClientSide } from '@corn12138/hooks';
 
 function MyComponent() {
   const isClient = useClientSide();
-
+  
   return (
     <div>
       {isClient ? (
-        <div>
-          <p>这是客户端组件</p>
-          <button onClick={() => alert('客户端交互')}>点击我</button>
-        </div>
+        <div>这是客户端内容</div>
       ) : (
-        <div>服务端渲染占位符</div>
+        <div>这是服务端内容</div>
       )}
     </div>
   );
 }
 ```
 
-## useClientSideEffect
+## 高级用法
 
-只在客户端执行副作用。
+```tsx
+import { useClientSideEffect } from '@corn12138/hooks';
 
-```javascript
-import { useClientSideEffect } from '@ai-code/hooks';
-
-function MyComponent() {
+function BrowserOnlyComponent() {
   useClientSideEffect(() => {
-    // 只在客户端执行
-    const timer = setInterval(() => {
-      console.log('客户端定时器');
-    }, 1000);
-
-    return () => clearInterval(timer);
+    // 这个代码只在客户端运行
+    console.log('客户端代码');
   }, []);
-
-  return <div>组件内容</div>;
+  
+  return <div>Browser only content</div>;
 }
 ```
 
-## useClientState
+## 状态管理
 
-客户端状态管理。
+```tsx
+import { useClientState } from '@corn12138/hooks';
 
-```javascript
-import { useClientState } from '@ai-code/hooks';
-
-function MyComponent() {
+function StatefulComponent() {
   const [count, setCount] = useClientState(0);
-
+  
   return (
     <div>
-      <p>计数: {count}</p>
-      <button onClick={() => setCount(c => c + 1)}>
-        增加
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
       </button>
     </div>
   );

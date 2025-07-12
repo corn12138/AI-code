@@ -1,36 +1,21 @@
 # useAsync
 
-异步操作管理 Hook，提供 loading、error、data 状态管理，支持取消操作和重试机制。
+用于处理异步操作的 React Hook。
 
-## 基础用法
+## 基本用法
 
-```javascript
-import { useAsync } from '@ai-code/hooks';
+```tsx
+import { useAsync } from '@corn12138/hooks';
 
-function UserProfile({ userId }) {
-  const { data: user, loading, error, execute } = useAsync(
-    async (id) => {
-      const response = await fetch(`/api/users/${id}`);
-      if (!response.ok) throw new Error('Failed to fetch user');
-      return response.json();
-    }
-  );
-
-  // 手动触发请求
-  const loadUser = () => {
-    execute(userId);
-  };
-
-  if (loading) return <div>加载中...</div>;
-  if (error) return <div>错误: {error}</div>;
-  if (!user) return <button onClick={loadUser}>加载用户</button>;
-
+function MyComponent() {
+  const { data, loading, error, execute } = useAsync(fetchData);
+  
   return (
     <div>
-      <h2>用户信息</h2>
-      <p>姓名: {user.name}</p>
-      <p>邮箱: {user.email}</p>
-      <button onClick={loadUser}>刷新</button>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+      {data && <p>Data: {JSON.stringify(data)}</p>}
+      <button onClick={execute}>Fetch Data</button>
     </div>
   );
 }
@@ -38,131 +23,89 @@ function UserProfile({ userId }) {
 
 ## 高级用法
 
-### 自动重试
+```tsx
+import { useAsync } from '@corn12138/hooks';
 
-```javascript
-import { useAsync } from '@ai-code/hooks';
-
-function DataList() {
-  const { data, loading, error, execute, retry } = useAsync(
+function DataComponent() {
+  const { data, loading, error, execute } = useAsync(
     async () => {
-      // 可能失败的 API 调用
       const response = await fetch('/api/data');
-      if (!response.ok) throw new Error('网络错误');
       return response.json();
     },
-    {
-      retryCount: 3,        // 失败后重试 3 次
-      retryDelay: 2000,     // 每次重试间隔 2 秒
-      onError: (error) => {
-        console.error('请求失败:', error);
-      },
-      onSuccess: (data) => {
-        console.log('请求成功:', data);
-      }
-    }
+    { immediate: true }
   );
-
+  
   return (
     <div>
-      {loading && <div>加载中...</div>}
-      {error && (
-        <div>
-          <p>错误: {error}</p>
-          <button onClick={retry}>重试</button>
-        </div>
-      )}
-      {data && (
-        <ul>
-          {data.map(item => (
-            <li key={item.id}>{item.name}</li>
-          ))}
-        </ul>
-      )}
-      <button onClick={() => execute()}>刷新数据</button>
+      {loading && <div>Loading...</div>}
+      {error && <div>Error: {error.message}</div>}
+      {data && <div>Data loaded: {data.length} items</div>}
     </div>
   );
 }
 ```
 
-### 请求取消
+## 与其他 Hook 结合
 
-```javascript
-import { useAsync } from '@ai-code/hooks';
+```tsx
+import { useAsync } from '@corn12138/hooks';
 
-function SearchResults() {
-  const { data, loading, execute, cancel } = useAsync(
-    async (query) => {
-      // 模拟慢速 API
-      await new Promise(resolve => setTimeout(resolve, 2000));
+function SearchComponent() {
+  const [query, setQuery] = useState('');
+  const { data, loading, error } = useAsync(
+    async () => {
+      if (!query) return [];
       const response = await fetch(`/api/search?q=${query}`);
       return response.json();
-    }
+    },
+    { deps: [query] }
   );
-
-  const handleSearch = (query) => {
-    execute(query);
-  };
-
-  const handleCancel = () => {
-    cancel(); // 取消当前请求
-  };
-
+  
   return (
     <div>
       <input 
-        onChange={(e) => handleSearch(e.target.value)}
-        placeholder="搜索..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
       />
-      {loading && (
-        <div>
-          <span>搜索中...</span>
-          <button onClick={handleCancel}>取消</button>
-        </div>
-      )}
-      {data && (
-        <div>
-          <h3>搜索结果</h3>
-          {data.results.map(item => (
-            <div key={item.id}>{item.title}</div>
-          ))}
-        </div>
-      )}
+      {loading && <p>Searching...</p>}
+      {data && <p>Found {data.length} results</p>}
     </div>
   );
 }
 ```
 
-### 与 useEffect 结合使用
+## 实际应用示例
 
-```javascript
-import { useAsync } from '@ai-code/hooks';
-import { useEffect } from 'react';
+```tsx
+import { useAsync } from '@corn12138/hooks';
 
-function PostDetail({ postId }) {
-  const { data: post, loading, error, execute } = useAsync(
-    async (id) => {
-      const response = await fetch(`/api/posts/${id}`);
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function UserProfile({ userId }: { userId: number }) {
+  const { data: user, loading, error, execute } = useAsync<User>(
+    async () => {
+      const response = await fetch(`/api/users/${userId}`);
+      if (!response.ok) throw new Error('User not found');
       return response.json();
-    }
+    },
+    { immediate: true }
   );
-
-  // 当 postId 变化时自动加载
-  useEffect(() => {
-    if (postId) {
-      execute(postId);
-    }
-  }, [postId, execute]);
-
-  if (loading) return <div>加载文章...</div>;
-  if (error) return <div>加载失败: {error}</div>;
-  if (!post) return null;
-
+  
+  if (loading) return <div>Loading user...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!user) return <div>No user found</div>;
+  
   return (
-    <article>
-      <h1>{post.title}</h1>
-      <p>{post.content}</p>
-    </article>
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+      <button onClick={execute}>Refresh</button>
+    </div>
   );
 }
 ```
