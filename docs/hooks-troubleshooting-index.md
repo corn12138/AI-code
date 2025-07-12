@@ -1,18 +1,41 @@
-# Hooks 问题快速索引
+# Hooks 故障排除索引
 
-本文档为您提供快速定位和解决 `@ai-code/hooks` 相关问题的索引。
+本文档为您提供快速定位和解决 `@corn12138/hooks` 相关问题的索引。
+
+## 📋 常见问题分类
+
+### 1. 模块解析问题
+- **问题**: Cannot resolve module '@corn12138/hooks'
+- **解决**: 检查包安装和路径配置
+
+### 2. 构建问题  
+- **问题**: Cannot find module '@corn12138/hooks/dist/index.js'
+- **解决**: 确保构建顺序正确
+
+## 🔍 诊断命令
+
+```bash
+# 构建排序
+pnpm -r --filter '@corn12138/hooks' build && pnpm -r build
+
+# 检查包状态
+pnpm list @corn12138/hooks
+
+# 检查依赖树
+pnpm list @corn12138/hooks --depth=0
+```
 
 ## 🚨 紧急问题快速解决
 
 ### 模块找不到
 ```bash
-Error: Cannot resolve module '@ai-code/hooks'
+Error: Cannot resolve module '@corn12138/hooks'
 ```
 **快速解决**: 检查 [模块解析问题](./hooks-migration-issues-solutions.md#1-模块解析问题)
 
 ### 构建失败
 ```bash
-Error: Cannot find module '@ai-code/hooks/dist/index.js'
+Error: Cannot find module '@corn12138/hooks/dist/index.js'
 ```
 **快速解决**: 检查 [构建顺序问题](./hooks-migration-issues-solutions.md#2-构建顺序问题)
 
@@ -63,7 +86,7 @@ Type 'X' is not assignable to type 'Y'
 cd shared/hooks && pnpm build
 
 # 构建所有依赖hooks的项目
-pnpm -r --filter '@ai-code/hooks' build && pnpm -r build
+pnpm -r --filter '@corn12138/hooks' build && pnpm -r build
 
 # 检查构建结果
 ls -la shared/hooks/dist/
@@ -78,7 +101,7 @@ cd shared/hooks && pnpm dev
 pnpm -r --parallel dev
 
 # 检查模块是否正确链接
-pnpm list @ai-code/hooks
+pnpm list @corn12138/hooks
 ```
 
 ### 依赖检查
@@ -90,7 +113,7 @@ npx madge --circular --extensions ts,tsx shared/hooks/src
 cd shared/hooks && pnpm tsc --noEmit
 
 # 检查包版本一致性
-pnpm list @ai-code/hooks --depth=0
+pnpm list @corn12138/hooks --depth=0
 ```
 
 ---

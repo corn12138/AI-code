@@ -1,101 +1,40 @@
-# Hooks独立化实现总结
+# Hooks 独立性实施记录
 
-## 项目概述
+## 项目信息
+- 包名：`@corn12138/hooks`
+- 版本：1.0.0
+- 描述：🎣 A collection of powerful React hooks for modern web development
 
-本文档记录了AI-Code项目中自定义Hooks的独立化实现过程，将原本分散在Blog和LowCode项目中的hooks统一迁移到`shared/hooks`包中，并使用Dumi进行文档化。
+## 修改的文件列表
 
-## 实现成果
+### Blog 应用
+- `src/hooks/useAuth.tsx` - 重新导出@corn12138/hooks
+- `src/hooks/useClientSide.ts` - 重新导出@corn12138/hooks
+- `src/hooks/useDebounce.ts` - 重新导出@corn12138/hooks
+- `src/components/common/Header.tsx` - 使用@corn12138/hooks
+- `src/components/auth/Login.tsx` - 使用@corn12138/hooks
+- `src/components/ClientWrapper.tsx` - 使用@corn12138/hooks
+- `src/components/ClientProviders.tsx` - 使用@corn12138/hooks
+- `src/components/CommentSection.tsx` - 使用@corn12138/hooks
+- `src/components/layout/Navbar.tsx` - 使用@corn12138/hooks
+- `src/components/auth/RequireAuth.tsx` - 使用@corn12138/hooks
+- `src/components/blog/CommentSection.tsx` - 使用@corn12138/hooks
 
-### 1. 创建了独立的Hooks包
+### Lowcode 应用
+- `src/components/Layout/Navbar.tsx` - 使用@corn12138/hooks
+- `src/pages/Login.tsx` - 使用@corn12138/hooks
+- `src/pages/Home.tsx` - 使用@corn12138/hooks
+- `src/main.tsx` - 使用@corn12138/hooks
+- `src/App.tsx` - 使用@corn12138/hooks
 
-📦 **包信息：**
-- 包名：`@ai-code/hooks`
-- 版本：`1.0.0`
-- 位置：`shared/hooks/`
+## 代码示例
+```typescript
+// Header.tsx
+import { useAuth, useClientSide } from '@corn12138/hooks';
 
-### 2. 提取的通用Hooks
-
-我们成功提取了以下通用hooks：
-
-#### 🔐 认证相关
-- **useAuth**: 统一的认证管理hook
-- **AuthProvider**: 认证上下文提供者
-
-#### ⏱️ 防抖相关
-- **useDebounce**: 防抖值处理
-- **useDebouncedCallback**: 防抖回调处理
-
-#### 💻 客户端相关
-- **useClientSide**: 客户端环境检测
-- **useClientSideEffect**: 客户端副作用处理
-- **useClientState**: 客户端状态管理
-
-#### 🔄 异步操作相关
-- **useAsync**: 异步操作状态管理
-  - 自动loading、error、data状态
-  - 支持取消操作
-  - 成功/失败回调
-
-#### 🌐 网络状态相关
-- **useNetworkStatus**: 网络状态监控
-  - 在线/离线状态检测
-  - 网络连接恢复检测
-  - 自定义回调支持
-
-#### 📝 表单相关
-- **useForm**: 表单状态管理
-  - 表单验证
-  - 错误处理
-  - 脏数据检测
-  - 提交状态管理
-
-#### 💾 本地存储相关
-- **useLocalStorage**: 本地存储操作
-  - 跨标签页同步
-  - 序列化/反序列化
-  - 错误处理
-
-#### 📏 窗口大小相关
-- **useWindowSize**: 窗口大小监听
-  - 防抖处理
-  - SSR兼容
-
-#### 🔌 API请求相关
-- **useApi**: API请求管理
-  - 基于useAsync构建
-  - 请求取消
-  - 错误处理
-  - 支持GET/POST/PUT/DELETE
-
-#### 🎯 编辑器相关
-- **useEditor**: 编辑器状态管理（已有）
-
-## 项目集成情况
-
-### Blog项目 (`apps/blog`)
-
-✅ **更新完成的文件：**
-- `src/hooks/useAuth.tsx` - 重新导出@ai-code/hooks
-- `src/hooks/useClientSide.ts` - 重新导出@ai-code/hooks
-- `src/hooks/useDebounce.ts` - 重新导出@ai-code/hooks
-- `src/components/common/Header.tsx` - 使用@ai-code/hooks
-- `src/components/auth/Login.tsx` - 使用@ai-code/hooks
-- `src/components/ClientWrapper.tsx` - 使用@ai-code/hooks
-- `src/components/ClientProviders.tsx` - 使用@ai-code/hooks
-- `src/components/CommentSection.tsx` - 使用@ai-code/hooks
-- `src/components/layout/Navbar.tsx` - 使用@ai-code/hooks
-- `src/components/auth/RequireAuth.tsx` - 使用@ai-code/hooks
-- `src/components/blog/CommentSection.tsx` - 使用@ai-code/hooks
-
-### LowCode项目 (`apps/lowcode`)
-
-✅ **更新完成的文件：**
-- `src/components/NetworkStatus.tsx` - 使用useNetworkStatus
-- `src/components/Layout/Navbar.tsx` - 使用@ai-code/hooks
-- `src/pages/Login.tsx` - 使用@ai-code/hooks
-- `src/pages/Home.tsx` - 使用@ai-code/hooks
-- `src/main.tsx` - 使用@ai-code/hooks
-- `src/App.tsx` - 使用@ai-code/hooks
+// NetworkStatus.tsx
+import { useNetworkStatus } from '@corn12138/hooks';
+```
 
 ## 技术架构
 
@@ -272,7 +211,7 @@ export function useNetworkStatus(options = {}) {
 
 ```typescript
 // apps/blog/src/components/common/Header.tsx
-import { useAuth, useClientSide } from '@ai-code/hooks';
+import { useAuth, useClientSide } from '@corn12138/hooks';
 
 export default function Header() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -298,7 +237,7 @@ export default function Header() {
 
 ```typescript
 // apps/lowcode/src/components/NetworkStatus.tsx
-import { useNetworkStatus } from '@ai-code/hooks';
+import { useNetworkStatus } from '@corn12138/hooks';
 
 export default function NetworkStatus() {
   const { isOnline } = useNetworkStatus({

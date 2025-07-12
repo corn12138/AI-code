@@ -1,4 +1,11 @@
-# Hooks独立化项目总结
+# AI-Code Hooks 项目总结
+
+## 项目概述
+
+### 核心包
+- **@corn12138/hooks** (1.0.0)
+  - 🎣 强大的 React Hooks 集合
+  - 🚀 现代化的 Web 开发工具
 
 本文档总结了AI-Code项目中自定义Hooks独立化的完整过程、取得的成果以及未来规划。
 
@@ -30,7 +37,7 @@
 
 ### 独立包结构
 ```
-@ai-code/hooks (1.0.0)
+@corn12138/hooks (1.0.0)
 ├── 9个核心Hooks
 ├── 完整TypeScript类型系统
 ├── UMD/ESM/CJS多格式支持

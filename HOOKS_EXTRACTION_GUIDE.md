@@ -1,4 +1,58 @@
-# 🚀 Git Subtree 提取 shared/hooks 完整指南
+# Hooks 提取指南
+
+## 目标
+将 AI-Code 项目中的自定义 hooks 提取到独立的 NPM 包中，以便复用和独立维护。
+
+## 包信息
+- **包名**: `@corn12138/hooks`
+- **版本**: `1.0.0`
+- **描述**: 🎣 A collection of powerful React hooks for modern web development
+
+## 发布验证
+
+### 命令行验证
+```bash
+# 查看包信息
+npm view @corn12138/hooks
+
+# 安装测试
+npm install @corn12138/hooks
+
+# 测试导入
+node -e "console.log(require('@corn12138/hooks'))"
+```
+
+### 浏览器验证
+```html
+<!-- CDN 引用 -->
+<script src="https://unpkg.com/@corn12138/hooks@latest/dist/index.umd.js"></script>
+```
+
+### 代码示例
+```typescript
+// ESM 导入
+import { useAuth, useDebounce, useAsync } from '@corn12138/hooks';
+
+// CommonJS 导入
+const { useAuth, useDebounce } = require('@corn12138/hooks');
+
+// 按需导入（Tree Shaking）
+import { useDebounce } from '@corn12138/hooks';  // 只打包 230B!
+```
+
+## 使用统计
+
+```bash
+# 查看下载统计
+npm view @corn12138/hooks downloads
+npx npm-stat @corn12138/hooks
+```
+
+## 成功标志
+
+恭喜！您的 `@corn12138/hooks` 现在是：
+
+🎉 Initial release of @corn12138/hooks!
 
 ## 📋 准备工作检查清单
 
@@ -127,7 +181,7 @@ npm token create --read-write
    - Release title: `v1.0.0 - Initial Release`
    - 描述：
      ```markdown
-     🎉 Initial release of @ai-code/hooks!
+     🎉 Initial release of @corn12138/hooks!
      
      ## ✨ Features
      - 🔐 useAuth - Authentication management
@@ -170,7 +224,7 @@ npm run prepublishOnly  # 包含: lint + type-check + test + build
 npm publish
 
 # 验证发布
-npm view @ai-code/hooks
+npm view @corn12138/hooks
 ```
 
 ## 🎯 第五步：验证发布
@@ -179,20 +233,20 @@ npm view @ai-code/hooks
 
 ```bash
 # 查看包信息
-npm view @ai-code/hooks
+npm view @corn12138/hooks
 
 # 测试安装
-npm install @ai-code/hooks
+npm install @corn12138/hooks
 
 # 检查导入
-node -e "console.log(require('@ai-code/hooks'))"
+node -e "console.log(require('@corn12138/hooks'))"
 ```
 
 ### 5.2 CDN 验证
 
 ```html
 <!-- UMD 构建测试 -->
-<script src="https://unpkg.com/@ai-code/hooks@latest/dist/index.umd.js"></script>
+<script src="https://unpkg.com/@corn12138/hooks@latest/dist/index.umd.js"></script>
 <script>
   console.log(window.AiCodeHooks); // 应该显示所有导出的 hooks
 </script>
@@ -202,13 +256,13 @@ node -e "console.log(require('@ai-code/hooks'))"
 
 ```javascript
 // ESM 导入
-import { useAuth, useDebounce, useAsync } from '@ai-code/hooks';
+import { useAuth, useDebounce, useAsync } from '@corn12138/hooks';
 
 // CommonJS 导入
-const { useAuth, useDebounce } = require('@ai-code/hooks');
+const { useAuth, useDebounce } = require('@corn12138/hooks');
 
 // 按需导入 (Tree Shaking)
-import { useDebounce } from '@ai-code/hooks';  // 只打包 230B!
+import { useDebounce } from '@corn12138/hooks';  // 只打包 230B!
 ```
 
 ## 📈 第六步：推广和维护
@@ -228,13 +282,13 @@ git push origin v1.0.1
 # GitHub Release 会自动触发 NPM 发布
 
 # 监控下载量
-npm view @ai-code/hooks downloads
-npx npm-stat @ai-code/hooks
+npm view @corn12138/hooks downloads
+npx npm-stat @corn12138/hooks
 ```
 
 ## 🎉 完成！
 
-恭喜！您的 `@ai-code/hooks` 现在是：
+恭喜！您的 `@corn12138/hooks` 现在是：
 
 ✅ **独立的 GitHub 仓库**  
 ✅ **发布到 NPM** 

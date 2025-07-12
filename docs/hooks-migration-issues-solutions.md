@@ -1,6 +1,6 @@
-# Hooks迁移与集成问题总结
+# Hooks 迁移问题与解决方案
 
-本文档详细记录了在AI-Code项目中将自定义Hooks从各个子项目迁移到独立包 `@ai-code/hooks` 过程中遇到的问题、挑战和解决方案。
+本文档详细记录了在AI-Code项目中将自定义Hooks从各个子项目迁移到独立包 `@corn12138/hooks` 过程中遇到的问题、挑战和解决方案。
 
 ## 📋 目录
 
@@ -147,11 +147,11 @@ export type User<T = {}> = ExtendedUser & T;
 ### 1. 模块解析问题
 
 #### 🔴 问题描述
-在monorepo环境中，项目无法正确解析 `@ai-code/hooks` 包：
+在monorepo环境中，项目无法正确解析 `@corn12138/hooks` 包：
 
 ```bash
-Error: Cannot resolve module '@ai-code/hooks'
-Module not found: Can't resolve '@ai-code/hooks' in '/Users/.../apps/blog/src'
+Error: Cannot resolve module '@corn12138/hooks'
+Module not found: Can't resolve '@corn12138/hooks' in '/Users/.../apps/blog/src'
 ```
 
 #### ✅ 解决方案
@@ -168,7 +168,7 @@ packages:
 // apps/blog/package.json
 {
   "dependencies": {
-    "@ai-code/hooks": "workspace:^1.0.0"
+    "@corn12138/hooks": "workspace:^1.0.0"
   }
 }
 ```
@@ -179,7 +179,7 @@ packages:
 {
   "compilerOptions": {
     "paths": {
-      "@ai-code/hooks": ["../shared/hooks/src"]
+      "@corn12138/hooks": ["../shared/hooks/src"]
     }
   }
 }
@@ -192,7 +192,7 @@ packages:
 
 ```bash
 Building blog...
-Error: Cannot find module '@ai-code/hooks/dist/index.js'
+Error: Cannot find module '@corn12138/hooks/dist/index.js'
 ```
 
 #### ✅ 解决方案
@@ -201,7 +201,7 @@ Error: Cannot find module '@ai-code/hooks/dist/index.js'
 // package.json (root)
 {
   "scripts": {
-    "build": "pnpm -r --filter '@ai-code/hooks' build && pnpm -r build",
+    "build": "pnpm -r --filter '@corn12138/hooks' build && pnpm -r build",
     "dev": "pnpm -r --parallel dev"
   }
 }
@@ -228,7 +228,7 @@ Error: Cannot find module '@ai-code/hooks/dist/index.js'
 ```typescript
 // next.config.js (blog项目)
 const nextConfig = {
-  transpilePackages: ['@ai-code/hooks'],
+  transpilePackages: ['@corn12138/hooks'],
   experimental: {
     externalDir: true,
   },
@@ -383,7 +383,7 @@ export * from './useDebounce';
 在monorepo中可能出现意外的循环依赖：
 
 ```
-@ai-code/hooks -> blog -> @ai-code/hooks
+@corn12138/hooks -> blog -> @corn12138/hooks
 ```
 
 #### ✅ 解决方案
@@ -404,14 +404,14 @@ npx madge --circular --extensions ts,tsx shared/hooks/src
 1. **workspace版本管理**：
 ```json
 // 使用workspace协议确保版本一致
-"@ai-code/hooks": "workspace:*"
+"@corn12138/hooks": "workspace:*"
 ```
 
 2. **版本检查脚本**：
 ```bash
 #!/bin/bash
 # check-versions.sh
-pnpm list @ai-code/hooks --depth=0 --json | jq '.[] | {name: .name, version: .version}'
+pnpm list @corn12138/hooks --depth=0 --json | jq '.[] | {name: .name, version: .version}'
 ```
 
 ---
