@@ -1,8 +1,8 @@
 'use client';
 
-import { useAuth } from '@ai-code/hooks';
-import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, ReactNode } from 'react';
+import { useAuth } from '@corn12138/hooks';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
 
 interface RequireAuthProps {
   children: ReactNode;

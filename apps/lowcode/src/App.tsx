@@ -1,5 +1,4 @@
-import { AuthProvider } from '@ai-code/hooks';
-import { useAuth } from '@ai-code/hooks';
+import { AuthProvider, useAuth } from '@corn12138/hooks';
 import React, { lazy, Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 

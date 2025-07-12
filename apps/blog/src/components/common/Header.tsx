@@ -2,7 +2,7 @@
 
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { cn } from '@/lib/utils';
-import { useAuth, useClientSide } from '@ai-code/hooks';
+import { useAuth, useClientSide } from '@corn12138/hooks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthProvider } from '@ai-code/hooks';
+import { AuthProvider } from '@corn12138/hooks';
 import React, { useEffect, useState } from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';

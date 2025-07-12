@@ -1,6 +1,6 @@
 'use client';
 
-import { useNetworkStatus } from '@ai-code/hooks';
+import { useNetworkStatus } from '@corn12138/hooks';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { trySyncNow } from '../utils/offlineStorage';

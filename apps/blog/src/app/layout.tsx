@@ -1,4 +1,4 @@
-import { AuthProvider } from '@ai-code/hooks';
+import { AuthProvider } from '@corn12138/hooks';
 import type { Metadata } from 'next';
 import ClientProviders from '../components/ClientProviders';
 import '../styles/globals.css';

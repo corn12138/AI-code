@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@ai-code/hooks';
+import { useAuth } from '@corn12138/hooks';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';

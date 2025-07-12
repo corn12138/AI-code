@@ -1,4 +1,4 @@
-import { useAuth } from '@ai-code/hooks';
+import { useAuth } from '@corn12138/hooks';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEditor } from '@ai-code/hooks';
+import { useEditor } from '@corn12138/hooks';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useDebounce } from '@ai-code/hooks';
+import { useDebounce } from '@corn12138/hooks';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

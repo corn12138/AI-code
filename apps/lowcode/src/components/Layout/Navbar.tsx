@@ -1,4 +1,4 @@
-import { useAuth, useClientSide } from '@ai-code/hooks';
+import { useAuth, useClientSide } from '@corn12138/hooks';
 import React from 'react';
 import { toast } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';

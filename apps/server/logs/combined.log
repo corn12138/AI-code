@@ -5815,3 +5815,138 @@
 {"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-09T08:06:03.723Z"}
 {"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-09T08:06:03.723Z"}
 {"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-09T08:06:04.223Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-12T13:49:47.359Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:49:47.366Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-12T13:49:47.367Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-12T13:49:47.367Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-12T13:49:47.367Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-12T13:49:47.367Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-12T13:49:47.368Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-12T13:49:47.389Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-12T13:49:47.394Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-12T13:49:47.394Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-12T13:49:47.394Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-12T13:49:47.394Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-12T13:49:47.681Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:49:47.681Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:49:47.681Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:49:47.681Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:49:47.681Z"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","timestamp":"2025-07-12T13:49:47.681Z"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","timestamp":"2025-07-12T13:49:47.682Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2025-07-12T13:49:47.682Z"}
+{"context":"InstanceLoader","level":"info","message":"UserModule dependencies initialized","timestamp":"2025-07-12T13:49:47.682Z"}
+{"context":"InstanceLoader","level":"info","message":"TagsModule dependencies initialized","timestamp":"2025-07-12T13:49:47.682Z"}
+{"context":"InstanceLoader","level":"info","message":"ArticleModule dependencies initialized","timestamp":"2025-07-12T13:49:47.682Z"}
+{"context":"InstanceLoader","level":"info","message":"LowcodeModule dependencies initialized","timestamp":"2025-07-12T13:49:47.682Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2025-07-12T13:49:47.683Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:","timestamp":"2025-07-12T13:49:47.706Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} route","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/logout, POST} route","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} route","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RoutesResolver","level":"info","message":"UserController {/api/users}:","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} route","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} route","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, DELETE} route","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RoutesResolver","level":"info","message":"ArticleController {/api/articles}:","timestamp":"2025-07-12T13:49:47.707Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, GET} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, GET} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, POST} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, PATCH} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, DELETE} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/publish, POST} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/unpublish, POST} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RoutesResolver","level":"info","message":"LowcodeController {/api/lowcode}:","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, GET} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, GET} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, POST} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, PATCH} route","timestamp":"2025-07-12T13:49:47.708Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, DELETE} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id/publish, POST} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/preview/:id, GET} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/templates, GET} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/from-template/:templateId, POST} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health/db, GET} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RoutesResolver","level":"info","message":"TagsController {/api/tags}:","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags, GET} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/:id, GET} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-07-12T13:49:47.709Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-07-12T13:49:47.710Z"}
+{"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3001","timestamp":"2025-07-12T13:49:47.711Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-12T13:50:57.157Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:50:57.164Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-12T13:50:57.164Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-12T13:50:57.164Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-12T13:50:57.165Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-12T13:50:57.165Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-12T13:50:57.165Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-12T13:50:57.174Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-12T13:50:57.179Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-12T13:50:57.179Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-12T13:50:57.179Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-12T13:50:57.179Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-12T13:50:57.430Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-12T13:53:15.229Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:53:15.237Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-12T13:53:15.237Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-12T13:53:15.237Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-12T13:53:15.238Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-12T13:53:15.238Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-12T13:53:15.238Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-12T13:53:15.246Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-12T13:53:15.252Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-12T13:53:15.252Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-12T13:53:15.252Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-12T13:53:15.252Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2025-07-12T13:53:15.497Z"}
+{"context":"InstanceLoader","level":"info","message":"UserModule dependencies initialized","timestamp":"2025-07-12T13:53:15.498Z"}
+{"context":"InstanceLoader","level":"info","message":"TagsModule dependencies initialized","timestamp":"2025-07-12T13:53:15.498Z"}
+{"context":"InstanceLoader","level":"info","message":"ArticleModule dependencies initialized","timestamp":"2025-07-12T13:53:15.498Z"}
+{"context":"InstanceLoader","level":"info","message":"LowcodeModule dependencies initialized","timestamp":"2025-07-12T13:53:15.498Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2025-07-12T13:53:15.498Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:","timestamp":"2025-07-12T13:53:15.517Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} route","timestamp":"2025-07-12T13:53:15.518Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/logout, POST} route","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} route","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RoutesResolver","level":"info","message":"UserController {/api/users}:","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} route","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} route","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, DELETE} route","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RoutesResolver","level":"info","message":"ArticleController {/api/articles}:","timestamp":"2025-07-12T13:53:15.519Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, GET} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, GET} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, POST} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, PATCH} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, DELETE} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/publish, POST} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/unpublish, POST} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RoutesResolver","level":"info","message":"LowcodeController {/api/lowcode}:","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, GET} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, GET} route","timestamp":"2025-07-12T13:53:15.520Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, POST} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, PATCH} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, DELETE} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id/publish, POST} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/preview/:id, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/templates, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/from-template/:templateId, POST} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health/db, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RoutesResolver","level":"info","message":"TagsController {/api/tags}:","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/:id, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-07-12T13:53:15.523Z"}
+{"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3001","timestamp":"2025-07-12T13:53:15.524Z"}

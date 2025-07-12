@@ -1,8 +1,8 @@
 'use client';
 
+import { AuthProvider } from '@corn12138/hooks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
-import { AuthProvider } from '@ai-code/hooks';
 
 export default function ClientProviders({
     children,
