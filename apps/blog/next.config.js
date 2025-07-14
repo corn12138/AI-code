@@ -13,15 +13,15 @@ const nextConfig = {
             'api.dicebear.com'
         ],
     },
-    // 添加重写规则以便于开发环境中代理API请求
-    async rewrites() {
-        return [
-            {
-                source: '/api/:path*',
-                destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/:path*`,
-            },
-        ];
-    },
+    // 移除 API 重写规则，让 Next.js 处理 API 路由
+    // async rewrites() {
+    //     return [
+    //         {
+    //             source: '/api/:path*',
+    //             destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/:path*`,
+    //         },
+    //     ];
+    // },
     webpack: (config, { isServer }) => {
         // 修复SSR问题
         if (!isServer) {

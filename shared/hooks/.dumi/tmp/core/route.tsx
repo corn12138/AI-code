@@ -8,9 +8,9 @@ export async function getRoutes() {
   return {
     routes,
     routeComponents: {
-'404': React.lazy(() => import(/* webpackChunkName: "nm__dumi__dist__client__pages__404" */'/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/client/pages/404.js')),
+'404': React.lazy(() => import(/* webpackChunkName: "nm__dumi__dist__client__pages__404" */'/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/client/pages/404.js')),
 'dumi-context-layout': React.lazy(() => import(/* webpackChunkName: "dumi__tmp__dumi__theme__ContextWrapper" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/.dumi/tmp/dumi/theme/ContextWrapper')),
-'DocLayout': React.lazy(() => import(/* webpackChunkName: "nm__dumi__theme-default__layouts__DocLayout__index" */'/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/theme-default/layouts/DocLayout/index.js')),
+'DocLayout': React.lazy(() => import(/* webpackChunkName: "nm__dumi__theme-default__layouts__DocLayout__index" */'/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/theme-default/layouts/DocLayout/index.js')),
 'docs/simple-examples': React.lazy(() => import(/* webpackChunkName: "docs__simple-examples.md" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/docs/simple-examples.md')),
 'docs/examples': React.lazy(() => import(/* webpackChunkName: "docs__examples.md" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/docs/examples.md')),
 'docs/guide': React.lazy(() => import(/* webpackChunkName: "docs__guide.md" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/docs/guide.md')),
@@ -35,7 +35,7 @@ export async function getRoutes() {
 'components/useLocalStorage/index': React.lazy(() => import(/* webpackChunkName: "useLocalStorage__index.md" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useLocalStorage/index.md')),
 'components/useNetworkStatus/index': React.lazy(() => import(/* webpackChunkName: "useNetworkStatus__index.md" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useNetworkStatus/index.md')),
 'components/useWindowSize/index': React.lazy(() => import(/* webpackChunkName: "useWindowSize__index.md" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useWindowSize/index.md')),
-'demo-render': React.lazy(() => import(/* webpackChunkName: "nm__dumi__dist__client__pages__Demo__index" */'/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/client/pages/Demo/index.js')),
+'demo-render': React.lazy(() => import(/* webpackChunkName: "nm__dumi__dist__client__pages__Demo__index" */'/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/client/pages/Demo/index.js')),
 },
   };
 }

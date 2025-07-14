@@ -76,7 +76,7 @@ export interface CreateArticleDto {
   isDraft?: boolean;
 }
 
-export interface UpdateArticleDto extends Partial<CreateArticleDto> {}
+export interface UpdateArticleDto extends Partial<CreateArticleDto> {} //partial 表示可选
 
 export interface CreateCommentDto {
   content: string;

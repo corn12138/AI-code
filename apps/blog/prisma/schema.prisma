@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  username     String   @unique
+  fullName     String?
+  password     String
+  avatar       String?
+  bio          String?
+  roles        Json     @default("[\"user\"]")
+  refreshToken String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // 关系
+  articles      Article[]
+  comments      Comment[]
+  lowcodePages  LowcodePage[]
+
+  @@map("users")
+}
+
+// 分类模型
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  slug        String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关系
+  articles Article[]
+
+  @@map("categories")
+}
+
+// 标签模型
+model Tag {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String?  @unique
+  description String?
+  color       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关系
+  articles Article[]
+
+  @@map("tags")
+}
+
+// 文章模型
+model Article {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String?  @unique
+  content        String   @db.Text
+  summary        String?  @db.Text
+  published      Boolean  @default(false)
+  featuredImage  String?
+  viewCount      Int      @default(0)
+  authorId       String
+  categoryId     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  publishedAt    DateTime?
+
+  // 关系
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  category  Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags      Tag[]
+  comments  Comment[]
+
+  @@map("articles")
+}
+
+// 评论模型
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  authorId  String
+  articleId String
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关系
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  article  Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  @@map("comments")
+}
+
+// 低代码页面模型
+model LowcodePage {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  content     Json
+  description String?
+  isHomePage  Boolean  @default(false)
+  published   Boolean  @default(false)
+  config      Json?
+  meta        Json?
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  // 关系
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@map("lowcode_pages")
+}

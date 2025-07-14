@@ -1,8 +1,8 @@
 {
   "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
   "pkg": {
-    "name": "@ai-code/hooks",
-    "version": "1.0.0",
+    "name": "@corn12138/hooks",
+    "version": "1.0.5",
     "description": "🎣 A collection of powerful React hooks for modern web development. Features authentication, debouncing, async operations, network status, form handling and more.",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
@@ -38,7 +38,7 @@
       "docs:build": "dumi build",
       "docs:preview": "dumi preview",
       "prepare": "npm run build",
-      "prepublishOnly": "npm run lint && npm run type-check && npm run test && npm run build:prod",
+      "prepublishOnly": "npm run build:prod",
       "test": "jest",
       "test:watch": "jest --watch",
       "test:coverage": "jest --coverage",
@@ -47,7 +47,22 @@
       "type-check": "tsc --noEmit",
       "clean": "rimraf dist",
       "size": "size-limit",
-      "release": "np --no-tests"
+      "release": "np --no-tests",
+      "audit": "npm audit --audit-level=moderate",
+      "audit:fix": "npm audit fix",
+      "audit:production": "npm audit --audit-level=high --production",
+      "audit:dev": "npm audit --audit-level=moderate --dev",
+      "security:check": "npm run audit:production && npm run lint:security",
+      "security:full": "npm audit --audit-level=moderate && npm run lint:security",
+      "lint:security": "eslint src --ext .ts,.tsx --config .eslintrc.security.js",
+      "deploy:local": "./deploy.sh local",
+      "deploy:docker": "./deploy.sh docker",
+      "deploy:build": "./deploy.sh build",
+      "deploy:clean": "./deploy.sh clean",
+      "docker:build": "docker build -t ai-code-hooks-docs .",
+      "docker:run": "docker run -p 8080:80 ai-code-hooks-docs",
+      "docker:logs": "docker-compose logs -f docs",
+      "docker:stop": "docker-compose down"
     },
     "keywords": [
       "react",
@@ -71,41 +86,43 @@
       "react-dom": ">=16.8.0"
     },
     "devDependencies": {
-      "@rollup/plugin-commonjs": "^25.0.7",
-      "@rollup/plugin-node-resolve": "^15.2.3",
-      "@rollup/plugin-typescript": "^11.1.5",
-      "@testing-library/react": "^14.0.0",
-      "@testing-library/react-hooks": "^8.0.1",
-      "@testing-library/jest-dom": "^6.0.0",
-      "@types/jest": "^29.5.0",
-      "@types/react": "^18.0.0",
-      "@types/react-dom": "^18.0.0",
-      "dumi": "^2.1.0",
-      "eslint": "^8.40.0",
-      "@typescript-eslint/eslint-plugin": "^5.59.0",
-      "@typescript-eslint/parser": "^5.59.0",
-      "jest": "^29.5.0",
-      "jest-environment-jsdom": "^29.5.0",
-      "np": "^9.2.0",
-      "rimraf": "^5.0.5",
-      "rollup": "^4.9.6",
-      "rollup-plugin-copy": "^3.5.0",
-      "rollup-plugin-filesize": "^10.0.0",
-      "rollup-plugin-peer-deps-external": "^2.2.4",
-      "rollup-plugin-terser": "^7.0.2",
-      "rollup-plugin-visualizer": "^5.12.0",
-      "size-limit": "^11.0.1",
+      "@rollup/plugin-commonjs": "^26.0.1",
+      "@rollup/plugin-node-resolve": "^15.3.0",
+      "@rollup/plugin-terser": "^0.4.4",
+      "@rollup/plugin-typescript": "^12.1.0",
       "@size-limit/preset-small-lib": "^11.0.1",
-      "ts-jest": "^29.1.0",
-      "tslib": "^2.6.2",
-      "typescript": "^5.0.0"
+      "@testing-library/jest-dom": "^6.1.4",
+      "@testing-library/react": "^14.1.0",
+      "@testing-library/react-hooks": "^8.0.1",
+      "@types/jest": "^29.5.7",
+      "@types/react": "^18.2.37",
+      "@types/react-dom": "^18.2.15",
+      "@typescript-eslint/eslint-plugin": "^6.10.0",
+      "@typescript-eslint/parser": "^6.10.0",
+      "dumi": "^2.2.13",
+      "eslint": "^8.53.0",
+      "eslint-plugin-react": "^7.33.2",
+      "eslint-plugin-react-hooks": "^4.6.0",
+      "eslint-plugin-security": "^1.7.1",
+      "jest": "^29.7.0",
+      "jest-environment-jsdom": "^29.7.0",
+      "np": "^10.0.7",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-test-renderer": "^18.2.0",
+      "rimraf": "^5.0.5",
+      "rollup": "^4.5.0",
+      "rollup-plugin-dts": "^6.1.0",
+      "rollup-plugin-peer-deps-external": "^2.2.4",
+      "size-limit": "^11.0.0",
+      "typescript": "^5.2.2"
     },
     "repository": {
       "type": "git",
-      "url": "https://github.com/corn12138/AI-code.git"
+      "url": "https://github.com/corn12138/ai-code-hooks"
     },
     "bugs": {
-      "url": "https://github.com/corn12138/AI-code/issues"
+      "url": "https://github.com/corn12138/ai-code-hooks/issues"
     },
     "homepage": "https://corn12138.github.io/ai-code-hooks",
     "publishConfig": {
@@ -131,7 +148,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 7
       },
       "enableBy": "register",
       "type": "preset",
@@ -148,7 +165,7 @@
       },
       "enableBy": "register",
       "type": "preset",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/preset.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/preset.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/preset",
       "key": "dumi-preset"
@@ -158,10 +175,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            0
+            2
           ]
         },
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -195,7 +212,7 @@
             6
           ]
         },
-        "register": 12
+        "register": 17
       },
       "enableBy": "register",
       "type": "plugin",
@@ -208,7 +225,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -228,7 +245,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -245,7 +262,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -258,7 +275,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -275,7 +292,7 @@
             0
           ]
         },
-        "register": 4
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1110,8 +1127,8 @@
       "config": {
         "default": {
           "umi": "@@/exports",
-          "react": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react@18.3.1/node_modules/react",
-          "react-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom",
+          "react": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/node_modules/react",
+          "react-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/node_modules/react-dom",
           "react-router": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router@6.3.0_react@18.3.1/node_modules/react-router",
           "react-router-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router-dom@6.3.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-router-dom"
         }
@@ -1170,7 +1187,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 43
+        "register": 47
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1183,7 +1200,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 41
+        "register": 27
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1217,7 +1234,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1230,7 +1247,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1257,10 +1274,10 @@
       "time": {
         "hooks": {
           "onStart": [
-            0
+            1
           ]
         },
-        "register": 16
+        "register": 17
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1310,7 +1327,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1417,7 +1434,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
@@ -1429,7 +1446,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1468,7 +1485,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1506,7 +1523,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 12
+        "register": 13
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1519,7 +1536,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/test/test.js",
@@ -1531,7 +1548,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1599,7 +1616,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1611,7 +1628,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1624,7 +1641,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1687,7 +1704,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 20
+        "register": 19
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1701,13 +1718,13 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            7
+            6
           ],
           "onStart": [
             0
           ]
         },
-        "register": 15
+        "register": 11
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1810,7 +1827,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1836,7 +1853,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1862,7 +1879,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1888,7 +1905,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1914,7 +1931,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1996,7 +2013,7 @@
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/registerMethods.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/registerMethods.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/registerMethods",
       "key": "dumi:registerMethods"
@@ -2005,11 +2022,11 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/configPlugins/index.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/configPlugins/index.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/configPlugins/index",
       "key": "index"
@@ -2109,13 +2126,13 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            387
+            0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/autoAlias.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/autoAlias.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/autoAlias",
       "key": "autoAlias"
@@ -2128,17 +2145,17 @@
             0
           ],
           "modifyDefaultConfig": [
-            0
+            1
           ],
           "onCheck": [
             1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/derivative.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/derivative.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/derivative",
       "key": "dumi:derivative"
@@ -2152,7 +2169,7 @@
         "register": 0
       },
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/compiled/@umijs/plugins/index.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/compiled/@umijs/plugins/index.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "@umijs/plugins",
       "key": "analytics"
@@ -2165,7 +2182,7 @@
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/sideEffects/index.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/sideEffects/index.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/sideEffects/index",
       "key": "dumi:sideEffects"
@@ -2182,7 +2199,7 @@
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/exports.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/exports.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/exports",
       "key": "dumi:exports"
@@ -2197,11 +2214,11 @@
             0
           ]
         },
-        "register": 15
+        "register": 5
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/compile/index.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/compile/index.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/compile/index",
       "key": "dumi:compile"
@@ -2217,14 +2234,14 @@
             0
           ],
           "modifyRoutes": [
-            3
+            4
           ]
         },
         "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/routes.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/routes.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/routes",
       "key": "dumi:routes"
@@ -2234,14 +2251,14 @@
       "time": {
         "hooks": {
           "modifyRoutes": [
-            1
+            0
           ]
         },
         "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/meta.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/meta.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/meta",
       "key": "meta"
@@ -2261,7 +2278,7 @@
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/tabs.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/tabs.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/tabs",
       "key": "tabs"
@@ -2271,18 +2288,18 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            10
+            11
           ],
           "modifyAppData": [
-            1,
-            1
+            0,
+            2
           ]
         },
-        "register": 14
+        "register": 13
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/theme/index.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/theme/index.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/theme/index",
       "key": "dumi:theme"
@@ -2306,11 +2323,11 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/locales.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/locales.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/locales",
       "key": "locales"
@@ -2323,7 +2340,7 @@
       },
       "enableBy": "config",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/parser.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/parser.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/parser",
       "key": "apiParser"
@@ -2335,7 +2352,7 @@
         "register": 0
       },
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/assets.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/assets.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/assets",
       "key": "assets"
@@ -2347,7 +2364,7 @@
         "register": 0
       },
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/exportStatic.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/exportStatic.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/exportStatic",
       "key": "dumi:exportStatic"
@@ -2356,10 +2373,10 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 3
       },
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/sitemap.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/sitemap.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/sitemap",
       "key": "sitemap"
@@ -2372,7 +2389,7 @@
       },
       "enableBy": "register",
       "type": "plugin",
-      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/html2sketch.js",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/html2sketch.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks",
       "id": "dumi/dist/features/html2sketch",
       "key": "html2sketch"
@@ -2398,6 +2415,11 @@
   },
   "userConfig": {
     "outputPath": "docs-dist",
+    "base": "/",
+    "publicPath": "/",
+    "exportStatic": {},
+    "hash": true,
+    "title": "AI-Code Hooks",
     "themeConfig": {
       "name": "AI-Code Hooks",
       "logo": false,
@@ -2417,6 +2439,14 @@
         {
           "title": "📚 Hooks",
           "link": "/hooks"
+        },
+        {
+          "title": "🌟 GitHub",
+          "link": "https://github.com/corn12138/ai-code-hooks"
+        },
+        {
+          "title": "📦 NPM",
+          "link": "https://www.npmjs.com/package/@corn12138/hooks"
         }
       ],
       "sidebar": {
@@ -2480,15 +2510,21 @@
             ]
           }
         ]
-      }
+      },
+      "socialLinks": {
+        "github": "https://github.com/corn12138/ai-code-hooks"
+      },
+      "footer": "Copyright © 2025 AI-Code Hooks. Built with ❤️ using Dumi.",
+      "editLink": false
     },
-    "mfsu": false,
     "resolve": {
       "docDirs": [
         "docs",
         "src"
       ]
-    }
+    },
+    "mfsu": false,
+    "analytics": {}
   },
   "mainConfigFile": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/.dumirc.ts",
   "config": {
@@ -2508,21 +2544,21 @@
     "autoCSSModules": true,
     "alias": {
       "umi": "@@/exports",
-      "react": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react@18.3.1/node_modules/react",
-      "react-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom",
+      "react": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/node_modules/react",
+      "react-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/node_modules/react-dom",
       "react-router": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router@6.3.0_react@18.3.1/node_modules/react-router",
       "react-router-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router-dom@6.3.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-router-dom",
       "@": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src",
       "@@": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/.dumi/tmp",
       "regenerator-runtime": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/regenerator-runtime@0.13.11/node_modules/regenerator-runtime",
-      "@ai-code/hooks": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src",
+      "@corn12138/hooks": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src",
       "dumi$": "@@/dumi/exports",
       "dumi/theme": "dumi/theme-original",
       "dumi/theme-original": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/.dumi/tmp/dumi/theme",
-      "dumi/theme-default": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/theme-default"
+      "dumi/theme-default": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/theme-default"
     },
     "themeConfig": {
-      "footer": "Copyright © 2025 | Powered by <a href=\"https://d.umijs.org\" target=\"_blank\" rel=\"noreferrer\">dumi</a>",
+      "footer": "Copyright © 2025 AI-Code Hooks. Built with ❤️ using Dumi.",
       "prefersColor": {
         "default": "light",
         "switch": true
@@ -2547,6 +2583,14 @@
         {
           "title": "📚 Hooks",
           "link": "/hooks"
+        },
+        {
+          "title": "🌟 GitHub",
+          "link": "https://github.com/corn12138/ai-code-hooks"
+        },
+        {
+          "title": "📦 NPM",
+          "link": "https://www.npmjs.com/package/@corn12138/hooks"
         }
       ],
       "sidebar": {
@@ -2611,8 +2655,11 @@
           }
         ]
       },
-      "sourceLink": "https://github.com/corn12138/AI-code/tree/main/{fileName}#L{line}",
-      "editLink": "https://github.com/corn12138/AI-code/edit/main/{filename}"
+      "socialLinks": {
+        "github": "https://github.com/corn12138/ai-code-hooks"
+      },
+      "editLink": false,
+      "sourceLink": "https://github.com/corn12138/ai-code-hooks/tree/main/{fileName}#L{line}"
     },
     "resolve": {
       "docDirs": [
@@ -2645,16 +2692,18 @@
     "exportStatic": {},
     "esbuildMinifyIIFE": true,
     "outputPath": "docs-dist",
+    "title": "AI-Code Hooks",
+    "analytics": {},
     "targets": {
       "chrome": 80
     },
     "extraBabelIncludes": [
-      "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/client/theme-api"
+      "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/client/theme-api"
     ],
     "theme": {
       "dark-selector": "~'[data-prefers-color=\"dark\"]'"
     },
-    "babelLoaderCustomize": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/features/compile/babelLoaderCustomize.js",
+    "babelLoaderCustomize": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/compile/babelLoaderCustomize.js",
     "define": {
       "SEARCH_WORKER_CODE": "\"use strict\";(()=>{var P=Object.create;var I=Object.defineProperty;var z=Object.getOwnPropertyDescriptor;var D=Object.getOwnPropertyNames,R=Object.getOwnPropertySymbols,B=Object.getPrototypeOf,E=Object.prototype.hasOwnProperty,L=Object.prototype.propertyIsEnumerable;var O=(e,t,i)=>t in e?I(e,t,{enumerable:!0,configurable:!0,writable:!0,value:i}):e[t]=i,M=(e,t)=>{for(var i in t||(t={}))E.call(t,i)&&O(e,i,t[i]);if(R)for(var i of R(t))L.call(t,i)&&O(e,i,t[i]);return e};var F=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports);var N=(e,t,i,h)=>{if(t&&typeof t==\"object\"||typeof t==\"function\")for(let a of D(t))!E.call(e,a)&&a!==i&&I(e,a,{get:()=>t[a],enumerable:!(h=z(t,a))||h.enumerable});return e};var W=(e,t,i)=>(i=e!=null?P(B(e)):{},N(t||!e||!e.__esModule?I(i,\"default\",{value:e,enumerable:!0}):i,e));var j=F((K,w)=>{w.exports=function(e){var t={};function i(h){if(t[h])return t[h].exports;var a=t[h]={exports:{},id:h,loaded:!1};return e[h].call(a.exports,a,a.exports,i),a.loaded=!0,a.exports}return i.m=e,i.c=t,i.p=\"\",i(0)}([function(e,t,i){e.exports=i(1)},function(e,t,i){\"use strict\";Object.defineProperty(t,\"__esModule\",{value:!0});var h=i(2);Object.defineProperty(t,\"combineChunks\",{enumerable:!0,get:function(){return h.combineChunks}}),Object.defineProperty(t,\"fillInChunks\",{enumerable:!0,get:function(){return h.fillInChunks}}),Object.defineProperty(t,\"findAll\",{enumerable:!0,get:function(){return h.findAll}}),Object.defineProperty(t,\"findChunks\",{enumerable:!0,get:function(){return h.findChunks}})},function(e,t){\"use strict\";Object.defineProperty(t,\"__esModule\",{value:!0});var i=t.findAll=function(s){var n=s.autoEscape,g=s.caseSensitive,f=g===void 0?!1:g,p=s.findChunks,u=p===void 0?a:p,c=s.sanitize,v=s.searchWords,T=s.textToHighlight;return l({chunksToHighlight:h({chunks:u({autoEscape:n,caseSensitive:f,sanitize:c,searchWords:v,textToHighlight:T})}),totalLength:T?T.length:0})},h=t.combineChunks=function(s){var n=s.chunks;return n=n.sort(function(g,f){return g.start-f.start}).reduce(function(g,f){if(g.length===0)return[f];var p=g.pop();if(f.start<=p.end){var u=Math.max(p.end,f.end);g.push({highlight:!1,start:p.start,end:u})}else g.push(p,f);return g},[]),n},a=function(s){var n=s.autoEscape,g=s.caseSensitive,f=s.sanitize,p=f===void 0?d:f,u=s.searchWords,c=s.textToHighlight;return c=p(c),u.filter(function(v){return v}).reduce(function(v,T){T=p(T),n&&(T=r(T));for(var m=new RegExp(T,g?\"g\":\"gi\"),x=void 0;x=m.exec(c);){var S=x.index,$=m.lastIndex;$>S&&v.push({highlight:!1,start:S,end:$}),x.index===m.lastIndex&&m.lastIndex++}return v},[])};t.findChunks=a;var l=t.fillInChunks=function(s){var n=s.chunksToHighlight,g=s.totalLength,f=[],p=function(v,T,m){T-v>0&&f.push({start:v,end:T,highlight:m})};if(n.length===0)p(0,g,!1);else{var u=0;n.forEach(function(c){p(u,c.start,!1),p(c.start,c.end,!0),u=c.end}),p(u,g,!1)}return f};function d(o){return o}function r(o){return o.replace(/[\\-\\[\\]\\/\\{\\}\\(\\)\\*\\+\\?\\.\\\\\\^\\$\\|]/g,\"\\\\$&\")}}])});var C=W(j());var H=\"tab\";function k(e,t,i,h,a){let l=a!==void 0;return h.reduce((r,o)=>(o.tocIndex===a&&(r[o.paraId]=(r[o.paraId]||\"\").concat(o.value)),r),[]).filter(Boolean).length||l?{rawTitle:e,title:t,link:i,paragraphs:h.reduce((r,o)=>{var s,n;return o.tocIndex===a&&((n=r[s=o.paraId])!=null||(r[s]=\"\"),r[o.paraId]+=o.value),r},[]).filter(Boolean)}:null}function y(e){return[e.title,e.subtitle].filter(Boolean).join(\" \")}function _(e,t,i){let h=[],a=Object.values(t).reduce((l,d)=>{var r,o;return d.asset&&((o=l[r=d.routeId])!=null||(l[r]=[]),l[d.routeId].push(d)),l},{});return Object.values(e).forEach(l=>{var d;if(\"meta\"in l&&!(\"isLayout\"in l)){let r=l.meta,o=l.path.replace(/^([^/])/,\"/$1\")||\"/\",s=i.find(u=>o===u.link||o.startsWith(`${u.activePath}/`)),n=(a[l.id]||[]).map(u=>{var c;return(c=u.asset)==null?void 0:c.id}),g=k(\"\",y(r.frontmatter),o,r.texts),f=r.toc.reduce((u,c,v)=>{if(!n.includes(c.id)&&c.depth>=1){let T=y(r.frontmatter);c.depth!==1&&(T=`${T} - ${c.title}`),u.push(k(c.title,T,`${o}#${c.id}`,r.texts,v))}return u},[]),p=(r.tabs||[]).reduce((u,{key:c,meta:v})=>{let T=k(\"\",`${y(r.frontmatter)} - ${v.frontmatter.title}`,`${o}?${H}=${c}`,v.texts);return T&&u.push(T),u.push(...v.toc.map((m,x)=>k(m.title,`${y(r.frontmatter)} - ${v.frontmatter.title} - ${m.title}`,`${o}?${H}=${c}#${m.id}`,v.texts,x))),u},[]);h.push({navTitle:s==null?void 0:s.title,navOrder:s?i.indexOf(s):1/0,title:y(r.frontmatter),link:o,sections:[...g?[g]:[],...f,...p],demos:((d=a[l.id])==null?void 0:d.map(u=>({link:`${o}#${u.asset.id}`,rawTitle:u.asset.title||\"\",title:u.asset.title||y(r.frontmatter),description:u.asset.description||\"\",keywords:u.asset.keywords||[]})))||[]})}}),h}function b(e=\"\",t,i=1){let h=(0,C.findAll)({textToHighlight:e,searchWords:t,autoEscape:!0}),a={};return[h.map(({start:l,end:d,highlight:r},o)=>{let s={text:e.slice(l,d)};return o===0&&!r&&h.length>1&&s.text.length>20&&(s.text=`...${s.text.slice(-20)}`),r&&(s.highlighted=!0,a[t.find(n=>s.text.includes(n))]=i),s}),a]}function Y(e,t){let i=t.split(\" \"),h=new RegExp(t.replace(/[.*+?^${}()|[\\]\\\\]/g,\"\\\\$&\").replace(/\\s+/g,\"|\"),\"i\"),a={};return e.forEach(l=>{var o,s;let d=l.title,r=[];if(l.sections.forEach(n=>{for(let g of n.paragraphs)if(h.test(g)){let[f,p]=b(n.title,i,10),[u,c]=b(g,i);r.push({type:\"content\",link:n.link,priority:Object.values(M(M({},c),p)).reduce((v,T)=>v+T,0),highlightTitleTexts:f,highlightTexts:u,pageTitle:d});return}if(h.test(n.rawTitle)&&!h.test(l.title)){let[g,f]=b(n.title,i,10);r.push({type:\"title\",link:n.link,priority:Object.values(f).reduce((p,u)=>p+u,0),highlightTitleTexts:g,highlightTexts:b(n.paragraphs[0]||\"\",i)[0],pageTitle:d})}}),l.demos.forEach(n=>{if(h.test(n.rawTitle)||h.test(n.description)){let[g,f]=b(n.title,i,10),[p,u]=b(n.description,i);r.push({type:\"demo\",link:n.link,priority:Object.values(M(M({},u),f)).reduce((c,v)=>c+v,0),highlightTitleTexts:g,highlightTexts:p,pageTitle:d})}}),h.test(l.title)){let[n,g]=b(l.title,i,100);r.push({type:\"page\",link:l.link,priority:Object.values(g).reduce((f,p)=>f+p,0),highlightTitleTexts:n,highlightTexts:b(((o=l.sections[0])==null?void 0:o.paragraphs[0])||\"\",i)[0],pageTitle:d})}if(r.length){let n=l.navTitle||\"$ROOT\";(s=a[n])!=null||(a[n]={title:l.navTitle,priority:l.navOrder*1e3,hints:[]}),a[n].hints.push(...r)}}),Object.values(a).forEach(({hints:l})=>{l.sort((d,r)=>r.priority-d.priority)}),Object.values(a).sort((l,d)=>d.priority-l.priority)}var A;self.onmessage=({data:e})=>{switch(e.action){case\"generate-metadata\":A=_(e.args.routes,e.args.demos,e.args.nav);break;case\"get-search-result\":self.postMessage(Y(A,e.args.keywords));break;default:}};})();\n"
     }
@@ -2665,7 +2714,7 @@
       "path": "*",
       "absPath": "/*",
       "parentId": "DocLayout",
-      "file": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/client/pages/404.js"
+      "file": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/client/pages/404.js"
     },
     "dumi-context-layout": {
       "id": "dumi-context-layout",
@@ -2678,7 +2727,7 @@
     "DocLayout": {
       "id": "DocLayout",
       "path": "/",
-      "file": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/theme-default/layouts/DocLayout/index.js",
+      "file": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/theme-default/layouts/DocLayout/index.js",
       "parentId": "dumi-context-layout",
       "absPath": "/",
       "isLayout": true
@@ -2886,7 +2935,7 @@
       "path": "~demos/:id",
       "absPath": "/~demos/:id",
       "parentId": "dumi-context-layout",
-      "file": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/client/pages/Demo/index.js"
+      "file": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/client/pages/Demo/index.js"
     }
   },
   "apiRoutes": {},
@@ -2903,11 +2952,11 @@
   },
   "react": {
     "version": "18.3.1",
-    "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react@18.3.1/node_modules/react"
+    "path": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/node_modules/react"
   },
   "react-dom": {
     "version": "18.3.1",
-    "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom"
+    "path": "/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/node_modules/react-dom"
   },
   "appJS": null,
   "locale": "zh-CN",
@@ -2926,6 +2975,6 @@
   "faviconFiles": [],
   "port": 8000,
   "host": "0.0.0.0",
-  "ip": "172.20.10.7",
-  "_2LevelNavAvailable": false
+  "ip": "192.168.3.89",
+  "_2LevelNavAvailable": true
 }

@@ -4,7 +4,7 @@
 import { history } from 'dumi';
 import React, { useState, useLayoutEffect, useCallback, type ReactNode } from 'react';
 import { RawIntlProvider, createIntl, createIntlCache } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-intl@7.1.11_react@18.3.1_typescript@5.8.3/node_modules/react-intl';
-import { useIsomorphicLayoutEffect } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._fdc68529d798985b726e5e384b86817f/node_modules/dumi/dist/client/theme-api/utils.js'
+import { useIsomorphicLayoutEffect } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/client/theme-api/utils.js'
 import { locales, messages } from './config';
 
 const cache = createIntlCache();
@@ -32,9 +32,9 @@ const LocalesContainer: FC<{ children: ReactNode }> = (props) => {
     const localeMessages = messages[locale] || {};
 
     // append internal message, for use intl as string template util
-    localeMessages['$internal.edit.link'] = "https://github.com/corn12138/AI-code/edit/main/{filename}";
+    localeMessages['$internal.edit.link'] = false;
 
-    localeMessages['$internal.api.sourceLink'] = "https://github.com/corn12138/AI-code/tree/main/{fileName}#L{line}";
+    localeMessages['$internal.api.sourceLink'] = "https://github.com/corn12138/ai-code-hooks/tree/main/{fileName}#L{line}";
 
     return createIntl({ locale, messages: localeMessages }, cache);
   }, []);

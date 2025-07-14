@@ -1,16 +1,15 @@
 'use client';
 
-import { uploadImage } from '@/services/api';
-import { Tab } from '@headlessui/react';
-import dynamic from 'next/dynamic';
-import { useCallback, useRef, useState } from 'react';
 
-const MyComponent = () => {
-    // Component logic here
+const MarkdownEditor = () => {
+  // Component logic here
 
-    return (
-    // JSX here
+  return (
+    <div>
+      {/* TODO: Implement markdown editor */}
+      <p>Markdown Editor - Coming Soon</p>
+    </div>
   );
 };
 
-export default MyComponent;
+export default MarkdownEditor;

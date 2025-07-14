@@ -117,10 +117,10 @@ export default function TagsPage() {
             const response = await fetch('/api/tags');
             if (response.ok) {
                 const data = await response.json();
-                console.log('API返回的标签数据:', data.data);
+                console.log('API返回的标签数据:', data.tags);
 
-                if (Array.isArray(data.data)) {
-                    setTags(data.data);
+                if (Array.isArray(data.tags)) {
+                    setTags(data.tags);
                 } else {
                     console.error('API返回的不是数组:', data);
                     setTags([]);

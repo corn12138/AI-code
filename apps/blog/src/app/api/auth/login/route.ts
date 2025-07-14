@@ -1,62 +1,114 @@
-import { NextRequest, NextResponse } from 'next/server';
+import {
+    createApiResponse,
+    handleApiError,
+    parseRequestBody,
+    validateEmail,
+    validateFields,
+    validateMethod
+} from '@/lib/api-auth';
+import { AuthUser, JWTUtils, PasswordUtils } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import { NextRequest } from 'next/server';
+
+interface LoginRequestBody {
+    email: string;
+    password: string;
+}
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
+        // 验证请求方法
+        validateMethod(request, ['POST']);
 
-        // 获取服务器 URL，更新默认端口为 3001
-        const serverUrl = process.env.SERVER_URL || 'http://localhost:3001';
+        // 解析请求体
+        const body = await parseRequestBody<LoginRequestBody>(request);
 
-        console.log('尝试连接到服务器:', serverUrl);
-        console.log('登录请求数据:', body);
+        // 验证必填字段
+        validateFields(body, ['email', 'password']);
 
-        // 转发请求到服务器应用
-        const response = await fetch(`${serverUrl}/api/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
+        const { email, password } = body;
+
+        // 验证邮箱格式
+        if (!validateEmail(email)) {
+            return createApiResponse(
+                { error: 'Invalid email format' },
+                400
+            );
+        }
+
+        // 查找用户
+        const user = await prisma.user.findUnique({
+            where: { email: email.toLowerCase() },
+            select: {
+                id: true,
+                email: true,
+                username: true,
+                password: true,
+                roles: true
+            }
         });
 
-        console.log('服务器响应状态:', response.status);
-
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            console.log('服务器错误响应:', errorData);
-            return NextResponse.json(
-                { message: errorData.message || '登录失败' },
-                { status: response.status }
+        // 检查用户是否存在
+        if (!user) {
+            return createApiResponse(
+                { error: 'Invalid email or password' },
+                401
             );
         }
 
-        const data = await response.json();
-        console.log('服务器响应数据:', data);
+        // 验证密码
+        const isValidPassword = await PasswordUtils.verifyPassword(password, user.password);
 
-        // 创建响应并转发cookies
-        const nextResponse = NextResponse.json(data);
-
-        // 转发服务器设置的cookies
-        const setCookieHeader = response.headers.get('set-cookie');
-        if (setCookieHeader) {
-            nextResponse.headers.set('set-cookie', setCookieHeader);
+        if (!isValidPassword) {
+            return createApiResponse(
+                { error: 'Invalid email or password' },
+                401
+            );
         }
 
-        return nextResponse;
+        // 创建用户信息对象
+        const authUser: AuthUser = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            roles: user.roles as string[]
+        };
+
+        // 生成 JWT tokens
+        const tokens = JWTUtils.generateTokenPair(authUser);
+
+        // 更新用户最后登录时间
+        await prisma.user.update({
+            where: { id: user.id },
+            data: { updatedAt: new Date() }
+        });
+
+        // 返回成功响应
+        return createApiResponse({
+            message: 'Login successful',
+            user: {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                roles: user.roles
+            },
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken
+        });
+
     } catch (error) {
-        console.error('Login API error:', error);
-
-        // 检查是否是连接错误
-        if (error instanceof Error && error.message.includes('fetch failed')) {
-            return NextResponse.json(
-                { message: '无法连接到认证服务器，请确保服务器正在 http://localhost:3001 运行' },
-                { status: 503 }
-            );
-        }
-
-        return NextResponse.json(
-            { message: '服务器内部错误' },
-            { status: 500 }
-        );
+        return handleApiError(error);
     }
+}
+
+// 处理 OPTIONS 请求（CORS）
+export async function OPTIONS(request: NextRequest) {
+    return new Response(null, {
+        status: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+    });
 }

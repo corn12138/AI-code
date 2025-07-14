@@ -5950,3 +5950,225 @@
 {"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-07-12T13:53:15.521Z"}
 {"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-07-12T13:53:15.523Z"}
 {"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3001","timestamp":"2025-07-12T13:53:15.524Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-13T01:32:00.461Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T01:32:00.469Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-13T01:32:00.469Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-13T01:32:00.469Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T01:32:00.469Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T01:32:00.470Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-13T01:32:00.470Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-13T01:32:00.492Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-13T01:32:00.497Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-13T01:32:00.497Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-13T01:32:00.497Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-13T01:32:00.497Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-13T01:32:00.758Z"}
+{"context":"HttpExceptionFilter","level":"error","message":"GET /api/user/profile - 404: Cannot GET /api/user/profile","stack":["NotFoundException: Cannot GET /api/user/profile\n    at callback (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/routes-resolver.js:77:19)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/router-proxy.js:9:23\n    at Layer.handle [as handle_request] (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:328:13)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:280:10)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:136:14)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)"],"timestamp":"2025-07-13T01:39:41.596Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/health 200 - 196ms","timestamp":"2025-07-13T01:49:32.935Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/health 200 - 193ms","timestamp":"2025-07-13T01:49:50.361Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/tags 200 - 301ms","timestamp":"2025-07-13T01:50:47.545Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/health 200 - 190ms","timestamp":"2025-07-13T01:52:47.412Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-13T01:53:28.443Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T01:53:28.452Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-13T01:53:28.452Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-13T01:53:28.453Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T01:53:28.453Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T01:53:28.453Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-13T01:53:28.454Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-13T01:53:28.472Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-13T01:53:28.477Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-13T01:53:28.477Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-13T01:53:28.477Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-13T01:53:28.477Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-13T01:53:28.719Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T01:53:28.719Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T01:53:28.719Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T01:53:28.719Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T01:53:28.719Z"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","timestamp":"2025-07-13T01:53:28.719Z"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","timestamp":"2025-07-13T01:53:28.720Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2025-07-13T01:53:28.720Z"}
+{"context":"InstanceLoader","level":"info","message":"UserModule dependencies initialized","timestamp":"2025-07-13T01:53:28.720Z"}
+{"context":"InstanceLoader","level":"info","message":"TagsModule dependencies initialized","timestamp":"2025-07-13T01:53:28.720Z"}
+{"context":"InstanceLoader","level":"info","message":"ArticleModule dependencies initialized","timestamp":"2025-07-13T01:53:28.720Z"}
+{"context":"InstanceLoader","level":"info","message":"LowcodeModule dependencies initialized","timestamp":"2025-07-13T01:53:28.720Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2025-07-13T01:53:28.720Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:","timestamp":"2025-07-13T01:53:28.741Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} route","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/logout, POST} route","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} route","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RoutesResolver","level":"info","message":"UserController {/api/users}:","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} route","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} route","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, DELETE} route","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RoutesResolver","level":"info","message":"ArticleController {/api/articles}:","timestamp":"2025-07-13T01:53:28.742Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, GET} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, GET} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, POST} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, PATCH} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, DELETE} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/publish, POST} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/unpublish, POST} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RoutesResolver","level":"info","message":"LowcodeController {/api/lowcode}:","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, GET} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, GET} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, POST} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, PATCH} route","timestamp":"2025-07-13T01:53:28.743Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, DELETE} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id/publish, POST} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/preview/:id, GET} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/templates, GET} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/from-template/:templateId, POST} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health/db, GET} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RoutesResolver","level":"info","message":"TagsController {/api/tags}:","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags, GET} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/:id, GET} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-07-13T01:53:28.744Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-07-13T01:53:28.745Z"}
+{"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3003","timestamp":"2025-07-13T01:53:28.746Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/health 200 - 190ms","timestamp":"2025-07-13T01:53:49.115Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/health 200 - 196ms","timestamp":"2025-07-13T01:55:33.810Z"}
+{"context":"HttpExceptionFilter","level":"error","message":"GET /api/nonexistent - 404: Cannot GET /api/nonexistent","stack":["NotFoundException: Cannot GET /api/nonexistent\n    at callback (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/routes-resolver.js:77:19)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/router-proxy.js:9:23\n    at Layer.handle [as handle_request] (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:328:13)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:280:10)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:136:14)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)"],"timestamp":"2025-07-13T01:56:33.170Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/health 200 - 189ms","timestamp":"2025-07-13T01:56:59.324Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/tags 200 - 300ms","timestamp":"2025-07-13T01:57:43.495Z"}
+{"context":"HttpExceptionFilter","level":"error","message":"POST /api/auth/register - 404: Cannot POST /api/auth/register","stack":["NotFoundException: Cannot POST /api/auth/register\n    at callback (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/routes-resolver.js:77:19)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/router-proxy.js:9:23\n    at Layer.handle [as handle_request] (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:328:13)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:280:10)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:136:14)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)"],"timestamp":"2025-07-13T01:57:54.512Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-13T02:01:29.171Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:01:29.179Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-13T02:01:29.179Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-13T02:01:29.180Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T02:01:29.181Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T02:01:29.181Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-13T02:01:29.182Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-13T02:01:29.198Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-13T02:01:29.203Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-13T02:01:29.203Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-13T02:01:29.204Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-13T02:01:29.204Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-13T02:01:29.444Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:01:29.444Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:01:29.444Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:01:29.444Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:01:29.444Z"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","timestamp":"2025-07-13T02:01:29.444Z"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","timestamp":"2025-07-13T02:01:29.444Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2025-07-13T02:01:29.445Z"}
+{"context":"InstanceLoader","level":"info","message":"UserModule dependencies initialized","timestamp":"2025-07-13T02:01:29.445Z"}
+{"context":"InstanceLoader","level":"info","message":"TagsModule dependencies initialized","timestamp":"2025-07-13T02:01:29.445Z"}
+{"context":"InstanceLoader","level":"info","message":"ArticleModule dependencies initialized","timestamp":"2025-07-13T02:01:29.445Z"}
+{"context":"InstanceLoader","level":"info","message":"LowcodeModule dependencies initialized","timestamp":"2025-07-13T02:01:29.445Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2025-07-13T02:01:29.446Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:","timestamp":"2025-07-13T02:01:29.467Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} route","timestamp":"2025-07-13T02:01:29.468Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/logout, POST} route","timestamp":"2025-07-13T02:01:29.468Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} route","timestamp":"2025-07-13T02:01:29.468Z"}
+{"context":"RoutesResolver","level":"info","message":"UserController {/api/users}:","timestamp":"2025-07-13T02:01:29.468Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} route","timestamp":"2025-07-13T02:01:29.468Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} route","timestamp":"2025-07-13T02:01:29.468Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route","timestamp":"2025-07-13T02:01:29.468Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, DELETE} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RoutesResolver","level":"info","message":"ArticleController {/api/articles}:","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, GET} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, GET} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, POST} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, PATCH} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, DELETE} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/publish, POST} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/unpublish, POST} route","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RoutesResolver","level":"info","message":"LowcodeController {/api/lowcode}:","timestamp":"2025-07-13T02:01:29.469Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, POST} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, PATCH} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, DELETE} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id/publish, POST} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/preview/:id, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/templates, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/from-template/:templateId, POST} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health/db, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RoutesResolver","level":"info","message":"TagsController {/api/tags}:","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/:id, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-07-13T02:01:29.470Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-07-13T02:01:29.472Z"}
+{"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3003","timestamp":"2025-07-13T02:01:29.473Z"}
+{"context":"HttpExceptionFilter","level":"error","message":"GET /api/auth/login - 404: Cannot GET /api/auth/login","stack":["NotFoundException: Cannot GET /api/auth/login\n    at callback (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/routes-resolver.js:77:19)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@nestjs+core@9.4.3_@nestjs+common@9.4.3_cache-manager@4.1.0_class-transformer@0.5.1_cla_41a4a1679781ff82da53d511585e9c58/node_modules/@nestjs/core/router/router-proxy.js:9:23\n    at Layer.handle [as handle_request] (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:328:13)\n    at /Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/index.js:280:10)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:136:14)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)\n    at next (/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/express@4.18.2/node_modules/express/lib/router/route.js:140:7)"],"timestamp":"2025-07-13T02:01:43.717Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-13T02:19:26.694Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:19:26.702Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-13T02:19:26.702Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-13T02:19:26.703Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T02:19:26.703Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T02:19:26.703Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-13T02:19:26.704Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-13T02:19:26.722Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-13T02:19:26.727Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-13T02:19:26.727Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-13T02:19:26.728Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-13T02:19:26.728Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"UserModule dependencies initialized","timestamp":"2025-07-13T02:19:26.972Z"}
+{"context":"InstanceLoader","level":"info","message":"TagsModule dependencies initialized","timestamp":"2025-07-13T02:19:26.973Z"}
+{"context":"InstanceLoader","level":"info","message":"ArticleModule dependencies initialized","timestamp":"2025-07-13T02:19:26.973Z"}
+{"context":"InstanceLoader","level":"info","message":"LowcodeModule dependencies initialized","timestamp":"2025-07-13T02:19:26.973Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2025-07-13T02:19:26.973Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:","timestamp":"2025-07-13T02:19:26.993Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} route","timestamp":"2025-07-13T02:19:26.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/logout, POST} route","timestamp":"2025-07-13T02:19:26.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} route","timestamp":"2025-07-13T02:19:26.994Z"}
+{"context":"RoutesResolver","level":"info","message":"UserController {/api/users}:","timestamp":"2025-07-13T02:19:26.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} route","timestamp":"2025-07-13T02:19:26.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} route","timestamp":"2025-07-13T02:19:26.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route","timestamp":"2025-07-13T02:19:26.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, DELETE} route","timestamp":"2025-07-13T02:19:26.995Z"}
+{"context":"RoutesResolver","level":"info","message":"ArticleController {/api/articles}:","timestamp":"2025-07-13T02:19:26.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, GET} route","timestamp":"2025-07-13T02:19:26.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, GET} route","timestamp":"2025-07-13T02:19:26.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, POST} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, PATCH} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, DELETE} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/publish, POST} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/unpublish, POST} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RoutesResolver","level":"info","message":"LowcodeController {/api/lowcode}:","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, GET} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, GET} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, POST} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, PATCH} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, DELETE} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id/publish, POST} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/preview/:id, GET} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/templates, GET} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/from-template/:templateId, POST} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2025-07-13T02:19:26.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health/db, GET} route","timestamp":"2025-07-13T02:19:26.997Z"}
+{"context":"RoutesResolver","level":"info","message":"TagsController {/api/tags}:","timestamp":"2025-07-13T02:19:26.997Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags, GET} route","timestamp":"2025-07-13T02:19:26.997Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/:id, GET} route","timestamp":"2025-07-13T02:19:26.997Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-07-13T02:19:26.997Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-07-13T02:19:26.998Z"}
+{"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3003","timestamp":"2025-07-13T02:19:26.999Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/tags 200 - 300ms","timestamp":"2025-07-13T02:19:40.078Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-07-13T02:26:50.235Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-07-13T02:26:50.244Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-07-13T02:26:50.244Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-07-13T02:26:50.244Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T02:26:50.245Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-07-13T02:26:50.245Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-07-13T02:26:50.245Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-07-13T02:26:50.264Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-07-13T02:26:50.268Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-07-13T02:26:50.269Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-07-13T02:26:50.269Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-07-13T02:26:50.269Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-07-13T02:26:50.508Z"}
