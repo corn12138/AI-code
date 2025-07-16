@@ -135,7 +135,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "preset",
@@ -148,7 +148,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 10
       },
       "enableBy": "register",
       "type": "preset",
@@ -178,7 +178,7 @@
             2
           ]
         },
-        "register": 3
+        "register": 4
       },
       "enableBy": "register",
       "type": "plugin",
@@ -195,7 +195,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -212,7 +212,7 @@
             8
           ]
         },
-        "register": 16
+        "register": 18
       },
       "enableBy": "register",
       "type": "plugin",
@@ -225,7 +225,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -262,7 +262,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -275,7 +275,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -292,7 +292,7 @@
             0
           ]
         },
-        "register": 11
+        "register": 6
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1144,7 +1144,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1158,7 +1158,7 @@
       "time": {
         "hooks": {
           "onStart": [
-            0
+            1
           ]
         },
         "register": 0
@@ -1187,7 +1187,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 46
+        "register": 49
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1200,7 +1200,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 42
+        "register": 49
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1277,7 +1277,7 @@
             0
           ]
         },
-        "register": 19
+        "register": 18
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1408,7 +1408,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 4
+        "register": 3
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1421,7 +1421,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1472,7 +1472,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1548,7 +1548,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1561,7 +1561,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1574,7 +1574,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1587,7 +1587,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1603,7 +1603,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1616,7 +1616,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
@@ -1641,7 +1641,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
@@ -1678,7 +1678,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1691,7 +1691,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1704,7 +1704,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 24
+        "register": 22
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1718,13 +1718,13 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            8
+            9
           ],
           "onStart": [
             0
           ]
         },
-        "register": 13
+        "register": 14
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__c3bd858ca65139e391d23bb54ebe3328/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
@@ -1749,7 +1749,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1918,7 +1918,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1944,7 +1944,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1957,7 +1957,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1983,7 +1983,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1996,7 +1996,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2022,7 +2022,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2129,7 +2129,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/dist/features/autoAlias.js",
@@ -2166,7 +2166,7 @@
       },
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.2_@types+node@20.17.46_@types+react@18._54b15bc5b15defb5cc2e774a369d3a31/node_modules/dumi/compiled/@umijs/plugins/index.js",
@@ -2178,7 +2178,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2211,10 +2211,10 @@
           "modifyConfig": [
             0,
             0,
-            1
+            0
           ]
         },
-        "register": 7
+        "register": 8
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2288,14 +2288,14 @@
       "time": {
         "hooks": {
           "modifyConfig": [
-            12
+            17
           ],
           "modifyAppData": [
             0,
             2
           ]
         },
-        "register": 18
+        "register": 19
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2323,7 +2323,7 @@
             0
           ]
         },
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -2336,7 +2336,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -2990,7 +2990,7 @@
     "tslibVersion": "2.8.1"
   },
   "faviconFiles": [],
-  "port": 8000,
+  "port": 8001,
   "host": "0.0.0.0",
   "ip": "172.20.10.7",
   "_2LevelNavAvailable": true
