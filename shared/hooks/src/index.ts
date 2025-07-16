@@ -36,5 +36,9 @@ export type { UseWindowSizeOptions, WindowSize } from './useWindowSize';
 export { useApi } from './useApi';
 export type { UseApiOptions, UseApiReturn } from './useApi';
 
+// Chat SSE相关
+export { useChatSSE } from './useChatSSE';
+export type { ChatSSEData, UseChatSSEOptions, UseChatSSEReturn } from './useChatSSE';
+
 // 版本信息
 export const version = '1.0.0'; 

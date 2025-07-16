@@ -17,9 +17,9 @@ export interface AuthState {
 }
 
 export interface AuthContextType extends AuthState {
-    login: (credentials: { username: string; password: string }) => Promise<void>;
+    login: (credentials: { email: string; password: string }) => Promise<boolean>;
     logout: () => void;
-    register: (userData: { username: string; email: string; password: string }) => Promise<void>;
+    register: (userData: { username: string; email: string; password: string }) => Promise<boolean>;
     updateUser: (userData: Partial<User>) => void;
 }
 
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const initAuth = () => {
             if (typeof window === 'undefined') return;
 
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('accessToken');
             const userStr = localStorage.getItem('user');
 
             if (token && userStr) {
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                         isAuthenticated: true,
                     });
                 } catch (error) {
-                    localStorage.removeItem('token');
+                    localStorage.removeItem('accessToken');
                     localStorage.removeItem('user');
                     setAuthState(prev => ({ ...prev, isLoading: false }));
                 }
@@ -65,7 +65,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         initAuth();
     }, []);
 
-    const login = useCallback(async (credentials: { username: string; password: string }) => {
+    const login = useCallback(async (credentials: { email: string; password: string }): Promise<boolean> => {
         setAuthState(prev => ({ ...prev, isLoading: true }));
 
         try {
@@ -75,30 +75,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 body: JSON.stringify(credentials),
             });
 
-            if (!response.ok) throw new Error('登录失败');
+            if (!response.ok) {
+                setAuthState(prev => ({ ...prev, isLoading: false }));
+                return false;
+            }
 
-            const { user, token } = await response.json();
+            const data = await response.json();
+            const { user, accessToken } = data;
 
             if (typeof window !== 'undefined') {
-                localStorage.setItem('token', token);
+                localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('user', JSON.stringify(user));
             }
 
             setAuthState({
                 user,
-                token,
+                token: accessToken,
                 isLoading: false,
                 isAuthenticated: true,
             });
+
+            return true;
         } catch (error) {
             setAuthState(prev => ({ ...prev, isLoading: false }));
-            throw error;
+            return false;
         }
     }, []);
 
     const logout = useCallback(() => {
         if (typeof window !== 'undefined') {
-            localStorage.removeItem('token');
+            localStorage.removeItem('accessToken');
             localStorage.removeItem('user');
         }
         setAuthState({
@@ -109,7 +115,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
     }, []);
 
-    const register = useCallback(async (userData: { username: string; email: string; password: string }) => {
+    const register = useCallback(async (userData: { username: string; email: string; password: string }): Promise<boolean> => {
         setAuthState(prev => ({ ...prev, isLoading: true }));
 
         try {
@@ -119,24 +125,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 body: JSON.stringify(userData),
             });
 
-            if (!response.ok) throw new Error('注册失败');
+            if (!response.ok) {
+                setAuthState(prev => ({ ...prev, isLoading: false }));
+                return false;
+            }
 
-            const { user, token } = await response.json();
+            const data = await response.json();
+            const { user, accessToken } = data;
 
             if (typeof window !== 'undefined') {
-                localStorage.setItem('token', token);
+                localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('user', JSON.stringify(user));
             }
 
             setAuthState({
                 user,
-                token,
+                token: accessToken,
                 isLoading: false,
                 isAuthenticated: true,
             });
+
+            return true;
         } catch (error) {
             setAuthState(prev => ({ ...prev, isLoading: false }));
-            throw error;
+            return false;
         }
     }, []);
 

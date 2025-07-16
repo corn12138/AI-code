@@ -19,36 +19,40 @@ import { frontmatter as fm7, toc as t7 } from '/Users/huangyuming/Desktop/create
 import { demoIndex as dmi7 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useWindowSize/index.md?type=demo-index';
 import { frontmatter as fm8, toc as t8 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=frontmatter';
 import { demoIndex as dmi8 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=demo-index';
-import { frontmatter as fm9, toc as t9 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=frontmatter';
-import { demoIndex as dmi9 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=demo-index';
-import { frontmatter as fm10, toc as t10 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=frontmatter';
-import { demoIndex as dmi10 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=demo-index';
-import { frontmatter as fm11, toc as t11 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=frontmatter';
-import { demoIndex as dmi11 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=demo-index';
-import { frontmatter as fm12, toc as t12 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=frontmatter';
-import { demoIndex as dmi12 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=demo-index';
-import { frontmatter as fm13, toc as t13 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=frontmatter';
-import { demoIndex as dmi13 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=demo-index';
+import { frontmatter as fm9, toc as t9 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useChatSSE/index.md?type=frontmatter';
+import { demoIndex as dmi9 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useChatSSE/index.md?type=demo-index';
+import { frontmatter as fm10, toc as t10 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=frontmatter';
+import { demoIndex as dmi10 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=demo-index';
+import { frontmatter as fm11, toc as t11 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=frontmatter';
+import { demoIndex as dmi11 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=demo-index';
+import { frontmatter as fm12, toc as t12 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=frontmatter';
+import { demoIndex as dmi12 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=demo-index';
+import { frontmatter as fm13, toc as t13 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=frontmatter';
+import { demoIndex as dmi13 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=demo-index';
 import { frontmatter as fm14, toc as t14 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=frontmatter';
 import { demoIndex as dmi14 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=demo-index';
-import { frontmatter as fm15, toc as t15 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=frontmatter';
-import { demoIndex as dmi15 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=demo-index';
-import { frontmatter as fm16, toc as t16 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=frontmatter';
-import { demoIndex as dmi16 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=demo-index';
-import { frontmatter as fm17, toc as t17 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useClientSide/index.md?type=frontmatter';
-import { demoIndex as dmi17 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useClientSide/index.md?type=demo-index';
-import { frontmatter as fm18, toc as t18 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=frontmatter';
-import { demoIndex as dmi18 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=demo-index';
-import { frontmatter as fm19, toc as t19 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=frontmatter';
-import { demoIndex as dmi19 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=demo-index';
-import { frontmatter as fm20, toc as t20 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=frontmatter';
-import { demoIndex as dmi20 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=demo-index';
-import { frontmatter as fm21, toc as t21 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useLocalStorage/index.md?type=frontmatter';
-import { demoIndex as dmi21 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useLocalStorage/index.md?type=demo-index';
-import { frontmatter as fm22, toc as t22 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useNetworkStatus/index.md?type=frontmatter';
-import { demoIndex as dmi22 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useNetworkStatus/index.md?type=demo-index';
-import { frontmatter as fm23, toc as t23 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useWindowSize/index.md?type=frontmatter';
-import { demoIndex as dmi23 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useWindowSize/index.md?type=demo-index';
+import { frontmatter as fm15, toc as t15 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=frontmatter';
+import { demoIndex as dmi15 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=demo-index';
+import { frontmatter as fm16, toc as t16 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=frontmatter';
+import { demoIndex as dmi16 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=demo-index';
+import { frontmatter as fm17, toc as t17 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=frontmatter';
+import { demoIndex as dmi17 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=demo-index';
+import { frontmatter as fm18, toc as t18 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useChatSSE/index.md?type=frontmatter';
+import { demoIndex as dmi18 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useChatSSE/index.md?type=demo-index';
+import { frontmatter as fm19, toc as t19 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useClientSide/index.md?type=frontmatter';
+import { demoIndex as dmi19 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useClientSide/index.md?type=demo-index';
+import { frontmatter as fm20, toc as t20 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=frontmatter';
+import { demoIndex as dmi20 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=demo-index';
+import { frontmatter as fm21, toc as t21 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=frontmatter';
+import { demoIndex as dmi21 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=demo-index';
+import { frontmatter as fm22, toc as t22 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=frontmatter';
+import { demoIndex as dmi22 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=demo-index';
+import { frontmatter as fm23, toc as t23 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useLocalStorage/index.md?type=frontmatter';
+import { demoIndex as dmi23 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useLocalStorage/index.md?type=demo-index';
+import { frontmatter as fm24, toc as t24 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useNetworkStatus/index.md?type=frontmatter';
+import { demoIndex as dmi24 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useNetworkStatus/index.md?type=demo-index';
+import { frontmatter as fm25, toc as t25 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useWindowSize/index.md?type=frontmatter';
+import { demoIndex as dmi25 } from '/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useWindowSize/index.md?type=demo-index';
 
 export const filesMeta = {
   'docs/simple-examples': {
@@ -105,94 +109,106 @@ export const filesMeta = {
     demoIndex: dmi8,
     textGetter: () => import(/* webpackChunkName: "meta__useDebounce" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=text'),
   },
-  'src/useEditor/index': {
+  'src/useChatSSE/index': {
     frontmatter: fm9,
     toc: t9,
     demoIndex: dmi9,
-    textGetter: () => import(/* webpackChunkName: "meta__useEditor" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useChatSSE" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useChatSSE/index.md?type=text'),
   },
-  'src/useAsync/index': {
+  'src/useEditor/index': {
     frontmatter: fm10,
     toc: t10,
     demoIndex: dmi10,
-    textGetter: () => import(/* webpackChunkName: "meta__useAsync" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useEditor" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=text'),
   },
-  'src/useAuth/index': {
+  'src/useAsync/index': {
     frontmatter: fm11,
     toc: t11,
     demoIndex: dmi11,
-    textGetter: () => import(/* webpackChunkName: "meta__useAuth" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useAsync" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=text'),
   },
-  'src/useForm/index': {
+  'src/useAuth/index': {
     frontmatter: fm12,
     toc: t12,
     demoIndex: dmi12,
-    textGetter: () => import(/* webpackChunkName: "meta__useForm" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useAuth" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=text'),
   },
-  'src/useApi/index': {
+  'src/useForm/index': {
     frontmatter: fm13,
     toc: t13,
     demoIndex: dmi13,
-    textGetter: () => import(/* webpackChunkName: "meta__useApi" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useForm" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=text'),
   },
-  'components/useApi/index': {
+  'src/useApi/index': {
     frontmatter: fm14,
     toc: t14,
     demoIndex: dmi14,
     textGetter: () => import(/* webpackChunkName: "meta__useApi" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=text'),
   },
-  'components/useAsync/index': {
+  'components/useApi/index': {
     frontmatter: fm15,
     toc: t15,
     demoIndex: dmi15,
-    textGetter: () => import(/* webpackChunkName: "meta__useAsync" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useApi" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useApi/index.md?type=text'),
   },
-  'components/useAuth/index': {
+  'components/useAsync/index': {
     frontmatter: fm16,
     toc: t16,
     demoIndex: dmi16,
-    textGetter: () => import(/* webpackChunkName: "meta__useAuth" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useAsync" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAsync/index.md?type=text'),
   },
-  'components/useClientSide/index': {
+  'components/useAuth/index': {
     frontmatter: fm17,
     toc: t17,
     demoIndex: dmi17,
-    textGetter: () => import(/* webpackChunkName: "meta__useClientSide" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useClientSide/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useAuth" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useAuth/index.md?type=text'),
   },
-  'components/useDebounce/index': {
+  'components/useChatSSE/index': {
     frontmatter: fm18,
     toc: t18,
     demoIndex: dmi18,
-    textGetter: () => import(/* webpackChunkName: "meta__useDebounce" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useChatSSE" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useChatSSE/index.md?type=text'),
   },
-  'components/useEditor/index': {
+  'components/useClientSide/index': {
     frontmatter: fm19,
     toc: t19,
     demoIndex: dmi19,
-    textGetter: () => import(/* webpackChunkName: "meta__useEditor" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useClientSide" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useClientSide/index.md?type=text'),
   },
-  'components/useForm/index': {
+  'components/useDebounce/index': {
     frontmatter: fm20,
     toc: t20,
     demoIndex: dmi20,
-    textGetter: () => import(/* webpackChunkName: "meta__useForm" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useDebounce" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useDebounce/index.md?type=text'),
   },
-  'components/useLocalStorage/index': {
+  'components/useEditor/index': {
     frontmatter: fm21,
     toc: t21,
     demoIndex: dmi21,
-    textGetter: () => import(/* webpackChunkName: "meta__useLocalStorage" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useLocalStorage/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useEditor" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useEditor/index.md?type=text'),
   },
-  'components/useNetworkStatus/index': {
+  'components/useForm/index': {
     frontmatter: fm22,
     toc: t22,
     demoIndex: dmi22,
-    textGetter: () => import(/* webpackChunkName: "meta__useNetworkStatus" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useNetworkStatus/index.md?type=text'),
+    textGetter: () => import(/* webpackChunkName: "meta__useForm" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useForm/index.md?type=text'),
   },
-  'components/useWindowSize/index': {
+  'components/useLocalStorage/index': {
     frontmatter: fm23,
     toc: t23,
     demoIndex: dmi23,
+    textGetter: () => import(/* webpackChunkName: "meta__useLocalStorage" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useLocalStorage/index.md?type=text'),
+  },
+  'components/useNetworkStatus/index': {
+    frontmatter: fm24,
+    toc: t24,
+    demoIndex: dmi24,
+    textGetter: () => import(/* webpackChunkName: "meta__useNetworkStatus" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useNetworkStatus/index.md?type=text'),
+  },
+  'components/useWindowSize/index': {
+    frontmatter: fm25,
+    toc: t25,
+    demoIndex: dmi25,
     textGetter: () => import(/* webpackChunkName: "meta__useWindowSize" */'/Users/huangyuming/Desktop/createProjects/AI-code/shared/hooks/src/useWindowSize/index.md?type=text'),
   },
 }
