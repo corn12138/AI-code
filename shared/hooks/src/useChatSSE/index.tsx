@@ -188,7 +188,7 @@ const defaultSSEParser: SSEParser = {
             return { type: 'content', content: line.slice(6) };
         }
     },
-    isEndSignal: (data: any) => data?.type === 'finish' || data?.type === 'error'
+    isEndSignal: (data: any) => data?.type === 'finish' || data?.type === 'complete' || data?.type === 'error'
 };
 
 /**
