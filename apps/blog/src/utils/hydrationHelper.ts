@@ -1,20 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useClientSide } from '@corn12138/hooks';
+import { DependencyList, ReactNode, useEffect, useState } from 'react';
 
 // 用于在客户端渲染时使用的自定义钩子
-export function useClientOnly(callback, deps = []) {
-    const [value, setValue] = useState(null);
+export function useClientOnly<T>(callback: () => T, deps: DependencyList = []): T | null {
+    const [value, setValue] = useState<T | null>(null);
+    const isClient = useClientSide();
 
     useEffect(() => {
-        setValue(callback());
-    }, deps);
+        if (isClient) {
+            setValue(callback());
+        }
+    }, [isClient, callback, ...deps]);
 
     return value;
 }
 
 // 用于防止水合错误的包装器组件
-export function ClientOnly({ children, fallback = null }) {
+interface ClientOnlyProps {
+    children: ReactNode;
+    fallback?: ReactNode;
+}
+
+export function ClientOnly({ children, fallback = null }: ClientOnlyProps): ReactNode {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

@@ -1,370 +1,229 @@
-import {
-    checkResourceOwnership,
-    createApiResponse,
-    getCurrentUser,
-    handleApiError,
-    parseRequestBody,
-    validateMethod
-} from '@/lib/api-auth';
+import { requireAuth } from '@/lib/api-auth';
 import { prisma } from '@/lib/prisma';
 import { NextRequest } from 'next/server';
 
 // 获取单个文章
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        validateMethod(request, ['GET']);
+        const user = await requireAuth(request);
+        const { id } = await params;
 
-        const { id } = params;
-
-        if (!id) {
-            return createApiResponse({ error: 'Article ID is required' }, 400);
-        }
-
-        const currentUser = await getCurrentUser(request);
-
-        // 查找文章
-        const article = await prisma.article.findUnique({
-            where: { id },
-            select: {
-                id: true,
-                title: true,
-                slug: true,
-                content: true,
-                summary: true,
-                published: true,
-                featuredImage: true,
-                viewCount: true,
-                createdAt: true,
-                updatedAt: true,
-                publishedAt: true,
-                authorId: true,
+        const article = await prisma.article.findFirst({
+            where: {
+                id: id,
+                authorId: user.id  // 只能查看自己的文章
+            },
+            include: {
+                category: true,
+                tags: true,
                 author: {
                     select: {
                         id: true,
                         username: true,
-                        fullName: true,
-                        avatar: true
+                        email: true
                     }
-                },
-                category: {
-                    select: {
-                        id: true,
-                        name: true,
-                        slug: true,
-                        description: true
-                    }
-                },
-                tags: {
-                    select: {
-                        id: true,
-                        name: true,
-                        slug: true,
-                        color: true,
-                        description: true
-                    }
-                },
-                comments: {
-                    where: { parentId: null }, // 只获取顶级评论
-                    select: {
-                        id: true,
-                        content: true,
-                        createdAt: true,
-                        updatedAt: true,
-                        author: {
-                            select: {
-                                id: true,
-                                username: true,
-                                fullName: true,
-                                avatar: true
-                            }
-                        },
-                        replies: {
-                            select: {
-                                id: true,
-                                content: true,
-                                createdAt: true,
-                                updatedAt: true,
-                                author: {
-                                    select: {
-                                        id: true,
-                                        username: true,
-                                        fullName: true,
-                                        avatar: true
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    orderBy: { createdAt: 'desc' }
                 }
             }
         });
 
         if (!article) {
-            return createApiResponse({ error: 'Article not found' }, 404);
-        }
-
-        // 检查访问权限
-        if (!article.published && (!currentUser || currentUser.id !== article.authorId)) {
-            // 未发布的文章只有作者和管理员可以访问
-            if (!currentUser?.roles.includes('admin')) {
-                return createApiResponse({ error: 'Article not found' }, 404);
-            }
-        }
-
-        // 增加浏览量（如果不是作者本人）
-        if (currentUser?.id !== article.authorId) {
-            await prisma.article.update({
-                where: { id },
-                data: { viewCount: { increment: 1 } }
+            return new Response(JSON.stringify({
+                error: 'Article not found'
+            }), {
+                status: 404,
+                headers: { 'Content-Type': 'application/json' }
             });
         }
 
-        return createApiResponse({
-            article
+        return new Response(JSON.stringify({ article }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
         });
 
     } catch (error) {
-        return handleApiError(error);
+        console.error('Get article error:', error);
+        return new Response(JSON.stringify({
+            error: 'Failed to fetch article'
+        }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
 
-// 更新文章
-export async function PATCH(
+// 更新文章（包括草稿保存）
+export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        validateMethod(request, ['PATCH']);
+        const user = await requireAuth(request);
+        const { id } = await params;
+        const body = await request.json();
 
-        const { id } = params;
+        const {
+            title,
+            content,
+            draftContent,
+            summary,
+            status,
+            categoryId,
+            tagIds,
+            metaTitle,
+            metaDescription,
+            keywords,
+            featuredImage
+        } = body;
 
-        if (!id) {
-            return createApiResponse({ error: 'Article ID is required' }, 400);
-        }
-
-        // 获取当前文章信息
-        const existingArticle = await prisma.article.findUnique({
-            where: { id },
-            select: { id: true, authorId: true, published: true }
+        // 检查文章是否存在且属于当前用户
+        const existingArticle = await prisma.article.findFirst({
+            where: {
+                id: id,
+                authorId: user.id
+            }
         });
 
         if (!existingArticle) {
-            return createApiResponse({ error: 'Article not found' }, 404);
+            return new Response(JSON.stringify({
+                error: 'Article not found'
+            }), {
+                status: 404,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        // 检查权限
-        const user = await checkResourceOwnership(request, existingArticle.authorId, ['admin', 'editor']);
+        // 准备更新数据
+        const updateData: any = {
+            lastSavedAt: new Date(),
+            version: (existingArticle.version || 0) + 1
+        };
 
-        const body = await parseRequestBody<{
-            title?: string;
-            content?: string;
-            summary?: string;
-            featuredImage?: string;
-            published?: boolean;
-            categoryId?: string;
-            tagIds?: string[];
-            slug?: string;
-        }>(request);
+        if (title !== undefined) updateData.title = title;
+        if (content !== undefined) updateData.content = content;
+        if (draftContent !== undefined) updateData.draftContent = draftContent;
+        if (summary !== undefined) updateData.summary = summary;
+        if (status !== undefined) updateData.status = status;
+        if (categoryId !== undefined) updateData.categoryId = categoryId;
+        if (metaTitle !== undefined) updateData.metaTitle = metaTitle;
+        if (metaDescription !== undefined) updateData.metaDescription = metaDescription;
 
-        // 验证字段
-        const updateData: any = {};
-
-        if (body.title !== undefined) {
-            if (body.title.length < 5 || body.title.length > 200) {
-                return createApiResponse({ error: 'Title must be between 5 and 200 characters' }, 400);
-            }
-            updateData.title = body.title;
-        }
-
-        if (body.content !== undefined) {
-            if (body.content.length < 50) {
-                return createApiResponse({ error: 'Content must be at least 50 characters' }, 400);
-            }
-            updateData.content = body.content;
-        }
-
-        if (body.summary !== undefined) {
-            if (body.summary.length > 500) {
-                return createApiResponse({ error: 'Summary must be less than 500 characters' }, 400);
-            }
-            updateData.summary = body.summary;
-        }
-
-        if (body.featuredImage !== undefined) {
-            updateData.featuredImage = body.featuredImage;
-        }
-
-        if (body.published !== undefined) {
-            updateData.published = body.published;
-            // 如果是发布文章，设置发布时间
-            if (body.published && !existingArticle.published) {
-                updateData.publishedAt = new Date();
-            } else if (!body.published && existingArticle.published) {
-                updateData.publishedAt = null;
-            }
-        }
-
-        if (body.categoryId !== undefined) {
-            if (body.categoryId) {
-                const category = await prisma.category.findUnique({
-                    where: { id: body.categoryId }
-                });
-                if (!category) {
-                    return createApiResponse({ error: 'Category not found' }, 404);
-                }
-            }
-            updateData.categoryId = body.categoryId;
-        }
-
-        // 处理 slug 更新
-        if (body.slug !== undefined) {
-            let slug = body.slug || body.title?.toLowerCase()
-                .replace(/[^a-z0-9\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-')
-                .trim();
-
-            if (slug) {
-                // 确保 slug 唯一（排除当前文章）
-                let slugCounter = 0;
-                let uniqueSlug = slug;
-
-                while (await prisma.article.findFirst({
-                    where: { slug: uniqueSlug, id: { not: id } }
-                })) {
-                    slugCounter++;
-                    uniqueSlug = `${slug}-${slugCounter}`;
-                }
-
-                updateData.slug = uniqueSlug;
-            }
-        }
-
-        // 处理标签更新
-        if (body.tagIds !== undefined) {
-            if (body.tagIds.length > 0) {
-                const tags = await prisma.tag.findMany({
-                    where: { id: { in: body.tagIds } }
-                });
-
-                if (tags.length !== body.tagIds.length) {
-                    return createApiResponse({ error: 'One or more tags not found' }, 404);
-                }
-
-                updateData.tags = {
-                    set: body.tagIds.map(id => ({ id }))
-                };
+        // 处理keywords字段（支持字符串和数组格式）
+        if (keywords !== undefined) {
+            if (typeof keywords === 'string') {
+                updateData.keywords = keywords.trim() || null;
+            } else if (Array.isArray(keywords)) {
+                const validKeywords = keywords
+                    .filter(k => typeof k === 'string' && k.trim())
+                    .map(k => k.trim());
+                updateData.keywords = validKeywords.length > 0 ? validKeywords.join(', ') : null;
             } else {
-                updateData.tags = {
-                    set: []
-                };
+                updateData.keywords = null;
             }
+        }
+
+        if (featuredImage !== undefined) updateData.featuredImage = featuredImage;
+
+        // 如果状态改为已发布，设置发布时间
+        if (status === 'PUBLISHED' && existingArticle.status !== 'PUBLISHED') {
+            updateData.publishedAt = new Date();
+        }
+
+        // 处理标签关联
+        if (tagIds !== undefined) {
+            updateData.tags = {
+                set: [], // 清除现有关联
+                connect: tagIds.map((id: string) => ({ id }))
+            };
         }
 
         // 更新文章
         const updatedArticle = await prisma.article.update({
-            where: { id },
+            where: { id: id },
             data: updateData,
-            select: {
-                id: true,
-                title: true,
-                slug: true,
-                summary: true,
-                published: true,
-                featuredImage: true,
-                viewCount: true,
-                createdAt: true,
-                updatedAt: true,
-                publishedAt: true,
+            include: {
+                category: true,
+                tags: true,
                 author: {
                     select: {
                         id: true,
                         username: true,
-                        fullName: true,
-                        avatar: true
-                    }
-                },
-                category: {
-                    select: {
-                        id: true,
-                        name: true,
-                        slug: true
-                    }
-                },
-                tags: {
-                    select: {
-                        id: true,
-                        name: true,
-                        slug: true,
-                        color: true
+                        email: true
                     }
                 }
             }
         });
 
-        return createApiResponse({
+        return new Response(JSON.stringify({
             message: 'Article updated successfully',
             article: updatedArticle
+        }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
         });
 
     } catch (error) {
-        return handleApiError(error);
+        console.error('Update article error:', error);
+        return new Response(JSON.stringify({
+            error: 'Failed to update article'
+        }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
 
 // 删除文章
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        validateMethod(request, ['DELETE']);
+        const user = await requireAuth(request);
+        const { id } = await params;
 
-        const { id } = params;
-
-        if (!id) {
-            return createApiResponse({ error: 'Article ID is required' }, 400);
-        }
-
-        // 获取当前文章信息
-        const existingArticle = await prisma.article.findUnique({
-            where: { id },
-            select: { id: true, authorId: true, title: true }
+        // 检查文章是否存在且属于当前用户
+        const existingArticle = await prisma.article.findFirst({
+            where: {
+                id: id,
+                authorId: user.id
+            }
         });
 
         if (!existingArticle) {
-            return createApiResponse({ error: 'Article not found' }, 404);
+            return new Response(JSON.stringify({
+                error: 'Article not found'
+            }), {
+                status: 404,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        // 检查权限
-        await checkResourceOwnership(request, existingArticle.authorId, ['admin']);
-
-        // 删除文章（由于外键关系，相关评论也会被删除）
-        await prisma.article.delete({
-            where: { id }
+        // 软删除：移动到回收站
+        await prisma.article.update({
+            where: { id: id },
+            data: {
+                status: 'TRASH',
+                lastSavedAt: new Date()
+            }
         });
 
-        return createApiResponse({
-            message: 'Article deleted successfully'
+        return new Response(JSON.stringify({
+            message: 'Article moved to trash successfully'
+        }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
         });
 
     } catch (error) {
-        return handleApiError(error);
+        console.error('Delete article error:', error);
+        return new Response(JSON.stringify({
+            error: 'Failed to delete article'
+        }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
-
-// 处理 OPTIONS 请求（CORS）
-export async function OPTIONS(request: NextRequest) {
-    return new Response(null, {
-        status: 200,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, PATCH, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
-    });
-} 

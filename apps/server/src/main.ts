@@ -9,6 +9,8 @@ import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { MetricsInterceptor } from './common/interceptors/metrics.interceptor';
+import { MetricsService } from './metrics/metrics.service';
 
 async function bootstrap() {
     // 配置Winston日志
@@ -153,6 +155,10 @@ async function bootstrap() {
             transform: true,
         }),
     );
+
+    // 添加全局指标收集拦截器
+    const metricsService = app.get(MetricsService);
+    app.useGlobalInterceptors(new MetricsInterceptor(metricsService));
 
     // Swagger API文档
     const config = new DocumentBuilder()

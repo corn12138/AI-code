@@ -1,4 +1,4 @@
-import { AUTH_TOKEN_KEY } from './constants';
+import { AUTH_TOKEN_KEY } from './src/constants';
 
 /**
  * 在多个应用/标签页间同步认证状态

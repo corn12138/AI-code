@@ -34,7 +34,7 @@ export function ClientArticlePage({ article }: ClientArticlePageProps) {
                         <div className="flex items-center gap-2">
                             <div className="relative w-10 h-10 rounded-full overflow-hidden">
                                 <Image
-                                    src={article.author.avatar || 'https://via.placeholder.com/40'}
+                                    src={article.author.avatar || '/default-avatar.svg'}
                                     alt={article.author.username}
                                     fill
                                     className="object-cover"

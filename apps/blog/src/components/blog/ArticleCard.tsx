@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Article } from '@/models/article';
+import { Article } from '@/types/index';
 import { formatRelativeTime, truncateText } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -21,8 +21,8 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
     author,
     tags,
     publishedAt,
-    viewCount,
-    readingTime,
+    viewCount = 0,
+    readingTime = 0,
   } = article;
 
   const isFeatured = variant === 'featured';
@@ -38,7 +38,7 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
       } ${isCompact ? 'h-32' : 'h-48'} overflow-hidden`}>
         <Link href={`/blog/${slug}`} aria-label={title}>
           <Image 
-            src={coverImage || 'https://via.placeholder.com/800x450?text=TechBlog'} 
+            src={coverImage || '/default-avatar.svgx450?text=TechBlog'} 
             alt={title}
             fill
             sizes={isFeatured ? '(max-width: 1024px) 100vw, 40vw' : '100vw'}

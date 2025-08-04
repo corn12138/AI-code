@@ -1,7 +1,14 @@
-import { User } from '@/types';
 import { formatDate } from '@/utils/date';
 import Image from 'next/image';
 import Link from 'next/link';
+
+type User = {
+    id: string;
+    username: string;
+    email: string;
+    avatar?: string;
+    roles?: string[];
+};
 
 interface ArticleMetaProps {
     author: User;
@@ -17,7 +24,7 @@ export default function ArticleMeta({ author, date, readingTime, views }: Articl
             <Link href={`/user/${author.id}`} className="flex items-center mr-6 group">
                 <div className="relative w-8 h-8 rounded-full overflow-hidden mr-2">
                     <Image
-                        src={author.avatar || 'https://via.placeholder.com/32'}
+                        src={author.avatar || '/default-avatar.svg'}
                         alt={author.username}
                         fill
                         style={{ objectFit: 'cover' }}

@@ -26,7 +26,7 @@ export default function HomePageClient({ initialArticles, tags }: HomePageClient
             setIsSearching(true);
             try {
                 const taggedArticles = await fetchArticles({ tag: tagName });
-                setArticles(taggedArticles);
+                setArticles(Array.isArray(taggedArticles) ? taggedArticles : taggedArticles.articles);
             } finally {
                 setIsSearching(false);
             }
@@ -42,7 +42,7 @@ export default function HomePageClient({ initialArticles, tags }: HomePageClient
         setIsSearching(true);
         try {
             const searchResults = await fetchArticles({ search: query });
-            setArticles(searchResults);
+            setArticles(Array.isArray(searchResults) ? searchResults : searchResults.articles);
         } finally {
             setIsSearching(false);
         }

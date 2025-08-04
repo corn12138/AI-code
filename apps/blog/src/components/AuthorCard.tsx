@@ -1,6 +1,13 @@
-import { User } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
+
+type User = {
+    id: string;
+    username: string;
+    email: string;
+    avatar?: string;
+    roles?: string[];
+};
 
 interface AuthorCardProps {
     author: User;
@@ -11,7 +18,7 @@ export default function AuthorCard({ author }: AuthorCardProps) {
         <div className="flex items-start">
             <div className="relative w-16 h-16 rounded-full overflow-hidden mr-4">
                 <Image
-                    src={author.avatar || 'https://via.placeholder.com/64'}
+                    src={author.avatar || '/default-avatar.svg'}
                     alt={author.username}
                     fill
                     style={{ objectFit: 'cover' }}
@@ -24,7 +31,7 @@ export default function AuthorCard({ author }: AuthorCardProps) {
                 </Link>
 
                 <p className="text-gray-600 mt-1">
-                    {author.bio || '这个作者很懒，还没有填写个人简介。'}
+                    {(author as any).bio || '这个作者很懒，还没有填写个人简介。'}
                 </p>
 
                 <div className="mt-3 flex space-x-3">

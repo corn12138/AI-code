@@ -17,6 +17,8 @@ export function BlogClientHydration() {
     // 从DOM中读取数据属性
     useEffect(() => {
         const container = document.getElementById('blog-container');
+        console.log('BlogClientHydration: container found:', !!container);
+        
         if (container) {
             try {
                 const articles = JSON.parse(container.getAttribute('data-articles') || '[]');
@@ -25,10 +27,20 @@ export function BlogClientHydration() {
                 const tag = container.getAttribute('data-tag') || '';
                 const page = parseInt(container.getAttribute('data-page') || '1', 10);
 
+                console.log('BlogClientHydration: parsed data:', { 
+                    articlesCount: articles.length, 
+                    tagsCount: tags.length, 
+                    search, 
+                    tag, 
+                    page 
+                });
+
                 setBlogData({ articles, tags, search, tag, page });
             } catch (error) {
                 console.error('Failed to parse blog data:', error);
             }
+        } else {
+            console.warn('BlogClientHydration: blog-container not found!');
         }
         setHydrated(true);
     }, []);

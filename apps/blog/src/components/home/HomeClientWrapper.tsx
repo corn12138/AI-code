@@ -40,7 +40,7 @@ export function HomeClientWrapper({ articles, tags }: HomeClientWrapperProps) {
                         <article key={article.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-700 transition-transform hover:shadow-md hover:translate-y-[-2px]">
                             <div className="relative h-48">
                                 <Image
-                                    src={article.coverImage || 'https://via.placeholder.com/800x450?text=TechBlog'}
+                                    src={article.coverImage || '/default-avatar.svgx450?text=TechBlog'}
                                     alt={article.title}
                                     fill
                                     className="object-cover"
@@ -58,7 +58,7 @@ export function HomeClientWrapper({ articles, tags }: HomeClientWrapperProps) {
                                         <span className="mr-2">📅</span> {new Date(article.createdAt).toLocaleDateString('zh-CN')}
                                     </span>
                                     <span className="flex items-center">
-                                        <span className="mr-1">👁️</span> {article.views}
+                                        <span className="mr-1">👁️</span> {article.viewCount}
                                     </span>
                                 </div>
                             </div>

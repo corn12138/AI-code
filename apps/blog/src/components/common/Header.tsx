@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 export default function Header() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth() as any;
   const isClient = useClientSide();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -73,21 +73,17 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          {isClient && (
-            <div className="flex items-center space-x-4">
-              {isAuthenticated ? (
-                <div className="flex items-center space-x-2">
-                  <span>欢迎, {user?.username}</span>
-                  <button onClick={logout} className="text-blue-600 hover:text-blue-800">
-                    登出
-                  </button>
-                </div>
-              ) : (
-                <Link href="/login" className="text-blue-600 hover:text-blue-800">
-                  登录
-                </Link>
-              )}
+          {isAuthenticated ? (
+            <div className="flex items-center space-x-2">
+              <span>欢迎, {user?.username}</span>
+              <button onClick={logout} className="text-blue-600 hover:text-blue-800">
+                登出
+              </button>
             </div>
+          ) : (
+            <Link href="/login" className="text-blue-600 hover:text-blue-800">
+              登录
+            </Link>
           )}
 
           <button
@@ -129,43 +125,41 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            {isClient && (
+            {isAuthenticated ? (
               <div className="flex flex-col space-y-2 pt-2">
-                {isAuthenticated ? (
-                  <>
-                    <Link
-                      href="/editor"
-                      className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      写文章
-                    </Link>
-                    <Link
-                      href="/dashboard"
-                      className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      控制台
-                    </Link>
-                    <button
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        logout();
-                      }}
-                      className="px-3 py-2 rounded-md text-left text-base font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
-                    >
-                      退出登录
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="px-3 py-2 rounded-md text-center text-base font-medium text-gray-700 border border-gray-300 hover:bg-gray-100 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-800"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    登录
-                  </Link>
-                )}
+                <Link
+                  href="/editor"
+                  className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  写文章
+                </Link>
+                <Link
+                  href="/dashboard"
+                  className="px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  控制台
+                </Link>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    logout();
+                  }}
+                  className="px-3 py-2 rounded-md text-left text-base font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                >
+                  退出登录
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col space-y-2 pt-2">
+                <Link
+                  href="/login"
+                  className="px-3 py-2 rounded-md text-center text-base font-medium text-gray-700 border border-gray-300 hover:bg-gray-100 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-800"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  登录
+                </Link>
               </div>
             )}
           </nav>

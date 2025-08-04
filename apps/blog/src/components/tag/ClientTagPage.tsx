@@ -1,11 +1,11 @@
 'use client';
 
-import { Article, Tag } from '@/types';
 import ArticleCard from '@/components/blog/ArticleCard';
 import TagList from '@/components/blog/TagList';
-import { useState } from 'react';
 import { fetchArticles } from '@/services/api';
+import { Article, Tag } from '@/types';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface ClientTagPageProps {
   tag: string;
@@ -23,8 +23,9 @@ export default function ClientTagPage({ tag, initialArticles, tags }: ClientTagP
     setIsLoading(true);
     try {
       const nextPage = page + 1;
-      const moreArticles = await fetchArticles({ tag, page: nextPage, limit: 10 });
-      
+      const result = await fetchArticles({ tag, page: nextPage, limit: 10 });
+      const moreArticles = Array.isArray(result) ? result : result.articles;
+
       if (moreArticles.length === 0) {
         setHasMore(false);
       } else {
@@ -44,7 +45,7 @@ export default function ClientTagPage({ tag, initialArticles, tags }: ClientTagP
           <div className="sticky top-24 space-y-8">
             <div className="card p-5">
               <h3 className="text-lg font-bold mb-4 text-secondary-800">热门标签</h3>
-              <TagList tags={tags} selectedTag={tag} />
+              <TagList tags={tags} selectedTag={tag} onTagSelect={(selectedTag) => console.log('选择标签:', selectedTag)} />
             </div>
 
             <div className="card p-5">
@@ -73,11 +74,11 @@ export default function ClientTagPage({ tag, initialArticles, tags }: ClientTagP
                   <ArticleCard key={article.id} article={article} />
                 ))}
               </div>
-              
+
               {/* 加载更多按钮 */}
               {hasMore && (
                 <div className="mt-10 text-center">
-                  <button 
+                  <button
                     onClick={handleLoadMore}
                     disabled={isLoading}
                     className={`border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}

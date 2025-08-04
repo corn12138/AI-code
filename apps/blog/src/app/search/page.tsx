@@ -1,19 +1,20 @@
 // 服务器组件
-import { fetchArticles } from '@/services/api';
 import ArticleList from '@/components/blog/ArticleList';
-import { Metadata } from 'next';
 import SearchForm from '@/components/search/SearchForm';
+import { fetchArticles } from '@/services/api';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic'; // 确保每次请求都重新渲染
 
 interface Props {
-    searchParams: {
+    searchParams: Promise<{
         q?: string;
-    };
+    }>;
 }
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-    const query = searchParams.q || '';
+    const { q } = await searchParams;
+    const query = q || '';
     return {
         title: query ? `搜索: ${query}` : '搜索文章',
         description: '在技术博客与低代码平台中搜索相关技术文章',
@@ -21,8 +22,10 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 export default async function SearchPage({ searchParams }: Props) {
-    const query = searchParams.q || '';
-    const articles = query ? await fetchArticles({ search: query }) : [];
+    const { q } = await searchParams;
+    const query = q || '';
+    const result = query ? await fetchArticles({ search: query }) : { articles: [] };
+    const articles = Array.isArray(result) ? result : result.articles;
 
     return (
         <div className="container-content mt-8 mb-16">

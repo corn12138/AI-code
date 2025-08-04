@@ -19,10 +19,17 @@ export function formatRelativeDate(date: string | Date): string {
  * 标准日期格式化函数 - 替代clientUtils中的formatDate
  * 在服务端和客户端都可安全使用
  */
-export function formatDate(dateString: string | Date): string {
+export function formatDate(dateString: string | Date | null | undefined): string {
     try {
+        if (!dateString) {
+            return '未知时间';
+        }
+        
         if (isClient) {
             const date = new Date(dateString);
+            if (isNaN(date.getTime())) {
+                return '无效日期';
+            }
             return new Intl.DateTimeFormat('zh-CN', {
                 year: 'numeric',
                 month: 'long',
@@ -30,11 +37,15 @@ export function formatDate(dateString: string | Date): string {
             }).format(date);
         } else {
             // 服务端安全的日期格式化
-            return dayjs(dateString).format('YYYY年MM月DD日');
+            const formatted = dayjs(dateString);
+            if (!formatted.isValid()) {
+                return '无效日期';
+            }
+            return formatted.format('YYYY年MM月DD日');
         }
     } catch (e) {
         console.error('日期格式化错误:', e);
-        return String(dateString);
+        return String(dateString || '未知时间');
     }
 }
 

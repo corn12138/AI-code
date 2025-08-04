@@ -10,13 +10,12 @@ import { PropsWithChildren, useEffect } from 'react';
 export function Providers({ children }: PropsWithChildren) {
     // 初始化会话检查
     useEffect(() => {
-        const cleanupSessionChecker = initSessionChecker();
-        const cleanupAuthSync = initAuthSyncManager();
-
-        return () => {
-            cleanupSessionChecker();
-            cleanupAuthSync();
-        };
+        try {
+            initSessionChecker();
+            initAuthSyncManager();
+        } catch (error) {
+            console.error('Failed to initialize auth services:', error);
+        }
     }, []);
 
     // 会话过期监听

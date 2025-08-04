@@ -8,8 +8,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatRelativeTime(dateString: string) {
+export function formatRelativeTime(dateString: string | null | undefined) {
+  if (!dateString) {
+    return '未知时间';
+  }
+  
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return '无效日期';
+  }
+  
   const now = new Date();
   const diff = now.getTime() - date.getTime();
   

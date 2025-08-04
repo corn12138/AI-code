@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useClientSide } from '@corn12138/hooks';
+import React, { useEffect, useState } from 'react';
 import { formatDate as formatDateFromUtil } from './date';
 
 // 检测是否在客户端环境
@@ -8,22 +9,6 @@ export const isClient = typeof window !== 'undefined';
 
 // 安全地访问window对象
 export const safeWindow = isClient ? window : undefined;
-
-// 客户端状态钩子
-export function useClientSide() {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-
-        // 添加清理函数
-        return () => {
-            setMounted(false);
-        };
-    }, []);
-
-    return mounted;
-}
 
 // 用于在客户端渲染时使用的自定义钩子
 export function useClientOnly<T>(callback: () => T, deps: any[] = []): T | null {

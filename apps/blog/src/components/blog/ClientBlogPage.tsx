@@ -103,7 +103,7 @@ export function ClientBlogPage({
                                                 <div className="flex items-center gap-1">
                                                     <span className="relative w-5 h-5 rounded-full overflow-hidden">
                                                         <Image
-                                                            src={article.author.avatar || 'https://via.placeholder.com/40'}
+                                                            src={article.author.avatar || '/default-avatar.svg'}
                                                             alt={article.author.username}
                                                             fill
                                                             className="object-cover"
@@ -111,11 +111,11 @@ export function ClientBlogPage({
                                                     </span>
                                                     <span>{article.author.username}</span>
                                                 </div>
-                                                <span>{new Date(article.createdAt).toLocaleDateString('zh-CN')}</span>
+                                                <span>{article.createdAt ? new Date(article.createdAt).toLocaleDateString('zh-CN') : '未知时间'}</span>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                                <span>{article.readingTime} 分钟</span>
-                                                <span>{article.views} 浏览</span>
+                                                <span>{article.readingTime || 0} 分钟</span>
+                                                <span>{article.viewCount || 0} 浏览</span>
                                             </div>
                                         </div>
                                     </div>

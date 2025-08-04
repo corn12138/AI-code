@@ -1,0 +1,350 @@
+// 增强版 Prisma Schema 设计
+// 针对AI对话统计和文章草稿功能的完整设计
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========== 用户相关模型 ==========
+
+// 用户模型 (保持不变)
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  username     String   @unique
+  fullName     String?
+  password     String
+  avatar       String?
+  bio          String?
+  roles        Json     @default("[\"user\"]")
+  refreshToken String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // 关系
+  articles         Article[]
+  comments         Comment[]
+  lowcodePages     LowcodePage[]
+  conversations    Conversation[]
+  messages         Message[]
+  userStatistics   UserStatistics[]
+
+  @@map("users")
+}
+
+// ========== 内容管理模型 ==========
+
+// 分类模型 (保持不变)
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  slug        String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  articles Article[]
+
+  @@map("categories")
+}
+
+// 标签模型 (保持不变)
+model Tag {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String?  @unique
+  description String?
+  color       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  articles Article[]
+
+  @@map("tags")
+}
+
+// 文章模型 (增强草稿功能)
+model Article {
+  id               String       @id @default(cuid())
+  title            String
+  slug             String?      @unique
+  content          String       @db.Text
+  summary          String?      @db.Text
+  status           ArticleStatus @default(DRAFT)  // 新增：文章状态
+  featuredImage    String?
+  viewCount        Int          @default(0)
+  authorId         String
+  categoryId       String?
+  
+  // 时间管理
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  publishedAt      DateTime?
+  lastSavedAt      DateTime?    // 新增：最后保存时间（用于草稿自动保存）
+  
+  // 版本控制
+  version          Int          @default(1)      // 新增：版本号
+  draftContent     String?      @db.Text         // 新增：草稿内容（与正式内容分离）
+  
+  // SEO和元数据
+  metaTitle        String?
+  metaDescription  String?
+  keywords         String?
+
+  // 关系
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  category  Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags      Tag[]
+  comments  Comment[]
+
+  // 索引优化
+  @@index([status])
+  @@index([authorId, status])
+  @@index([publishedAt])
+  @@index([createdAt])
+  @@map("articles")
+}
+
+// 文章状态枚举
+enum ArticleStatus {
+  DRAFT      // 草稿
+  PUBLISHED  // 已发布
+  ARCHIVED   // 已归档
+  SCHEDULED  // 定时发布
+  TRASH      // 回收站
+}
+
+// 评论模型 (保持不变)
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  authorId  String
+  articleId String
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  article  Article   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  @@map("comments")
+}
+
+// ========== AI对话相关模型 ==========
+
+// AI对话模型 (大幅增强)
+model Conversation {
+  id               String              @id @default(cuid())
+  title            String
+  userId           String
+  
+  // AI模型信息
+  model            String              // 使用的AI模型
+  modelProvider    String?             // 模型提供商 (openai, anthropic, etc.)
+  modelVersion     String?             // 模型版本
+  
+  // 对话统计
+  messageCount     Int                 @default(0)     // 消息总数
+  totalTokens      Int                 @default(0)     // 总token数
+  inputTokens      Int                 @default(0)     // 输入token数  
+  outputTokens     Int                 @default(0)     // 输出token数
+  totalCost        Decimal             @default(0)     // 总成本 (单位：分)
+  
+  // 对话状态和设置
+  status           ConversationStatus  @default(ACTIVE)
+  temperature      Float?              @default(0.7)   // 温度参数
+  maxTokens        Int?                @default(1000)  // 最大token限制
+  
+  // 时间信息
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  lastMessageAt    DateTime?           // 最后一条消息时间
+  duration         Int?                // 对话持续时间(秒)
+  
+  // 分类和标签
+  category         String?             // 对话分类
+  tags             String[]            @default([])    // 对话标签
+  
+  // 质量评估
+  userRating       Int?                // 用户评分 (1-5)
+  feedback         String?             // 用户反馈
+
+  // 关系
+  user             User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages         Message[]
+
+  // 索引优化 - 用于统计查询
+  @@index([userId])
+  @@index([createdAt])
+  @@index([model])
+  @@index([modelProvider])
+  @@index([status])
+  @@index([userId, createdAt])
+  @@index([model, createdAt])
+  @@index([lastMessageAt])
+  @@map("conversations")
+}
+
+// 对话状态枚举
+enum ConversationStatus {
+  ACTIVE     // 活跃中
+  COMPLETED  // 已完成
+  PAUSED     // 暂停
+  ARCHIVED   // 已归档
+  ERROR      // 错误状态
+}
+
+// AI消息模型 (增强统计功能)
+model Message {
+  id               String       @id @default(cuid())
+  conversationId   String
+  role             MessageRole  // 使用枚举
+  content          String       @db.Text
+  
+  // AI模型信息
+  model            String?      // 生成此消息的模型
+  modelProvider    String?      // 模型提供商
+  
+  // Token统计
+  inputTokens      Int?         // 输入token数
+  outputTokens     Int?         // 输出token数
+  totalTokens      Int?         // 总token数
+  
+  // 性能指标
+  responseTime     Int?         // 响应时间(毫秒)
+  cost             Decimal?     // 消息成本
+  
+  // 质量指标
+  confidence       Float?       // AI回复的置信度
+  userRating       Int?         // 用户对此回复的评分
+  
+  // 技术参数
+  temperature      Float?       // 生成时的温度参数
+  maxTokens        Int?         // 最大token限制
+  finishReason     String?      // 完成原因 (stop, length, etc.)
+  
+  // 时间信息
+  createdAt        DateTime     @default(now())
+  userId           String?
+
+  // 关系
+  conversation     Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user             User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // 索引优化
+  @@index([conversationId])
+  @@index([createdAt])
+  @@index([role])
+  @@index([model])
+  @@index([userId])
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
+
+// 消息角色枚举
+enum MessageRole {
+  USER      // 用户消息
+  ASSISTANT // AI助手消息
+  SYSTEM    // 系统消息
+  FUNCTION  // 函数调用消息
+}
+
+// ========== 统计分析模型 ==========
+
+// 用户使用统计 (新增)
+model UserStatistics {
+  id               String   @id @default(cuid())
+  userId           String
+  date             DateTime // 统计日期 (按天)
+  
+  // 使用量统计
+  conversationCount Int     @default(0)  // 对话数量
+  messageCount     Int      @default(0)  // 消息数量
+  totalTokens      Int      @default(0)  // 总token使用
+  totalCost        Decimal  @default(0)  // 总花费
+  
+  // 时间统计 (分钟)
+  totalDuration    Int      @default(0)  // 总使用时长
+  avgResponseTime  Int?     // 平均响应时间
+  
+  // 模型使用统计 (JSON格式存储各模型的使用次数)
+  modelUsage       Json     @default("{}")
+  
+  // 质量统计
+  avgRating        Float?   // 平均评分
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // 关系
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 唯一约束：每个用户每天只有一条记录
+  @@unique([userId, date])
+  @@index([date])
+  @@index([userId, date])
+  @@map("user_statistics")
+}
+
+// 模型使用统计 (新增)
+model ModelStatistics {
+  id               String   @id @default(cuid())
+  model            String   // 模型名称
+  modelProvider    String   // 提供商
+  date             DateTime // 统计日期
+  
+  // 使用量统计
+  requestCount     Int      @default(0)  // 请求次数
+  userCount        Int      @default(0)  // 使用用户数
+  totalTokens      Int      @default(0)  // 总token数
+  totalCost        Decimal  @default(0)  // 总成本
+  
+  // 性能统计
+  avgResponseTime  Int?     // 平均响应时间
+  maxResponseTime  Int?     // 最大响应时间
+  minResponseTime  Int?     // 最小响应时间
+  
+  // 质量统计
+  avgRating        Float?   // 平均用户评分
+  errorRate        Float?   // 错误率
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // 唯一约束
+  @@unique([model, modelProvider, date])
+  @@index([date])
+  @@index([model])
+  @@index([modelProvider])
+  @@map("model_statistics")
+}
+
+// ========== 其他模型 (保持不变) ==========
+
+// 低代码页面模型
+model LowcodePage {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  content     Json
+  description String?
+  isHomePage  Boolean  @default(false)
+  published   Boolean  @default(false)
+  config      Json?
+  meta        Json?
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@map("lowcode_pages")
+} 

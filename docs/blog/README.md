@@ -18,6 +18,17 @@
 
 ### 架构技术 🎯
 - [**Next.js 全栈架构详解**](./nextjs-fullstack-architecture.md) - 后端逻辑实现和前后端交互机制
+- [**NextJS API 路由指南**](./nextjs-api-routes-guide.md) - API 路由设计和最佳实践
+- [**NextJS SSR 性能优化**](./nextjs-ssr-performance-optimization.md) - 服务端渲染性能优化策略
+
+### 技术创新与亮点 ✨
+- [**AI博客系统技术亮点总览**](./ai-blog-system-technical-highlights.md) - 整体技术架构创新和核心亮点
+- [**前端技术创新亮点**](./frontend-innovation-highlights.md) - Next.js 前端开发的技术突破和创新
+- [**AI集成与实时功能技术实现**](./ai-integration-and-realtime-implementation.md) - 多模型AI集成和SSE实时通信技术
+- [**技术难题与创新解决方案**](./technical-challenges-and-solutions.md) - 关键技术问题的分析和创新解决方案
+
+### AI 相关技术 🤖
+- [**AI 聊天功能实现**](./ai-chat-sse-implementation.md) - SSE 实时聊天功能的完整实现
 
 ## 🏗️ 架构变化
 

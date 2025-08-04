@@ -10,12 +10,12 @@ import { NextRequest } from 'next/server';
 // 获取用户信息（通过 ID）
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         validateMethod(request, ['GET']);
 
-        const { id } = params;
+        const { id } = await params;
 
         if (!id) {
             return createApiResponse({ error: 'User ID is required' }, 400);

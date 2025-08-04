@@ -21,13 +21,24 @@ const escapeHtml = (text: string): string => {
         .replace(/'/g, '&#039;');
 };
 
-// 确保所有API调用都指向后端服务
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+// 使用Next.js内部API routes
+const getApiBaseUrl = (isServer: boolean) => {
+    if (process.env.NEXT_PUBLIC_API_URL) {
+        return process.env.NEXT_PUBLIC_API_URL;
+    }
+
+    // 在服务端使用完整URL，在客户端使用相对URL
+    if (isServer) {
+        return 'http://localhost:3000/api';
+    } else {
+        return '/api';
+    }
+};
 
 // 创建axios实例 - 服务端版本 (不使用Local Storage)
 const createApiInstance = (isServer = true) => {
     const instance = axios.create({
-        baseURL: API_BASE_URL,
+        baseURL: getApiBaseUrl(isServer),
         headers: {
             'Content-Type': 'application/json',
         },
@@ -41,10 +52,7 @@ const createApiInstance = (isServer = true) => {
             try {
                 let token = localStorage.getItem('accessToken') || localStorage.getItem('auth-token');
                 if (token) {
-                    config.headers = {
-                        ...config.headers,
-                        'Authorization': `Bearer ${token}`
-                    };
+                    config.headers.Authorization = `Bearer ${token}`;
                 }
             } catch (error) {
                 console.error('Error accessing localStorage:', error);
@@ -64,7 +72,7 @@ export async function fetchArticles(params?: {
     limit?: number;
     author?: string;
     sort?: 'newest' | 'popular';
-}): Promise<Article[]> {
+}): Promise<{ articles: Article[], pagination?: any }> {
     try {
         const api = createApiInstance(typeof window === 'undefined');
 
@@ -79,15 +87,15 @@ export async function fetchArticles(params?: {
 
         const response = await api.get(`/articles?${queryParams.toString()}`);
 
-        // 后端返回的格式：{ items: [], meta: {} }
-        const articlesData = response.data.items || response.data;
+        // Next.js API返回的格式：{ articles: [], pagination: {} }
+        const articlesData = response.data.articles || response.data;
 
         // 数据转换：将后端格式转换为前端所需格式
         const articles = articlesData.map((article: any) => ({
             id: article.id,
             title: article.title,
             slug: article.slug,
-            excerpt: article.summary || article.content?.substring(0, 200) + '...',
+            excerpt: article.summary || (article.content ? article.content.substring(0, 200) + '...' : '暂无摘要'),
             content: article.content,
             createdAt: article.createdAt,
             updatedAt: article.updatedAt,
@@ -97,31 +105,38 @@ export async function fetchArticles(params?: {
                 id: article.author?.id || article.authorId,
                 username: article.author?.username || '匿名用户',
                 avatar: article.author?.avatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&w=256&h=256&q=80',
-                bio: article.author?.bio
+                bio: article.author?.bio,
+                createdAt: article.author?.createdAt || new Date().toISOString()
             },
             tags: article.tags?.map((tag: any) => ({
                 id: tag.id,
                 name: tag.name,
                 count: tag.articleCount
             })) || [],
-            views: article.viewCount || 0,
-            likesCount: Math.floor(Math.random() * 50), // 暂时随机生成，后续可添加真实点赞功能
-            readingTime: Math.ceil((article.content?.length || 0) / 200) // 估算阅读时间
+            viewCount: article.viewCount || 0, // 修正字段名
+            views: article.viewCount || 0, // 保持兼容性
+            likeCount: Math.floor(Math.random() * 50), // 暂时随机生成，后续可添加真实点赞功能
+            readingTime: Math.max(1, Math.ceil((article.content?.length || 0) / 200)) // 估算阅读时间，最少1分钟
         }));
 
-        return articles;
+        // 如果API返回了分页信息，一并返回
+        return {
+            articles,
+            pagination: response.data.pagination
+        };
     } catch (error) {
         console.error('Error fetching articles:', error);
 
         // 如果API调用失败，返回空数组而不是模拟数据
-        return [];
+        return { articles: [], pagination: null };
     }
 }
 
 export async function fetchArticleById(id: string): Promise<Article | null> {
     try {
         const api = createApiInstance(typeof window === 'undefined');
-        const response = await api.get(`/articles/${id}`);
+        // 使用公开的文章API端点，不需要认证
+        const response = await api.get(`/articles/public/${id}`);
 
         const article = response.data;
 
@@ -130,29 +145,31 @@ export async function fetchArticleById(id: string): Promise<Article | null> {
             id: article.id,
             title: article.title,
             slug: article.slug,
-            excerpt: article.summary || article.content?.substring(0, 200) + '...',
+            excerpt: article.excerpt || article.summary || (article.content ? article.content.substring(0, 200) + '...' : '暂无摘要'),
             content: article.content,
             createdAt: article.createdAt,
             updatedAt: article.updatedAt,
-            publishedAt: article.createdAt,
-            coverImage: article.featuredImage,
+            publishedAt: article.publishedAt || article.createdAt,
+            coverImage: article.coverImage || article.featuredImage,
             author: {
-                id: article.author?.id || article.authorId,
+                id: article.author?.id || 'unknown',
                 username: article.author?.username || '匿名用户',
-                avatar: article.author?.avatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&w=256&h=256&q=80',
-                bio: article.author?.bio
+                avatar: article.author?.avatar || '/default-avatar.svg',
+                bio: article.author?.bio,
+                createdAt: article.author?.createdAt || new Date().toISOString()
             },
             tags: article.tags?.map((tag: any) => ({
                 id: tag.id,
                 name: tag.name,
                 count: tag.articleCount
             })) || [],
-            views: article.viewCount || 0,
-            likesCount: Math.floor(Math.random() * 50), // 暂时随机生成
-            readingTime: Math.ceil((article.content?.length || 0) / 200) // 估算阅读时间
+            viewCount: article.viewCount || 0,
+            likeCount: Math.floor(Math.random() * 50), // 暂时随机生成，后续可添加真实点赞功能
+            commentCount: article.commentCount || 0,
+            readingTime: article.readingTime || Math.ceil((article.content?.length || 0) / 200) // 使用API返回的或计算
         };
     } catch (error) {
-        console.error(`Error fetching article ${id}:`, error);
+        console.error('Error fetching article by id:', error);
         return null;
     }
 }
@@ -160,13 +177,16 @@ export async function fetchArticleById(id: string): Promise<Article | null> {
 export async function fetchTags(): Promise<Tag[]> {
     try {
         const api = createApiInstance(typeof window === 'undefined');
-        const response = await api.get('/tags');
+        const response = await api.get('/tags?includeCount=true');
+
+        // Next.js API返回格式：{ tags: Tag[] }
+        const tagsData = response.data.tags || response.data;
 
         // 数据转换：将后端格式转换为前端所需格式
-        return response.data.map((tag: any) => ({
+        return tagsData.map((tag: any) => ({
             id: tag.id,
             name: tag.name,
-            count: tag.articleCount || 0
+            count: tag._count?.articles || tag.articleCount || 0
         }));
     } catch (error) {
         console.error('Error fetching tags:', error);
@@ -227,4 +247,23 @@ export const api = {
         list: () => createApiInstance(typeof window === 'undefined').get('/tags'),
         articles: (tag: string) => createApiInstance(typeof window === 'undefined').get(`/tags/${tag}/articles`),
     },
+};
+
+// 图片上传函数
+export const uploadImage = async (file: File): Promise<string> => {
+    try {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const response = await createApiInstance(false).post('/upload/image', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        return response.data.url || response.data.data?.url;
+    } catch (error) {
+        console.error('图片上传失败:', error);
+        throw new Error('图片上传失败');
+    }
 };

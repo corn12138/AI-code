@@ -19,7 +19,8 @@ export default function ArticleList({ initialArticles }: ArticleListProps) {
         setIsLoading(true);
         try {
             const nextPage = page + 1;
-            const newArticles = await fetchArticles({ page: nextPage, limit: 10 });
+            const result = await fetchArticles({ page: nextPage, limit: 10 });
+            const newArticles = Array.isArray(result) ? result : result.articles;
 
             if (newArticles.length === 0) {
                 setHasMore(false);

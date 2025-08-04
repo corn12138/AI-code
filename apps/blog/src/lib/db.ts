@@ -10,3 +10,6 @@ export const db =
     });
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
+
+// 导出 prisma 实例以供向后兼容
+export const prisma = db;

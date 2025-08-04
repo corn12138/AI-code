@@ -6,11 +6,11 @@ import { updateData } from '../actions/serverActions';
 export default function FormWithServerAction() {
     const [status, setStatus] = useState('');
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         setStatus('提交中...');
 
-        const formData = new FormData(event.target);
+        const formData = new FormData(event.target as HTMLFormElement);
         const result = await updateData(formData);
 
         setStatus(result.success ? '提交成功!' : '提交失败');

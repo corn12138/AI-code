@@ -1,14 +1,10 @@
-export interface User {
-    id: string;
-    username: string;
-    email?: string;
-    avatar?: string;
-    bio?: string;
-}
+// Blog项目特有的类型定义
 
 export interface Tag {
     id: string;
     name: string;
+    description?: string;
+    slug: string;
     count?: number;
 }
 
@@ -16,7 +12,15 @@ export interface Comment {
     id: string;
     content: string;
     createdAt: string;
-    author: User;
+    author: {
+        id: string;
+        username: string;
+        email?: string;
+        avatar?: string;
+        roles?: string[];
+        createdAt?: string;
+        bio?: string;
+    };
     replies?: Comment[];
 }
 
@@ -30,11 +34,20 @@ export interface Article {
     updatedAt?: string;
     publishedAt?: string;
     coverImage?: string;
-    author: User;
+    author: {
+        id: string;
+        username: string;
+        email?: string;
+        avatar?: string;
+        roles?: string[];
+        bio?: string;
+        createdAt?: string;
+    };
     tags?: Tag[];
-    views?: number;
-    likesCount?: number;
-    readingTime?: number;
+    viewCount: number;
+    likeCount: number;
+    commentCount: number;
+    readingTime: number;
     comments?: Comment[];
 }
 

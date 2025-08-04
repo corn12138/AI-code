@@ -1,7 +1,7 @@
 // 更复杂的导航栏实现
 'use client';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@corn12138/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -29,7 +29,7 @@ export default function Navbar({ minimal = false }: NavbarProps) {
     }, []);
 
     const handleLogout = async () => {
-        await logout();
+        await (logout as any)();
         window.location.href = '/';
     };
 
@@ -100,13 +100,13 @@ export default function Navbar({ minimal = false }: NavbarProps) {
                                 >
                                     <div className="relative w-8 h-8 rounded-full overflow-hidden border border-secondary-200 ring-2 ring-white">
                                         <Image
-                                            src={user?.avatar || 'https://via.placeholder.com/40'}
-                                            alt={user?.username || 'User'}
+                                            src={(user as any)?.avatar || '/default-avatar.svg'}
+                                            alt={(user as any)?.username || 'User'}
                                             fill
                                             style={{ objectFit: 'cover' }}
                                         />
                                     </div>
-                                    <span className="hidden md:inline text-sm font-medium text-secondary-700">{user?.username}</span>
+                                    <span className="hidden md:inline text-sm font-medium text-secondary-700">{(user as any)?.username}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-secondary-500">
                                         <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                                     </svg>
@@ -117,7 +117,7 @@ export default function Navbar({ minimal = false }: NavbarProps) {
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-10 border border-secondary-100 overflow-hidden">
                                         <div className="px-4 py-2 border-b border-secondary-100">
                                             <p className="text-xs text-secondary-500">登录为</p>
-                                            <p className="font-medium text-secondary-900 truncate">{user?.username}</p>
+                                            <p className="font-medium text-secondary-900 truncate">{(user as any)?.username}</p>
                                         </div>
                                         <Link href="/profile"
                                             className="flex items-center gap-2 px-4 py-2 text-sm text-secondary-700 hover:bg-secondary-50"

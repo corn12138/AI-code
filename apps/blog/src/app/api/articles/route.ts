@@ -57,6 +57,17 @@ export async function GET(request: NextRequest) {
         // 发布状态过滤
         if (published !== null) {
             where.published = published === 'true';
+        } else {
+            // 默认只显示已发布的文章，添加状态过滤
+            where.AND = [
+                { published: true },
+                {
+                    OR: [
+                        { status: 'PUBLISHED' },
+                        { status: { equals: null } } // 兼容旧数据
+                    ]
+                }
+            ];
         }
 
         // 作者过滤

@@ -13,7 +13,7 @@ interface ArticleCardProps {
 export default function ArticleCard({ article, highlight = false }: ArticleCardProps) {
     return (
         <div className={`card group ${highlight ? 'ring-2 ring-primary-500 bg-primary-50' : ''}`}>
-            <Link href={`/article/${article.id}`} className="block">
+            <Link href={article.slug ? `/blog/${article.slug}` : `/article/${article.id}`} className="block">
                 {/* 文章封面图 */}
                 {article.coverImage && (
                     <div className="relative h-48 overflow-hidden">
@@ -64,7 +64,7 @@ export default function ArticleCard({ article, highlight = false }: ArticleCardP
                             <div className="flex items-center space-x-2">
                                 <div className="relative w-7 h-7 rounded-full overflow-hidden ring-2 ring-white">
                                     <Image
-                                        src={article.author.avatar || 'https://via.placeholder.com/40'}
+                                        src={article.author.avatar || '/default-avatar.svg'}
                                         alt={article.author.username}
                                         fill
                                         style={{ objectFit: 'cover' }}
@@ -89,7 +89,7 @@ export default function ArticleCard({ article, highlight = false }: ArticleCardP
                                     <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                     <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                                 </svg>
-                                {article.views || 0}
+                                {article.viewCount || 0}
                             </span>
                             <span className="text-secondary-500 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">

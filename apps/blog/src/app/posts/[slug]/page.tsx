@@ -3,7 +3,7 @@ import CommentSection from '@/components/blog/CommentSection';
 import PostContent from '@/components/blog/PostContent';
 import RelatedPosts from '@/components/blog/RelatedPosts';
 import ShareButtons from '@/components/blog/ShareButtons';
-import { getAllSlugs, getPostBySlug } from '@/lib/posts';
+import { getAllSlugs, getPostBySlug, getRelatedPosts } from '@/lib/posts';
 import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
@@ -11,8 +11,9 @@ export async function generateStaticParams() {
     return slugs.map(slug => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-    const post = await getPostBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const post = await getPostBySlug(slug);
 
     if (!post) {
         return {
@@ -22,31 +23,32 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
 
     return {
-        title: post.title,
-        description: post.excerpt
+        title: (post as any).title || '文章',
+        description: (post as any).excerpt || '文章内容'
     };
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
-    const post = await getPostBySlug(params.slug);
+export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const post = await getPostBySlug(slug);
 
     if (!post) {
         notFound();
     }
 
-    const relatedPosts = await getRelatedPosts(post.id, post.tags);
+    const relatedPosts = await getRelatedPosts(post.id, (post as any).tags || []);
 
     return (
         <article className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+            <h1 className="text-4xl font-bold mb-4">{(post as any).title || '无标题'}</h1>
             <div className="text-gray-600 mb-6">
-                发布于: {post.date} · 阅读时间: {post.readingTime}分钟
+                发布于: {(post as any).date || '未知日期'} · 阅读时间: {(post as any).readingTime || 5}分钟
             </div>
 
             <PostContent content={post.content} />
 
             <div className="mt-8 border-t pt-6">
-                <ShareButtons title={post.title} slug={params.slug} />
+                <ShareButtons title={(post as any).title || '文章'} slug={slug} />
             </div>
 
             <div className="mt-10">
@@ -54,7 +56,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
                 <RelatedPosts posts={relatedPosts} />
             </div>
 
-            <CommentSection postId={post.id} />
+            <CommentSection articleId={post.id} />
         </article>
     );
 }

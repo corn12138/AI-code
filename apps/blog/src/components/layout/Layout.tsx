@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import styles from '../../styles/Layout.module.css';
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

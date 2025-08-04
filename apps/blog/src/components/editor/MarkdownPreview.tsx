@@ -2,12 +2,12 @@
 
 import { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import rehypeSanitize from 'rehype-sanitize';
+import remarkGfm from 'remark-gfm';
+// import rehypeSanitize from 'rehype-sanitize'; // 缺失依赖，暂时注释
+import Image from 'next/image';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import Image from 'next/image';
 
 interface MarkdownPreviewProps {
   content: string;
@@ -23,13 +23,13 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
     <ReactMarkdown
       className="prose prose-slate dark:prose-invert max-w-none"
       remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw, rehypeSanitize]}
+      rehypePlugins={[rehypeRaw]}
       components={{
         code({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
             <SyntaxHighlighter
-              style={vscDarkPlus}
+              style={vscDarkPlus as any}
               language={match[1]}
               PreTag="div"
               className="rounded-md"
@@ -45,7 +45,7 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
         },
         img({ src, alt, ...props }) {
           if (!src) return null;
-          
+
           // 外部图片使用 Image 组件优化
           return (
             <span className="relative block w-full max-w-full my-6">

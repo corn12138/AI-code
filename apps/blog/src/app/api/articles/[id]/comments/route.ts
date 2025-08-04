@@ -9,12 +9,12 @@ import { NextRequest } from 'next/server';
 // 获取特定文章的评论
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         validateMethod(request, ['GET']);
 
-        const { id } = params;
+        const { id } = await params;
 
         if (!id) {
             return createApiResponse({ error: 'Article ID is required' }, 400);

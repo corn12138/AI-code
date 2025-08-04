@@ -5,12 +5,23 @@ const nextConfig = {
     reactStrictMode: true,
     transpilePackages: ['@shared/ui', '@shared/utils', '@shared/auth'],
     images: {
-        domains: [
-            'images.unsplash.com',
-            'via.placeholder.com',
-            'avatars.githubusercontent.com',
-            'res.cloudinary.com',
-            'api.dicebear.com'
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'avatars.githubusercontent.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'api.dicebear.com',
+            }
         ],
     },
     // 移除 API 重写规则，让 Next.js 处理 API 路由

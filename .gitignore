@@ -27,6 +27,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+logs/
+**/logs/
+*.log
 
 # 编辑器
 .idea
@@ -42,3 +45,40 @@ pnpm-debug.log*
 # 操作系统
 .DS_Store
 Thumbs.db
+
+# 证书和密钥文件
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.cert
+ssl/
+certs/
+
+# 备份文件
+*backup*
+*-backup-*
+*.backup
+*.bak
+*.old
+*.tmp
+deleted-files-backup-*/
+
+# 数据库转储
+*.sql
+*.dump
+*.sqlite
+*.db
+
+# 临时文件和缓存
+.cache/
+.temp/
+tmp/
+*.cache
+
+# 特定文件
+apps/blog/AI-CHAT-SETUP.md
+docs/ai-chat-development-summary.md
+apps/blog/ENV_CONFIG.txt
+ENV_CONFIG.txt

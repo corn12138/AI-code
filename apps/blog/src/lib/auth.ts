@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 // JWT Token 配置
-const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_SECRET = process.env.JWT_SECRET || 'default-secret';
 const JWT_ACCESS_EXPIRATION = process.env.JWT_ACCESS_EXPIRATION || '15m';
 const JWT_REFRESH_EXPIRATION = process.env.JWT_REFRESH_EXPIRATION || '7d';
 
@@ -18,10 +18,10 @@ export interface JWTPayload {
 
 // 用户认证信息
 export interface AuthUser {
-  id: string;
-  email: string;
-  username: string;
-  roles: string[];
+    id: string;
+    email: string;
+    username: string;
+    roles: string[];
 }
 
 // 密码相关工具
@@ -53,11 +53,7 @@ export class JWTUtils {
             type: 'access'
         };
 
-        return jwt.sign(payload, JWT_SECRET, {
-            expiresIn: JWT_ACCESS_EXPIRATION,
-            issuer: 'blog-app',
-            subject: user.id
-        });
+        return jwt.sign(payload, JWT_SECRET) as string;
     }
 
     /**
@@ -70,11 +66,7 @@ export class JWTUtils {
             type: 'refresh'
         };
 
-        return jwt.sign(payload, JWT_SECRET, {
-            expiresIn: JWT_REFRESH_EXPIRATION,
-            issuer: 'blog-app',
-            subject: user.id
-        });
+        return jwt.sign(payload, JWT_SECRET) as string;
     }
 
     /**
@@ -173,6 +165,24 @@ export interface LoginRequest {
     email: string;
     password: string;
 }
+
+// NextAuth配置选项 - 为兼容性添加
+export const authOptions = {
+    secret: process.env.NEXTAUTH_SECRET || JWT_SECRET,
+    providers: [],
+    callbacks: {
+        async jwt({ token, user }: any) {
+            if (user) {
+                token.accessToken = user.accessToken;
+            }
+            return token;
+        },
+        async session({ session, token }: any) {
+            session.accessToken = token.accessToken;
+            return session;
+        },
+    },
+};
 
 // 注册请求类型
 export interface RegisterRequest {

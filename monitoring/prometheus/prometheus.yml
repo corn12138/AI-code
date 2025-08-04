@@ -1,0 +1,50 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+scrape_configs:
+  # Prometheus本身的指标
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Node Exporter - 系统指标
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 5s
+
+  # PostgreSQL数据库指标
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 5s
+
+  # NestJS服务器应用指标
+  - job_name: 'nestjs-server'
+    static_configs:
+      - targets: ['server:3001']
+    metrics_path: '/api/metrics'
+    scrape_interval: 5s
+
+  # Next.js博客应用指标
+  - job_name: 'nextjs-blog'
+    static_configs:
+      - targets: ['blog:3000']
+    metrics_path: '/api/metrics'
+    scrape_interval: 5s
+
+  # 健康检查端点监控
+  - job_name: 'health-checks'
+    static_configs:
+      - targets: ['server:3001', 'blog:3000']
+    metrics_path: '/api/health'
+    scrape_interval: 10s 

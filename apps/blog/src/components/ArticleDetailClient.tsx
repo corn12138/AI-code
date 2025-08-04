@@ -13,7 +13,7 @@ interface ArticleDetailProps {
 }
 
 export default function ArticleDetailClient({ article }: ArticleDetailProps) {
-    const [likes, setLikes] = useState(article.likesCount || 0);
+    const [likes, setLikes] = useState(article.likeCount || 0);
     const [hasLiked, setHasLiked] = useState(false);
 
     const handleLike = async () => {
@@ -42,7 +42,7 @@ export default function ArticleDetailClient({ article }: ArticleDetailProps) {
                         <div className="flex items-center mr-4">
                             <div className="relative w-10 h-10 rounded-full overflow-hidden mr-2">
                                 <Image
-                                    src={article.author.avatar || "https://via.placeholder.com/40"}
+                                    src={article.author.avatar || "/default-avatar.svg"}
                                     alt={article.author.username}
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -102,7 +102,7 @@ export default function ArticleDetailClient({ article }: ArticleDetailProps) {
                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                         <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                                     </svg>
-                                    <span>{article.views || 0}</span>
+                                    <span>{article.viewCount || 0}</span>
                                 </span>
 
                                 <span className="flex items-center gap-1">

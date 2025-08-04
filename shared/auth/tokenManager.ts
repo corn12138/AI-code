@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_BASE_PATH, AUTH_TOKEN_KEY } from './constants';
+import { API_BASE_URL, AUTH_TOKEN_KEY } from './src/constants';
 
 // 防止并发刷新请求
 let refreshPromise: Promise<string> | null = null;
@@ -11,7 +11,7 @@ export async function refreshAuthToken(): Promise<string> {
 
     refreshPromise = new Promise(async (resolve, reject) => {
         try {
-            const response = await axios.post(`${API_BASE_PATH}/auth/refresh`, {}, {
+            const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {}, {
                 withCredentials: true
             });
 

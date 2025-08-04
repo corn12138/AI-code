@@ -1,6 +1,8 @@
 import { toast as toastFunction } from '@/components/ui/use-toast';
 import { Article, PaginatedResult, Tag } from '@/models/article';
-import { API_BASE_PATH, AUTH_TOKEN_KEY } from '@shared/auth/src/constants';
+// import { API_BASE_PATH, AUTH_TOKEN_KEY } from '@shared/auth/src/constants'; // 暂时注释，模块不存在
+const API_BASE_PATH = '/api';
+const AUTH_TOKEN_KEY = 'auth_token';
 import axios from 'axios';
 
 // Create a toast function with proper typing

@@ -4,14 +4,15 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 interface Props {
-    params: {
+    params: Promise<{
         slug: string;
-    }
+    }>;
 }
 
 // 动态生成文章页的元数据
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const article = await fetchArticleById(params.slug);
+    const { slug } = await params;
+    const article = await fetchArticleById(slug);
 
     if (!article) {
         return {
@@ -32,7 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
     // 获取文章数据
-    const article = await fetchArticleById(params.slug);
+    const { slug } = await params;
+    const article = await fetchArticleById(slug);
 
     if (!article) {
         notFound();

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-export default function ClientSection({ initialData }) {
+export default function ClientSection({ initialData }: { initialData: any }) {
     const [clientState, setClientState] = useState(initialData);
     const [browserInfo, setBrowserInfo] = useState("");
 

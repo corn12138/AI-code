@@ -5,11 +5,11 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 interface Props {
-    params: { tag: string }
+    params: Promise<{ tag: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { tag } = params;
+    const { tag } = await params;
     const decodedTag = decodeURIComponent(tag);
 
     return {
@@ -19,11 +19,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function TagPage({ params }: Props) {
-    const { tag } = params;
+    const { tag } = await params;
     const decodedTag = decodeURIComponent(tag);
 
     // 获取相关文章
-    const articles = await fetchArticles({ tag: decodedTag });
+    const result = await fetchArticles({ tag: decodedTag });
+    const articles = Array.isArray(result) ? result : result.articles;
     const allTags = await fetchTags();
 
     // 获取当前标签详细信息

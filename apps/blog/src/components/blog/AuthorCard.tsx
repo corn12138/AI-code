@@ -1,9 +1,16 @@
 'use client';
 
-import { User } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
+
+type User = {
+    id: string;
+    username: string;
+    email: string;
+    avatar?: string;
+    roles?: string[];
+};
 
 interface AuthorCardProps {
     author: User;
@@ -16,7 +23,7 @@ const AuthorCard: FC<AuthorCardProps> = ({ author }) => {
                 <div className="flex-shrink-0">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden ring-2 ring-primary-300">
                         <Image
-                            src={author.avatar || 'https://via.placeholder.com/100'}
+                            src={author.avatar || '/default-avatar.svg'}
                             alt={author.username}
                             fill
                             style={{ objectFit: 'cover' }}
@@ -31,9 +38,9 @@ const AuthorCard: FC<AuthorCardProps> = ({ author }) => {
                         </Link>
                     </h3>
 
-                    {author.bio && (
+                    {(author as any).bio && (
                         <p className="text-secondary-600 mt-1 text-sm leading-relaxed">
-                            {author.bio}
+                            {(author as any).bio}
                         </p>
                     )}
 

@@ -1,11 +1,10 @@
-import { AuthProvider } from '@corn12138/hooks';
 import type { Metadata } from 'next';
 import ClientProviders from '../components/ClientProviders';
 import '../styles/globals.css';
 
 export const metadata: Metadata = {
-    title: '博客网站',
-    description: '一个现代化的博客网站',
+    title: 'AI Tech Blog - 人工智能技术博客',
+    description: '专注于AI技术分享、前端开发、智能编程的现代化技术博客平台',
 };
 
 export default function RootLayout({
@@ -16,11 +15,9 @@ export default function RootLayout({
     return (
         <html lang="zh-CN">
             <body>
-                <AuthProvider>
-                    <ClientProviders>
-                        {children}
-                    </ClientProviders>
-                </AuthProvider>
+                <ClientProviders>
+                    {children}
+                </ClientProviders>
             </body>
         </html>
     );

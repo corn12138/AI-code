@@ -1,10 +1,17 @@
 'use client';
 
-import { User } from '@/types';
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import ClientPageWrapper from './ClientPageWrapper';
+
+type User = {
+    id: string;
+    username: string;
+    email: string;
+    avatar?: string;
+    roles?: string[];
+};
 
 interface ProfileClientProps {
     initialUser: User;
@@ -14,8 +21,8 @@ export default function ProfileClient({ initialUser }: ProfileClientProps) {
     const [user, setUser] = useState(initialUser);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
-        username: user.username,
-        bio: user.bio || '',
+        username: (user as any).username,
+        bio: (user as any).bio || '',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -47,7 +54,7 @@ export default function ProfileClient({ initialUser }: ProfileClientProps) {
                         <div className="absolute -bottom-16 left-6">
                             <div className="relative h-32 w-32 rounded-full border-4 border-white overflow-hidden">
                                 <Image
-                                    src={user.avatar || "https://via.placeholder.com/128"}
+                                    src={user.avatar || "/default-avatar.svg"}
                                     alt={user.username}
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -117,7 +124,7 @@ export default function ProfileClient({ initialUser }: ProfileClientProps) {
                                 <div className="mt-6">
                                     <h2 className="text-lg font-semibold text-gray-900">个人简介</h2>
                                     <p className="mt-2 text-gray-600">
-                                        {user.bio || "用户还没有添加个人简介"}
+                                        {(user as any).bio || "用户还没有添加个人简介"}
                                     </p>
                                 </div>
                             </div>

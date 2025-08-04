@@ -1,19 +1,25 @@
 'use client';
 
-import { useEffect } from 'react';
-import { BlogClientHydration } from './blog/BlogClientHydration';
+import { useEffect, useState } from 'react';
 import { HomeClientHydration } from './home/HomeClientHydration';
 
 export function GlobalClientHydrator() {
+    const [mounted, setMounted] = useState(false);
+    const [hasHomeContainer, setHasHomeContainer] = useState(false);
+
     useEffect(() => {
-        // 这里可以添加全局的客户端初始化逻辑
+        setMounted(true);
+        setHasHomeContainer(!!document.getElementById('home-container'));
     }, []);
+
+    if (!mounted) {
+        return null;
+    }
 
     return (
         <>
-            {document.getElementById('home-container') && <HomeClientHydration />}
-            {document.getElementById('blog-container') && <BlogClientHydration />}
-            {/* 添加更多水合器 */}
+            {hasHomeContainer && <HomeClientHydration />}
+            {/* 其他页面的水合器可以在这里添加 */}
         </>
     );
 }

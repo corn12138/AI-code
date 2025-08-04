@@ -1,3 +1,4 @@
+import { StaticBlogContent } from '@/components/blog/StaticBlogContent';
 import { fetchArticles, fetchTags } from '@/services/api';
 import { Metadata } from 'next';
 
@@ -11,14 +12,15 @@ export const dynamic = 'force-dynamic';
 export default async function BlogPage({
     searchParams
 }: {
-    searchParams: { tag?: string; search?: string; page?: string; }
+    searchParams: Promise<{ tag?: string; search?: string; page?: string; }>
 }) {
-    const tag = searchParams.tag;
-    const search = searchParams.search;
-    const page = searchParams.page ? parseInt(searchParams.page) : 1;
+    const params = await searchParams;
+    const tag = params.tag;
+    const search = params.search;
+    const page = params.page ? parseInt(params.page) : 1;
 
     // 获取文章和标签
-    const articles = await fetchArticles({
+    const { articles, pagination } = await fetchArticles({
         tag,
         search,
         page,
@@ -27,17 +29,18 @@ export default async function BlogPage({
 
     const tags = await fetchTags();
 
-    // 将所有数据传给客户端组件，不要在服务器组件中放置交互逻辑
+    // 计算总页数
+    const totalPages = pagination?.totalPages || Math.ceil((pagination?.totalCount || 62) / 10);
+
+    // 使用静态组件，只有搜索功能需要水合
     return (
-        <div className="container mx-auto px-4 py-8">
-            {/* 客户端组件占位符 - 我们将通过客户端水合来处理交互 */}
-            <div id="blog-container"
-                data-articles={JSON.stringify(articles)}
-                data-tags={JSON.stringify(tags)}
-                data-search={search || ''}
-                data-tag={tag || ''}
-                data-page={page}
-            />
-        </div>
+        <StaticBlogContent
+            articles={articles}
+            tags={tags}
+            initialSearch={search || ''}
+            currentTag={tag || ''}
+            currentPage={page}
+            totalPages={totalPages}
+        />
     );
 }

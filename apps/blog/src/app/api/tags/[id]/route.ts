@@ -11,12 +11,12 @@ import { NextRequest } from 'next/server';
 // 获取单个标签
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         validateMethod(request, ['GET']);
 
-        const { id } = params;
+        const { id } = await params;
 
         if (!id) {
             return createApiResponse({ error: 'Tag ID is required' }, 400);
@@ -87,12 +87,12 @@ export async function GET(
 // 更新标签
 export async function PATCH(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         validateMethod(request, ['PATCH']);
 
-        const { id } = params;
+        const { id } = await params;
 
         if (!id) {
             return createApiResponse({ error: 'Tag ID is required' }, 400);
@@ -213,12 +213,12 @@ export async function PATCH(
 // 删除标签
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         validateMethod(request, ['DELETE']);
 
-        const { id } = params;
+        const { id } = await params;
 
         if (!id) {
             return createApiResponse({ error: 'Tag ID is required' }, 400);

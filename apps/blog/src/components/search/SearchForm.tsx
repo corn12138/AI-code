@@ -13,23 +13,29 @@ export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
     const router = useRouter();
     const debouncedSearchTerm = useDebounce(query, 300);
 
-    const handleSearch = (e: React.FormEvent) => {
+    // 处理表单提交
+    const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (!query.trim()) return;
-
-        // 跳转到带有搜索查询的搜索页面
-        router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+        performSearch(query);
     };
 
+    // 执行搜索逻辑
+    const performSearch = (searchQuery: string) => {
+        if (!searchQuery.trim()) return;
+
+        // 跳转到带有搜索查询的搜索页面
+        router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    };
+
+    // 防抖搜索
     useEffect(() => {
-        if (debouncedSearchTerm) {
-            handleSearch(debouncedSearchTerm);
+        if (debouncedSearchTerm && debouncedSearchTerm !== initialQuery) {
+            performSearch(debouncedSearchTerm);
         }
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, initialQuery]);
 
     return (
-        <form onSubmit={handleSearch} className="relative">
+        <form onSubmit={handleFormSubmit} className="relative">
             <div className="flex">
                 <input
                     type="text"

@@ -1,12 +1,12 @@
 'use client';
 
-import { Article, Tag } from '@/types';
-import { useState } from 'react';
-import { fetchArticles } from '@/services/api';
-import TagList from '@/components/blog/TagList';
 import ArticleCard from '@/components/blog/ArticleCard';
+import TagList from '@/components/blog/TagList';
 import SearchBar from '@/components/ui/SearchBar';
+import { fetchArticles } from '@/services/api';
+import { Article, Tag } from '@/types';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface ClientHomePageProps {
   initialArticles: Article[];
@@ -30,7 +30,7 @@ export default function ClientHomePage({ initialArticles, tags }: ClientHomePage
     setIsSearching(true);
     try {
       const searchResults = await fetchArticles({ search: query });
-      setArticles(searchResults);
+      setArticles(Array.isArray(searchResults) ? searchResults : searchResults.articles);
     } finally {
       setIsSearching(false);
     }
@@ -40,8 +40,9 @@ export default function ClientHomePage({ initialArticles, tags }: ClientHomePage
     setIsLoadingMore(true);
     try {
       const nextPage = currentPage + 1;
-      const moreArticles = await fetchArticles({ page: nextPage, limit: 10 });
-      
+      const result = await fetchArticles({ page: nextPage, limit: 10 });
+      const moreArticles = Array.isArray(result) ? result : result.articles;
+
       if (moreArticles.length === 0) {
         setHasMore(false);
       } else {
@@ -78,7 +79,7 @@ export default function ClientHomePage({ initialArticles, tags }: ClientHomePage
             <div className="sticky top-24 space-y-8">
               <div className="card p-5">
                 <h3 className="text-lg font-bold mb-4 text-secondary-800">热门标签</h3>
-                <TagList tags={tags} selectedTag={selectedTag} />
+                <TagList tags={tags} selectedTag={selectedTag} onTagSelect={(tag) => setSelectedTag(tag)} />
               </div>
 
               <div className="card p-5">
@@ -121,7 +122,7 @@ export default function ClientHomePage({ initialArticles, tags }: ClientHomePage
                 {/* 加载更多按钮 */}
                 {hasMore && (
                   <div className="mt-10 text-center">
-                    <button 
+                    <button
                       onClick={handleLoadMore}
                       disabled={isLoadingMore}
                       className={`border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium py-2 px-4 rounded-md transition-colors ${isLoadingMore ? 'opacity-70 cursor-not-allowed' : ''}`}

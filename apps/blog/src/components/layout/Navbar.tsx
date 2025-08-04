@@ -4,8 +4,7 @@ import { useAuth } from '@corn12138/hooks';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 import { Fragment, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -19,19 +18,22 @@ export default function Navbar() {
         { name: '首页', href: '/', current: pathname === '/' },
         { name: '文章', href: '/articles', current: pathname === '/articles' || pathname.startsWith('/article/') },
         { name: '标签', href: '/tags', current: pathname === '/tags' },
+        { name: 'AI 助手', href: '/chat', current: pathname === '/chat' },
+        { name: '仪表板', href: '/dashboard', current: pathname.startsWith('/dashboard') },
         { name: '关于', href: '/about', current: pathname === '/about' },
     ];
 
     const profileLinks = [
-        { name: '个人主页', href: `/author/${user?.id}` },
+        { name: '个人主页', href: `/author/${(user as any)?.id}` },
+        { name: '数据仪表板', href: '/dashboard' },
         { name: '我的文章', href: '/dashboard/articles' },
-        { name: '我的评论', href: '/dashboard/comments' },
-        { name: '账户设置', href: '/settings' },
+        { name: '草稿管理', href: '/dashboard/drafts' },
+        { name: '设置', href: '/settings' },
     ];
 
     const handleLogout = async () => {
         try {
-            await logout();
+            await (logout as any)();
             toast.success('已成功退出登录');
             router.push('/login');
         } catch (error) {
@@ -88,18 +90,18 @@ export default function Navbar() {
                                         <Menu as="div" className="relative">
                                             <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                                                 <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                                                    {user?.avatar ? (
+                                                    {(user as any)?.avatar ? (
                                                         <div className="relative h-full w-full">
                                                             <Image
-                                                                src={user.avatar}
-                                                                alt={user.username}
+                                                                src={(user as any).avatar}
+                                                                alt={(user as any).username}
                                                                 fill
                                                                 className="object-cover"
                                                                 sizes="40px"
                                                             />
                                                         </div>
                                                     ) : (
-                                                        <span className="text-sm font-medium text-gray-600">{user?.username?.charAt(0).toUpperCase()}</span>
+                                                        <span className="text-sm font-medium text-gray-600">{(user as any)?.username?.charAt(0).toUpperCase()}</span>
                                                     )}
                                                 </div>
                                             </Menu.Button>
@@ -116,10 +118,10 @@ export default function Navbar() {
                                                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
                                                     <div className="px-4 py-2 border-b">
                                                         <p className="text-sm text-gray-700 truncate">
-                                                            {user?.username}
+                                                            {(user as any)?.username}
                                                         </p>
                                                         <p className="text-xs text-gray-500 truncate">
-                                                            {user?.email}
+                                                            {(user as any)?.email}
                                                         </p>
                                                     </div>
 
@@ -204,24 +206,24 @@ export default function Navbar() {
                                     <div className="flex items-center px-4">
                                         <div className="flex-shrink-0">
                                             <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                                                {user?.avatar ? (
+                                                {(user as any)?.avatar ? (
                                                     <div className="relative h-full w-full">
                                                         <Image
-                                                            src={user.avatar}
-                                                            alt={user.username}
+                                                            src={(user as any).avatar}
+                                                            alt={(user as any).username}
                                                             fill
                                                             className="object-cover"
                                                             sizes="40px"
                                                         />
                                                     </div>
                                                 ) : (
-                                                    <span className="text-sm font-medium text-gray-600">{user?.username?.charAt(0).toUpperCase()}</span>
+                                                    <span className="text-sm font-medium text-gray-600">{(user as any)?.username?.charAt(0).toUpperCase()}</span>
                                                 )}
                                             </div>
                                         </div>
                                         <div className="ml-3">
-                                            <div className="text-base font-medium text-gray-800">{user?.username}</div>
-                                            <div className="text-sm font-medium text-gray-500">{user?.email}</div>
+                                            <div className="text-base font-medium text-gray-800">{(user as any)?.username}</div>
+                                            <div className="text-sm font-medium text-gray-500">{(user as any)?.email}</div>
                                         </div>
                                     </div>
                                     <div className="mt-3 space-y-1">

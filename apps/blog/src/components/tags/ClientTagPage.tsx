@@ -46,7 +46,7 @@ export function ClientTagPage({ currentTag, articles, allTags }: ClientTagPagePr
                                 <span className="flex items-center gap-2">
                                     <span className="relative w-6 h-6 rounded-full overflow-hidden">
                                         <Image
-                                            src={article.author.avatar || 'https://via.placeholder.com/40'}
+                                            src={article.author.avatar || '/default-avatar.svg'}
                                             alt={article.author.username}
                                             fill
                                             className="object-cover"

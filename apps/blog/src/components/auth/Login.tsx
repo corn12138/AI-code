@@ -1,7 +1,8 @@
 import { useAuth } from '@corn12138/hooks';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -10,10 +11,7 @@ const Login: React.FC = () => {
     const [error, setError] = useState('');
 
     const { login, isAuthenticated } = useAuth();
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const from = location.state?.from?.pathname || '/';
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,9 +24,9 @@ const Login: React.FC = () => {
         setIsLoading(true);
 
         try {
-            await login({ username: usernameOrEmail, password });
+            await (login as any)({ email: usernameOrEmail, password });
             toast.success('登录成功');
-            navigate(from, { replace: true });
+            router.push('/');
         } catch (error) {
             console.error('Login failed:', error);
             setError('登录失败，请检查用户名和密码');
@@ -45,7 +43,7 @@ const Login: React.FC = () => {
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
                     或{' '}
-                    <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
                         注册新账号
                     </Link>
                 </p>

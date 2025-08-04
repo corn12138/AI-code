@@ -1,16 +1,19 @@
 import ClientPageWrapper from '@/components/ClientPageWrapper';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import { fetchArticleById } from '@/services/api';
+import { formatDate } from '@/utils/date';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 interface ArticlePageProps {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }
 
 // 动态生成元数据
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-    const article = await fetchArticleById(params.id);
+    const { id } = await params;
+    const article = await fetchArticleById(id);
 
     if (!article) {
         return {
@@ -31,7 +34,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-    const article = await fetchArticleById(params.id);
+    const { id } = await params;
+    const article = await fetchArticleById(id);
 
     if (!article) {
         notFound();
@@ -48,7 +52,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         <div className="flex items-center mr-4">
                             <div className="relative w-10 h-10 rounded-full overflow-hidden mr-2">
                                 <Image
-                                    src={article.author.avatar || "https://via.placeholder.com/40"}
+                                    src={article.author.avatar || "/default-avatar.svg"}
                                     alt={article.author.username}
                                     fill
                                     style={{ objectFit: 'cover' }}

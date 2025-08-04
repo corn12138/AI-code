@@ -32,7 +32,8 @@ const CommentSection: FC<CommentSectionProps> = ({ articleId }) => {
                         author: {
                             id: 'user-1',
                             username: '读者小王',
-                            avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=256&h=256&fit=crop&crop=face'
+                            avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=256&h=256&fit=crop&crop=face',
+                            createdAt: new Date().toISOString()
                         }
                     },
                     {
@@ -42,7 +43,8 @@ const CommentSection: FC<CommentSectionProps> = ({ articleId }) => {
                         author: {
                             id: 'user-2',
                             username: '技术爱好者',
-                            avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=256&h=256&fit=crop&crop=face'
+                            avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=256&h=256&fit=crop&crop=face',
+                            createdAt: new Date().toISOString()
                         }
                     }
                 ];
@@ -72,9 +74,10 @@ const CommentSection: FC<CommentSectionProps> = ({ articleId }) => {
                 content: commentText,
                 createdAt: new Date().toISOString(),
                 author: {
-                    id: user?.id || 'guest',
-                    username: user?.username || '访客',
-                    avatar: user?.avatar
+                    id: (user as any)?.id || 'guest',
+                    username: (user as any)?.username || '访客',
+                    avatar: (user as any)?.avatar,
+                    createdAt: new Date().toISOString()
                 }
             };
 
@@ -132,7 +135,7 @@ const CommentSection: FC<CommentSectionProps> = ({ articleId }) => {
                         <div key={comment.id} className="flex">
                             <div className="relative w-10 h-10 rounded-full overflow-hidden mr-4">
                                 <Image
-                                    src={comment.author.avatar || 'https://via.placeholder.com/40'}
+                                    src={comment.author.avatar || '/default-avatar.svg'}
                                     alt={comment.author.username}
                                     fill
                                     style={{ objectFit: 'cover' }}

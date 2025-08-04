@@ -13,6 +13,7 @@ import configuration from './config/configuration';
 import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
 import { LowcodeModule } from './lowcode/lowcode.module';
+import { MetricsModule } from './metrics/metrics.module';
 import { TagsModule } from './tags/tags.module';
 import { UserModule } from './user/user.module';
 
@@ -47,6 +48,7 @@ import { UserModule } from './user/user.module';
         CommonModule,
         HealthModule,
         TagsModule,
+        MetricsModule,
     ],
     providers: [
         // 全局限流守卫

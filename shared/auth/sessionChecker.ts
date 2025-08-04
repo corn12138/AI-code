@@ -1,4 +1,4 @@
-import { AUTH_TOKEN_KEY } from './constants';
+import { AUTH_TOKEN_KEY } from './src/constants';
 import { refreshAuthToken } from './tokenManager';
 
 /**
