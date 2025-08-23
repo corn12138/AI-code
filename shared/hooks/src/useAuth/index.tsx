@@ -18,10 +18,18 @@ export interface AuthState {
 }
 
 export interface AuthContextType extends AuthState {
-    login: (credentials: { email: string; password: string }) => Promise<boolean>;
+    // 兼容两种调用方式：
+    // 1) login({ email, password })
+    // 2) login(usernameOrEmail, password)
+    login: (
+        credentialsOrUsername: { email: string; password: string } | string,
+        passwordIfUsername?: string
+    ) => Promise<boolean>;
     logout: () => void;
     register: (userData: { username: string; email: string; password: string }) => Promise<boolean>;
     updateUser: (userData: Partial<User>) => void;
+    // 刷新accessToken（依赖后端httpOnly refreshToken cookie）
+    refreshToken: () => Promise<boolean>;
 }
 
 // Context
@@ -66,14 +74,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         initAuth();
     }, []);
 
-    const login = useCallback(async (credentials: { email: string; password: string }): Promise<boolean> => {
+    const login = useCallback(async (
+        credentialsOrUsername: { email: string; password: string } | string,
+        passwordIfUsername?: string
+    ): Promise<boolean> => {
         setAuthState(prev => ({ ...prev, isLoading: true }));
 
         try {
+            // 构造请求体：优先兼容后端Nest接口 { usernameOrEmail, password }
+            let body: any;
+            if (typeof credentialsOrUsername === 'string') {
+                body = {
+                    usernameOrEmail: credentialsOrUsername,
+                    password: passwordIfUsername ?? ''
+                };
+            } else {
+                const { email, password } = credentialsOrUsername;
+                // 同时兼容使用邮箱登录
+                body = { usernameOrEmail: email, password };
+            }
+
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(credentials),
+                credentials: 'include',
+                body: JSON.stringify(body),
             });
 
             if (!response.ok) {
@@ -123,6 +148,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const response = await fetch('/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(userData),
             });
 
@@ -153,6 +179,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, []);
 
+    const refreshToken = useCallback(async (): Promise<boolean> => {
+        try {
+            const response = await fetch('/api/auth/refresh', {
+                method: 'POST',
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                return false;
+            }
+
+            const data = await response.json();
+            const { accessToken } = data;
+
+            const userStr = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+            const user = userStr ? JSON.parse(userStr) as User : null;
+
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('accessToken', accessToken);
+            }
+
+            setAuthState(prev => ({
+                user: user ?? prev.user,
+                token: accessToken,
+                isLoading: false,
+                isAuthenticated: Boolean(user ?? prev.user),
+            }));
+
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }, []);
+
     const updateUser = useCallback((userData: Partial<User>) => {
         setAuthState(prev => {
             if (!prev.user) return prev;
@@ -176,6 +236,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logout,
         register,
         updateUser,
+        refreshToken,
     };
 
     return (
