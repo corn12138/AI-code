@@ -20,7 +20,10 @@ build
 .env.production.local
 .env.development
 .env.prod
+.env.production
 .env.example
+.env.backup*
+.env.*.backup*
 
 # 日志
 npm-debug.log*
@@ -77,8 +80,43 @@ deleted-files-backup-*/
 tmp/
 *.cache
 
+# 构建缓存
+.next/
+**/.next/
+**/node_modules/.cache/
+**/.cache/
+**/dist/
+**/build/
+**/out/
+
+# 虚拟环境
+**/venv/
+**/env/
+**/.venv/
+**/.env/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+
 # 特定文件
 apps/blog/AI-CHAT-SETUP.md
 docs/ai-chat-development-summary.md
 apps/blog/ENV_CONFIG.txt
 ENV_CONFIG.txt
+
+# 敏感配置文件
+**/config/secrets.json
+**/config/credentials.json
+**/config/database.json
+**/config/auth.json
+**/config/production.json
+**/config/local.json
+
+# 测试配置文件（可能包含敏感信息）
+testing.yml
+ai-code-testing.yml
+**/testing.yml
+**/test-config.yml
+**/test-config.yaml
