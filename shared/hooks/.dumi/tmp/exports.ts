@@ -11,7 +11,7 @@ export { getSketchJSON } from '/Users/huangyuming/Desktop/createProjects/AI-code
 export { createBrowserHistory, createHashHistory, createMemoryHistory, Helmet, HelmetProvider, createSearchParams, generatePath, matchPath, matchRoutes, Navigate, NavLink, Outlet, resolvePath, useLocation, useMatch, useNavigate, useOutlet, useOutletContext, useParams, useResolvedPath, useRoutes, useSearchParams, useAppData, useClientLoaderData, useLoaderData, useRouteProps, useSelectedRoutes, useServerLoaderData, renderClient, __getRoot, Link, useRouteData, __useFetcher, withRouter } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+renderer-react@4.4.11_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@umijs/renderer-react';
 export type { History, ClientLoader } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+renderer-react@4.4.11_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@umijs/renderer-react'
 // umi/client/client/plugin
-export { ApplyPluginsType, PluginManager } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_eslint@8.57.1_jest@29.7.0_@types+n_430f69cf0ccc7e653064d26a52e68392/node_modules/umi/client/client/plugin.js';
+export { ApplyPluginsType, PluginManager } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_eslint@8.57.1_jest@29.7.0_@types+n_61044d608b4e484d0fee99f68501cd4f/node_modules/umi/client/client/plugin.js';
 export { history, createHistory } from './core/history';
 export { terminal } from './core/terminal';
 // react ssr
