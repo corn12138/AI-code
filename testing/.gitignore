@@ -1,0 +1,67 @@
+# 测试报告和输出
+reports/
+coverage/
+htmlcov/
+.coverage
+*.coverage
+*.lcov
+
+# Python相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+.env/
+.pytest_cache/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# IDE相关
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# 敏感配置文件
+config.yml
+real-world-config.yml
+docker-compose.test.yml
+.env*
+secrets.json
+credentials.json
+
+# 测试数据
+test-data/
+fixtures/
+*.db
+*.sqlite
+*.sqlite3
+
+# 构建输出
+dist/
+build/
+*.egg-info/
+
+# 缓存文件
+.cache/
+*.cache
+
+# 系统文件
+.DS_Store
+Thumbs.db

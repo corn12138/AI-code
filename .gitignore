@@ -120,3 +120,25 @@ ai-code-testing.yml
 **/testing.yml
 **/test-config.yml
 **/test-config.yaml
+testing/config.yml
+testing/real-world-config.yml
+testing/docker-compose.test.yml
+
+# 测试相关文件
+testing/reports/
+testing/orchestrator/venv/
+testing/orchestrator/__pycache__/
+testing/orchestrator/.idea/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.pytest_cache/
+**/.coverage
+**/htmlcov/
+**/.tox/
+**/.mypy_cache/
+**/.ruff_cache/
+
+# 测试目录（使用专门的.gitignore）
+testing/.gitignore
