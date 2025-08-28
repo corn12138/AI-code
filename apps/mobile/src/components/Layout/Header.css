@@ -1,0 +1,41 @@
+.header-container {
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding-top: env(safe-area-inset-top);
+}
+
+.custom-navbar {
+  background-color: #fff;
+  --height: 44px;
+  --border-bottom: 1px solid transparent;
+}
+
+.custom-navbar .adm-nav-bar-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #000;
+}
+
+.custom-navbar .adm-nav-bar-back-arrow {
+  font-size: 18px;
+  color: #1677ff;
+}
+
+/* 移动端适配 */
+.header-container.mobile .custom-navbar {
+  --height: 42px;
+}
+
+.header-container.mobile .custom-navbar .adm-nav-bar-title {
+  font-size: 16px;
+}
+
+/* 安全区域适配 */
+@supports (padding: max(0px)) {
+  .header-container {
+    padding-top: max(0px, env(safe-area-inset-top));
+  }
+}

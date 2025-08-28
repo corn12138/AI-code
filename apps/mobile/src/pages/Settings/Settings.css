@@ -1,0 +1,185 @@
+.settings-page {
+    padding-bottom: 20px;
+}
+
+.settings-section {
+    margin-bottom: 16px;
+}
+
+.settings-section .adm-card-header-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.settings-section .adm-list-item-content-prefix {
+    margin-right: 12px;
+    color: #666;
+    font-size: 20px;
+}
+
+.settings-section .adm-list-item-content-main {
+    font-size: 15px;
+    color: #333;
+}
+
+.settings-section .adm-list-item-content-description {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.selector-item {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.selector-item:last-child {
+    border-bottom: none;
+}
+
+.selector-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: #333;
+}
+
+.selector-label svg {
+    font-size: 20px;
+    color: #666;
+}
+
+.about-content {
+    text-align: left;
+    line-height: 1.6;
+}
+
+.about-content p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.about-content strong {
+    color: #333;
+}
+
+.action-buttons {
+    margin-top: 20px;
+}
+
+/* 开关样式优化 */
+.adm-switch {
+    --width: 48px;
+    --height: 28px;
+    --border-width: 2px;
+}
+
+/* 选择器样式优化 */
+.adm-selector {
+    margin-top: 8px;
+}
+
+.adm-selector-item {
+    border-radius: 8px;
+    border: 1px solid #e8e8e8;
+    padding: 12px 16px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.adm-selector-item-active {
+    border-color: #1677ff;
+    background-color: #f0f5ff;
+    color: #1677ff;
+}
+
+/* 移动端适配 */
+.settings-page.mobile .settings-section .adm-list-item-content-main {
+    font-size: 14px;
+}
+
+.settings-page.mobile .settings-section .adm-list-item-content-description {
+    font-size: 12px;
+}
+
+.settings-page.mobile .selector-label {
+    font-size: 14px;
+}
+
+.settings-page.mobile .selector-label svg {
+    font-size: 18px;
+}
+
+.settings-page.mobile .adm-selector-item {
+    padding: 10px 12px;
+    font-size: 13px;
+}
+
+.settings-page.mobile .about-content p {
+    font-size: 13px;
+}
+
+/* 平板适配 */
+.settings-page.tablet .content-container {
+    padding: 20px;
+}
+
+.settings-page.tablet .settings-section .adm-list-item-content-main {
+    font-size: 16px;
+}
+
+.settings-page.tablet .settings-section .adm-list-item-content-description {
+    font-size: 14px;
+}
+
+.settings-page.tablet .selector-label {
+    font-size: 16px;
+}
+
+.settings-page.tablet .selector-label svg {
+    font-size: 22px;
+}
+
+.settings-page.tablet .adm-selector-item {
+    padding: 14px 18px;
+    font-size: 15px;
+}
+
+.settings-page.tablet .about-content p {
+    font-size: 15px;
+}
+
+/* 列表项悬停效果 */
+.adm-list-item-clickable:active {
+    background-color: #f5f5f5;
+}
+
+/* 卡片间距优化 */
+.adm-card+.adm-card {
+    margin-top: 16px;
+}
+
+/* 响应式调整 */
+@media screen and (min-width: 1024px) {
+    .settings-page .content-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+}
+
+/* 危险按钮样式 */
+.adm-button-danger {
+    --background-color: #ff4d4f;
+    --border-color: #ff4d4f;
+    --text-color: #fff;
+}
+
+.adm-button-danger:active {
+    --background-color: #d9363e;
+    --border-color: #d9363e;
+}

@@ -10,6 +10,7 @@ import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 
@@ -112,5 +113,50 @@ export class AuthController {
         });
 
         return { accessToken: tokens.accessToken };
+    }
+
+    @Public()
+    @Post('register')
+    @HttpCode(201)
+    @ApiOperation({ summary: '用户注册' })
+    @ApiResponse({ status: 201, description: '注册成功' })
+    @ApiResponse({ status: 400, description: '注册信息无效或用户已存在' })
+    async register(@Body() registerDto: RegisterDto, @Res({ passthrough: true }) res: Response) {
+        try {
+            this.logger.log(`注册尝试: ${registerDto.email}`);
+
+            const result = await this.authService.register(registerDto);
+
+            this.logger.log(`用户 ${registerDto.email} 注册成功`);
+
+            // 设置安全的HTTP Only Cookie
+            res.cookie('refreshToken', result.refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+                path: '/',
+            });
+
+            // 设置CSRF令牌作为普通cookie（可被JavaScript访问）
+            if (result.csrfToken) {
+                res.cookie('XSRF-TOKEN', result.csrfToken, {
+                    httpOnly: false,
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'strict',
+                    maxAge: 24 * 60 * 60 * 1000, // 1天
+                    path: '/',
+                });
+            }
+
+            // 不在响应中返回refreshToken
+            const { refreshToken, ...response } = result;
+            return response;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            this.logger.error(`注册失败: ${registerDto.email} - ${errorMessage}`, errorStack);
+            throw error;
+        }
     }
 }

@@ -53,7 +53,7 @@ export class JWTUtils {
             type: 'access'
         };
 
-        return jwt.sign(payload, JWT_SECRET) as string;
+        return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION }) as string;
     }
 
     /**
@@ -66,7 +66,7 @@ export class JWTUtils {
             type: 'refresh'
         };
 
-        return jwt.sign(payload, JWT_SECRET) as string;
+        return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION }) as string;
     }
 
     /**

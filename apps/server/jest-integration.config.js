@@ -9,6 +9,12 @@ module.exports = {
     transform: {
         '^.+\\.(t|j)s$': 'ts-jest',
     },
+    // Use Testcontainers to provision ephemeral Postgres for integration/e2e tests
+    globalSetup: '<rootDir>/test/testcontainers-setup.js',
+    globalTeardown: '<rootDir>/test/testcontainers-teardown.js',
+    setupFilesAfterEnv: [
+        '<rootDir>/test/testcontainers-env.js',
+    ],
     collectCoverageFrom: [
         '**/*.service.ts',
         '**/*.controller.ts',

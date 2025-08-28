@@ -10,7 +10,15 @@
         "start": "next start",
         "lint": "next lint",
         "clean": "rm -rf .next && rm -rf node_modules/.cache",
-        "dev:clean": "pnpm clean && pnpm dev"
+        "dev:clean": "pnpm clean && pnpm dev",
+        "db:generate": "prisma generate",
+        "db:push": "prisma db push",
+        "db:seed": "tsx prisma/seed.ts",
+        "db:reset": "prisma migrate reset --force",
+        "db:setup": "prisma db push && pnpm db:seed"
+    },
+    "prisma": {
+        "seed": "tsx prisma/seed.ts"
     },
     "dependencies": {
         "@corn12138/hooks": "workspace:*",
@@ -74,6 +82,8 @@
         "postcss": "^8.4.24",
         "tailwindcss": "^3.3.2",
         "tailwindcss-animate": "^1.0.7",
-        "typescript": "^5.0.4"
+        "tsx": "^4.7.0",
+        "typescript": "^5.0.4",
+        "@pact-foundation/pact": "^12.0.0"
     }
 }

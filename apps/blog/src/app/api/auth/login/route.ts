@@ -11,7 +11,7 @@ import { prisma } from '@/lib/prisma';
 import { NextRequest } from 'next/server';
 
 interface LoginRequestBody {
-    email: string;
+    email: string; // 可以是邮箱或用户名
     password: string;
 }
 
@@ -26,19 +26,21 @@ export async function POST(request: NextRequest) {
         // 验证必填字段
         validateFields(body, ['email', 'password']);
 
-        const { email, password } = body;
+        const { email: emailOrUsername, password } = body;
 
-        // 验证邮箱格式
-        if (!validateEmail(email)) {
-            return createApiResponse(
-                { error: 'Invalid email format' },
-                400
-            );
-        }
+        // 判断输入是邮箱还是用户名
+        const isEmail = validateEmail(emailOrUsername);
 
-        // 查找用户
-        const user = await prisma.user.findUnique({
-            where: { email: email.toLowerCase() },
+        // 查找用户 - 支持邮箱或用户名登录
+        const user = await prisma.user.findFirst({
+            where: isEmail
+                ? { email: emailOrUsername.toLowerCase() }
+                : {
+                    OR: [
+                        { email: emailOrUsername.toLowerCase() },
+                        { username: emailOrUsername.toLowerCase() }
+                    ]
+                },
             select: {
                 id: true,
                 email: true,
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
         // 检查用户是否存在
         if (!user) {
             return createApiResponse(
-                { error: 'Invalid email or password' },
+                { error: 'Invalid credentials' },
                 401
             );
         }
@@ -61,7 +63,7 @@ export async function POST(request: NextRequest) {
 
         if (!isValidPassword) {
             return createApiResponse(
-                { error: 'Invalid email or password' },
+                { error: 'Invalid credentials' },
                 401
             );
         }

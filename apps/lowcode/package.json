@@ -7,9 +7,14 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "preview": "vite preview",
-        "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+        "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "coverage": "vitest run --coverage"
     },
     "dependencies": {
+        "@babel/generator": "^7.23.0",
+        "@babel/parser": "^7.23.0",
         "@corn12138/hooks": "workspace:*",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.0",
@@ -22,6 +27,7 @@
         "@shared/ui": "workspace:*",
         "@shared/utils": "workspace:*",
         "Unstable_Grid2": "link:@mui/material/Unstable_Grid2",
+        "jszip": "^3.10.1",
         "react": "^18.2.0",
         "react-dnd": "^16.0.1",
         "react-dnd-html5-backend": "^16.0.1",
@@ -36,6 +42,7 @@
         "@types/react-dom": "^18.2.4",
         "@typescript-eslint/eslint-plugin": "^5.59.7",
         "@typescript-eslint/parser": "^5.59.7",
+        "@vitest/coverage-v8": "^2.0.0",
         "@vitejs/plugin-react": "^4.0.0",
         "autoprefixer": "^10.4.14",
         "eslint": "^8.41.0",
@@ -45,6 +52,7 @@
         "tailwindcss": "^3.3.2",
         "typescript": "^5.0.4",
         "vite": "^4.3.9",
-        "vite-tsconfig-paths": "^4.2.0"
+        "vite-tsconfig-paths": "^4.2.0",
+        "vitest": "^2.0.0"
     }
 }

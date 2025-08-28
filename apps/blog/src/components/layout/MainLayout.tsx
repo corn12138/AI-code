@@ -37,6 +37,7 @@ export default function MainLayout({
     const { isAuthenticated, user } = useAuth();
     const pathname = usePathname();
     const [selectedCategory, setSelectedCategory] = useState('最新');
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
     // 公开导航项（未登录时也显示）
     const publicNavItems = [
@@ -74,11 +75,14 @@ export default function MainLayout({
     const NavItem = ({ item, section = '' }: { item: any; section?: string }) => (
         <Link
             href={item.href}
-            className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${item.current
+            className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 touch-target ${item.current
                 ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                 }`}
-            onClick={() => setSelectedCategory(item.name)}
+            onClick={() => {
+                setSelectedCategory(item.name);
+                setIsMobileSidebarOpen(false); // 移动端点击后关闭侧边栏
+            }}
         >
             <item.icon className="mr-3 h-5 w-5" />
             {item.name}
@@ -87,11 +91,41 @@ export default function MainLayout({
 
     return (
         <div className="min-h-screen bg-gray-50">
+            {/* 移动端侧边栏背景遮罩 */}
+            {isMobileSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                    onClick={() => setIsMobileSidebarOpen(false)}
+                />
+            )}
+
             <div className="max-w-screen-xl mx-auto flex">
+                {/* 移动端侧边栏按钮 */}
+                {showSidebar && (
+                    <button
+                        className="fixed top-4 left-4 z-50 lg:hidden bg-white rounded-md p-2 shadow-md border border-gray-200 touch-target"
+                        onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+                    >
+                        {isMobileSidebarOpen ? (
+                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        ) : (
+                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        )}
+                    </button>
+                )}
+
                 {/* 左侧导航栏 */}
                 {showSidebar && (
-                    <div className="hidden lg:block w-64 bg-white shadow-sm border-r border-gray-200 min-h-screen">
-                        <div className="sticky top-0 p-6 space-y-6">
+                    <div className={`
+                        fixed lg:relative lg:block w-64 bg-white shadow-sm border-r border-gray-200 min-h-screen z-40
+                        transition-transform duration-300 ease-in-out
+                        ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+                    `}>
+                        <div className="sticky top-0 p-4 lg:p-6 space-y-4 lg:space-y-6 pt-16 lg:pt-6">
                             {/* 公开导航 */}
                             <nav className="space-y-2">
                                 {publicNavItems.map((item) => (
@@ -173,8 +207,8 @@ export default function MainLayout({
                 )}
 
                 {/* 主内容区域 */}
-                <div className={`flex-1 ${showSidebar ? 'lg:ml-0' : ''} ${showRightSidebar ? 'lg:mr-0' : ''}`}>
-                    <main className="bg-white min-h-screen">
+                <div className={`flex-1 ${showSidebar ? 'lg:ml-0' : ''} ${showRightSidebar ? 'lg:mr-0' : ''} ${showSidebar ? 'pl-0 lg:pl-0' : ''}`}>
+                    <main className="bg-white min-h-screen mobile-padding pt-4 lg:pt-0">
                         {children}
                     </main>
                 </div>

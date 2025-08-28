@@ -1,0 +1,66 @@
+{
+    "name": "workbench-ios",
+    "version": "1.0.0",
+    "description": "iOS native app container for H5 mobile workbench",
+    "private": true,
+    "keywords": [
+        "ios",
+        "swift",
+        "webview",
+        "hybrid",
+        "workbench"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/your-org/workbench-ios.git"
+    },
+    "scripts": {
+        "ios:build": "xcodebuild -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -configuration Release",
+        "ios:clean": "xcodebuild clean -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp",
+        "ios:archive": "xcodebuild archive -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -archivePath build/WorkbenchApp.xcarchive",
+        "ios:export": "xcodebuild -exportArchive -archivePath build/WorkbenchApp.xcarchive -exportPath build/ipa -exportOptionsPlist ExportOptions.plist"
+    },
+    "config": {
+        "h5_dev_url": "http://localhost:8002",
+        "h5_prod_url": "https://your-production-domain.com",
+        "bundle_id": "com.yourcompany.workbench",
+        "app_name": "工作台",
+        "version": "1.0.0",
+        "build_number": "1"
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "ios": {
+        "deployment_target": "13.0",
+        "supported_devices": [
+            "iPhone",
+            "iPad"
+        ],
+        "orientations": [
+            "portrait",
+            "landscape"
+        ],
+        "capabilities": [
+            "camera",
+            "photo_library",
+            "push_notifications",
+            "background_modes"
+        ]
+    },
+    "features": {
+        "webview": {
+            "javascript_enabled": true,
+            "local_storage": true,
+            "javascript_bridge": true,
+            "pull_to_refresh": true
+        },
+        "native_integration": {
+            "camera": true,
+            "photo_picker": true,
+            "file_upload": true,
+            "push_notifications": true,
+            "device_info": true,
+            "network_status": true
+        }
+    }
+}

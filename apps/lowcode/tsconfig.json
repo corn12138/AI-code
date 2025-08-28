@@ -25,10 +25,18 @@
             "@/*": [
                 "src/*"
             ]
-        }
+        },
+        "types": [
+            "vitest/globals"
+        ]
     },
     "include": [
-        "src"
+        "src",
+        "vitest.setup.ts",
+        "src/**/*.spec.ts",
+        "src/**/*.test.ts",
+        "src/**/*.spec.tsx",
+        "src/**/*.test.tsx"
     ],
     "references": [
         {

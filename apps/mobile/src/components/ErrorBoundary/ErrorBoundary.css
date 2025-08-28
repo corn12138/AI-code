@@ -1,0 +1,153 @@
+/* 错误边界样式 */
+.error-boundary {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.error-boundary-content {
+    width: 100%;
+    max-width: 400px;
+}
+
+.error-card {
+    text-align: center;
+    padding: 40px 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.error-icon {
+    margin-bottom: 24px;
+}
+
+.error-emoji {
+    font-size: 64px;
+    line-height: 1;
+    animation: shake 2s infinite;
+}
+
+@keyframes shake {
+
+    0%,
+    20%,
+    40%,
+    60%,
+    80%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+}
+
+.error-text {
+    margin-bottom: 32px;
+}
+
+.error-text h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 12px 0;
+}
+
+.error-message {
+    font-size: 16px;
+    color: #6b7280;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.error-details {
+    font-size: 14px;
+    color: #ef4444;
+    font-family: 'Courier New', monospace;
+    word-break: break-word;
+}
+
+.error-details-dev {
+    margin-top: 24px;
+    text-align: left;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.error-details-dev summary {
+    padding: 12px 16px;
+    background: #f9fafb;
+    cursor: pointer;
+    font-weight: 500;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.error-details-dev summary:hover {
+    background: #f3f4f6;
+}
+
+.error-stack,
+.error-component-stack {
+    margin: 0;
+    padding: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #ef4444;
+    background: #fef2f2;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.error-component-stack {
+    border-top: 1px solid #fecaca;
+    background: #fff5f5;
+    color: #dc2626;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .error-boundary {
+        padding: 16px;
+    }
+
+    .error-card {
+        padding: 32px 20px;
+    }
+
+    .error-emoji {
+        font-size: 48px;
+    }
+
+    .error-text h2 {
+        font-size: 20px;
+    }
+
+    .error-message {
+        font-size: 14px;
+    }
+
+    .error-details-dev {
+        font-size: 11px;
+    }
+}
+
+/* 按钮样式调整 */
+.error-boundary :global(.adm-button) {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.error-boundary :global(.adm-space) {
+    gap: 12px;
+}

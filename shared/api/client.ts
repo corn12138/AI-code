@@ -10,7 +10,10 @@ const apiClient = axios.create({
 // 添加请求拦截器
 apiClient.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('auth-token');
+        // 优先读取与blog/lowcode一致的键
+        const accessToken = localStorage.getItem('accessToken');
+        const legacyToken = localStorage.getItem('auth-token');
+        const token = accessToken || legacyToken;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

@@ -47,12 +47,11 @@ done
 # 检查是否包含敏感关键词
 echo -e "${YELLOW}检查代码中的敏感关键词...${NC}"
 SENSITIVE_PATTERNS=(
-    "HYm_7893_hyujs_m"
-    "c1bfb20a5e1da3b8c8e03479a000c5febee75ae75bf69b888d0977519e0b9261"
-    "blogpassword"
-    "yourpassword"
-    "test_password"
-    "admin123"
+    "password.*=.*[a-zA-Z0-9_]{8,}"
+    "secret.*=.*[a-zA-Z0-9_]{16,}"
+    "key.*=.*[a-zA-Z0-9_]{16,}"
+    "token.*=.*[a-zA-Z0-9_]{16,}"
+    "api_key.*=.*[a-zA-Z0-9_]{16,}"
 )
 
 for pattern in "${SENSITIVE_PATTERNS[@]}"; do

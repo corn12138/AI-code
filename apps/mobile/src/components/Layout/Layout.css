@@ -1,0 +1,96 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.layout-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
+  -webkit-overflow-scrolling: touch;
+}
+
+.layout-tabbar {
+  background-color: #fff;
+  border-top: 1px solid #f0f0f0;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.custom-tabbar {
+  background-color: #fff;
+}
+
+.custom-tabbar .adm-tab-bar-item {
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.custom-tabbar .adm-tab-bar-item-icon {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.custom-tabbar .adm-tab-bar-item-title {
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* 移动端适配 */
+.layout.mobile .layout-content {
+  padding-top: 0;
+}
+
+.layout.mobile .custom-tabbar .adm-tab-bar-item {
+  padding: 6px 0;
+}
+
+.layout.mobile .custom-tabbar .adm-tab-bar-item-icon {
+  font-size: 20px;
+}
+
+.layout.mobile .custom-tabbar .adm-tab-bar-item-title {
+  font-size: 11px;
+}
+
+/* 平板适配 */
+.layout.tablet .layout-content {
+  padding: 0 20px;
+}
+
+.layout.tablet .custom-tabbar {
+  padding: 0 20px;
+}
+
+.layout.tablet .custom-tabbar .adm-tab-bar-item {
+  padding: 12px 0;
+}
+
+.layout.tablet .custom-tabbar .adm-tab-bar-item-icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.layout.tablet .custom-tabbar .adm-tab-bar-item-title {
+  font-size: 13px;
+}
+
+/* 横屏适配 */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .layout-tabbar {
+    display: none;
+  }
+
+  .layout-content {
+    padding-bottom: 0;
+  }
+}
+
+/* 安全区域适配 */
+@supports (padding: max(0px)) {
+  .layout-tabbar {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+}

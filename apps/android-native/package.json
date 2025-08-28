@@ -1,0 +1,76 @@
+{
+    "name": "workbench-android",
+    "version": "1.0.0",
+    "description": "Android native app container for H5 mobile workbench",
+    "private": true,
+    "keywords": [
+        "android",
+        "kotlin",
+        "webview",
+        "hybrid",
+        "workbench"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/your-org/workbench-android.git"
+    },
+    "scripts": {
+        "android:build": "./gradlew assembleRelease",
+        "android:debug": "./gradlew assembleDebug",
+        "android:clean": "./gradlew clean",
+        "android:install": "./gradlew installDebug",
+        "android:bundle": "./gradlew bundleRelease",
+        "android:lint": "./gradlew lint",
+        "android:test": "./gradlew test"
+    },
+    "config": {
+        "h5_dev_url": "http://10.0.2.2:8002",
+        "h5_dev_url_device": "http://192.168.1.x:8002",
+        "h5_prod_url": "https://your-production-domain.com",
+        "application_id": "com.yourcompany.workbench",
+        "app_name": "工作台",
+        "version_name": "1.0.0",
+        "version_code": 1
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "android": {
+        "compile_sdk": 34,
+        "min_sdk": 21,
+        "target_sdk": 34,
+        "build_tools": "34.0.0",
+        "kotlin_version": "1.8.10",
+        "gradle_version": "8.0.2"
+    },
+    "features": {
+        "webview": {
+            "javascript_enabled": true,
+            "dom_storage": true,
+            "javascript_interface": true,
+            "pull_to_refresh": true,
+            "file_access": true
+        },
+        "native_integration": {
+            "camera": true,
+            "gallery": true,
+            "file_upload": true,
+            "push_notifications": true,
+            "device_info": true,
+            "network_status": true,
+            "permissions": true
+        },
+        "firebase": {
+            "cloud_messaging": true,
+            "analytics": false,
+            "crashlytics": false
+        }
+    },
+    "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
+    ]
+}

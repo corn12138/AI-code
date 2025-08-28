@@ -1,41 +1,13 @@
-'use client';
-
-import {
-  BookmarkIcon,
-  ChatBubbleLeftIcon,
-  ClockIcon,
-  EyeIcon,
-  FireIcon,
-  HeartIcon,
-  TrophyIcon
-} from '@heroicons/react/24/outline';
-import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
-import { useState } from 'react';
+import { Suspense } from 'react';
+import { HomeContent } from '../components/home/HomeContent';
+import { TrendingTopics, WeeklyRanking } from '../components/home/StaticSections';
 import MainLayout from '../components/layout/MainLayout';
 import TopNavbar from '../components/layout/TopNavbar';
 
-interface Article {
-  id: string;
-  title: string;
-  content: string;
-  author: {
-    name: string;
-    avatar?: string;
-    company?: string;
-  };
-  tags: string[];
-  likeCount: number;
-  commentCount: number;
-  viewCount: number;
-  publishedAt: string;
-  readTime: number;
-  isLiked?: boolean;
-  isBookmarked?: boolean;
-}
-
-export default function HomePage() {
-  const [articles] = useState<Article[]>([
+// 模拟数据获取 - 在实际项目中这里会是数据库查询
+async function getArticles() {
+  // 服务端数据获取
+  return [
     {
       id: '1',
       title: '这个夏日让我教你一起"学宝典"，参与蔚来小伙编辑器让你轻松拿分！',
@@ -104,184 +76,66 @@ export default function HomePage() {
       isLiked: true,
       isBookmarked: false
     }
-  ]);
+  ];
+}
 
-  const ArticleCard = ({ article }: { article: Article }) => (
-    <div className="bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-colors p-6 mb-4">
-      {/* 作者信息 */}
-      <div className="flex items-center mb-4">
-        <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white font-medium text-sm">
-          {article.author.name.charAt(0)}
-        </div>
-        <div className="ml-3">
-          <div className="flex items-center">
-            <span className="text-sm font-medium text-gray-900">{article.author.name}</span>
-            {article.author.company && (
-              <>
-                <span className="mx-1 text-gray-400">·</span>
-                <span className="text-sm text-gray-600">{article.author.company}</span>
-              </>
-            )}
-          </div>
-          <div className="flex items-center text-xs text-gray-500">
-            <ClockIcon className="h-3 w-3 mr-1" />
-            {article.publishedAt}
-            <span className="mx-1">·</span>
-            {article.readTime}分钟阅读
-          </div>
-        </div>
-      </div>
-
-      {/* 文章内容 */}
-      <Link href={`/article/${article.id}`} className="block group">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
-          {article.title}
-        </h2>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-          {article.content}
-        </p>
-      </Link>
-
-      {/* 标签 */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        {article.tags.map((tag) => (
-          <span
-            key={tag}
-            className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md hover:bg-gray-200 cursor-pointer transition-colors"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* 互动数据 */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <button className={`flex items-center space-x-1 text-sm transition-colors ${article.isLiked ? 'text-red-500' : 'text-gray-500 hover:text-red-500'
-            }`}>
-            {article.isLiked ? (
-              <HeartSolidIcon className="h-4 w-4" />
-            ) : (
-              <HeartIcon className="h-4 w-4" />
-            )}
-            <span>{article.likeCount}</span>
-          </button>
-
-          <Link href={`/article/${article.id}#comments`} className="flex items-center space-x-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-            <ChatBubbleLeftIcon className="h-4 w-4" />
-            <span>{article.commentCount}</span>
-          </Link>
-
-          <div className="flex items-center space-x-1 text-sm text-gray-500">
-            <EyeIcon className="h-4 w-4" />
-            <span>{article.viewCount}</span>
-          </div>
-        </div>
-
-        <button className={`p-1 rounded transition-colors ${article.isBookmarked ? 'text-blue-500' : 'text-gray-400 hover:text-gray-600'
-          }`}>
-          <BookmarkIcon className="h-5 w-5" />
-        </button>
-      </div>
-    </div>
-  );
-
-  const TrendingTopics = () => (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-gray-900 flex items-center">
-          <FireIcon className="h-5 w-5 text-red-500 mr-2" />
-          热门话题
-        </h3>
-        <button className="text-sm text-blue-600 hover:text-blue-700">更多</button>
-      </div>
-      <div className="space-y-3">
-        {[
-          { topic: 'Next.js 14 新特性', count: '1.2k 讨论' },
-          { topic: 'AI 编程助手', count: '856 讨论' },
-          { topic: 'React Server Components', count: '743 讨论' },
-          { topic: 'TypeScript 最佳实践', count: '621 讨论' }
-        ].map((item, index) => (
-          <div key={index} className="flex items-center justify-between">
-            <span className="text-sm text-gray-700 hover:text-blue-600 cursor-pointer">
-              #{item.topic}
-            </span>
-            <span className="text-xs text-gray-500">{item.count}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  const WeeklyRanking = () => (
-    <div className="bg-white rounded-lg border border-gray-200 p-4">
-      <div className="flex items-center mb-4">
-        <TrophyIcon className="h-5 w-5 text-yellow-500 mr-2" />
-        <h3 className="font-semibold text-gray-900">本周排行</h3>
-      </div>
-      <div className="space-y-3">
-        {[
-          { rank: 1, author: '前端大师', score: '1.2k' },
-          { rank: 2, author: 'React专家', score: '998' },
-          { rank: 3, author: 'Vue开发者', score: '876' },
-          { rank: 4, author: 'Node.js高手', score: '745' },
-          { rank: 5, author: 'TypeScript忍者', score: '692' }
-        ].map((item) => (
-          <div key={item.rank} className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white mr-3 ${item.rank <= 3 ? 'bg-gradient-to-r from-yellow-400 to-yellow-600' : 'bg-gray-400'
-                }`}>
-                {item.rank}
-              </div>
-              <span className="text-sm text-gray-700">{item.author}</span>
-            </div>
-            <span className="text-xs text-gray-500">{item.score}分</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+// 服务端组件 - 利用 Next.js App Router 的 SSR 优势
+export default async function HomePage() {
+  const articles = await getArticles();
 
   return (
     <div>
       <TopNavbar />
       <MainLayout>
-        <div className="flex">
+        <div className="flex flex-col lg:flex-row mobile-gap">
           {/* 主内容区域 */}
-          <div className="flex-1 p-6 mr-6">
-            {/* 内容过滤标签 */}
-            <div className="flex items-center space-x-4 mb-6 border-b border-gray-200 pb-4">
-              <button className="text-blue-600 border-b-2 border-blue-600 pb-2 text-sm font-medium">
+          <div className="flex-1 mobile-padding lg:mr-6">
+            {/* 静态导航过滤标签 */}
+            <div className="flex items-center space-x-2 sm:space-x-4 mb-4 sm:mb-6 border-b border-gray-200 pb-3 sm:pb-4 overflow-x-auto">
+              <span className="text-blue-600 border-b-2 border-blue-600 pb-2 text-sm font-medium whitespace-nowrap">
                 推荐
-              </button>
-              <button className="text-gray-600 hover:text-gray-900 pb-2 text-sm font-medium">
+              </span>
+              <span className="text-gray-600 pb-2 text-sm font-medium whitespace-nowrap">
                 最新
-              </button>
-              <button className="text-gray-600 hover:text-gray-900 pb-2 text-sm font-medium">
+              </span>
+              <span className="text-gray-600 pb-2 text-sm font-medium whitespace-nowrap">
                 热门
-              </button>
-              <button className="text-gray-600 hover:text-gray-900 pb-2 text-sm font-medium">
+              </span>
+              <span className="text-gray-600 pb-2 text-sm font-medium whitespace-nowrap">
                 关注
-              </button>
+              </span>
             </div>
 
-            {/* 文章列表 */}
-            <div>
-              {articles.map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-            </div>
-
-            {/* 加载更多 */}
-            <div className="text-center py-8">
-              <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
-                加载更多
-              </button>
-            </div>
+            {/* 使用 Suspense 包装动态内容 */}
+            <Suspense fallback={
+              <div className="space-y-6">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="bg-white rounded-lg border border-gray-200 p-6 animate-pulse">
+                    <div className="flex items-center mb-4">
+                      <div className="h-10 w-10 rounded-full bg-gray-200"></div>
+                      <div className="ml-3 space-y-2">
+                        <div className="h-4 bg-gray-200 rounded w-24"></div>
+                        <div className="h-3 bg-gray-200 rounded w-16"></div>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                      <div className="h-4 bg-gray-200 rounded w-full"></div>
+                      <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            }>
+              <HomeContent articles={articles} />
+            </Suspense>
           </div>
 
-          {/* 右侧额外内容（在小屏幕时隐藏） */}
-          <div className="hidden lg:block w-64 space-y-6">
+          {/* 右侧静态内容 */}
+          <div className="w-full lg:w-64 mt-6 lg:mt-0 space-y-6">
+            <div className="block lg:hidden mb-4">
+              <h2 className="text-lg font-semibold mb-4">推荐内容</h2>
+            </div>
             <TrendingTopics />
             <WeeklyRanking />
           </div>

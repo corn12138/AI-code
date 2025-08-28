@@ -232,12 +232,17 @@ export class AuthService {
         // 生成令牌
         const tokens = await this.getTokens(newUser.id, newUser.username, newUser.email, newUser.roles);
 
+        // 生成CSRF令牌
+        const csrfToken = crypto.randomBytes(16).toString('hex');
+
         // 更新刷新令牌
         await this.usersService.updateRefreshToken(newUser.id, tokens.refreshToken);
 
         return {
             user: result,
-            ...tokens,
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
+            csrfToken,
         };
     }
 }

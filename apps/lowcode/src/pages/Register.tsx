@@ -1,19 +1,22 @@
+import { useAuth } from '@corn12138/hooks';
 import {
     Alert,
     Box,
     Button,
     Container,
-    Grid,
     Paper,
     Snackbar,
     TextField,
     Typography,
 } from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
+    const { register } = useAuth();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -22,6 +25,7 @@ const Register: React.FC = () => {
     });
     const [error, setError] = useState('');
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -44,18 +48,35 @@ const Register: React.FC = () => {
             return;
         }
 
-        try {
-            // 实际项目中，这里应该调用API进行注册
-            // const response = await registerUser(formData);
-
-            // 模拟成功注册
-            console.log('用户注册成功', formData);
-
-            // 注册成功后跳转到登录页面
-            navigate('/login');
-        } catch (error) {
-            setError('注册失败，请稍后再试');
+        if (formData.password.length < 6) {
+            setError('密码至少需要6个字符');
             setOpen(true);
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const success = await register({
+                username: formData.username,
+                email: formData.email,
+                password: formData.password
+            });
+
+            if (success) {
+                toast.success('注册成功！正在跳转...');
+                navigate('/', { replace: true });
+            } else {
+                setError('注册失败，请检查输入信息');
+                setOpen(true);
+            }
+        } catch (error) {
+            console.error('Registration failed:', error);
+            const errorMessage = error instanceof Error ? error.message : '注册失败，请稍后再试';
+            setError(errorMessage);
+            setOpen(true);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -73,7 +94,7 @@ const Register: React.FC = () => {
 
                     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
-                            <Grid xs={12}>
+                            <Grid item xs={12}>
                                 <TextField
                                     name="username"
                                     required
@@ -86,7 +107,7 @@ const Register: React.FC = () => {
                                 />
                             </Grid>
 
-                            <Grid xs={12}>
+                            <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -99,7 +120,7 @@ const Register: React.FC = () => {
                                 />
                             </Grid>
 
-                            <Grid xs={12}>
+                            <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -113,7 +134,7 @@ const Register: React.FC = () => {
                                 />
                             </Grid>
 
-                            <Grid xs={12}>
+                            <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -132,13 +153,14 @@ const Register: React.FC = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
+                            disabled={isLoading}
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            注册
+                            {isLoading ? '注册中...' : '注册'}
                         </Button>
 
                         <Grid container justifyContent="flex-end">
-                            <Grid>
+                            <Grid item>
                                 <Link to="/login">
                                     已有账号？点击登录
                                 </Link>

@@ -224,6 +224,8 @@ export async function requireAuth(request: NextRequest): Promise<AuthUser> {
         };
 
     } catch (error) {
+        console.error('Auth verification error:', error);
+        
         // 如果是已知的认证错误，直接抛出
         if (error instanceof Error && error.name === 'AuthError') {
             throw error;
@@ -231,15 +233,23 @@ export async function requireAuth(request: NextRequest): Promise<AuthUser> {
 
         // JWT验证错误
         if (error instanceof Error && error.name === 'JsonWebTokenError') {
+            console.error('JWT validation failed:', error.message);
             throw AUTH_ERRORS.INVALID_TOKEN;
         }
 
         if (error instanceof Error && error.name === 'TokenExpiredError') {
+            console.error('JWT token expired:', error.message);
             throw AUTH_ERRORS.EXPIRED_TOKEN;
         }
 
+        // Prisma数据库错误
+        if (error instanceof Error && error.name === 'PrismaClientKnownRequestError') {
+            console.error('Database error during auth:', error.message);
+            throw AUTH_ERRORS.USER_NOT_FOUND;
+        }
+
         // 其他未知错误
-        console.error('Auth verification error:', error);
+        console.error('Unknown auth error:', error);
         throw AUTH_ERRORS.INVALID_TOKEN;
     }
 }

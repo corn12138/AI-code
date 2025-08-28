@@ -1,0 +1,267 @@
+.login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.logo-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.logo-text {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+
+.login-subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.login-card {
+    margin-bottom: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.login-card .adm-form-item-label {
+    font-weight: 500;
+    color: #333;
+}
+
+.login-card .adm-input {
+    border-radius: 8px;
+    border: 1px solid #e8e8e8;
+    background-color: #f8f9fa;
+}
+
+.login-card .adm-input:focus {
+    border-color: #1677ff;
+    background-color: white;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.login-options .adm-check-list {
+    flex: 1;
+}
+
+.login-options .adm-check-list-item {
+    padding: 0;
+}
+
+.login-divider {
+    color: rgba(255, 255, 255, 0.8);
+    margin: 20px 0;
+}
+
+.login-divider::before,
+.login-divider::after {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.quick-login-card {
+    margin-bottom: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.quick-login-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.register-link {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.register-link span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.login-footer {
+    text-align: center;
+}
+
+.login-footer p {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+}
+
+/* 移动端适配 */
+.login-page.mobile {
+    padding: 16px;
+}
+
+.login-page.mobile .logo-icon {
+    font-size: 40px;
+}
+
+.login-page.mobile .logo-text {
+    font-size: 20px;
+}
+
+.login-page.mobile .login-subtitle {
+    font-size: 13px;
+}
+
+.login-page.mobile .login-card {
+    margin-bottom: 16px;
+}
+
+.login-page.mobile .quick-login-card {
+    margin-bottom: 16px;
+}
+
+.login-page.mobile .register-link {
+    margin-bottom: 20px;
+}
+
+.login-page.mobile .register-link span {
+    font-size: 13px;
+}
+
+.login-page.mobile .login-footer p {
+    font-size: 11px;
+}
+
+/* 平板适配 */
+.login-page.tablet {
+    padding: 24px;
+}
+
+.login-page.tablet .login-container {
+    max-width: 480px;
+}
+
+.login-page.tablet .logo-icon {
+    font-size: 56px;
+}
+
+.login-page.tablet .logo-text {
+    font-size: 28px;
+}
+
+.login-page.tablet .login-subtitle {
+    font-size: 16px;
+}
+
+.login-page.tablet .quick-login-title {
+    font-size: 18px;
+}
+
+.login-page.tablet .register-link span {
+    font-size: 15px;
+}
+
+.login-page.tablet .login-footer p {
+    font-size: 13px;
+}
+
+/* 按钮样式优化 */
+.adm-button-primary {
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(22, 119, 255, 0.3);
+}
+
+.adm-button-success {
+    border-radius: 8px;
+    font-weight: 500;
+    background-color: #52c41a;
+    border-color: #52c41a;
+    box-shadow: 0 2px 8px rgba(82, 196, 26, 0.3);
+}
+
+.adm-button-fill-none {
+    font-weight: 500;
+}
+
+/* 表单项间距 */
+.adm-form-item:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+/* 输入框图标样式 */
+.adm-input-prefix,
+.adm-input-suffix {
+    color: #999;
+    font-size: 16px;
+}
+
+.adm-input-suffix {
+    cursor: pointer;
+}
+
+/* 复选框样式 */
+.adm-check-list-item-content {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 360px) {
+    .login-page {
+        padding: 12px;
+    }
+
+    .login-container {
+        max-width: 100%;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .login-page {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .login-header {
+        margin-bottom: 20px;
+    }
+
+    .logo-icon {
+        font-size: 32px !important;
+    }
+
+    .logo-text {
+        font-size: 18px !important;
+    }
+}

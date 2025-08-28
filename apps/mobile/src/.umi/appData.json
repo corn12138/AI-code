@@ -1,0 +1,2624 @@
+{
+  "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+  "pkg": {
+    "name": "mobile",
+    "private": true,
+    "version": "0.1.0",
+    "scripts": {
+      "dev": "umi dev",
+      "build": "umi build",
+      "preview": "umi preview",
+      "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+      "test": "jest",
+      "test:watch": "jest --watch",
+      "coverage": "jest --coverage",
+      "type-check": "tsc --noEmit",
+      "setup": "umi setup"
+    },
+    "dependencies": {
+      "@corn12138/hooks": "workspace:*",
+      "@shared/auth": "workspace:*",
+      "@shared/ui": "workspace:*",
+      "@shared/utils": "workspace:*",
+      "antd-mobile": "^5.37.1",
+      "antd-mobile-icons": "^0.3.0",
+      "axios": "^1.7.7",
+      "classnames": "^2.5.1",
+      "dayjs": "^1.11.13",
+      "react": "^18.3.1",
+      "react-dom": "^18.3.1",
+      "react-hot-toast": "^2.5.2",
+      "zustand": "^4.5.5"
+    },
+    "devDependencies": {
+      "@types/jest": "^29.5.12",
+      "@types/react": "^18.3.17",
+      "@types/react-dom": "^18.3.2",
+      "@typescript-eslint/eslint-plugin": "^6.21.0",
+      "@typescript-eslint/parser": "^6.21.0",
+      "@umijs/plugins": "^4.3.11",
+      "eslint": "^8.57.1",
+      "eslint-plugin-react-hooks": "^4.6.2",
+      "jest": "^29.7.0",
+      "postcss": "^8.4.49",
+      "tailwindcss": "^3.4.15",
+      "typescript": "^5.7.2",
+      "umi": "^4.3.11",
+      "vconsole": "^3.15.1"
+    }
+  },
+  "pkgPath": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/package.json",
+  "plugins": {
+    "@umijs/core/dist/service/servicePlugin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "preset",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+core@4.4.11/node_modules/@umijs/core/dist/service/servicePlugin.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/core/dist/service/servicePlugin",
+      "key": "servicePlugin"
+    },
+    "@umijs/preset-umi": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 21
+      },
+      "enableBy": "register",
+      "type": "preset",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/index.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi",
+      "key": "umi"
+    },
+    "@umijs/preset-umi/dist/registerMethods": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onStart": [
+            0
+          ]
+        },
+        "register": 3
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/registerMethods.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/registerMethods",
+      "key": "registerMethods"
+    },
+    "@umijs/did-you-know": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onStart": [
+            1
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+did-you-know@1.0.3/node_modules/@umijs/did-you-know/dist/plugin.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/did-you-know",
+      "key": "umijsDidYouKnow"
+    },
+    "@umijs/preset-umi/dist/features/404/404": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyRoutes": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/404/404.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/404/404",
+      "key": "404"
+    },
+    "@umijs/preset-umi/dist/features/appData/appData": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyAppData": [
+            20
+          ]
+        },
+        "register": 18
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/appData/appData.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/appData/appData",
+      "key": "appData"
+    },
+    "@umijs/preset-umi/dist/features/appData/umiInfo": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/appData/umiInfo.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/appData/umiInfo",
+      "key": "umiInfo"
+    },
+    "@umijs/preset-umi/dist/features/check/check": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onCheckConfig": [
+            0
+          ],
+          "onCheck": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/check/check.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/check/check",
+      "key": "check"
+    },
+    "@umijs/preset-umi/dist/features/check/babel722": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onCheck": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/check/babel722.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/check/babel722",
+      "key": "babel722"
+    },
+    "@umijs/preset-umi/dist/features/codeSplitting/codeSplitting": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/codeSplitting/codeSplitting.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/codeSplitting/codeSplitting",
+      "key": "codeSplitting"
+    },
+    "@umijs/preset-umi/dist/features/configPlugins/configPlugins": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyConfig": [
+            0
+          ]
+        },
+        "register": 9
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/configPlugins/configPlugins.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/configPlugins/configPlugins",
+      "key": "configPlugins"
+    },
+    "virtual: config-title": {
+      "id": "virtual: config-title",
+      "key": "title",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-styles": {
+      "id": "virtual: config-styles",
+      "key": "styles",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-scripts": {
+      "id": "virtual: config-scripts",
+      "key": "scripts",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-routes": {
+      "id": "virtual: config-routes",
+      "key": "routes",
+      "config": {
+        "onChange": "regenerateTmpFiles"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-routeLoader": {
+      "id": "virtual: config-routeLoader",
+      "key": "routeLoader",
+      "config": {
+        "default": {
+          "moduleType": "esm"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-reactRouter5Compat": {
+      "id": "virtual: config-reactRouter5Compat",
+      "key": "reactRouter5Compat",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-presets": {
+      "id": "virtual: config-presets",
+      "key": "presets",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-plugins": {
+      "id": "virtual: config-plugins",
+      "key": "plugins",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-npmClient": {
+      "id": "virtual: config-npmClient",
+      "key": "npmClient",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-mountElementId": {
+      "id": "virtual: config-mountElementId",
+      "key": "mountElementId",
+      "config": {
+        "default": "root"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-metas": {
+      "id": "virtual: config-metas",
+      "key": "metas",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-links": {
+      "id": "virtual: config-links",
+      "key": "links",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-historyWithQuery": {
+      "id": "virtual: config-historyWithQuery",
+      "key": "historyWithQuery",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-history": {
+      "id": "virtual: config-history",
+      "key": "history",
+      "config": {
+        "default": {
+          "type": "browser"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-headScripts": {
+      "id": "virtual: config-headScripts",
+      "key": "headScripts",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-esbuildMinifyIIFE": {
+      "id": "virtual: config-esbuildMinifyIIFE",
+      "key": "esbuildMinifyIIFE",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-conventionRoutes": {
+      "id": "virtual: config-conventionRoutes",
+      "key": "conventionRoutes",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-conventionLayout": {
+      "id": "virtual: config-conventionLayout",
+      "key": "conventionLayout",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-base": {
+      "id": "virtual: config-base",
+      "key": "base",
+      "config": {
+        "default": "/"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-analyze": {
+      "id": "virtual: config-analyze",
+      "key": "analyze",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-writeToDisk": {
+      "id": "virtual: config-writeToDisk",
+      "key": "writeToDisk",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-transformRuntime": {
+      "id": "virtual: config-transformRuntime",
+      "key": "transformRuntime",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-theme": {
+      "id": "virtual: config-theme",
+      "key": "theme",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-targets": {
+      "id": "virtual: config-targets",
+      "key": "targets",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-svgr": {
+      "id": "virtual: config-svgr",
+      "key": "svgr",
+      "config": {
+        "default": {}
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-svgo": {
+      "id": "virtual: config-svgo",
+      "key": "svgo",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-stylusLoader": {
+      "id": "virtual: config-stylusLoader",
+      "key": "stylusLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-styleLoader": {
+      "id": "virtual: config-styleLoader",
+      "key": "styleLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-srcTranspilerOptions": {
+      "id": "virtual: config-srcTranspilerOptions",
+      "key": "srcTranspilerOptions",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-srcTranspiler": {
+      "id": "virtual: config-srcTranspiler",
+      "key": "srcTranspiler",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-sassLoader": {
+      "id": "virtual: config-sassLoader",
+      "key": "sassLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-runtimePublicPath": {
+      "id": "virtual: config-runtimePublicPath",
+      "key": "runtimePublicPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-purgeCSS": {
+      "id": "virtual: config-purgeCSS",
+      "key": "purgeCSS",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-publicPath": {
+      "id": "virtual: config-publicPath",
+      "key": "publicPath",
+      "config": {
+        "default": "/"
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-proxy": {
+      "id": "virtual: config-proxy",
+      "key": "proxy",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-postcssLoader": {
+      "id": "virtual: config-postcssLoader",
+      "key": "postcssLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-outputPath": {
+      "id": "virtual: config-outputPath",
+      "key": "outputPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-normalCSSLoaderModules": {
+      "id": "virtual: config-normalCSSLoaderModules",
+      "key": "normalCSSLoaderModules",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-mfsu": {
+      "id": "virtual: config-mfsu",
+      "key": "mfsu",
+      "config": {
+        "default": {
+          "strategy": "eager"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-mdx": {
+      "id": "virtual: config-mdx",
+      "key": "mdx",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-manifest": {
+      "id": "virtual: config-manifest",
+      "key": "manifest",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-lessLoader": {
+      "id": "virtual: config-lessLoader",
+      "key": "lessLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-jsMinifierOptions": {
+      "id": "virtual: config-jsMinifierOptions",
+      "key": "jsMinifierOptions",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-jsMinifier": {
+      "id": "virtual: config-jsMinifier",
+      "key": "jsMinifier",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-inlineLimit": {
+      "id": "virtual: config-inlineLimit",
+      "key": "inlineLimit",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-ignoreMomentLocale": {
+      "id": "virtual: config-ignoreMomentLocale",
+      "key": "ignoreMomentLocale",
+      "config": {
+        "default": true
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-https": {
+      "id": "virtual: config-https",
+      "key": "https",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-hash": {
+      "id": "virtual: config-hash",
+      "key": "hash",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-forkTSChecker": {
+      "id": "virtual: config-forkTSChecker",
+      "key": "forkTSChecker",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-fastRefresh": {
+      "id": "virtual: config-fastRefresh",
+      "key": "fastRefresh",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraPostCSSPlugins": {
+      "id": "virtual: config-extraPostCSSPlugins",
+      "key": "extraPostCSSPlugins",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraBabelPresets": {
+      "id": "virtual: config-extraBabelPresets",
+      "key": "extraBabelPresets",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraBabelPlugins": {
+      "id": "virtual: config-extraBabelPlugins",
+      "key": "extraBabelPlugins",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-extraBabelIncludes": {
+      "id": "virtual: config-extraBabelIncludes",
+      "key": "extraBabelIncludes",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-externals": {
+      "id": "virtual: config-externals",
+      "key": "externals",
+      "config": {
+        "default": {}
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-esm": {
+      "id": "virtual: config-esm",
+      "key": "esm",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-devtool": {
+      "id": "virtual: config-devtool",
+      "key": "devtool",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-depTranspiler": {
+      "id": "virtual: config-depTranspiler",
+      "key": "depTranspiler",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-define": {
+      "id": "virtual: config-define",
+      "key": "define",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-deadCode": {
+      "id": "virtual: config-deadCode",
+      "key": "deadCode",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssPublicPath": {
+      "id": "virtual: config-cssPublicPath",
+      "key": "cssPublicPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssMinifierOptions": {
+      "id": "virtual: config-cssMinifierOptions",
+      "key": "cssMinifierOptions",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssMinifier": {
+      "id": "virtual: config-cssMinifier",
+      "key": "cssMinifier",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssLoaderModules": {
+      "id": "virtual: config-cssLoaderModules",
+      "key": "cssLoaderModules",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cssLoader": {
+      "id": "virtual: config-cssLoader",
+      "key": "cssLoader",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-copy": {
+      "id": "virtual: config-copy",
+      "key": "copy",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-checkDepCssModules": {
+      "id": "virtual: config-checkDepCssModules",
+      "key": "checkDepCssModules",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-chainWebpack": {
+      "id": "virtual: config-chainWebpack",
+      "key": "chainWebpack",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-cacheDirectoryPath": {
+      "id": "virtual: config-cacheDirectoryPath",
+      "key": "cacheDirectoryPath",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-babelLoaderCustomize": {
+      "id": "virtual: config-babelLoaderCustomize",
+      "key": "babelLoaderCustomize",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-autoprefixer": {
+      "id": "virtual: config-autoprefixer",
+      "key": "autoprefixer",
+      "config": {},
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-autoCSSModules": {
+      "id": "virtual: config-autoCSSModules",
+      "key": "autoCSSModules",
+      "config": {
+        "default": true
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "virtual: config-alias": {
+      "id": "virtual: config-alias",
+      "key": "alias",
+      "config": {
+        "default": {
+          "umi": "@@/exports",
+          "react": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/node_modules/react",
+          "react-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/node_modules/react-dom",
+          "react-router": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router@6.3.0_react@18.3.1/node_modules/react-router",
+          "react-router-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router-dom@6.3.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-router-dom"
+        }
+      },
+      "type": "plugin",
+      "enableBy": "register",
+      "time": {
+        "hooks": {},
+        "register": 0
+      }
+    },
+    "@umijs/preset-umi/dist/features/crossorigin/crossorigin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/crossorigin/crossorigin.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/crossorigin/crossorigin",
+      "key": "crossorigin"
+    },
+    "@umijs/preset-umi/dist/features/depsOnDemand/depsOnDemand": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onStart": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/depsOnDemand/depsOnDemand.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/depsOnDemand/depsOnDemand",
+      "key": "depsOnDemand"
+    },
+    "@umijs/preset-umi/dist/features/devTool/devTool": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/devTool/devTool.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/devTool/devTool",
+      "key": "devTool"
+    },
+    "@umijs/preset-umi/dist/features/esbuildHelperChecker/esbuildHelperChecker": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 47
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/esbuildHelperChecker/esbuildHelperChecker.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/esbuildHelperChecker/esbuildHelperChecker",
+      "key": "esbuildHelperChecker"
+    },
+    "@umijs/preset-umi/dist/features/esmi/esmi": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 63
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/esmi/esmi.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/esmi/esmi",
+      "key": "esmi"
+    },
+    "@umijs/preset-umi/dist/features/exportStatic/exportStatic": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 12
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/exportStatic/exportStatic.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/exportStatic/exportStatic",
+      "key": "exportStatic"
+    },
+    "@umijs/preset-umi/dist/features/favicons/favicons": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyAppData": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/favicons/favicons.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/favicons/favicons",
+      "key": "favicons"
+    },
+    "@umijs/preset-umi/dist/features/helmet/helmet": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/helmet/helmet.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/helmet/helmet",
+      "key": "helmet"
+    },
+    "@umijs/preset-umi/dist/features/icons/icons": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/icons/icons.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/icons/icons",
+      "key": "icons"
+    },
+    "@umijs/preset-umi/dist/features/mock/mock": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "onStart": [
+            1
+          ]
+        },
+        "register": 21
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/mock/mock",
+      "key": "mock"
+    },
+    "@umijs/preset-umi/dist/features/mpa/mpa": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/mpa/mpa.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/mpa/mpa",
+      "key": "mpa"
+    },
+    "@umijs/preset-umi/dist/features/okam/okam": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/okam/okam.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/okam/okam",
+      "key": "okam"
+    },
+    "@umijs/preset-umi/dist/features/overrides/overrides": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/overrides/overrides.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/overrides/overrides",
+      "key": "overrides"
+    },
+    "@umijs/preset-umi/dist/features/phantomDependency/phantomDependency": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/phantomDependency/phantomDependency.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/phantomDependency/phantomDependency",
+      "key": "phantomDependency"
+    },
+    "@umijs/preset-umi/dist/features/polyfill/polyfill": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyConfig": [
+            0
+          ]
+        },
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/polyfill/polyfill.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/polyfill/polyfill",
+      "key": "polyfill"
+    },
+    "@umijs/preset-umi/dist/features/polyfill/publicPathPolyfill": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/polyfill/publicPathPolyfill.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/polyfill/publicPathPolyfill",
+      "key": "publicPathPolyfill"
+    },
+    "@umijs/preset-umi/dist/features/prepare/prepare": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/prepare/prepare.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/prepare/prepare",
+      "key": "prepare"
+    },
+    "@umijs/preset-umi/dist/features/routePrefetch/routePrefetch": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/routePrefetch/routePrefetch.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/routePrefetch/routePrefetch",
+      "key": "routePrefetch"
+    },
+    "@umijs/preset-umi/dist/features/terminal/terminal": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/terminal/terminal.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/terminal/terminal",
+      "key": "terminal"
+    },
+    "@umijs/preset-umi/dist/features/tmpFiles/tmpFiles": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/tmpFiles/tmpFiles.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/tmpFiles/tmpFiles",
+      "key": "tmpFiles"
+    },
+    "@umijs/preset-umi/dist/features/clientLoader/clientLoader": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/clientLoader/clientLoader.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/clientLoader/clientLoader",
+      "key": "clientLoader"
+    },
+    "@umijs/preset-umi/dist/features/routeProps/routeProps": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/routeProps/routeProps.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/routeProps/routeProps",
+      "key": "routeProps"
+    },
+    "@umijs/preset-umi/dist/features/ssr/ssr": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/ssr/ssr.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/ssr/ssr",
+      "key": "ssr"
+    },
+    "@umijs/preset-umi/dist/features/tmpFiles/configTypes": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/tmpFiles/configTypes.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/tmpFiles/configTypes",
+      "key": "configTypes"
+    },
+    "@umijs/preset-umi/dist/features/transform/transform": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/transform/transform.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/transform/transform",
+      "key": "transform"
+    },
+    "@umijs/preset-umi/dist/features/lowImport/lowImport": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/lowImport/lowImport.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/lowImport/lowImport",
+      "key": "lowImport"
+    },
+    "@umijs/preset-umi/dist/features/vite/vite": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/vite/vite.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/vite/vite",
+      "key": "vite"
+    },
+    "@umijs/preset-umi/dist/features/apiRoute/apiRoute": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 4
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/apiRoute/apiRoute",
+      "key": "apiRoute"
+    },
+    "@umijs/preset-umi/dist/features/monorepo/redirect": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 14
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/monorepo/redirect.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/monorepo/redirect",
+      "key": "monorepoRedirect"
+    },
+    "@umijs/preset-umi/dist/features/test/test": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/test/test.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/test/test",
+      "key": "test"
+    },
+    "@umijs/preset-umi/dist/features/clickToComponent/clickToComponent": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/clickToComponent/clickToComponent",
+      "key": "clickToComponent"
+    },
+    "@umijs/preset-umi/dist/features/legacy/legacy": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/legacy/legacy.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/legacy/legacy",
+      "key": "legacy"
+    },
+    "@umijs/preset-umi/dist/features/classPropertiesLoose/classPropertiesLoose": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/classPropertiesLoose/classPropertiesLoose.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/classPropertiesLoose/classPropertiesLoose",
+      "key": "classPropertiesLoose"
+    },
+    "@umijs/preset-umi/dist/features/webpack/webpack": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/webpack/webpack",
+      "key": "preset-umi:webpack"
+    },
+    "@umijs/preset-umi/dist/features/swc/swc": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "addOnDemandDeps": [
+            0
+          ]
+        },
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/swc/swc.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/swc/swc",
+      "key": "swc"
+    },
+    "@umijs/preset-umi/dist/features/ui/ui": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/ui/ui.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/ui/ui",
+      "key": "ui"
+    },
+    "@umijs/preset-umi/dist/features/mako/mako": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/mako/mako.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/mako/mako",
+      "key": "mako"
+    },
+    "@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/hmrGuardian/hmrGuardian",
+      "key": "hmrGuardian"
+    },
+    "@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/routePreloadOnLoad/routePreloadOnLoad",
+      "key": "routePreloadOnLoad"
+    },
+    "@umijs/preset-umi/dist/features/forget/forget": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/forget/forget.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/forget/forget",
+      "key": "forget"
+    },
+    "@umijs/preset-umi/dist/features/bundler/bundler": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/bundler/bundler.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/features/bundler/bundler",
+      "key": "preset-umi:bundler"
+    },
+    "@umijs/preset-umi/dist/commands/build": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 3
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/build.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/build",
+      "key": "build"
+    },
+    "@umijs/preset-umi/dist/commands/config/config": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 22
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/config/config.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/config/config",
+      "key": "config"
+    },
+    "@umijs/preset-umi/dist/commands/dev/dev": {
+      "config": {},
+      "time": {
+        "hooks": {
+          "modifyAppData": [
+            8
+          ],
+          "onStart": [
+            0
+          ]
+        },
+        "register": 26
+      },
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/dev/dev.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/dev/dev",
+      "key": "dev"
+    },
+    "@umijs/preset-umi/dist/commands/help": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/help.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/help",
+      "key": "help"
+    },
+    "@umijs/preset-umi/dist/commands/lint": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/lint.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/lint",
+      "key": "lint"
+    },
+    "@umijs/preset-umi/dist/commands/setup": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/setup.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/setup",
+      "key": "setup"
+    },
+    "@umijs/preset-umi/dist/commands/deadcode": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/deadcode.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/deadcode",
+      "key": "deadcode"
+    },
+    "@umijs/preset-umi/dist/commands/version": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/version.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/version",
+      "key": "version"
+    },
+    "@umijs/preset-umi/dist/commands/generators/page": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/page.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/page",
+      "key": "generator:page"
+    },
+    "@umijs/preset-umi/dist/commands/generators/prettier": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/prettier.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/prettier",
+      "key": "generator:prettier"
+    },
+    "@umijs/preset-umi/dist/commands/generators/tsconfig": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/tsconfig.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/tsconfig",
+      "key": "generator:tsconfig"
+    },
+    "@umijs/preset-umi/dist/commands/generators/jest": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/jest.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/jest",
+      "key": "generator:jest"
+    },
+    "@umijs/preset-umi/dist/commands/generators/tailwindcss": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/tailwindcss.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/tailwindcss",
+      "key": "generator:tailwindcss"
+    },
+    "@umijs/preset-umi/dist/commands/generators/dva": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/dva.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/dva",
+      "key": "generator:dva"
+    },
+    "@umijs/preset-umi/dist/commands/generators/component": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/component.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/component",
+      "key": "generator:component"
+    },
+    "@umijs/preset-umi/dist/commands/generators/mock": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/mock.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/mock",
+      "key": "generator:mock"
+    },
+    "@umijs/preset-umi/dist/commands/generators/cypress": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/cypress.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/cypress",
+      "key": "generator:cypress"
+    },
+    "@umijs/preset-umi/dist/commands/generators/api": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/api.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/api",
+      "key": "generator:api"
+    },
+    "@umijs/preset-umi/dist/commands/generators/precommit": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/generators/precommit.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/generators/precommit",
+      "key": "generator:precommit"
+    },
+    "@umijs/preset-umi/dist/commands/plugin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/plugin.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/plugin",
+      "key": "command:plugin"
+    },
+    "@umijs/preset-umi/dist/commands/verify-commit": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/verify-commit.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/verify-commit",
+      "key": "verifyCommit"
+    },
+    "@umijs/preset-umi/dist/commands/preview": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 14
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/preview.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/preview",
+      "key": "preview"
+    },
+    "@umijs/preset-umi/dist/commands/mfsu/mfsu": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 2
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/commands/mfsu/mfsu.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/preset-umi/dist/commands/mfsu/mfsu",
+      "key": "mfsu-cli"
+    },
+    "@umijs/plugin-run": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 5
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+plugin-run@4.4.11/node_modules/@umijs/plugin-run/dist/index.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/plugin-run",
+      "key": "run"
+    },
+    "@umijs/core/dist/service/generatePlugin": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 1
+      },
+      "enableBy": "register",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+core@4.4.11/node_modules/@umijs/core/dist/service/generatePlugin.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "@umijs/core/dist/service/generatePlugin",
+      "key": "generatePlugin"
+    },
+    "./node_modules/@umijs/plugins/dist/tailwindcss": {
+      "config": {},
+      "time": {
+        "hooks": {},
+        "register": 0
+      },
+      "enableBy": "config",
+      "type": "plugin",
+      "path": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/node_modules/@umijs/plugins/dist/tailwindcss.js",
+      "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
+      "id": "./node_modules/@umijs/plugins/dist/tailwindcss",
+      "key": "tailwindcss"
+    }
+  },
+  "presets": [],
+  "name": "dev",
+  "args": {
+    "_": []
+  },
+  "userConfig": {
+    "routes": [
+      {
+        "path": "/login",
+        "component": "@/pages/Auth/Login",
+        "layout": false,
+        "meta": {
+          "title": "登录",
+          "requireAuth": false
+        }
+      },
+      {
+        "path": "/register",
+        "component": "@/pages/Auth/Register",
+        "layout": false,
+        "meta": {
+          "title": "注册",
+          "requireAuth": false
+        }
+      },
+      {
+        "path": "/forgot-password",
+        "component": "@/pages/Auth/ForgotPassword",
+        "layout": false,
+        "meta": {
+          "title": "忘记密码",
+          "requireAuth": false
+        }
+      },
+      {
+        "path": "/",
+        "component": "@/components/Layout/Layout",
+        "meta": {
+          "requireAuth": true
+        },
+        "routes": [
+          {
+            "path": "/",
+            "component": "@/pages/Home/Home",
+            "meta": {
+              "title": "首页",
+              "icon": "home",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/apps",
+            "component": "@/pages/Apps/Apps",
+            "meta": {
+              "title": "应用",
+              "icon": "apps",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/message",
+            "component": "@/pages/Message/Message",
+            "meta": {
+              "title": "消息",
+              "icon": "message",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/profile",
+            "component": "@/pages/Profile/Profile",
+            "meta": {
+              "title": "我的",
+              "icon": "profile",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/settings",
+            "component": "@/pages/Settings/Settings",
+            "meta": {
+              "title": "设置",
+              "requireAuth": true
+            }
+          },
+          {
+            "path": "/notifications",
+            "component": "@/pages/Notifications/Notifications",
+            "meta": {
+              "title": "通知",
+              "requireAuth": true
+            }
+          },
+          {
+            "path": "/documents",
+            "component": "@/pages/Documents/Documents",
+            "meta": {
+              "title": "文档",
+              "requireAuth": true
+            }
+          },
+          {
+            "path": "/apps/:id",
+            "component": "@/pages/Apps/AppDetail",
+            "meta": {
+              "title": "应用详情",
+              "requireAuth": true,
+              "hidden": true
+            }
+          },
+          {
+            "path": "/message/:id",
+            "component": "@/pages/Message/MessageDetail",
+            "meta": {
+              "title": "消息详情",
+              "requireAuth": true,
+              "hidden": true
+            }
+          },
+          {
+            "path": "/profile/edit",
+            "component": "@/pages/Profile/EditProfile",
+            "meta": {
+              "title": "编辑资料",
+              "requireAuth": true,
+              "hidden": true
+            }
+          }
+        ]
+      },
+      {
+        "path": "/404",
+        "component": "@/pages/NotFound/NotFound",
+        "layout": false,
+        "meta": {
+          "title": "页面不存在",
+          "requireAuth": false,
+          "hidden": true
+        }
+      },
+      {
+        "path": "/403",
+        "component": "@/pages/Error/Forbidden",
+        "layout": false,
+        "meta": {
+          "title": "访问被拒绝",
+          "requireAuth": false,
+          "hidden": true
+        }
+      },
+      {
+        "path": "/500",
+        "component": "@/pages/Error/ServerError",
+        "layout": false,
+        "meta": {
+          "title": "服务器错误",
+          "requireAuth": false,
+          "hidden": true
+        }
+      },
+      {
+        "path": "*",
+        "redirect": "/404"
+      }
+    ],
+    "outputPath": "dist",
+    "publicPath": "/",
+    "hash": false,
+    "proxy": {
+      "/api": {
+        "target": "http://localhost:3001",
+        "changeOrigin": true,
+        "pathRewrite": {
+          "^/api": "/api"
+        }
+      }
+    },
+    "plugins": [
+      "@umijs/plugins/dist/tailwindcss"
+    ],
+    "tailwindcss": {},
+    "title": "移动端应用",
+    "alias": {
+      "@": "./src",
+      "@components": "./src/components",
+      "@pages": "./src/pages",
+      "@utils": "./src/utils",
+      "@hooks": "./src/hooks",
+      "@store": "./src/store",
+      "@types": "./src/types",
+      "@services": "./src/services"
+    },
+    "fastRefresh": true,
+    "targets": {
+      "chrome": 70,
+      "firefox": 64,
+      "safari": 10,
+      "edge": 13,
+      "ios": 10,
+      "android": "4.4"
+    },
+    "define": {
+      "process.env.NODE_ENV": "\"development\""
+    },
+    "metas": [
+      {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      }
+    ]
+  },
+  "mainConfigFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/.umirc.ts",
+  "config": {
+    "routeLoader": {
+      "moduleType": "esm"
+    },
+    "mountElementId": "root",
+    "history": {
+      "type": "browser"
+    },
+    "base": "/",
+    "svgr": {},
+    "publicPath": "/",
+    "mfsu": {
+      "strategy": "eager"
+    },
+    "ignoreMomentLocale": true,
+    "externals": {},
+    "autoCSSModules": true,
+    "alias": {
+      "umi": "@@/exports",
+      "react": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/node_modules/react",
+      "react-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/node_modules/react-dom",
+      "react-router": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router@6.3.0_react@18.3.1/node_modules/react-router",
+      "react-router-dom": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/react-router-dom@6.3.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-router-dom",
+      "@": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src",
+      "@components": "./src/components",
+      "@pages": "./src/pages",
+      "@utils": "./src/utils",
+      "@hooks": "./src/hooks",
+      "@store": "./src/store",
+      "@types": "./src/types",
+      "@services": "./src/services",
+      "@@": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/.umi",
+      "regenerator-runtime": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/regenerator-runtime@0.13.11/node_modules/regenerator-runtime"
+    },
+    "routes": [
+      {
+        "path": "/login",
+        "component": "@/pages/Auth/Login",
+        "layout": false,
+        "meta": {
+          "title": "登录",
+          "requireAuth": false
+        }
+      },
+      {
+        "path": "/register",
+        "component": "@/pages/Auth/Register",
+        "layout": false,
+        "meta": {
+          "title": "注册",
+          "requireAuth": false
+        }
+      },
+      {
+        "path": "/forgot-password",
+        "component": "@/pages/Auth/ForgotPassword",
+        "layout": false,
+        "meta": {
+          "title": "忘记密码",
+          "requireAuth": false
+        }
+      },
+      {
+        "path": "/",
+        "component": "@/components/Layout/Layout",
+        "meta": {
+          "requireAuth": true
+        },
+        "routes": [
+          {
+            "path": "/",
+            "component": "@/pages/Home/Home",
+            "meta": {
+              "title": "首页",
+              "icon": "home",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/apps",
+            "component": "@/pages/Apps/Apps",
+            "meta": {
+              "title": "应用",
+              "icon": "apps",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/message",
+            "component": "@/pages/Message/Message",
+            "meta": {
+              "title": "消息",
+              "icon": "message",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/profile",
+            "component": "@/pages/Profile/Profile",
+            "meta": {
+              "title": "我的",
+              "icon": "profile",
+              "keepAlive": true
+            }
+          },
+          {
+            "path": "/settings",
+            "component": "@/pages/Settings/Settings",
+            "meta": {
+              "title": "设置",
+              "requireAuth": true
+            }
+          },
+          {
+            "path": "/notifications",
+            "component": "@/pages/Notifications/Notifications",
+            "meta": {
+              "title": "通知",
+              "requireAuth": true
+            }
+          },
+          {
+            "path": "/documents",
+            "component": "@/pages/Documents/Documents",
+            "meta": {
+              "title": "文档",
+              "requireAuth": true
+            }
+          },
+          {
+            "path": "/apps/:id",
+            "component": "@/pages/Apps/AppDetail",
+            "meta": {
+              "title": "应用详情",
+              "requireAuth": true,
+              "hidden": true
+            }
+          },
+          {
+            "path": "/message/:id",
+            "component": "@/pages/Message/MessageDetail",
+            "meta": {
+              "title": "消息详情",
+              "requireAuth": true,
+              "hidden": true
+            }
+          },
+          {
+            "path": "/profile/edit",
+            "component": "@/pages/Profile/EditProfile",
+            "meta": {
+              "title": "编辑资料",
+              "requireAuth": true,
+              "hidden": true
+            }
+          }
+        ]
+      },
+      {
+        "path": "/404",
+        "component": "@/pages/NotFound/NotFound",
+        "layout": false,
+        "meta": {
+          "title": "页面不存在",
+          "requireAuth": false,
+          "hidden": true
+        }
+      },
+      {
+        "path": "/403",
+        "component": "@/pages/Error/Forbidden",
+        "layout": false,
+        "meta": {
+          "title": "访问被拒绝",
+          "requireAuth": false,
+          "hidden": true
+        }
+      },
+      {
+        "path": "/500",
+        "component": "@/pages/Error/ServerError",
+        "layout": false,
+        "meta": {
+          "title": "服务器错误",
+          "requireAuth": false,
+          "hidden": true
+        }
+      },
+      {
+        "path": "*",
+        "redirect": "/404"
+      }
+    ],
+    "outputPath": "dist",
+    "hash": false,
+    "proxy": {
+      "/api": {
+        "target": "http://localhost:3001",
+        "changeOrigin": true,
+        "pathRewrite": {
+          "^/api": "/api"
+        }
+      }
+    },
+    "plugins": [
+      "@umijs/plugins/dist/tailwindcss"
+    ],
+    "tailwindcss": {},
+    "title": "移动端应用",
+    "fastRefresh": true,
+    "targets": {
+      "chrome": 70,
+      "firefox": 64,
+      "safari": 10,
+      "edge": 13,
+      "ios": 10,
+      "android": "4.4"
+    },
+    "define": {
+      "process.env.NODE_ENV": "\"development\""
+    },
+    "metas": [
+      {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      }
+    ]
+  },
+  "routes": {
+    "1": {
+      "path": "/login",
+      "layout": false,
+      "file": "@/pages/Auth/Login.tsx",
+      "id": "1",
+      "absPath": "/login",
+      "__content": "import { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport {\n    Button,\n    Card,\n    CheckList,\n    Divider,\n    Form,\n    Input,\n    Space,\n    Toast\n} from 'antd-mobile'\nimport {\n    EyeInvisibleOutline,\n    EyeOutline,\n    LockOutline,\n    UserOutline\n} from 'antd-mobile-icons'\nimport { useState } from 'react'\nimport './Login.css'\n\nexport default function Login() {\n    const { isMobile, isTablet } = useDeviceInfo()\n\n    const [form] = Form.useForm()\n    const [loading, setLoading] = useState(false)\n    const [showPassword, setShowPassword] = useState(false)\n    const [rememberMe, setRememberMe] = useState(false)\n\n    const handleLogin = async (values: any) => {\n        setLoading(true)\n        try {\n            // TODO: 实现登录逻辑\n            console.log('Login values:', values)\n            await new Promise(resolve => setTimeout(resolve, 1000)) // 模拟API调用\n\n            Toast.show({\n                icon: 'success',\n                content: '登录成功',\n            })\n\n            history.push('/')\n        } catch (error) {\n            Toast.show({\n                icon: 'fail',\n                content: '登录失败，请检查用户名和密码',\n            })\n        } finally {\n            setLoading(false)\n        }\n    }\n\n    const handleForgotPassword = () => {\n        Toast.show('忘记密码功能待开发')\n    }\n\n    const handleRegister = () => {\n        Toast.show('注册功能待开发')\n    }\n\n    const handleQuickLogin = (type: string) => {\n        Toast.show(`${type}登录待开发`)\n    }\n\n    return (\n        <div className={`login-page ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n            <div className=\"login-container\">\n                {/* 头部Logo */}\n                <div className=\"login-header\">\n                    <div className=\"logo\">\n                        <div className=\"logo-icon\">📱</div>\n                        <h1 className=\"logo-text\">移动端应用</h1>\n                    </div>\n                    <p className=\"login-subtitle\">欢迎回来，请登录您的账户</p>\n                </div>\n\n                {/* 登录表单 */}\n                <Card className=\"login-card\">\n                    <Form\n                        form={form}\n                        onFinish={handleLogin}\n                        layout=\"vertical\"\n                        footer={\n                            <Space direction=\"vertical\" block>\n                                <Button\n                                    block\n                                    type=\"submit\"\n                                    color=\"primary\"\n                                    size=\"large\"\n                                    loading={loading}\n                                >\n                                    登录\n                                </Button>\n\n                                <div className=\"login-options\">\n                                    <CheckList\n                                        value={rememberMe ? ['remember'] : []}\n                                        onChange={(val) => setRememberMe(val.includes('remember'))}\n                                    >\n                                        <CheckList.Item value=\"remember\">记住密码</CheckList.Item>\n                                    </CheckList>\n                                    <Button\n                                        fill=\"none\"\n                                        size=\"small\"\n                                        onClick={handleForgotPassword}\n                                    >\n                                        忘记密码？\n                                    </Button>\n                                </div>\n                            </Space>\n                        }\n                    >\n                        <Form.Item\n                            name=\"username\"\n                            label=\"用户名\"\n                            rules={[\n                                { required: true, message: '请输入用户名' },\n                                { min: 3, message: '用户名至少3个字符' }\n                            ]}\n                        >\n                            <Input\n                                placeholder=\"请输入用户名\"\n                                prefix={<UserOutline />}\n                                clearable\n                            />\n                        </Form.Item>\n\n                        <Form.Item\n                            name=\"password\"\n                            label=\"密码\"\n                            rules={[\n                                { required: true, message: '请输入密码' },\n                                { min: 6, message: '密码至少6个字符' }\n                            ]}\n                        >\n                            <Input\n                                placeholder=\"请输入密码\"\n                                type={showPassword ? 'text' : 'password'}\n                                prefix={<LockOutline />}\n                                suffix={\n                                    <div onClick={() => setShowPassword(!showPassword)}>\n                                        {showPassword ? <EyeOutline /> : <EyeInvisibleOutline />}\n                                    </div>\n                                }\n                                clearable\n                            />\n                        </Form.Item>\n                    </Form>\n                </Card>\n\n                {/* 分割线 */}\n                <Divider className=\"login-divider\">或</Divider>\n\n                {/* 快捷登录 */}\n                <Card className=\"quick-login-card\">\n                    <div className=\"quick-login-title\">快捷登录</div>\n                    <Space direction=\"vertical\" block>\n                        <Button\n                            block\n                            color=\"success\"\n                            size=\"large\"\n                            onClick={() => handleQuickLogin('微信')}\n                        >\n                            微信登录\n                        </Button>\n                        <Button\n                            block\n                            size=\"large\"\n                            onClick={() => handleQuickLogin('手机号')}\n                        >\n                            手机号登录\n                        </Button>\n                    </Space>\n                </Card>\n\n                {/* 注册链接 */}\n                <div className=\"register-link\">\n                    <span>还没有账户？</span>\n                    <Button\n                        fill=\"none\"\n                        color=\"primary\"\n                        onClick={handleRegister}\n                    >\n                        立即注册\n                    </Button>\n                </div>\n\n                {/* 底部信息 */}\n                <div className=\"login-footer\">\n                    <p>登录即表示同意用户协议和隐私政策</p>\n                </div>\n            </div>\n        </div>\n    )\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Auth/Login.tsx"
+    },
+    "2": {
+      "path": "/register",
+      "layout": false,
+      "file": "@/pages/Auth/Register.tsx",
+      "id": "2",
+      "absPath": "/register",
+      "__content": "import { useAuthStore } from '@/stores/auth/useAuthStore'\nimport { Button, Form, Input, NavBar, Toast } from 'antd-mobile'\nimport { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'\nimport React, { useState } from 'react'\nimport { history } from 'umi'\nimport './Auth.css'\n\ninterface RegisterForm {\n    username: string\n    email: string\n    password: string\n    confirmPassword: string\n    phone?: string\n}\n\nconst Register: React.FC = () => {\n    const [form] = Form.useForm<RegisterForm>()\n    const [loading, setLoading] = useState(false)\n    const [showPassword, setShowPassword] = useState(false)\n    const [showConfirmPassword, setShowConfirmPassword] = useState(false)\n    const { register } = useAuthStore()\n\n    const handleSubmit = async (values: RegisterForm) => {\n        try {\n            setLoading(true)\n\n            // 验证密码一致性\n            if (values.password !== values.confirmPassword) {\n                Toast.show({\n                    content: '两次输入的密码不一致',\n                    position: 'top',\n                })\n                return\n            }\n\n            // 调用注册接口\n            await register({\n                username: values.username,\n                email: values.email,\n                password: values.password,\n                phone: values.phone,\n            })\n\n            Toast.show({\n                content: '注册成功！',\n                position: 'top',\n            })\n\n            // 注册成功后跳转到登录页\n            setTimeout(() => {\n                history.push('/login')\n            }, 1000)\n        } catch (error) {\n            console.error('Registration failed:', error)\n            Toast.show({\n                content: '注册失败，请重试',\n                position: 'top',\n            })\n        } finally {\n            setLoading(false)\n        }\n    }\n\n    const goToLogin = () => {\n        history.push('/login')\n    }\n\n    return (\n        <div className=\"auth-container\">\n            <NavBar onBack={() => history.back()}>注册</NavBar>\n\n            <div className=\"auth-content\">\n                <div className=\"auth-header\">\n                    <h1 className=\"auth-title\">创建账户</h1>\n                    <p className=\"auth-subtitle\">请填写以下信息完成注册</p>\n                </div>\n\n                <Form\n                    form={form}\n                    onFinish={handleSubmit}\n                    layout=\"vertical\"\n                    className=\"auth-form\"\n                >\n                    <Form.Item\n                        name=\"username\"\n                        label=\"用户名\"\n                        rules={[\n                            { required: true, message: '请输入用户名' },\n                            { min: 3, message: '用户名至少3个字符' },\n                            { max: 20, message: '用户名最多20个字符' },\n                            { pattern: /^[a-zA-Z0-9_]+$/, message: '用户名只能包含字母、数字和下划线' },\n                        ]}\n                    >\n                        <Input placeholder=\"请输入用户名\" />\n                    </Form.Item>\n\n                    <Form.Item\n                        name=\"email\"\n                        label=\"邮箱\"\n                        rules={[\n                            { required: true, message: '请输入邮箱' },\n                            { type: 'email', message: '请输入有效的邮箱地址' },\n                        ]}\n                    >\n                        <Input placeholder=\"请输入邮箱地址\" />\n                    </Form.Item>\n\n                    <Form.Item\n                        name=\"phone\"\n                        label=\"手机号（可选）\"\n                        rules={[\n                            { pattern: /^1[3-9]\\d{9}$/, message: '请输入有效的手机号' },\n                        ]}\n                    >\n                        <Input placeholder=\"请输入手机号\" />\n                    </Form.Item>\n\n                    <Form.Item\n                        name=\"password\"\n                        label=\"密码\"\n                        rules={[\n                            { required: true, message: '请输入密码' },\n                            { min: 6, message: '密码至少6个字符' },\n                            { max: 20, message: '密码最多20个字符' },\n                        ]}\n                    >\n                        <Input\n                            placeholder=\"请输入密码\"\n                            type={showPassword ? 'text' : 'password'}\n                            suffix={\n                                <div\n                                    className=\"password-toggle\"\n                                    onClick={() => setShowPassword(!showPassword)}\n                                >\n                                    {showPassword ? <EyeOutline /> : <EyeInvisibleOutline />}\n                                </div>\n                            }\n                        />\n                    </Form.Item>\n\n                    <Form.Item\n                        name=\"confirmPassword\"\n                        label=\"确认密码\"\n                        rules={[\n                            { required: true, message: '请确认密码' },\n                            ({ getFieldValue }) => ({\n                                validator(_, value) {\n                                    if (!value || getFieldValue('password') === value) {\n                                        return Promise.resolve()\n                                    }\n                                    return Promise.reject(new Error('两次输入的密码不一致'))\n                                },\n                            }),\n                        ]}\n                    >\n                        <Input\n                            placeholder=\"请再次输入密码\"\n                            type={showConfirmPassword ? 'text' : 'password'}\n                            suffix={\n                                <div\n                                    className=\"password-toggle\"\n                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}\n                                >\n                                    {showConfirmPassword ? <EyeOutline /> : <EyeInvisibleOutline />}\n                                </div>\n                            }\n                        />\n                    </Form.Item>\n\n                    <div className=\"auth-actions\">\n                        <Button\n                            type=\"submit\"\n                            color=\"primary\"\n                            size=\"large\"\n                            loading={loading}\n                            block\n                        >\n                            注册\n                        </Button>\n                    </div>\n                </Form>\n\n                <div className=\"auth-footer\">\n                    <span>已有账户？</span>\n                    <Button\n                        fill=\"none\"\n                        color=\"primary\"\n                        onClick={goToLogin}\n                        className=\"auth-link\"\n                    >\n                        立即登录\n                    </Button>\n                </div>\n            </div>\n        </div>\n    )\n}\n\nexport default Register\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Auth/Register.tsx"
+    },
+    "3": {
+      "path": "/forgot-password",
+      "layout": false,
+      "file": "@/pages/Auth/ForgotPassword.tsx",
+      "id": "3",
+      "absPath": "/forgot-password",
+      "__content": "import { apiClient } from '@/api/client'\nimport { Button, Form, Input, NavBar, Space, Steps, Toast } from 'antd-mobile'\nimport React, { useState } from 'react'\nimport { history } from 'umi'\nimport './Auth.css'\n\ninterface ForgotPasswordForm {\n    email: string\n    verificationCode: string\n    newPassword: string\n    confirmPassword: string\n}\n\nconst ForgotPassword: React.FC = () => {\n    const [form] = Form.useForm<ForgotPasswordForm>()\n    const [loading, setLoading] = useState(false)\n    const [currentStep, setCurrentStep] = useState(0)\n    const [countdown, setCountdown] = useState(0)\n    const [email, setEmail] = useState('')\n\n    // 发送验证码\n    const sendVerificationCode = async () => {\n        try {\n            const emailValue = form.getFieldValue('email')\n            if (!emailValue) {\n                Toast.show({ content: '请先输入邮箱地址', position: 'top' })\n                return\n            }\n\n            setLoading(true)\n            await apiClient.post('/auth/send-reset-code', { email: emailValue })\n\n            setEmail(emailValue)\n            setCountdown(60)\n            const timer = setInterval(() => {\n                setCountdown((prev) => {\n                    if (prev <= 1) {\n                        clearInterval(timer)\n                        return 0\n                    }\n                    return prev - 1\n                })\n            }, 1000)\n\n            Toast.show({ content: '验证码已发送到您的邮箱', position: 'top' })\n            setCurrentStep(1)\n        } catch (error) {\n            console.error('Send verification code failed:', error)\n            Toast.show({ content: '发送验证码失败，请重试', position: 'top' })\n        } finally {\n            setLoading(false)\n        }\n    }\n\n    // 验证验证码\n    const verifyCode = async () => {\n        try {\n            const values = form.getFieldsValue(['verificationCode'])\n            if (!values.verificationCode) {\n                Toast.show({ content: '请输入验证码', position: 'top' })\n                return\n            }\n\n            setLoading(true)\n            await apiClient.post('/auth/verify-reset-code', {\n                email,\n                code: values.verificationCode,\n            })\n\n            Toast.show({ content: '验证码验证成功', position: 'top' })\n            setCurrentStep(2)\n        } catch (error) {\n            console.error('Verify code failed:', error)\n            Toast.show({ content: '验证码错误，请重试', position: 'top' })\n        } finally {\n            setLoading(false)\n        }\n    }\n\n    // 重置密码\n    const resetPassword = async () => {\n        try {\n            const values = form.getFieldsValue(['newPassword', 'confirmPassword'])\n\n            if (values.newPassword !== values.confirmPassword) {\n                Toast.show({ content: '两次输入的密码不一致', position: 'top' })\n                return\n            }\n\n            setLoading(true)\n            await apiClient.post('/auth/reset-password', {\n                email,\n                code: form.getFieldValue('verificationCode'),\n                newPassword: values.newPassword,\n            })\n\n            Toast.show({ content: '密码重置成功！', position: 'top' })\n\n            setTimeout(() => {\n                history.push('/login')\n            }, 1000)\n        } catch (error) {\n            console.error('Reset password failed:', error)\n            Toast.show({ content: '密码重置失败，请重试', position: 'top' })\n        } finally {\n            setLoading(false)\n        }\n    }\n\n    const handleNext = () => {\n        if (currentStep === 0) {\n            sendVerificationCode()\n        } else if (currentStep === 1) {\n            verifyCode()\n        } else if (currentStep === 2) {\n            resetPassword()\n        }\n    }\n\n    const steps = [\n        { title: '验证邮箱', description: '输入您的邮箱地址' },\n        { title: '输入验证码', description: '请查收邮箱验证码' },\n        { title: '重置密码', description: '设置新密码' },\n    ]\n\n    return (\n        <div className=\"auth-container\">\n            <NavBar onBack={() => history.back()}>忘记密码</NavBar>\n\n            <div className=\"auth-content\">\n                <div className=\"auth-header\">\n                    <h1 className=\"auth-title\">重置密码</h1>\n                    <p className=\"auth-subtitle\">通过邮箱验证来重置您的密码</p>\n                </div>\n\n                <div className=\"forgot-password-steps\">\n                    <Steps current={currentStep} direction=\"horizontal\">\n                        {steps.map((step, index) => (\n                            <Steps.Step\n                                key={index}\n                                title={step.title}\n                                description={step.description}\n                            />\n                        ))}\n                    </Steps>\n                </div>\n\n                <Form form={form} layout=\"vertical\" className=\"auth-form\">\n                    {currentStep === 0 && (\n                        <Form.Item\n                            name=\"email\"\n                            label=\"邮箱地址\"\n                            rules={[\n                                { required: true, message: '请输入邮箱地址' },\n                                { type: 'email', message: '请输入有效的邮箱地址' },\n                            ]}\n                        >\n                            <Input placeholder=\"请输入您的邮箱地址\" />\n                        </Form.Item>\n                    )}\n\n                    {currentStep === 1 && (\n                        <Space direction=\"vertical\" style={{ width: '100%' }}>\n                            <div className=\"verification-info\">\n                                <p>验证码已发送到：{email}</p>\n                                {countdown > 0 && <p className=\"countdown\">重新发送 ({countdown}s)</p>}\n                            </div>\n                            <Form.Item\n                                name=\"verificationCode\"\n                                label=\"验证码\"\n                                rules={[\n                                    { required: true, message: '请输入验证码' },\n                                    { len: 6, message: '验证码为6位数字' },\n                                ]}\n                            >\n                                <Input placeholder=\"请输入6位验证码\" maxLength={6} />\n                            </Form.Item>\n                            {countdown === 0 && (\n                                <Button\n                                    fill=\"none\"\n                                    color=\"primary\"\n                                    onClick={sendVerificationCode}\n                                    loading={loading}\n                                >\n                                    重新发送验证码\n                                </Button>\n                            )}\n                        </Space>\n                    )}\n\n                    {currentStep === 2 && (\n                        <Space direction=\"vertical\" style={{ width: '100%' }}>\n                            <Form.Item\n                                name=\"newPassword\"\n                                label=\"新密码\"\n                                rules={[\n                                    { required: true, message: '请输入新密码' },\n                                    { min: 6, message: '密码至少6个字符' },\n                                    { max: 20, message: '密码最多20个字符' },\n                                ]}\n                            >\n                                <Input placeholder=\"请输入新密码\" type=\"password\" />\n                            </Form.Item>\n\n                            <Form.Item\n                                name=\"confirmPassword\"\n                                label=\"确认新密码\"\n                                rules={[\n                                    { required: true, message: '请确认新密码' },\n                                    ({ getFieldValue }) => ({\n                                        validator(_, value) {\n                                            if (!value || getFieldValue('newPassword') === value) {\n                                                return Promise.resolve()\n                                            }\n                                            return Promise.reject(new Error('两次输入的密码不一致'))\n                                        },\n                                    }),\n                                ]}\n                            >\n                                <Input placeholder=\"请再次输入新密码\" type=\"password\" />\n                            </Form.Item>\n                        </Space>\n                    )}\n\n                    <div className=\"auth-actions\">\n                        <Button\n                            color=\"primary\"\n                            size=\"large\"\n                            loading={loading}\n                            onClick={handleNext}\n                            block\n                        >\n                            {currentStep === 0 && '发送验证码'}\n                            {currentStep === 1 && '验证'}\n                            {currentStep === 2 && '重置密码'}\n                        </Button>\n                    </div>\n                </Form>\n\n                <div className=\"auth-footer\">\n                    <Button\n                        fill=\"none\"\n                        color=\"primary\"\n                        onClick={() => history.push('/login')}\n                        className=\"auth-link\"\n                    >\n                        返回登录\n                    </Button>\n                </div>\n            </div>\n        </div>\n    )\n}\n\nexport default ForgotPassword\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Auth/ForgotPassword.tsx"
+    },
+    "4": {
+      "path": "/",
+      "file": "@/components/Layout/Layout.tsx",
+      "id": "4",
+      "absPath": "/",
+      "__content": "import { tabBarConfig } from '@/config/env'\nimport { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport { useUIStore } from '@/stores/ui/useUIStore'\nimport { Mask, SpinLoading, TabBar } from 'antd-mobile'\nimport { useEffect } from 'react'\nimport { history, Outlet, useLocation } from 'umi'\nimport Header from './Header'\nimport './Layout.css'\n\nexport default function Layout() {\n  const location = useLocation()\n  const { isMobile, isTablet, deviceType } = useDeviceInfo()\n  const { globalLoading, loadingText } = useUIStore()\n\n  // 从配置中获取 Tab 配置 - 已直接导入\n\n  useEffect(() => {\n    // 根据设备类型添加相应的类名\n    document.body.className = `device-${deviceType} ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`\n\n    // 移动端优化\n    if (isMobile) {\n      // 禁用双击缩放\n      document.addEventListener('touchstart', function (event) {\n        if (event.touches.length > 1) {\n          event.preventDefault()\n        }\n      }, { passive: false })\n\n      let lastTouchEnd = 0\n      document.addEventListener('touchend', function (event) {\n        const now = (new Date()).getTime()\n        if (now - lastTouchEnd <= 300) {\n          event.preventDefault()\n        }\n        lastTouchEnd = now\n      }, { passive: false })\n    }\n  }, [isMobile, isTablet, deviceType])\n\n  const handleTabChange = (key: string) => {\n    history.push(key)\n  }\n\n  return (\n    <div className={`layout ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n      {/* 头部 */}\n      <Header />\n\n      {/* 主内容区域 */}\n      <main className=\"layout-content\">\n        <div className=\"responsive-container\">\n          <Outlet />\n        </div>\n      </main>\n\n      {/* 底部导航栏 */}\n      <div className=\"layout-tabbar\">\n        <TabBar\n          activeKey={location.pathname}\n          onChange={handleTabChange}\n          className=\"custom-tabbar\"\n          style={tabBarConfig.style}\n        >\n          {tabBarConfig.tabs.map(item => {\n            const IconComponent = location.pathname === item.key ? item.activeIcon : item.icon\n            return (\n              <TabBar.Item\n                key={item.key}\n                icon={IconComponent ? <IconComponent /> : null}\n                title={item.title}\n                badge={item.badge}\n              />\n            )\n          })}\n        </TabBar>\n      </div>\n\n      {/* 全局加载遮罩 */}\n      <Mask visible={globalLoading} opacity={0.5}>\n        <div style={{\n          position: 'absolute',\n          top: '50%',\n          left: '50%',\n          transform: 'translate(-50%, -50%)',\n          textAlign: 'center',\n          color: '#ffffff'\n        }}>\n          <SpinLoading color=\"#ffffff\" style={{ fontSize: 48 }} />\n          <div style={{ marginTop: 12, fontSize: 16 }}>{loadingText}</div>\n        </div>\n      </Mask>\n    </div>\n  )\n}",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/components/Layout/Layout.tsx"
+    },
+    "5": {
+      "path": "/",
+      "file": "@/pages/Home/Home.tsx",
+      "parentId": "4",
+      "id": "5",
+      "absPath": "/",
+      "__content": "import { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport nativeBridge from '@/utils/nativeBridge'\nimport { Button, Card, Grid, Space } from 'antd-mobile'\nimport { useEffect, useState } from 'react'\nimport './Home.css'\n\ninterface EnvironmentInfo {\n  platform: string\n  isNative: boolean\n  version: string\n  model: string\n  appVersion: string\n}\n\nexport default function Home() {\n  const { isMobile, isTablet, deviceType } = useDeviceInfo()\n  const [envInfo, setEnvInfo] = useState<EnvironmentInfo | null>(null)\n\n  useEffect(() => {\n    // 获取环境信息\n    const getEnvironmentInfo = async () => {\n      try {\n        const deviceInfo = await nativeBridge.getDeviceInfo()\n        setEnvInfo({\n          platform: deviceInfo.platform,\n          isNative: nativeBridge.isNative,\n          version: deviceInfo.version,\n          model: deviceInfo.model,\n          appVersion: deviceInfo.appVersion\n        })\n      } catch (error) {\n        console.error('Failed to get device info:', error)\n        setEnvInfo({\n          platform: 'web',\n          isNative: false,\n          version: 'unknown',\n          model: 'browser',\n          appVersion: '1.0.0'\n        })\n      }\n    }\n\n    getEnvironmentInfo()\n  }, [])\n\n  const handleTestNativeFeature = async (feature: string) => {\n    switch (feature) {\n      case 'toast':\n        nativeBridge.showToast(`这是来自${envInfo?.platform || 'web'}的Toast消息`)\n        break\n      case 'alert':\n        await nativeBridge.showAlert('原生弹窗', '这是通过原生Bridge调用的弹窗')\n        break\n      case 'confirm':\n        const result = await nativeBridge.showConfirm('确认操作', '你确定要执行这个操作吗？')\n        nativeBridge.showToast(result ? '用户确认' : '用户取消')\n        break\n      case 'storage':\n        await nativeBridge.setStorage('test_key', { message: 'Hello from H5', timestamp: Date.now() })\n        const stored = await nativeBridge.getStorage('test_key')\n        nativeBridge.showToast(`存储测试: ${stored?.message}`)\n        break\n      case 'network':\n        try {\n          const networkStatus = await nativeBridge.getNetworkStatus()\n          nativeBridge.showToast(`网络状态: ${networkStatus.isConnected ? '已连接' : '未连接'} (${networkStatus.connectionType})`)\n        } catch (error) {\n          nativeBridge.showToast('网络状态检测失败')\n        }\n        break\n      default:\n        nativeBridge.showToast(`测试功能: ${feature}`)\n    }\n  }\n\n  return (\n    <div className={`home ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n      <div className=\"responsive-container\">\n        {/* 欢迎卡片 */}\n        <Card className=\"welcome-card\">\n          <div className=\"welcome-content\">\n            <h2>欢迎使用工作台</h2>\n            <p>这是一个现代化的移动端应用，支持原生容器和Web环境</p>\n          </div>\n        </Card>\n\n        {/* 环境信息卡片 */}\n        <Card title=\"运行环境\" className=\"env-card\">\n          <div className=\"env-info\">\n            {envInfo ? (\n              <Space direction=\"vertical\" style={{ width: '100%' }}>\n                <div className=\"env-item\">\n                  <span className=\"label\">平台:</span>\n                  <span className={`value platform-${envInfo.platform}`}>\n                    {envInfo.platform.toUpperCase()}\n                    {envInfo.isNative && <span className=\"native-badge\">原生容器</span>}\n                  </span>\n                </div>\n                <div className=\"env-item\">\n                  <span className=\"label\">设备类型:</span>\n                  <span className=\"value\">{deviceType}</span>\n                </div>\n                <div className=\"env-item\">\n                  <span className=\"label\">系统版本:</span>\n                  <span className=\"value\">{envInfo.version}</span>\n                </div>\n                <div className=\"env-item\">\n                  <span className=\"label\">设备型号:</span>\n                  <span className=\"value\">{envInfo.model}</span>\n                </div>\n                <div className=\"env-item\">\n                  <span className=\"label\">应用版本:</span>\n                  <span className=\"value\">{envInfo.appVersion}</span>\n                </div>\n              </Space>\n            ) : (\n              <div className=\"loading\">正在获取环境信息...</div>\n            )}\n          </div>\n        </Card>\n\n        {/* 调试工具卡片 */}\n        <Card title=\"调试工具\" className=\"debug-card\">\n          <Grid columns={2} gap={12}>\n            <Grid.Item>\n              <Button\n                block\n                color=\"success\"\n                onClick={() => {\n                  if ((window as any).vConsole) {\n                    console.log('vConsole 已可用!')\n                    console.log('当前时间:', new Date().toLocaleString())\n                    console.log('页面信息:', {\n                      url: window.location.href,\n                      userAgent: navigator.userAgent,\n                      viewport: {\n                        width: window.innerWidth,\n                        height: window.innerHeight\n                      }\n                    })\n                  } else {\n                    console.log('vConsole 不可用')\n                  }\n                }}\n              >\n                测试 vConsole\n              </Button>\n            </Grid.Item>\n            <Grid.Item>\n              <Button\n                block\n                color=\"primary\"\n                onClick={() => {\n                  console.log('这是一条测试日志')\n                  console.warn('这是一条警告日志')\n                  console.error('这是一条错误日志')\n                  console.info('这是一条信息日志')\n                }}\n              >\n                生成测试日志\n              </Button>\n            </Grid.Item>\n          </Grid>\n        </Card>\n\n        {/* 功能测试卡片 */}\n        <Card title=\"原生功能测试\" className=\"test-card\">\n          <Grid columns={2} gap={12}>\n            <Grid.Item>\n              <Button\n                block\n                color=\"primary\"\n                onClick={() => handleTestNativeFeature('toast')}\n              >\n                Toast 消息\n              </Button>\n            </Grid.Item>\n            <Grid.Item>\n              <Button\n                block\n                color=\"primary\"\n                onClick={() => handleTestNativeFeature('alert')}\n              >\n                Alert 弹窗\n              </Button>\n            </Grid.Item>\n            <Grid.Item>\n              <Button\n                block\n                color=\"primary\"\n                onClick={() => handleTestNativeFeature('confirm')}\n              >\n                Confirm 确认\n              </Button>\n            </Grid.Item>\n            <Grid.Item>\n              <Button\n                block\n                color=\"primary\"\n                onClick={() => handleTestNativeFeature('storage')}\n              >\n                存储测试\n              </Button>\n            </Grid.Item>\n            <Grid.Item>\n              <Button\n                block\n                color=\"primary\"\n                onClick={() => handleTestNativeFeature('network')}\n              >\n                网络状态\n              </Button>\n            </Grid.Item>\n            <Grid.Item>\n              <Button\n                block\n                color=\"primary\"\n                disabled={!envInfo?.isNative}\n                onClick={() => handleTestNativeFeature('camera')}\n              >\n                相机功能\n              </Button>\n            </Grid.Item>\n          </Grid>\n        </Card>\n\n        {/* 快捷入口 */}\n        <Card title=\"快捷入口\" className=\"shortcuts-card\">\n          <Grid columns={3} gap={16}>\n            <Grid.Item>\n              <div className=\"shortcut-item\">\n                <div className=\"shortcut-icon\">📊</div>\n                <div className=\"shortcut-title\">数据看板</div>\n              </div>\n            </Grid.Item>\n            <Grid.Item>\n              <div className=\"shortcut-item\">\n                <div className=\"shortcut-icon\">📋</div>\n                <div className=\"shortcut-title\">任务管理</div>\n              </div>\n            </Grid.Item>\n            <Grid.Item>\n              <div className=\"shortcut-item\">\n                <div className=\"shortcut-icon\">👥</div>\n                <div className=\"shortcut-title\">团队协作</div>\n              </div>\n            </Grid.Item>\n            <Grid.Item>\n              <div className=\"shortcut-item\">\n                <div className=\"shortcut-icon\">📈</div>\n                <div className=\"shortcut-title\">业绩统计</div>\n              </div>\n            </Grid.Item>\n            <Grid.Item>\n              <div className=\"shortcut-item\">\n                <div className=\"shortcut-icon\">⚙️</div>\n                <div className=\"shortcut-title\">系统设置</div>\n              </div>\n            </Grid.Item>\n            <Grid.Item>\n              <div className=\"shortcut-item\">\n                <div className=\"shortcut-icon\">❓</div>\n                <div className=\"shortcut-title\">帮助中心</div>\n              </div>\n            </Grid.Item>\n          </Grid>\n        </Card>\n      </div>\n    </div>\n  )\n}",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Home/Home.tsx"
+    },
+    "6": {
+      "path": "/apps",
+      "file": "@/pages/Apps/Apps.tsx",
+      "parentId": "4",
+      "id": "6",
+      "absPath": "/apps",
+      "__content": "import { homeConfig } from '@/config/env'\nimport { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport { Card, Grid } from 'antd-mobile'\nimport './Apps.css'\n\nexport default function Apps() {\n    const { isMobile, isTablet } = useDeviceInfo()\n    // 配置已直接导入\n\n    const handleAppClick = (link: string) => {\n        // TODO: 实现应用跳转逻辑\n        console.log('跳转到应用:', link)\n    }\n\n    return (\n        <div className={`apps-page ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n            <div className=\"page-container\">\n                <Card className=\"apps-card\">\n                    <h2 className=\"section-title\">应用中心</h2>\n\n                    <Grid columns={isMobile ? 4 : 6} gap={16}>\n                        {homeConfig.quickActions.map((item: any) => {\n                            // 这里可以根据 icon 字符串动态导入图标组件\n                            return (\n                                <Grid.Item key={item.id}>\n                                    <div\n                                        className=\"app-item\"\n                                        onClick={() => handleAppClick(item.link)}\n                                    >\n                                        <div\n                                            className=\"app-icon\"\n                                            style={{\n                                                backgroundColor: item.color,\n                                                width: isMobile ? '48px' : '56px',\n                                                height: isMobile ? '48px' : '56px',\n                                            }}\n                                        >\n                                            {/* 这里应该渲染对应的图标 */}\n                                            <span className=\"icon-placeholder\">{item.title.charAt(0)}</span>\n                                        </div>\n                                        <div className=\"app-title\">{item.title}</div>\n                                        {item.badge && (\n                                            <div className=\"app-badge\">{item.badge}</div>\n                                        )}\n                                    </div>\n                                </Grid.Item>\n                            )\n                        })}\n                    </Grid>\n                </Card>\n\n                {/* 最近使用 */}\n                <Card className=\"recent-apps-card\">\n                    <h3 className=\"section-title\">最近使用</h3>\n                    <div className=\"recent-apps\">\n                        {homeConfig.quickActions.slice(0, 4).map((item: any) => (\n                            <div\n                                key={`recent-${item.id}`}\n                                className=\"recent-app-item\"\n                                onClick={() => handleAppClick(item.link)}\n                            >\n                                <div\n                                    className=\"recent-app-icon\"\n                                    style={{ backgroundColor: item.color }}\n                                >\n                                    <span className=\"icon-placeholder\">{item.title.charAt(0)}</span>\n                                </div>\n                                <span className=\"recent-app-title\">{item.title}</span>\n                            </div>\n                        ))}\n                    </div>\n                </Card>\n\n                {/* 分类应用 */}\n                <Card className=\"category-apps-card\">\n                    <h3 className=\"section-title\">分类应用</h3>\n                    <div className=\"category-list\">\n                        <div className=\"category-item\">\n                            <h4>办公工具</h4>\n                            <div className=\"category-apps\">\n                                {homeConfig.quickActions.slice(0, 3).map((item: any) => (\n                                    <span\n                                        key={`office-${item.id}`}\n                                        className=\"category-app-tag\"\n                                        onClick={() => handleAppClick(item.link)}\n                                    >\n                                        {item.title}\n                                    </span>\n                                ))}\n                            </div>\n                        </div>\n\n                        <div className=\"category-item\">\n                            <h4>沟通协作</h4>\n                            <div className=\"category-apps\">\n                                {homeConfig.quickActions.slice(3, 6).map((item: any) => (\n                                    <span\n                                        key={`comm-${item.id}`}\n                                        className=\"category-app-tag\"\n                                        onClick={() => handleAppClick(item.link)}\n                                    >\n                                        {item.title}\n                                    </span>\n                                ))}\n                            </div>\n                        </div>\n                    </div>\n                </Card>\n            </div>\n        </div>\n    )\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Apps/Apps.tsx"
+    },
+    "7": {
+      "path": "/message",
+      "file": "@/pages/Message/Message.tsx",
+      "parentId": "4",
+      "id": "7",
+      "absPath": "/message",
+      "__content": "import { loading } from '@/stores'\nimport { Avatar, Badge, Empty, InfiniteScroll, List, PullToRefresh, SearchBar, Tabs } from 'antd-mobile'\nimport { BellOutline, MessageOutline } from 'antd-mobile-icons'\nimport React, { useEffect, useState } from 'react'\nimport { history } from 'umi'\nimport './Message.css'\n\ninterface MessageItem {\n  id: string\n  type: 'chat' | 'system' | 'notification'\n  title: string\n  content: string\n  avatar?: string\n  time: string\n  unreadCount?: number\n  isRead: boolean\n}\n\nconst Message: React.FC = () => {\n  const [searchValue, setSearchValue] = useState('')\n  const [activeTab, setActiveTab] = useState('all')\n  const [messages, setMessages] = useState<MessageItem[]>([])\n  const [hasMore, setHasMore] = useState(true)\n  // 消息数据状态\n\n  // 模拟消息数据\n  const mockMessages: MessageItem[] = [\n    {\n      id: '1',\n      type: 'chat',\n      title: '系统管理员',\n      content: '欢迎使用移动工作台！如有任何问题请随时联系我们。',\n      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',\n      time: '刚刚',\n      unreadCount: 1,\n      isRead: false,\n    },\n    {\n      id: '2',\n      type: 'system',\n      title: '系统通知',\n      content: '您的账户安全设置已更新',\n      time: '2分钟前',\n      isRead: true,\n    },\n    {\n      id: '3',\n      type: 'notification',\n      title: '应用更新',\n      content: '移动工作台已更新到最新版本，快来体验新功能吧！',\n      time: '1小时前',\n      unreadCount: 2,\n      isRead: false,\n    },\n    {\n      id: '4',\n      type: 'chat',\n      title: '张三',\n      content: '今天的会议改到下午3点了',\n      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',\n      time: '上午10:30',\n      isRead: true,\n    },\n    {\n      id: '5',\n      type: 'system',\n      title: '任务提醒',\n      content: '您有3个待处理的任务即将到期',\n      time: '昨天',\n      unreadCount: 3,\n      isRead: false,\n    },\n  ]\n\n  useEffect(() => {\n    loadMessages()\n  }, []) // eslint-disable-line react-hooks/exhaustive-deps\n\n  const loadMessages = async () => {\n    try {\n      console.log('Loading 对象:', loading)\n      console.log('Loading.show 方法:', typeof loading.show)\n\n      loading.show('加载消息中...')\n      console.log('Loading.show 调用成功')\n\n      // 模拟API调用\n      await new Promise(resolve => setTimeout(resolve, 1000))\n      setMessages(mockMessages)\n      console.log('消息加载完成')\n    } catch (error) {\n      console.error('Load messages failed:', error)\n    } finally {\n      loading.hide()\n      console.log('Loading.hide 调用成功')\n    }\n  }\n\n  const loadMore = async () => {\n    try {\n      // 模拟加载更多数据\n      await new Promise(resolve => setTimeout(resolve, 1000))\n      setHasMore(false)\n    } catch (error) {\n      console.error('Load more failed:', error)\n    }\n  }\n\n  const handleRefresh = async () => {\n    await loadMessages()\n  }\n\n  const handleMessageClick = (message: MessageItem) => {\n    if (message.type === 'chat') {\n      history.push(`/message/${message.id}`)\n    } else {\n      // 处理系统通知和其他类型消息\n      console.log('Handle message:', message)\n    }\n  }\n\n  const filteredMessages = messages.filter((message) => {\n    const matchesSearch = message.title.toLowerCase().includes(searchValue.toLowerCase()) ||\n      message.content.toLowerCase().includes(searchValue.toLowerCase())\n\n    if (activeTab === 'all') return matchesSearch\n    if (activeTab === 'unread') return matchesSearch && !message.isRead\n    if (activeTab === 'chat') return matchesSearch && message.type === 'chat'\n    if (activeTab === 'system') return matchesSearch && (message.type === 'system' || message.type === 'notification')\n\n    return matchesSearch\n  })\n\n  const getMessageIcon = (type: MessageItem['type']) => {\n    switch (type) {\n      case 'chat':\n        return <MessageOutline />\n      case 'system':\n      case 'notification':\n        return <BellOutline />\n      default:\n        return <MessageOutline />\n    }\n  }\n\n  const tabs = [\n    { key: 'all', title: '全部' },\n    { key: 'unread', title: '未读' },\n    { key: 'chat', title: '聊天' },\n    { key: 'system', title: '通知' },\n  ]\n\n  const renderMessage = (message: MessageItem) => (\n    <List.Item\n      key={message.id}\n      prefix={\n        message.avatar ? (\n          <Avatar src={message.avatar} style={{ '--size': '48px' }} />\n        ) : (\n          <div className=\"message-icon\">\n            {getMessageIcon(message.type)}\n          </div>\n        )\n      }\n      extra={\n        <div className=\"message-extra\">\n          <div className=\"message-time\">{message.time}</div>\n          {message.unreadCount && (\n            <Badge content={message.unreadCount} style={{ '--right': '-2px', '--top': '2px' }} />\n          )}\n        </div>\n      }\n      onClick={() => handleMessageClick(message)}\n      className={`message-item ${!message.isRead ? 'unread' : ''}`}\n    >\n      <div className=\"message-content\">\n        <div className=\"message-title\">{message.title}</div>\n        <div className=\"message-text\">{message.content}</div>\n      </div>\n    </List.Item>\n  )\n\n  return (\n    <div className=\"message-page\">\n      <div className=\"message-header\">\n        <SearchBar\n          placeholder=\"搜索消息\"\n          value={searchValue}\n          onChange={setSearchValue}\n          style={{ '--border-radius': '20px' }}\n        />\n      </div>\n\n      <Tabs activeKey={activeTab} onChange={setActiveTab}>\n        {tabs.map(tab => (\n          <Tabs.Tab title={tab.title} key={tab.key} />\n        ))}\n      </Tabs>\n\n      <div className=\"message-list\">\n        <PullToRefresh onRefresh={handleRefresh}>\n          {filteredMessages.length > 0 ? (\n            <List>\n              {filteredMessages.map(renderMessage)}\n            </List>\n          ) : (\n            <Empty\n              description=\"暂无消息\"\n              image=\"https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg\"\n            />\n          )}\n          <InfiniteScroll loadMore={loadMore} hasMore={hasMore}>\n            {hasMore ? '加载中...' : '没有更多了'}\n          </InfiniteScroll>\n        </PullToRefresh>\n      </div>\n    </div>\n  )\n}\n\nexport default Message",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Message/Message.tsx"
+    },
+    "8": {
+      "path": "/profile",
+      "file": "@/pages/Profile/Profile.tsx",
+      "parentId": "4",
+      "id": "8",
+      "absPath": "/profile",
+      "__content": "import { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport nativeBridge from '@/utils/nativeBridge'\nimport {\n    Avatar,\n    Badge,\n    Button,\n    Card,\n    Grid,\n    List,\n    Space\n} from 'antd-mobile'\nimport {\n    AppOutline,\n    HeartOutline,\n    RightOutline,\n    SetOutline,\n    UserOutline\n} from 'antd-mobile-icons'\nimport './Profile.css'\n\nconst userStats = [\n    { label: '关注', value: '256', key: 'following' },\n    { label: '粉丝', value: '1.2k', key: 'followers' },\n    { label: '获赞', value: '3.6k', key: 'likes' },\n    { label: '积分', value: '8888', key: 'points' }\n]\n\nconst menuItems = [\n    {\n        key: 'orders',\n        title: '我的订单',\n        icon: <AppOutline />,\n        badge: 2,\n        color: '#1677ff'\n    },\n    {\n        key: 'favorites',\n        title: '我的收藏',\n        icon: <HeartOutline />,\n        color: '#ff4d4f'\n    },\n    {\n        key: 'history',\n        title: '浏览历史',\n        icon: <AppOutline />,\n        color: '#52c41a'\n    },\n    {\n        key: 'team',\n        title: '我的团队',\n        icon: <UserOutline />,\n        color: '#722ed1'\n    }\n]\n\nconst settingItems = [\n    {\n        key: 'account',\n        title: '账号设置',\n        icon: <UserOutline />,\n        description: '个人信息、密码设置'\n    },\n    {\n        key: 'notification',\n        title: '消息通知',\n        icon: <SetOutline />,\n        description: '推送设置、隐私设置'\n    },\n    {\n        key: 'help',\n        title: '帮助与反馈',\n        icon: <AppOutline />,\n        description: '常见问题、意见反馈'\n    }\n]\n\nexport default function Profile() {\n    const { isMobile, isTablet } = useDeviceInfo()\n\n    const handleMenuItem = async (key: string) => {\n        console.log('Menu item clicked:', key)\n\n        // 根据功能调用原生能力\n        switch (key) {\n            case 'orders':\n                nativeBridge.showToast('查看我的订单')\n                break\n            case 'favorites':\n                nativeBridge.showToast('查看我的收藏')\n                break\n            case 'history':\n                nativeBridge.showToast('查看浏览历史')\n                break\n            case 'team':\n                nativeBridge.showToast('查看我的团队')\n                break\n            default:\n                console.log('Unknown menu item:', key)\n        }\n    }\n\n    const handleEditProfile = () => {\n        console.log('Edit profile')\n        // TODO: 实现编辑个人信息\n    }\n\n    const handleLogout = () => {\n        console.log('Logout')\n        // TODO: 实现登出功能\n    }\n\n    return (\n        <div className={`profile-page ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n            <div className=\"content-container\">\n                {/* 用户信息卡片 */}\n                <Card className=\"user-info-card\">\n                    <div className=\"user-info\">\n                        <div className=\"user-avatar\">\n                            <Avatar\n                                src=\"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80\"\n                                style={{ '--size': isMobile ? '64px' : '80px' }}\n                            />\n                            <div className=\"edit-avatar\" onClick={handleEditProfile}>\n                                <UserOutline />\n                            </div>\n                        </div>\n                        <div className=\"user-details\">\n                            <h3 className=\"user-name\">张三</h3>\n                            <p className=\"user-desc\">产品经理 · 北京</p>\n                            <p className=\"user-id\">ID: 123456789</p>\n                        </div>\n                    </div>\n                </Card>\n\n                {/* 用户统计 */}\n                <Card className=\"user-stats-card\">\n                    <Grid columns={4} gap={0}>\n                        {userStats.map(stat => (\n                            <Grid.Item key={stat.key}>\n                                <div className=\"stat-item\" onClick={() => handleMenuItem(stat.key)}>\n                                    <div className=\"stat-value\">{stat.value}</div>\n                                    <div className=\"stat-label\">{stat.label}</div>\n                                </div>\n                            </Grid.Item>\n                        ))}\n                    </Grid>\n                </Card>\n\n                {/* 功能菜单 */}\n                <Card className=\"menu-card\">\n                    <Grid columns={isMobile ? 4 : 6} gap={16}>\n                        {menuItems.map(item => (\n                            <Grid.Item key={item.key}>\n                                <div\n                                    className=\"menu-item\"\n                                    onClick={() => handleMenuItem(item.key)}\n                                >\n                                    <div\n                                        className=\"menu-icon\"\n                                        style={{ backgroundColor: `${item.color}15`, color: item.color }}\n                                    >\n                                        {item.icon}\n                                        {item.badge && (\n                                            <Badge\n                                                content={item.badge}\n                                                style={{ position: 'absolute', top: '-4px', right: '-4px' }}\n                                            />\n                                        )}\n                                    </div>\n                                    <span className=\"menu-title\">{item.title}</span>\n                                </div>\n                            </Grid.Item>\n                        ))}\n                    </Grid>\n                </Card>\n\n                {/* 设置列表 */}\n                <Card title=\"设置\" className=\"settings-card\">\n                    <List>\n                        {settingItems.map(item => (\n                            <List.Item\n                                key={item.key}\n                                prefix={\n                                    <div className=\"setting-icon\">\n                                        {item.icon}\n                                    </div>\n                                }\n                                extra={<RightOutline />}\n                                description={item.description}\n                                onClick={() => handleMenuItem(item.key)}\n                                clickable\n                            >\n                                {item.title}\n                            </List.Item>\n                        ))}\n                    </List>\n                </Card>\n\n                {/* 操作按钮 */}\n                <div className=\"action-buttons\">\n                    <Space direction=\"vertical\" block>\n                        <Button color=\"primary\" size=\"large\" block onClick={handleEditProfile}>\n                            编辑个人信息\n                        </Button>\n                        <Button size=\"large\" block onClick={handleLogout}>\n                            退出登录\n                        </Button>\n                    </Space>\n                </div>\n            </div>\n        </div>\n    )\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Profile/Profile.tsx"
+    },
+    "9": {
+      "path": "/settings",
+      "file": "@/pages/Settings/Settings.tsx",
+      "parentId": "4",
+      "id": "9",
+      "absPath": "/settings",
+      "__content": "import { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport {\n    Button,\n    Card,\n    List,\n    Modal,\n    Selector,\n    Space,\n    Switch,\n    Toast\n} from 'antd-mobile'\nimport {\n    BellOutline,\n    DeleteOutline,\n    ExclamationCircleOutline,\n    EyeInvisibleOutline,\n    GlobalOutline,\n    MoonOutline,\n    RightOutline,\n    SoundOutline\n} from 'antd-mobile-icons'\nimport { useState } from 'react'\nimport './Settings.css'\n\nconst languageOptions = [\n    { label: '简体中文', value: 'zh-CN' },\n    { label: 'English', value: 'en-US' },\n    { label: '繁體中文', value: 'zh-TW' },\n    { label: '日本語', value: 'ja-JP' }\n]\n\nconst themeOptions = [\n    { label: '跟随系统', value: 'auto' },\n    { label: '浅色模式', value: 'light' },\n    { label: '深色模式', value: 'dark' }\n]\n\nexport default function Settings() {\n    const { isMobile, isTablet } = useDeviceInfo()\n\n    // 设置状态\n    const [notifications, setNotifications] = useState(true)\n    const [soundEnabled, setSoundEnabled] = useState(true)\n    const [darkMode, setDarkMode] = useState(false)\n    const [language, setLanguage] = useState(['zh-CN'])\n    const [theme, setTheme] = useState(['auto'])\n    const [privacyMode, setPrivacyMode] = useState(false)\n\n    const handleClearCache = () => {\n        Modal.confirm({\n            title: '清除缓存',\n            content: '确定要清除所有缓存数据吗？这将会重新加载应用。',\n            onConfirm: () => {\n                // TODO: 实现清除缓存功能\n                Toast.show({\n                    icon: 'success',\n                    content: '缓存已清除',\n                })\n            }\n        })\n    }\n\n    const handleResetSettings = () => {\n        Modal.confirm({\n            title: '重置设置',\n            content: '确定要重置所有设置到默认状态吗？',\n            onConfirm: () => {\n                setNotifications(true)\n                setSoundEnabled(true)\n                setDarkMode(false)\n                setLanguage(['zh-CN'])\n                setTheme(['auto'])\n                setPrivacyMode(false)\n                Toast.show({\n                    icon: 'success',\n                    content: '设置已重置',\n                })\n            }\n        })\n    }\n\n    const handleAbout = () => {\n        Modal.alert({\n            title: '关于应用',\n            content: (\n                <div className=\"about-content\">\n                    <p><strong>应用名称：</strong>移动端应用</p>\n                    <p><strong>版本号：</strong>v1.0.0</p>\n                    <p><strong>构建时间：</strong>2024-01-15</p>\n                    <p><strong>技术栈：</strong>React + Vite + antd-mobile</p>\n                </div>\n            )\n        })\n    }\n\n    return (\n        <div className={`settings-page ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n            <div className=\"content-container\">\n                {/* 通知设置 */}\n                <Card title=\"通知设置\" className=\"settings-section\">\n                    <List>\n                        <List.Item\n                            prefix={<BellOutline />}\n                            extra={\n                                <Switch\n                                    checked={notifications}\n                                    onChange={setNotifications}\n                                />\n                            }\n                            description=\"接收应用推送通知\"\n                        >\n                            推送通知\n                        </List.Item>\n                        <List.Item\n                            prefix={<SoundOutline />}\n                            extra={\n                                <Switch\n                                    checked={soundEnabled}\n                                    onChange={setSoundEnabled}\n                                    disabled={!notifications}\n                                />\n                            }\n                            description=\"通知声音提醒\"\n                        >\n                            声音提醒\n                        </List.Item>\n                    </List>\n                </Card>\n\n                {/* 显示设置 */}\n                <Card title=\"显示设置\" className=\"settings-section\">\n                    <List>\n                        <List.Item\n                            prefix={<MoonOutline />}\n                            extra={\n                                <Switch\n                                    checked={darkMode}\n                                    onChange={setDarkMode}\n                                />\n                            }\n                            description=\"开启深色模式\"\n                        >\n                            深色模式\n                        </List.Item>\n                    </List>\n\n                    <div className=\"selector-item\">\n                        <div className=\"selector-label\">\n                            <GlobalOutline />\n                            <span>主题模式</span>\n                        </div>\n                        <Selector\n                            options={themeOptions}\n                            value={theme}\n                            onChange={setTheme}\n                            columns={3}\n                        />\n                    </div>\n                </Card>\n\n                {/* 语言设置 */}\n                <Card title=\"语言设置\" className=\"settings-section\">\n                    <div className=\"selector-item\">\n                        <div className=\"selector-label\">\n                            <GlobalOutline />\n                            <span>界面语言</span>\n                        </div>\n                        <Selector\n                            options={languageOptions}\n                            value={language}\n                            onChange={setLanguage}\n                            columns={2}\n                        />\n                    </div>\n                </Card>\n\n                {/* 隐私设置 */}\n                <Card title=\"隐私设置\" className=\"settings-section\">\n                    <List>\n                        <List.Item\n                            prefix={<EyeInvisibleOutline />}\n                            extra={\n                                <Switch\n                                    checked={privacyMode}\n                                    onChange={setPrivacyMode}\n                                />\n                            }\n                            description=\"隐藏敏感信息\"\n                        >\n                            隐私模式\n                        </List.Item>\n                    </List>\n                </Card>\n\n                {/* 数据管理 */}\n                <Card title=\"数据管理\" className=\"settings-section\">\n                    <List>\n                        <List.Item\n                            prefix={<DeleteOutline />}\n                            extra={<RightOutline />}\n                            onClick={handleClearCache}\n                            clickable\n                            description=\"清除应用缓存数据\"\n                        >\n                            清除缓存\n                        </List.Item>\n                    </List>\n                </Card>\n\n                {/* 其他设置 */}\n                <Card title=\"其他\" className=\"settings-section\">\n                    <List>\n                        <List.Item\n                            prefix={<ExclamationCircleOutline />}\n                            extra={<RightOutline />}\n                            onClick={handleAbout}\n                            clickable\n                            description=\"查看应用版本信息\"\n                        >\n                            关于应用\n                        </List.Item>\n                    </List>\n                </Card>\n\n                {/* 操作按钮 */}\n                <div className=\"action-buttons\">\n                    <Space direction=\"vertical\" block>\n                        <Button\n                            color=\"danger\"\n                            size=\"large\"\n                            block\n                            onClick={handleResetSettings}\n                        >\n                            重置所有设置\n                        </Button>\n                    </Space>\n                </div>\n            </div>\n        </div>\n    )\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Settings/Settings.tsx"
+    },
+    "10": {
+      "path": "/notifications",
+      "file": "@/pages/Notifications/Notifications.tsx",
+      "parentId": "4",
+      "id": "10",
+      "absPath": "/notifications",
+      "__content": "import { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport { Badge, Card, List, Switch, Tabs } from 'antd-mobile'\nimport { BellOutline, MessageOutline } from 'antd-mobile-icons'\nimport { useState } from 'react'\nimport './Notifications.css'\n\n// 模拟通知数据\nconst mockNotifications = [\n    {\n        id: 1,\n        type: 'system',\n        title: '系统更新',\n        content: '新版本 v2.1.0 已发布，包含重要安全更新',\n        time: '2小时前',\n        read: false,\n        important: true,\n    },\n    {\n        id: 2,\n        type: 'message',\n        title: '新消息',\n        content: '您有 3 条未读消息',\n        time: '3小时前',\n        read: false,\n        important: false,\n    },\n    {\n        id: 3,\n        type: 'system',\n        title: '维护通知',\n        content: '系统将于今晚 23:00-24:00 进行维护',\n        time: '1天前',\n        read: true,\n        important: true,\n    },\n    {\n        id: 4,\n        type: 'activity',\n        title: '登录异常',\n        content: '检测到异地登录，请注意账户安全',\n        time: '2天前',\n        read: true,\n        important: true,\n    },\n    {\n        id: 5,\n        type: 'message',\n        title: '群聊消息',\n        content: '项目讨论组有新的消息',\n        time: '3天前',\n        read: true,\n        important: false,\n    },\n]\n\nconst notificationSettings = [\n    {\n        key: 'push',\n        title: '推送通知',\n        description: '接收重要通知的推送',\n        enabled: true,\n    },\n    {\n        key: 'sound',\n        title: '声音提醒',\n        description: '新通知时播放提示音',\n        enabled: true,\n    },\n    {\n        key: 'vibrate',\n        title: '震动提醒',\n        description: '新通知时设备震动',\n        enabled: false,\n    },\n    {\n        key: 'preview',\n        title: '消息预览',\n        description: '在通知中显示消息内容',\n        enabled: true,\n    },\n]\n\nexport default function Notifications() {\n    const { isMobile, isTablet } = useDeviceInfo()\n    const [activeTab, setActiveTab] = useState('all')\n    const [settings, setSettings] = useState(notificationSettings)\n\n    const handleNotificationClick = (notificationId: number) => {\n        console.log('查看通知详情:', notificationId)\n        // TODO: 实现通知详情页面\n    }\n\n    const handleMarkAllRead = () => {\n        console.log('标记所有通知为已读')\n        // TODO: 实现标记已读功能\n    }\n\n    const handleClearAll = () => {\n        console.log('清空所有通知')\n        // TODO: 实现清空通知功能\n    }\n\n    const handleSettingChange = (key: string, value: boolean) => {\n        setSettings(prev => prev.map(item =>\n            item.key === key ? { ...item, enabled: value } : item\n        ))\n    }\n\n    const filteredNotifications = mockNotifications.filter(notification => {\n        if (activeTab === 'all') return true\n        if (activeTab === 'unread') return !notification.read\n        if (activeTab === 'important') return notification.important\n        return true\n    })\n\n    const getNotificationIcon = (type: string) => {\n        switch (type) {\n            case 'system':\n                return <BellOutline />\n            case 'message':\n                return <MessageOutline />\n            default:\n                return <BellOutline />\n        }\n    }\n\n    const getNotificationColor = (type: string) => {\n        switch (type) {\n            case 'system':\n                return '#1677ff'\n            case 'message':\n                return '#52c41a'\n            case 'activity':\n                return '#faad14'\n            default:\n                return '#666666'\n        }\n    }\n\n    const renderNotificationItem = (item: typeof mockNotifications[0]) => (\n        <List.Item\n            key={item.id}\n            prefix={\n                <div\n                    className=\"notification-icon\"\n                    style={{ backgroundColor: getNotificationColor(item.type) }}\n                >\n                    {getNotificationIcon(item.type)}\n                </div>\n            }\n            description={\n                <div className=\"notification-content\">\n                    <span className=\"notification-text\">{item.content}</span>\n                    <span className=\"notification-time\">{item.time}</span>\n                </div>\n            }\n            extra={\n                <div className=\"notification-extra\">\n                    {item.important && <Badge content=\"重要\" color=\"#f5222d\" />}\n                    {!item.read && <div className=\"unread-dot\" />}\n                </div>\n            }\n            onClick={() => handleNotificationClick(item.id)}\n            className={`notification-item ${!item.read ? 'unread' : ''} ${item.important ? 'important' : ''}`}\n        >\n            <div className=\"notification-title\">{item.title}</div>\n        </List.Item>\n    )\n\n    return (\n        <div className={`notifications-page ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n            <div className=\"page-container\">\n                <Tabs activeKey={activeTab} onChange={setActiveTab} className=\"notification-tabs\">\n                    <Tabs.Tab title=\"全部\" key=\"all\">\n                        <div className=\"notification-actions\">\n                            <button className=\"action-button\" onClick={handleMarkAllRead}>\n                                全部已读\n                            </button>\n                            <button className=\"action-button secondary\" onClick={handleClearAll}>\n                                清空通知\n                            </button>\n                        </div>\n\n                        <Card className=\"notification-list-card\">\n                            {filteredNotifications.length > 0 ? (\n                                <List className=\"notification-list\">\n                                    {filteredNotifications.map(renderNotificationItem)}\n                                </List>\n                            ) : (\n                                <div className=\"empty-state\">\n                                    <BellOutline className=\"empty-icon\" />\n                                    <p>暂无通知</p>\n                                </div>\n                            )}\n                        </Card>\n                    </Tabs.Tab>\n\n                    <Tabs.Tab title=\"未读\" key=\"unread\">\n                        <Card className=\"notification-list-card\">\n                            {filteredNotifications.length > 0 ? (\n                                <List className=\"notification-list\">\n                                    {filteredNotifications.map(renderNotificationItem)}\n                                </List>\n                            ) : (\n                                <div className=\"empty-state\">\n                                    <BellOutline className=\"empty-icon\" />\n                                    <p>没有未读通知</p>\n                                </div>\n                            )}\n                        </Card>\n                    </Tabs.Tab>\n\n                    <Tabs.Tab title=\"重要\" key=\"important\">\n                        <Card className=\"notification-list-card\">\n                            {filteredNotifications.length > 0 ? (\n                                <List className=\"notification-list\">\n                                    {filteredNotifications.map(renderNotificationItem)}\n                                </List>\n                            ) : (\n                                <div className=\"empty-state\">\n                                    <BellOutline className=\"empty-icon\" />\n                                    <p>没有重要通知</p>\n                                </div>\n                            )}\n                        </Card>\n                    </Tabs.Tab>\n\n                    <Tabs.Tab title=\"设置\" key=\"settings\">\n                        <Card className=\"settings-card\">\n                            <h3 className=\"section-title\">通知设置</h3>\n                            <List className=\"settings-list\">\n                                {settings.map(setting => (\n                                    <List.Item\n                                        key={setting.key}\n                                        extra={\n                                            <Switch\n                                                checked={setting.enabled}\n                                                onChange={(checked) => handleSettingChange(setting.key, checked)}\n                                            />\n                                        }\n                                        description={setting.description}\n                                    >\n                                        {setting.title}\n                                    </List.Item>\n                                ))}\n                            </List>\n                        </Card>\n                    </Tabs.Tab>\n                </Tabs>\n            </div>\n        </div>\n    )\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Notifications/Notifications.tsx"
+    },
+    "11": {
+      "path": "/documents",
+      "file": "@/pages/Documents/Documents.tsx",
+      "parentId": "4",
+      "id": "11",
+      "absPath": "/documents",
+      "__content": "import { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport { Button, Card, Grid, List, SearchBar, Tabs } from 'antd-mobile'\nimport {\n    DeleteOutline,\n    DownlandOutline as DownloadOutline,\n    FileOutline,\n    FileOutline as FileTextOutline,\n    FolderOutline,\n    PictureOutline,\n    StarOutline as ShareOutline,\n    SoundOutline,\n    CameraOutline as VideoCameraOutline\n} from 'antd-mobile-icons'\nimport { useState } from 'react'\nimport './Documents.css'\n\n// 模拟文档数据\nconst mockDocuments = [\n    {\n        id: 1,\n        name: '项目需求文档.docx',\n        type: 'document',\n        size: '2.5MB',\n        modifiedTime: '2小时前',\n        category: 'recent',\n        shared: false,\n    },\n    {\n        id: 2,\n        name: '设计稿',\n        type: 'folder',\n        size: '15个文件',\n        modifiedTime: '1天前',\n        category: 'folder',\n        shared: true,\n    },\n    {\n        id: 3,\n        name: '演示视频.mp4',\n        type: 'video',\n        size: '125MB',\n        modifiedTime: '3天前',\n        category: 'recent',\n        shared: false,\n    },\n    {\n        id: 4,\n        name: '会议记录.pdf',\n        type: 'document',\n        size: '1.2MB',\n        modifiedTime: '1周前',\n        category: 'document',\n        shared: true,\n    },\n    {\n        id: 5,\n        name: '产品原型图.png',\n        type: 'image',\n        size: '3.8MB',\n        modifiedTime: '2周前',\n        category: 'image',\n        shared: false,\n    },\n    {\n        id: 6,\n        name: '音频反馈.mp3',\n        type: 'audio',\n        size: '12MB',\n        modifiedTime: '1个月前',\n        category: 'audio',\n        shared: false,\n    },\n]\n\nconst quickActions = [\n    {\n        id: 'upload',\n        title: '上传文件',\n        icon: FileOutline,\n        color: '#1677ff',\n    },\n    {\n        id: 'newFolder',\n        title: '新建文件夹',\n        icon: FolderOutline,\n        color: '#52c41a',\n    },\n    {\n        id: 'scan',\n        title: '扫描文档',\n        icon: PictureOutline,\n        color: '#faad14',\n    },\n    {\n        id: 'shared',\n        title: '共享文件',\n        icon: ShareOutline,\n        color: '#13c2c2',\n    },\n]\n\nexport default function Documents() {\n    const { isMobile, isTablet } = useDeviceInfo()\n    const [activeTab, setActiveTab] = useState('recent')\n    const [searchValue, setSearchValue] = useState('')\n\n    const handleDocumentClick = (documentId: number) => {\n        console.log('打开文档:', documentId)\n        // TODO: 实现文档预览\n    }\n\n    const handleActionClick = (actionId: string) => {\n        console.log('执行操作:', actionId)\n        // TODO: 实现对应的操作\n    }\n\n    const handleDownload = (documentId: number, event: React.MouseEvent) => {\n        event.stopPropagation()\n        console.log('下载文档:', documentId)\n        // TODO: 实现下载功能\n    }\n\n    const handleShare = (documentId: number, event: React.MouseEvent) => {\n        event.stopPropagation()\n        console.log('分享文档:', documentId)\n        // TODO: 实现分享功能\n    }\n\n    const handleDelete = (documentId: number, event: React.MouseEvent) => {\n        event.stopPropagation()\n        console.log('删除文档:', documentId)\n        // TODO: 实现删除功能\n    }\n\n    const filteredDocuments = mockDocuments.filter(doc => {\n        const matchesSearch = doc.name.toLowerCase().includes(searchValue.toLowerCase())\n        if (activeTab === 'recent') return matchesSearch\n        if (activeTab === 'all') return matchesSearch\n        return matchesSearch && doc.category === activeTab\n    })\n\n    const getDocumentIcon = (type: string) => {\n        switch (type) {\n            case 'folder':\n                return <FolderOutline />\n            case 'image':\n                return <PictureOutline />\n            case 'video':\n                return <VideoCameraOutline />\n            case 'audio':\n                return <SoundOutline />\n            case 'document':\n                return <FileTextOutline />\n            default:\n                return <FileOutline />\n        }\n    }\n\n    const getDocumentColor = (type: string) => {\n        switch (type) {\n            case 'folder':\n                return '#52c41a'\n            case 'image':\n                return '#eb2f96'\n            case 'video':\n                return '#722ed1'\n            case 'audio':\n                return '#13c2c2'\n            case 'document':\n                return '#1677ff'\n            default:\n                return '#666666'\n        }\n    }\n\n    const renderDocumentItem = (item: typeof mockDocuments[0]) => (\n        <List.Item\n            key={item.id}\n            prefix={\n                <div\n                    className=\"document-icon\"\n                    style={{ color: getDocumentColor(item.type) }}\n                >\n                    {getDocumentIcon(item.type)}\n                </div>\n            }\n            description={\n                <div className=\"document-info\">\n                    <span className=\"document-size\">{item.size}</span>\n                    <span className=\"document-time\">{item.modifiedTime}</span>\n                </div>\n            }\n            extra={\n                <div className=\"document-actions\">\n                    <button\n                        className=\"action-btn\"\n                        onClick={(e) => handleDownload(item.id, e)}\n                    >\n                        <DownloadOutline />\n                    </button>\n                    <button\n                        className=\"action-btn\"\n                        onClick={(e) => handleShare(item.id, e)}\n                    >\n                        <ShareOutline />\n                    </button>\n                    <button\n                        className=\"action-btn delete\"\n                        onClick={(e) => handleDelete(item.id, e)}\n                    >\n                        <DeleteOutline />\n                    </button>\n                </div>\n            }\n            onClick={() => handleDocumentClick(item.id)}\n            className={`document-item ${item.shared ? 'shared' : ''}`}\n        >\n            <div className=\"document-name\">\n                {item.name}\n                {item.shared && <span className=\"shared-badge\">共享</span>}\n            </div>\n        </List.Item>\n    )\n\n    return (\n        <div className={`documents-page ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n            <div className=\"page-container\">\n                {/* 搜索栏 */}\n                <div className=\"search-section\">\n                    <SearchBar\n                        placeholder=\"搜索文档\"\n                        value={searchValue}\n                        onChange={setSearchValue}\n                        className=\"document-search\"\n                    />\n                </div>\n\n                {/* 快捷操作 */}\n                <Card className=\"quick-actions-card\">\n                    <h3 className=\"section-title\">快捷操作</h3>\n                    <Grid columns={4} gap={16}>\n                        {quickActions.map(action => {\n                            const IconComponent = action.icon\n                            return (\n                                <Grid.Item key={action.id}>\n                                    <div\n                                        className=\"quick-action-item\"\n                                        onClick={() => handleActionClick(action.id)}\n                                    >\n                                        <div\n                                            className=\"quick-action-icon\"\n                                            style={{\n                                                backgroundColor: action.color,\n                                                width: isMobile ? '48px' : '56px',\n                                                height: isMobile ? '48px' : '56px',\n                                            }}\n                                        >\n                                            <IconComponent />\n                                        </div>\n                                        <div className=\"quick-action-title\">{action.title}</div>\n                                    </div>\n                                </Grid.Item>\n                            )\n                        })}\n                    </Grid>\n                </Card>\n\n                {/* 标签页 */}\n                <Tabs activeKey={activeTab} onChange={setActiveTab} className=\"document-tabs\">\n                    <Tabs.Tab title=\"最近\" key=\"recent\">\n                        <Card className=\"document-list-card\">\n                            {filteredDocuments.length > 0 ? (\n                                <List className=\"document-list\">\n                                    {filteredDocuments.map(renderDocumentItem)}\n                                </List>\n                            ) : (\n                                <div className=\"empty-state\">\n                                    <FileOutline className=\"empty-icon\" />\n                                    <p>暂无最近文档</p>\n                                    <Button\n                                        color=\"primary\"\n                                        onClick={() => handleActionClick('upload')}\n                                    >\n                                        上传文件\n                                    </Button>\n                                </div>\n                            )}\n                        </Card>\n                    </Tabs.Tab>\n\n                    <Tabs.Tab title=\"全部\" key=\"all\">\n                        <Card className=\"document-list-card\">\n                            {filteredDocuments.length > 0 ? (\n                                <List className=\"document-list\">\n                                    {filteredDocuments.map(renderDocumentItem)}\n                                </List>\n                            ) : (\n                                <div className=\"empty-state\">\n                                    <FileOutline className=\"empty-icon\" />\n                                    <p>暂无文档</p>\n                                </div>\n                            )}\n                        </Card>\n                    </Tabs.Tab>\n\n                    <Tabs.Tab title=\"图片\" key=\"image\">\n                        <Card className=\"document-list-card\">\n                            {filteredDocuments.length > 0 ? (\n                                <List className=\"document-list\">\n                                    {filteredDocuments.map(renderDocumentItem)}\n                                </List>\n                            ) : (\n                                <div className=\"empty-state\">\n                                    <PictureOutline className=\"empty-icon\" />\n                                    <p>暂无图片文件</p>\n                                </div>\n                            )}\n                        </Card>\n                    </Tabs.Tab>\n\n                    <Tabs.Tab title=\"文档\" key=\"document\">\n                        <Card className=\"document-list-card\">\n                            {filteredDocuments.length > 0 ? (\n                                <List className=\"document-list\">\n                                    {filteredDocuments.map(renderDocumentItem)}\n                                </List>\n                            ) : (\n                                <div className=\"empty-state\">\n                                    <FileTextOutline className=\"empty-icon\" />\n                                    <p>暂无文档文件</p>\n                                </div>\n                            )}\n                        </Card>\n                    </Tabs.Tab>\n                </Tabs>\n            </div>\n        </div>\n    )\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Documents/Documents.tsx"
+    },
+    "12": {
+      "path": "/apps/:id",
+      "file": "@/pages/Apps/AppDetail.tsx",
+      "parentId": "4",
+      "id": "12",
+      "absPath": "/apps/:id",
+      "__content": "import { Button, Card, NavBar, Space, Tag } from 'antd-mobile'\nimport React from 'react'\nimport { history, useParams } from 'umi'\n\nconst AppDetail: React.FC = () => {\n    const { id } = useParams<{ id: string }>()\n\n    return (\n        <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>\n            <NavBar onBack={() => history.back()}>应用详情</NavBar>\n            <div style={{ padding: 16 }}>\n                <Card>\n                    <h2>应用详情 #{id}</h2>\n                    <Space wrap>\n                        <Tag color=\"primary\">办公工具</Tag>\n                        <Tag color=\"success\">免费</Tag>\n                    </Space>\n                    <p style={{ marginTop: 16 }}>这是一个应用详情页面...</p>\n                    <Button color=\"primary\" block style={{ marginTop: 16 }}>\n                        使用应用\n                    </Button>\n                </Card>\n            </div>\n        </div>\n    )\n}\n\nexport default AppDetail\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Apps/AppDetail.tsx"
+    },
+    "13": {
+      "path": "/message/:id",
+      "file": "@/pages/Message/MessageDetail.tsx",
+      "parentId": "4",
+      "id": "13",
+      "absPath": "/message/:id",
+      "__content": "import { history, useParams } from 'umi'\nimport { Card, NavBar } from 'antd-mobile'\nimport React from 'react'\n\nconst MessageDetail: React.FC = () => {\n    const { id } = useParams<{ id: string }>()\n\n    return (\n        <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>\n            <NavBar onBack={() => history.back()}>消息详情</NavBar>\n            <div style={{ padding: 16 }}>\n                <Card>\n                    <h2>消息详情 #{id}</h2>\n                    <p>这是一个消息详情页面...</p>\n                </Card>\n            </div>\n        </div>\n    )\n}\n\nexport default MessageDetail\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Message/MessageDetail.tsx"
+    },
+    "14": {
+      "path": "/profile/edit",
+      "file": "@/pages/Profile/EditProfile.tsx",
+      "parentId": "4",
+      "id": "14",
+      "absPath": "/profile/edit",
+      "__content": "import { Button, Card, Form, Input, NavBar } from 'antd-mobile'\nimport React from 'react'\nimport { history } from 'umi'\n\nconst EditProfile: React.FC = () => {\n    const [form] = Form.useForm()\n\n    const handleSubmit = (values: any) => {\n        console.log('Form values:', values)\n        history.back()\n    }\n\n    return (\n        <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>\n            <NavBar onBack={() => history.back()}>编辑资料</NavBar>\n            <div style={{ padding: 16 }}>\n                <Card>\n                    <Form form={form} onFinish={handleSubmit} layout=\"vertical\">\n                        <Form.Item name=\"nickname\" label=\"昵称\">\n                            <Input placeholder=\"请输入昵称\" />\n                        </Form.Item>\n                        <Form.Item name=\"email\" label=\"邮箱\">\n                            <Input placeholder=\"请输入邮箱\" />\n                        </Form.Item>\n                        <Form.Item name=\"phone\" label=\"手机号\">\n                            <Input placeholder=\"请输入手机号\" />\n                        </Form.Item>\n                        <Button type=\"submit\" color=\"primary\" block>\n                            保存\n                        </Button>\n                    </Form>\n                </Card>\n            </div>\n        </div>\n    )\n}\n\nexport default EditProfile\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Profile/EditProfile.tsx"
+    },
+    "15": {
+      "path": "/404",
+      "layout": false,
+      "file": "@/pages/NotFound/NotFound.tsx",
+      "id": "15",
+      "absPath": "/404",
+      "__content": "import { useDeviceInfo } from '@/hooks/useDeviceInfo'\nimport { Button, Space } from 'antd-mobile'\nimport { history } from 'umi'\nimport './NotFound.css'\n\nexport default function NotFound() {\n    const { isMobile, isTablet } = useDeviceInfo()\n\n    const handleGoHome = () => {\n        history.push('/')\n    }\n\n    const handleGoBack = () => {\n        if (window.history.length > 1) {\n            history.back()\n        } else {\n            history.push('/')\n        }\n    }\n\n    return (\n        <div className={`not-found-page ${isMobile ? 'mobile' : ''} ${isTablet ? 'tablet' : ''}`}>\n            <div className=\"not-found-container\">\n                <div className=\"not-found-content\">\n                    {/* 404 图标 */}\n                    <div className=\"error-icon\">\n                        <div className=\"error-number\">404</div>\n                        <div className=\"error-emoji\">😵</div>\n                    </div>\n\n                    {/* 错误信息 */}\n                    <div className=\"error-info\">\n                        <h2 className=\"error-title\">页面不存在</h2>\n                        <p className=\"error-description\">\n                            抱歉，您访问的页面可能已被删除、重命名或暂时不可用。\n                        </p>\n                    </div>\n\n                    {/* 操作按钮 */}\n                    <div className=\"error-actions\">\n                        <Space direction=\"vertical\" block>\n                            <Button\n                                color=\"primary\"\n                                size=\"large\"\n                                block\n                                onClick={handleGoHome}\n                            >\n                                返回首页\n                            </Button>\n                            <Button\n                                size=\"large\"\n                                block\n                                onClick={handleGoBack}\n                            >\n                                返回上页\n                            </Button>\n                        </Space>\n                    </div>\n\n                    {/* 建议操作 */}\n                    <div className=\"error-suggestions\">\n                        <h3 className=\"suggestions-title\">您可以尝试：</h3>\n                        <ul className=\"suggestions-list\">\n                            <li>检查网址是否正确</li>\n                            <li>返回上一页面</li>\n                            <li>访问首页重新导航</li>\n                            <li>稍后再试</li>\n                        </ul>\n                    </div>\n                </div>\n            </div>\n        </div>\n    )\n}\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/NotFound/NotFound.tsx"
+    },
+    "16": {
+      "path": "/403",
+      "layout": false,
+      "file": "@/pages/Error/Forbidden.tsx",
+      "id": "16",
+      "absPath": "/403",
+      "__content": "import { Button, Result } from 'antd-mobile'\nimport { LockOutline } from 'antd-mobile-icons'\nimport React from 'react'\nimport { history } from 'umi'\nimport './Error.css'\n\nconst Forbidden: React.FC = () => {\n    const goHome = () => {\n        history.push('/')\n    }\n\n    const goBack = () => {\n        history.back()\n    }\n\n    return (\n        <div className=\"error-container\">\n            <Result\n                icon={<LockOutline style={{ fontSize: 64, color: '#ff6b35' }} />}\n                status=\"error\"\n                title=\"访问被拒绝\"\n                description=\"抱歉，您没有权限访问此页面。请联系管理员获取访问权限。\"\n            />\n\n            <div className=\"error-actions\">\n                <Button color=\"primary\" onClick={goHome} block>\n                    返回首页\n                </Button>\n                <Button fill=\"outline\" onClick={goBack} block style={{ marginTop: 12 }}>\n                    返回上一页\n                </Button>\n            </div>\n        </div>\n    )\n}\n\nexport default Forbidden\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Error/Forbidden.tsx"
+    },
+    "17": {
+      "path": "/500",
+      "layout": false,
+      "file": "@/pages/Error/ServerError.tsx",
+      "id": "17",
+      "absPath": "/500",
+      "__content": "import { Button, Result } from 'antd-mobile'\nimport { ExclamationCircleOutline } from 'antd-mobile-icons'\nimport React from 'react'\nimport { history } from 'umi'\nimport './Error.css'\n\nconst ServerError: React.FC = () => {\n  const goHome = () => {\n    history.push('/')\n  }\n\n  const refresh = () => {\n    window.location.reload()\n  }\n\n  const goBack = () => {\n    history.back()\n  }\n\n  return (\n    <div className=\"error-container\">\n      <Result\n        icon={<ExclamationCircleOutline style={{ fontSize: 64, color: '#ff6b35' }} />}\n        status=\"error\"\n        title=\"服务器错误\"\n        description=\"抱歉，服务器出现了一些问题。请稍后重试或联系技术支持。\"\n      />\n\n      <div className=\"error-actions\">\n        <Button color=\"primary\" onClick={refresh} block>\n          重新加载\n        </Button>\n        <Button fill=\"outline\" onClick={goHome} block style={{ marginTop: 12 }}>\n          返回首页\n        </Button>\n        <Button fill=\"none\" onClick={goBack} block style={{ marginTop: 12 }}>\n          返回上一页\n        </Button>\n      </div>\n    </div>\n  )\n}\n\nexport default ServerError\n",
+      "__isJSFile": true,
+      "__absFile": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/pages/Error/ServerError.tsx"
+    },
+    "18": {
+      "path": "*",
+      "redirect": "/404",
+      "id": "18",
+      "absPath": "/*"
+    }
+  },
+  "apiRoutes": {
+    "client": {
+      "path": "client",
+      "id": "client",
+      "file": "client.ts",
+      "absPath": "/client",
+      "__content": "/**\n * API客户端配置\n * 统一的HTTP客户端，包含拦截器、错误处理等\n */\n\nimport { useAuthStore } from '@/stores/auth/useAuthStore'\nimport { toast } from '@/stores/ui/useUIStore'\nimport axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'\nimport { appConfig } from '../config/env'\n\n// API响应基础结构\nexport interface ApiResponse<T = any> {\n    code: number\n    message: string\n    data: T\n    success: boolean\n    timestamp: number\n}\n\n// API错误类型\nexport interface ApiError {\n    code: number\n    message: string\n    details?: any\n}\n\n// 创建axios实例\nexport const apiClient = axios.create({\n    baseURL: appConfig.apiBaseUrl,\n    timeout: appConfig.apiTimeout,\n    headers: {\n        'Content-Type': 'application/json',\n    },\n})\n\n// 请求拦截器\napiClient.interceptors.request.use(\n    (config) => {\n        // 添加认证token\n        const { token } = useAuthStore.getState()\n        if (token) {\n            config.headers.Authorization = `Bearer ${token}`\n        }\n\n        // 添加请求ID用于追踪\n        config.headers['X-Request-ID'] = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`\n\n        // 开发环境下打印请求信息\n        if (appConfig.isDev) {\n            console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`, {\n                headers: config.headers,\n                params: config.params,\n                data: config.data,\n            })\n        }\n\n        return config\n    },\n    (error) => {\n        console.error('❌ Request Error:', error)\n        return Promise.reject(error)\n    }\n)\n\n// 响应拦截器\napiClient.interceptors.response.use(\n    (response: AxiosResponse<ApiResponse>) => {\n        const { data } = response\n\n        // 开发环境下打印响应信息\n        if (appConfig.isDev) {\n            console.log(`✅ API Response: ${response.config.method?.toUpperCase()} ${response.config.url}`, {\n                status: response.status,\n                data,\n            })\n        }\n\n        // 统一处理业务错误\n        if (!data.success && data.code !== 200) {\n            const error: ApiError = {\n                code: data.code,\n                message: data.message,\n                details: data.data,\n            }\n\n            // 显示错误提示\n            toast.error(data.message)\n\n            return Promise.reject(error)\n        }\n\n        return response\n    },\n    async (error: AxiosError<ApiResponse>) => {\n        const { response, config } = error\n\n        // 开发环境下打印错误信息\n        if (appConfig.isDev) {\n            console.error(`❌ API Error: ${config?.method?.toUpperCase()} ${config?.url}`, {\n                status: response?.status,\n                data: response?.data,\n                message: error.message,\n            })\n        }\n\n        // 处理不同的HTTP状态码\n        if (response) {\n            const { status, data } = response\n\n            switch (status) {\n                case 401:\n                    // 未授权，清除认证信息并跳转到登录页\n                    useAuthStore.getState().logout()\n                    toast.error('登录已过期，请重新登录')\n                    // 这里可以添加路由跳转逻辑\n                    break\n\n                case 403:\n                    toast.error('没有权限访问该资源')\n                    break\n\n                case 404:\n                    toast.error('请求的资源不存在')\n                    break\n\n                case 422:\n                    // 表单验证错误\n                    if (data?.data && typeof data.data === 'object') {\n                        const firstErrorMessage = Object.values(data.data)[0]\n                        toast.error(firstErrorMessage as string)\n                    } else {\n                        toast.error(data?.message || '请求参数错误')\n                    }\n                    break\n\n                case 429:\n                    toast.error('请求过于频繁，请稍后再试')\n                    break\n\n                case 500:\n                    toast.error('服务器内部错误')\n                    break\n\n                default:\n                    toast.error(data?.message || `请求失败 (${status})`)\n            }\n\n            // 返回统一的错误格式\n            const apiError: ApiError = {\n                code: status,\n                message: data?.message || error.message,\n                details: data?.data,\n            }\n\n            return Promise.reject(apiError)\n        }\n\n        // 网络错误或其他错误\n        if (error.code === 'ECONNABORTED') {\n            toast.error('请求超时，请检查网络连接')\n        } else if (!navigator.onLine) {\n            toast.error('网络连接异常，请检查网络设置')\n        } else {\n            toast.error('网络错误，请稍后重试')\n        }\n\n        return Promise.reject({\n            code: 0,\n            message: error.message,\n            details: error,\n        } as ApiError)\n    }\n)\n\n// 请求方法封装\nexport const api = {\n    get: <T = any>(url: string, config?: AxiosRequestConfig) =>\n        apiClient.get<ApiResponse<T>>(url, config).then(res => res.data.data),\n\n    post: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) =>\n        apiClient.post<ApiResponse<T>>(url, data, config).then(res => res.data.data),\n\n    put: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) =>\n        apiClient.put<ApiResponse<T>>(url, data, config).then(res => res.data.data),\n\n    patch: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) =>\n        apiClient.patch<ApiResponse<T>>(url, data, config).then(res => res.data.data),\n\n    delete: <T = any>(url: string, config?: AxiosRequestConfig) =>\n        apiClient.delete<ApiResponse<T>>(url, config).then(res => res.data.data),\n}\n\n// 上传文件方法\nexport const uploadFile = async (\n    url: string,\n    file: File,\n    onProgress?: (percent: number) => void\n) => {\n    const formData = new FormData()\n    formData.append('file', file)\n\n    return apiClient.post<ApiResponse<{ url: string; filename: string }>>(url, formData, {\n        headers: {\n            'Content-Type': 'multipart/form-data',\n        },\n        onUploadProgress: (progressEvent) => {\n            if (progressEvent.total && onProgress) {\n                const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total)\n                onProgress(percent)\n            }\n        },\n    }).then(res => res.data.data)\n}\n\n// 并发请求\nexport const concurrent = <T extends readonly unknown[] | []>(\n    requests: readonly [...{ [K in keyof T]: Promise<T[K]> }]\n): Promise<T> => {\n    return Promise.all(requests) as Promise<T>\n}\n\n// 请求重试\nexport const retry = async <T>(\n    request: () => Promise<T>,\n    maxRetries: number = 3,\n    delay: number = 1000\n): Promise<T> => {\n    let lastError: any\n\n    for (let i = 0; i < maxRetries; i++) {\n        try {\n            return await request()\n        } catch (error) {\n            lastError = error\n            if (i < maxRetries - 1) {\n                await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)))\n            }\n        }\n    }\n\n    throw lastError\n}\n\nexport default api\n"
+    }
+  },
+  "hasSrcDir": true,
+  "npmClient": "pnpm",
+  "umi": {
+    "version": "4.4.11",
+    "name": "Umi",
+    "importSource": "umi",
+    "cliName": "umi"
+  },
+  "bundleStatus": {
+    "done": false
+  },
+  "mfsuBundleStatus": {
+    "done": false
+  },
+  "react": {
+    "version": "18.3.1",
+    "path": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/node_modules/react"
+  },
+  "react-dom": {
+    "version": "18.3.1",
+    "path": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/node_modules/react-dom"
+  },
+  "appJS": {
+    "path": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/app.tsx",
+    "exports": [
+      "rootContainer"
+    ]
+  },
+  "locale": "zh-CN",
+  "globalCSS": [],
+  "globalJS": [],
+  "overridesCSS": [],
+  "bundler": "webpack",
+  "git": {
+    "originUrl": "https://github.com/corn12138/AI-code.git"
+  },
+  "framework": "react",
+  "typescript": {
+    "tsVersion": "5.8.3",
+    "tslibVersion": "2.5.3"
+  },
+  "faviconFiles": [],
+  "port": 8000,
+  "host": "0.0.0.0",
+  "ip": "172.20.10.7"
+}
