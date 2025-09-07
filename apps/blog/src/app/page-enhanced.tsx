@@ -211,7 +211,7 @@ export default function HomePageEnhanced() {
             debounceMs: 300,
         },
         $form: {
-            onSubmit: async (data) => {
+            onSubmit: async (data: any) => {
                 if (!isAuthenticated) {
                     toast.error('请先登录');
                     await push('/login');
@@ -591,7 +591,7 @@ export default function HomePageEnhanced() {
             <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
                 <div className="flex items-start space-x-4">
                     <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-medium text-sm shadow-md">
-                        {user?.username?.charAt(0).toUpperCase()}
+                        {(user as any)?.username?.charAt(0).toUpperCase()}
                     </div>
                     <div className="flex-1">
                         <form {...quickPostForm.getFormProps()} className="space-y-3">

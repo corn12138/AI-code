@@ -1,6 +1,6 @@
 'use client';
 
-import { ExclamationTriangleIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
-    
+
     this.setState({
       error,
       errorInfo
@@ -96,7 +96,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
       // Send to monitoring service
       console.log('Error report:', errorReport);
-      
+
       // You can replace this with actual error reporting
       // Example: Sentry.captureException(error, { contexts: { errorInfo } });
     } catch (reportingError) {
@@ -154,24 +154,24 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           transition={{ duration: 0.3 }}
           className="min-h-[400px] flex items-center justify-center p-8"
         >
-          <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 text-center">
+          <div className="max-w-md w-full bg-space-900/90 backdrop-blur-xl rounded-2xl shadow-cosmic border border-cosmic-500/20 p-6 text-center">
             {/* Error Icon */}
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.1, type: 'spring' }}
-              className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4"
+              className="w-16 h-16 bg-red-900/40 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4 border border-red-500/20"
             >
-              <ExclamationTriangleIcon className="w-8 h-8 text-red-600 dark:text-red-400" />
+              <ExclamationTriangleIcon className="w-8 h-8 text-red-400" />
             </motion.div>
 
             {/* Error Title */}
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-semibold text-space-200 mb-2">
               Oops! Something went wrong
             </h3>
 
             {/* Error Description */}
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-space-400 mb-4">
               The AI Assistant encountered an unexpected error. Don't worry, your data is safe.
             </p>
 
@@ -181,12 +181,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="mb-4 text-left bg-gray-50 dark:bg-gray-800 rounded-lg p-3"
+                className="mb-4 text-left bg-space-800/40 backdrop-blur-sm rounded-xl p-3 border border-cosmic-500/20"
               >
-                <summary className="cursor-pointer text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <summary className="cursor-pointer text-sm font-medium text-space-300 mb-2">
                   Error Details
                 </summary>
-                <div className="text-xs font-mono text-red-600 dark:text-red-400 whitespace-pre-wrap overflow-auto max-h-32">
+                <div className="text-xs font-mono text-red-300 whitespace-pre-wrap overflow-auto max-h-32">
                   <div className="mb-2">
                     <strong>Error:</strong> {error.message}
                   </div>
@@ -213,7 +213,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               {retryCount < maxRetries && (
                 <motion.button
                   onClick={this.handleRetry}
-                  className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white rounded-xl hover:from-cosmic-700 hover:to-nebula-700 transition-all duration-300 shadow-cosmic"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -224,7 +224,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
               <motion.button
                 onClick={this.handleReload}
-                className="flex items-center justify-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="flex items-center justify-center space-x-2 px-4 py-2 bg-space-700 text-white rounded-xl hover:bg-space-600 transition-all duration-300 border border-cosmic-500/20"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -238,7 +238,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="mt-3 text-sm text-gray-500 dark:text-gray-400"
+                className="mt-3 text-sm text-space-400"
               >
                 Retry attempt: {retryCount}/{maxRetries}
               </motion.p>

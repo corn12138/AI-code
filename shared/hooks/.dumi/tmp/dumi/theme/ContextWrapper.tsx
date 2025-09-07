@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useOutlet, history } from 'dumi';
 import { warning } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/rc-util@5.44.4_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/rc-util';
-import { SiteContext, type ISiteContext } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@swc+helpers@0.5.15_@types+node@20.17.46_@types+react@18.3.21_eslint@8.57.1_aa4e53bacd92d18024734bf09cc6329f/node_modules/dumi/dist/client/theme-api/context.js';
+import { SiteContext, type ISiteContext } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.15_@types+node@20.17.46_@types+react@18_a8ac41f25939d5d8f9ab7e25c0abd3bc/node_modules/dumi/dist/client/theme-api/context.js';
 import { components } from '../meta/atoms';
 import { locales } from '../locales/config';
 

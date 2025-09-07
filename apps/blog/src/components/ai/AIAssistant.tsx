@@ -236,19 +236,19 @@ export const AIAssistant: React.FC = () => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="mb-4 w-96 max-w-[calc(100vw-2rem)] h-[600px] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden"
+                        className="mb-4 w-96 max-w-[calc(100vw-2rem)] h-[600px] bg-space-900/90 backdrop-blur-xl rounded-2xl shadow-cosmic border border-cosmic-500/20 flex flex-col overflow-hidden"
                     >
                         {/* Header */}
-                        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                        <div className="p-4 border-b border-cosmic-500/20 flex items-center justify-between">
                             <div className="flex items-center space-x-3">
-                                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                <div className="w-8 h-8 bg-gradient-to-r from-cosmic-500 to-nebula-600 rounded-full flex items-center justify-center shadow-cosmic">
                                     <SparklesIcon className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900 dark:text-white">AI Assistant</h3>
+                                    <h3 className="font-semibold text-space-200">AI Assistant</h3>
                                     <div className="flex items-center space-x-2">
-                                        <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`} />
-                                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                                        <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-nebula-400' : 'bg-red-400'}`} />
+                                        <span className="text-xs text-space-400">
                                             {isConnected ? 'Connected' : 'Disconnected'}
                                         </span>
                                     </div>
@@ -258,15 +258,15 @@ export const AIAssistant: React.FC = () => {
                             <div className="flex items-center space-x-2">
                                 <button
                                     onClick={() => setShowSettings(!showSettings)}
-                                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                    className="p-2 rounded-lg hover:bg-space-800/60 transition-colors text-space-400 hover:text-cosmic-300"
                                 >
-                                    <CogIcon className="w-5 h-5 text-gray-500" />
+                                    <CogIcon className="w-5 h-5" />
                                 </button>
                                 <button
                                     onClick={() => setIsExpanded(false)}
-                                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                    className="p-2 rounded-lg hover:bg-space-800/60 transition-colors text-space-400 hover:text-cosmic-300"
                                 >
-                                    <XMarkIcon className="w-5 h-5 text-gray-500" />
+                                    <XMarkIcon className="w-5 h-5" />
                                 </button>
                             </div>
                         </div>
@@ -278,7 +278,7 @@ export const AIAssistant: React.FC = () => {
                                     initial={{ height: 0, opacity: 0 }}
                                     animate={{ height: 'auto', opacity: 1 }}
                                     exit={{ height: 0, opacity: 0 }}
-                                    className="border-b border-gray-200 dark:border-gray-700 overflow-hidden"
+                                    className="border-b border-cosmic-500/20 overflow-hidden"
                                 >
                                     <ChatSettings
                                         selectedModel={selectedModel}
@@ -328,11 +328,11 @@ export const AIAssistant: React.FC = () => {
                                     className="p-4 flex items-center space-x-2"
                                 >
                                     <div className="flex space-x-1">
-                                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" />
-                                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                                        <div className="w-2 h-2 bg-cosmic-400 rounded-full animate-bounce" />
+                                        <div className="w-2 h-2 bg-cosmic-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                                        <div className="w-2 h-2 bg-cosmic-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                                     </div>
-                                    <span className="text-sm text-gray-500">AI is thinking...</span>
+                                    <span className="text-sm text-space-400">AI is thinking...</span>
                                 </motion.div>
                             )}
                         </div>
@@ -344,27 +344,27 @@ export const AIAssistant: React.FC = () => {
                                     initial={{ height: 0, opacity: 0 }}
                                     animate={{ height: 'auto', opacity: 1 }}
                                     exit={{ height: 0, opacity: 0 }}
-                                    className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                                    className="p-3 border-t border-cosmic-500/20 bg-space-800/40"
                                 >
                                     <div className="flex flex-wrap gap-2">
                                         {attachments.map((attachment) => (
                                             <div
                                                 key={attachment.id}
-                                                className="flex items-center space-x-2 bg-white dark:bg-gray-700 rounded-lg p-2 border border-gray-200 dark:border-gray-600"
+                                                className="flex items-center space-x-2 bg-space-800/60 backdrop-blur-sm rounded-lg p-2 border border-cosmic-500/20"
                                             >
                                                 {attachment.type === 'image' ? (
-                                                    <PhotoIcon className="w-4 h-4 text-blue-500" />
+                                                    <PhotoIcon className="w-4 h-4 text-cosmic-400" />
                                                 ) : (
-                                                    <DocumentTextIcon className="w-4 h-4 text-green-500" />
+                                                    <DocumentTextIcon className="w-4 h-4 text-nebula-400" />
                                                 )}
-                                                <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[120px]">
+                                                <span className="text-sm text-space-300 truncate max-w-[120px]">
                                                     {attachment.name}
                                                 </span>
                                                 <button
                                                     onClick={() => removeAttachment(attachment.id)}
-                                                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                                                    className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-cosmic-300"
                                                 >
-                                                    <XMarkIcon className="w-3 h-3 text-gray-400" />
+                                                    <XMarkIcon className="w-3 h-3" />
                                                 </button>
                                             </div>
                                         ))}
@@ -374,7 +374,7 @@ export const AIAssistant: React.FC = () => {
                         </AnimatePresence>
 
                         {/* Input Area */}
-                        <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                        <div className="p-4 border-t border-cosmic-500/20">
                             <div className="flex items-end space-x-2">
                                 <div className="flex-1 relative">
                                     <textarea
@@ -383,7 +383,7 @@ export const AIAssistant: React.FC = () => {
                                         onChange={(e) => setInputValue(e.target.value)}
                                         onKeyDown={handleKeyDown}
                                         placeholder="Type your message..."
-                                        className="w-full resize-none rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 max-h-32"
+                                        className="w-full resize-none rounded-lg border border-cosmic-500/30 bg-space-800/60 backdrop-blur-sm px-3 py-2 text-sm text-space-200 placeholder-space-500 focus:border-cosmic-400/50 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 max-h-32"
                                         rows={1}
                                         style={{
                                             minHeight: '40px',
@@ -404,18 +404,18 @@ export const AIAssistant: React.FC = () => {
 
                                         <button
                                             onClick={() => fileInputRef.current?.click()}
-                                            className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                            className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-cosmic-300"
                                             title="Attach file"
                                         >
-                                            <DocumentTextIcon className="w-4 h-4 text-gray-400" />
+                                            <DocumentTextIcon className="w-4 h-4" />
                                         </button>
 
                                         {speechSupported && (
                                             <button
                                                 onClick={toggleVoiceInput}
                                                 className={`p-1 rounded transition-colors ${isListening
-                                                    ? 'bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400'
-                                                    : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-400'
+                                                    ? 'bg-red-900/40 text-red-300'
+                                                    : 'hover:bg-space-700/60 text-space-400 hover:text-cosmic-300'
                                                     }`}
                                                 title={isListening ? 'Stop recording' : 'Start voice input'}
                                             >
@@ -432,7 +432,7 @@ export const AIAssistant: React.FC = () => {
                                 <button
                                     onClick={handleSendMessage}
                                     disabled={(!inputValue.trim() && attachments.length === 0) || isLoading}
-                                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                                    className="p-2 bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white rounded-lg hover:from-cosmic-700 hover:to-nebula-700 disabled:bg-space-700 disabled:cursor-not-allowed transition-all duration-300 shadow-cosmic"
                                 >
                                     {isLoading ? (
                                         <ArrowPathIcon className="w-5 h-5 animate-spin" />
@@ -443,7 +443,7 @@ export const AIAssistant: React.FC = () => {
                             </div>
 
                             {/* Model info */}
-                            <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex items-center justify-between">
+                            <div className="mt-2 text-xs text-space-400 flex items-center justify-between">
                                 <span>Model: {selectedModel}</span>
                                 <span>{inputValue.length} chars</span>
                             </div>
@@ -455,7 +455,7 @@ export const AIAssistant: React.FC = () => {
             {/* Toggle Button */}
             <motion.button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all duration-200"
+                className="w-14 h-14 bg-gradient-to-r from-cosmic-600 to-nebula-600 rounded-full shadow-cosmic flex items-center justify-center text-white hover:shadow-xl transition-all duration-200"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
             >
@@ -482,7 +482,7 @@ export const AIAssistant: React.FC = () => {
                 </AnimatePresence>
 
                 {/* Connection indicator */}
-                <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${isConnected ? 'bg-green-500' : 'bg-red-500'
+                <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-space-900 ${isConnected ? 'bg-nebula-400' : 'bg-red-400'
                     }`} />
             </motion.button>
         </div>

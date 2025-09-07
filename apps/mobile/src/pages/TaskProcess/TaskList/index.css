@@ -1,0 +1,625 @@
+/**
+ * 任务列表页面样式
+ * 参考UI图片设计，实现移动端友好的卡片式布局
+ * 使用统一的商务风格配色方案
+ */
+
+@import '../../../styles/taskProcess.css';
+
+.task-list-page {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 搜索头部区域 */
+.search-header {
+    display: flex;
+    align-items: center;
+    gap: var(--tp-spacing-md);
+    padding: var(--tp-spacing-md) var(--tp-spacing-lg);
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.task-search-bar {
+    flex: 1;
+    --border-radius: 22px;
+    --background: #f8f9fa;
+    --border-color: transparent;
+    --text-color: #333333;
+    --placeholder-color: #999999;
+}
+
+.filter-button {
+    --border-radius: 50%;
+    --background-color: var(--tp-bg-tertiary);
+    --border-color: transparent;
+    --text-color: #666;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-button:active {
+    --background-color: #e9ecef;
+}
+
+/* Tab栏容器 */
+.tabs-container {
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 69px;
+    z-index: 99;
+    margin: 0 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-top: 8px;
+}
+
+.status-tabs {
+    --content-padding: 0 16px;
+    --tab-padding: 12px 0;
+    --active-line-color: #1890ff;
+    --tab-text-color: #666;
+    --tab-text-color-active: #1890ff;
+    --tab-font-size: 15px;
+    --tab-font-weight-active: 500;
+}
+
+/* 任务列表容器 */
+.task-list-container {
+    flex: 1;
+    padding: 12px 16px 0;
+    background-color: #f5f5f5;
+}
+
+/* 加载状态 */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 16px;
+    gap: 16px;
+}
+
+.loading-text {
+    font-size: 14px;
+    color: #999;
+}
+
+/* 任务卡片 */
+.task-card {
+    --border-radius: 12px;
+    --header-padding: 16px;
+    --body-padding: 16px;
+    margin-bottom: 12px;
+    border: none;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: #ffffff;
+    border-radius: 12px;
+}
+
+.task-card:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* 卡片头部 */
+.task-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.task-title-row {
+    flex: 1;
+    margin-right: 12px;
+}
+
+.task-type-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #1890ff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.task-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #262626;
+    line-height: 1.4;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 优先级和状态标签 */
+.priority-tag,
+.overdue-tag {
+    --border-radius: 12px;
+    --font-size: 11px;
+    --font-weight: 500;
+    --padding: 3px 8px;
+}
+
+.overdue-tag {
+    background-color: #fff2f0 !important;
+    border: 1px solid #ffccc7 !important;
+    color: #ff4d4f !important;
+}
+
+/* 卡片内容 */
+.task-card-content {
+    margin-bottom: 16px;
+}
+
+.task-info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.task-info-row:last-child {
+    margin-bottom: 0;
+}
+
+.task-info-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.task-info-item:first-child {
+    margin-right: 12px;
+}
+
+.info-label {
+    font-size: 13px;
+    color: #8c8c8c;
+    margin-right: 4px;
+    white-space: nowrap;
+}
+
+.info-value {
+    font-size: 13px;
+    color: #595959;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-danger {
+    color: #ff4d4f !important;
+}
+
+/* 卡片底部 */
+.task-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #f5f5f5;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.task-action {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #8c8c8c;
+}
+
+.action-text {
+    font-size: 12px;
+}
+
+.action-icon {
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.task-card:active .action-icon {
+    transform: translateX(2px);
+}
+
+/* 加载更多和无更多数据 */
+.loading-more,
+.no-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+    font-size: 14px;
+    color: #999;
+}
+
+.no-more {
+    color: #bfbfbf;
+}
+
+/* 平板适配 (768px - 1024px) */
+@media (min-width: 768px) {
+    .task-list-page {
+        background-color: #ffffff !important;
+    }
+
+    .search-header {
+        padding: 16px 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .tabs-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .status-tabs {
+        max-width: 1200px;
+        width: 100%;
+        --content-padding: 0 24px;
+    }
+
+    .task-list-container {
+        padding: 16px 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 16px;
+    }
+
+    .task-card {
+        margin-bottom: 0;
+        --header-padding: 20px;
+        --body-padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .task-card:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+    }
+
+    .task-title {
+        font-size: 17px;
+    }
+
+    .loading-container,
+    .loading-more,
+    .no-more {
+        grid-column: 1 / -1;
+    }
+}
+
+/* 大屏适配 (1024px+) */
+@media (min-width: 1024px) {
+    .task-list-container {
+        grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+        gap: 20px;
+    }
+
+    .task-card {
+        --border-radius: 16px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .task-card:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+    }
+}
+
+/* 小屏手机适配 (最大375px) */
+@media (max-width: 375px) {
+    .search-header {
+        padding: 10px 12px;
+    }
+
+    .task-search-bar {
+        --font-size: 14px;
+    }
+
+    .filter-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .tabs-container {
+        top: 61px;
+    }
+
+    .status-tabs {
+        --content-padding: 0 12px;
+        --tab-font-size: 14px;
+    }
+
+    .task-list-container {
+        padding: 10px 12px 0;
+    }
+
+    .task-card {
+        --header-padding: 14px;
+        --body-padding: 14px;
+        margin-bottom: 10px;
+    }
+
+    .task-title {
+        font-size: 15px;
+    }
+
+    .task-info-item:first-child {
+        margin-right: 8px;
+    }
+
+    .info-label,
+    .info-value {
+        font-size: 12px;
+    }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .task-list-page {
+        background-color: #ffffff !important;
+    }
+
+    .search-header,
+    .tabs-container {
+        background: #ffffff !important;
+        border-bottom-color: #e0e0e0;
+    }
+
+    .task-search-bar {
+        --background: #262626;
+        --text-color: #fff;
+        --placeholder-color: #8c8c8c;
+    }
+
+    .filter-button {
+        --background-color: #262626;
+        --text-color: #fff;
+    }
+
+    .filter-button:active {
+        --background-color: #434343;
+    }
+
+    .status-tabs {
+        --tab-text-color: #8c8c8c;
+        --tab-text-color-active: #1890ff;
+    }
+
+    .task-card {
+        background: #ffffff !important;
+        border: 1px solid #e0e0e0;
+    }
+
+    .task-title {
+        color: #fff;
+    }
+
+    .info-value {
+        color: #d9d9d9;
+    }
+
+    .info-label {
+        color: #8c8c8c;
+    }
+
+    .task-card-footer {
+        border-top-color: #303030;
+    }
+
+    .task-action {
+        color: #8c8c8c;
+    }
+}
+
+/* 动画优化 */
+@media (prefers-reduced-motion: reduce) {
+
+    .task-card,
+    .action-icon {
+        transition: none;
+    }
+
+    .task-card:active,
+    .task-card:hover {
+        transform: none;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .task-card {
+        border: 2px solid #000;
+    }
+
+    .task-type-tag {
+        border: 2px solid #1890ff;
+    }
+
+    .task-card-footer {
+        border-top: 2px solid #000;
+    }
+}
+
+/* 任务网格布局 - 默认单列 */
+.task-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ========== 屏幕方向适配 ========== */
+
+/* 手机竖屏 */
+@media screen and (max-width: 767px) and (orientation: portrait) {
+    .task-list-page {
+        padding: 0 12px 16px;
+    }
+
+    .search-header {
+        padding: 12px 0;
+        margin: 0 -12px 16px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .task-card {
+        margin-bottom: 12px;
+        --border-radius: 12px;
+    }
+
+    .task-card-content {
+        padding: 16px;
+    }
+}
+
+/* 手机横屏 */
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .task-list-page {
+        padding: 0 16px 12px;
+    }
+
+    .search-header {
+        padding: 8px 0;
+        margin: 0 -16px 12px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .task-card {
+        margin-bottom: 8px;
+        --border-radius: 8px;
+    }
+
+    .task-card-content {
+        padding: 12px 16px;
+        /* 横屏时减少垂直padding */
+    }
+
+    .task-card-header {
+        margin-bottom: 8px;
+        /* 减少间距 */
+    }
+
+    .task-card-body {
+        margin-bottom: 8px;
+    }
+}
+
+/* 平板竖屏 */
+@media screen and (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+    .task-list-page {
+        padding: 0 20px 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .task-card {
+        margin-bottom: 16px;
+        --border-radius: 16px;
+    }
+}
+
+/* 平板横屏 */
+@media screen and (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+    .task-list-page {
+        padding: 0 24px 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .task-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .task-card {
+        margin-bottom: 0;
+        --border-radius: 12px;
+    }
+}
+
+/* iPad Pro 竖屏 */
+@media screen and (min-width: 1024px) and (orientation: portrait) {
+    .task-list-page {
+        padding: 0 32px 24px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .task-card {
+        margin-bottom: 20px;
+        --border-radius: 16px;
+    }
+}
+
+/* iPad Pro 横屏 */
+@media screen and (min-width: 1024px) and (orientation: landscape) {
+    .task-list-page {
+        padding: 0 40px 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .task-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .task-card {
+        margin-bottom: 0;
+        --border-radius: 16px;
+    }
+}
+
+/* 超宽屏横屏 */
+@media screen and (min-width: 1440px) and (orientation: landscape) {
+    .task-list-page {
+        max-width: 1600px;
+    }
+
+    .task-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+}

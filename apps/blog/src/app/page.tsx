@@ -87,41 +87,25 @@ export default async function HomePage() {
     <div>
       <TopNavbar />
       <MainLayout>
-        <div className="flex flex-col lg:flex-row mobile-gap">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* 主内容区域 */}
-          <div className="flex-1 mobile-padding lg:mr-6">
-            {/* 静态导航过滤标签 */}
-            <div className="flex items-center space-x-2 sm:space-x-4 mb-4 sm:mb-6 border-b border-gray-200 pb-3 sm:pb-4 overflow-x-auto">
-              <span className="text-blue-600 border-b-2 border-blue-600 pb-2 text-sm font-medium whitespace-nowrap">
-                推荐
-              </span>
-              <span className="text-gray-600 pb-2 text-sm font-medium whitespace-nowrap">
-                最新
-              </span>
-              <span className="text-gray-600 pb-2 text-sm font-medium whitespace-nowrap">
-                热门
-              </span>
-              <span className="text-gray-600 pb-2 text-sm font-medium whitespace-nowrap">
-                关注
-              </span>
-            </div>
-
+          <div className="flex-1">
             {/* 使用 Suspense 包装动态内容 */}
             <Suspense fallback={
               <div className="space-y-6">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="bg-white rounded-lg border border-gray-200 p-6 animate-pulse">
+                  <div key={i} className="bg-space-900/40 backdrop-blur-xl rounded-2xl border border-cosmic-500/20 p-6 animate-pulse">
                     <div className="flex items-center mb-4">
-                      <div className="h-10 w-10 rounded-full bg-gray-200"></div>
+                      <div className="h-10 w-10 rounded-xl bg-space-700"></div>
                       <div className="ml-3 space-y-2">
-                        <div className="h-4 bg-gray-200 rounded w-24"></div>
-                        <div className="h-3 bg-gray-200 rounded w-16"></div>
+                        <div className="h-4 bg-space-700 rounded w-24"></div>
+                        <div className="h-3 bg-space-700 rounded w-16"></div>
                       </div>
                     </div>
                     <div className="space-y-3">
-                      <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                      <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                      <div className="h-6 bg-space-700 rounded w-3/4"></div>
+                      <div className="h-4 bg-space-700 rounded w-full"></div>
+                      <div className="h-4 bg-space-700 rounded w-2/3"></div>
                     </div>
                   </div>
                 ))}
@@ -132,10 +116,7 @@ export default async function HomePage() {
           </div>
 
           {/* 右侧静态内容 */}
-          <div className="w-full lg:w-64 mt-6 lg:mt-0 space-y-6">
-            <div className="block lg:hidden mb-4">
-              <h2 className="text-lg font-semibold mb-4">推荐内容</h2>
-            </div>
+          <div className="w-full lg:w-80 space-y-6">
             <TrendingTopics />
             <WeeklyRanking />
           </div>

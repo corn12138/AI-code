@@ -1,0 +1,717 @@
+/**
+ * 任务详情页面样式
+ * 支持移动端和平板端的自适应布局
+ */
+
+.task-detail-page {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 导航栏 */
+.task-detail-nav {
+    --background: #fff;
+    --border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.task-type {
+    font-size: 16px;
+    font-weight: 600;
+    color: #262626;
+}
+
+.nav-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #8c8c8c;
+}
+
+.nav-action-btn {
+    --border-radius: 50%;
+    --background-color: transparent;
+    --text-color: #666;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-action-btn:active {
+    --background-color: #f5f5f5;
+}
+
+/* 页面内容 */
+.page-content {
+    flex: 1;
+    padding: 16px;
+    padding-bottom: 0;
+}
+
+/* 任务头部卡片 */
+.task-header-card {
+    --border-radius: 12px;
+    --header-padding: 0;
+    --body-padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.task-header-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-main-info {
+    flex: 1;
+}
+
+.task-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #262626;
+    line-height: 1.4;
+    margin: 0 0 12px 0;
+}
+
+.task-meta {
+    margin-bottom: 16px;
+}
+
+.task-meta .adm-tag {
+    --border-radius: 12px;
+    --font-size: 12px;
+    --font-weight: 500;
+    --padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.task-basic-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+}
+
+.info-item .label {
+    font-size: 14px;
+    color: #8c8c8c;
+    margin-right: 8px;
+    min-width: 80px;
+}
+
+.info-item .value {
+    font-size: 14px;
+    color: #262626;
+    font-weight: 500;
+    flex: 1;
+}
+
+.info-item .value.overdue {
+    color: #ff4d4f;
+}
+
+/* Tab容器 */
+.detail-tabs {
+    --content-padding: 0;
+    --tab-padding: 16px 0;
+    --active-line-color: #1890ff;
+    --tab-text-color: #666;
+    --tab-text-color-active: #1890ff;
+    --tab-font-size: 15px;
+    --tab-font-weight-active: 500;
+}
+
+.detail-tabs .adm-tabs-header {
+    background: #fff;
+    border-radius: 12px 12px 0 0;
+    padding: 0 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-tabs .adm-tabs-content {
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+    min-height: 400px;
+}
+
+/* 移动端内容 */
+.mobile-content {
+    flex: 1;
+    margin-bottom: 80px;
+    /* 为底部操作栏留空间 */
+}
+
+/* 平板端布局 - 保持Tab一致性 */
+.tablet-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* 平板端Tab内容布局 */
+.tablet-tab-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    align-items: start;
+    min-height: 500px;
+}
+
+/* 任务信息Tab的特殊布局 */
+.tablet-tabs .tablet-tab-content:has(.quick-actions-panel) {
+    grid-template-columns: 2fr 1fr;
+}
+
+/* 流程记录和流程处理Tab的单列布局 */
+.tablet-tabs .tablet-tab-content:not(:has(.quick-actions-panel)) {
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* 回退：不支持:has()选择器的浏览器 */
+@supports not (selector(:has(*))) {
+
+    /* 默认双列布局 */
+    .tablet-tab-content {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    /* 为特定Tab添加类名来控制布局 */
+    .tablet-tab-content.single-column {
+        grid-template-columns: 1fr;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+}
+
+/* 主内容区域 */
+.main-content {
+    min-width: 0;
+    /* 防止内容溢出 */
+}
+
+/* 快速操作面板 */
+.quick-actions-panel {
+    position: sticky;
+    top: 20px;
+}
+
+.quick-actions-card {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.quick-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.left-panel {
+    min-height: 500px;
+}
+
+.right-panel {
+    position: sticky;
+    top: 100px;
+}
+
+.process-panel-card {
+    --border-radius: 12px;
+    --header-padding: 20px;
+    --body-padding: 20px;
+    margin: 0 16px 16px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f0f0f0;
+}
+
+.process-panel-card .adm-card-header {
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+}
+
+.process-panel-card .adm-card-header .adm-card-header-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #262626;
+}
+
+/* 底部操作栏 (移动端) */
+.bottom-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    padding: 12px 16px;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+}
+
+.bottom-actions .adm-space {
+    width: 100%;
+    max-width: 400px;
+    gap: 12px;
+}
+
+.bottom-actions .adm-button {
+    flex: 1;
+    min-width: 120px;
+}
+
+.bottom-actions .adm-button .adm-button-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 加载和错误状态 */
+.task-detail-loading,
+.task-detail-error {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 16px;
+    gap: 16px;
+}
+
+.task-detail-loading span,
+.error-content p {
+    font-size: 14px;
+    color: #999;
+}
+
+.error-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+/* 响应式设计 */
+
+/* 平板适配 (768px - 1024px) */
+@media (min-width: 768px) {
+    .task-detail-page.tablet-view {
+        background-color: #fafafa;
+    }
+
+    .task-detail-page.tablet-view .page-content {
+        padding: 20px 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .task-header-card {
+        --body-padding: 24px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .task-title {
+        font-size: 24px;
+    }
+
+    .task-basic-info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 24px;
+    }
+
+    .info-item .label {
+        min-width: 100px;
+        font-size: 15px;
+    }
+
+    .info-item .value {
+        font-size: 15px;
+    }
+
+    .detail-tabs {
+        --tab-font-size: 16px;
+    }
+
+    .detail-tabs .adm-tabs-header {
+        padding: 0 24px;
+    }
+
+    .detail-tabs .adm-tabs-content {
+        min-height: 500px;
+    }
+
+    /* 隐藏移动端底部操作栏 */
+    .bottom-actions {
+        display: none;
+    }
+}
+
+/* 大屏适配 (1024px+) */
+@media (min-width: 1024px) {
+    .tablet-content {
+        grid-template-columns: 3fr 2fr;
+        gap: 32px;
+        padding: 0 24px;
+    }
+
+    .task-detail-page.tablet-view .page-content {
+        padding: 24px 32px;
+    }
+
+    .task-header-card {
+        --border-radius: 16px;
+    }
+
+    .process-panel-card {
+        --border-radius: 16px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .detail-tabs .adm-tabs-header,
+    .detail-tabs .adm-tabs-content {
+        border-radius: 16px;
+    }
+}
+
+/* 小屏手机适配 (最大375px) */
+@media (max-width: 375px) {
+    .page-content {
+        padding: 12px;
+    }
+
+    .task-header-card {
+        --body-padding: 16px;
+        margin-bottom: 12px;
+    }
+
+    .task-title {
+        font-size: 18px;
+    }
+
+    .task-meta .adm-tag {
+        --font-size: 11px;
+        --padding: 3px 6px;
+    }
+
+    .info-item .label {
+        font-size: 13px;
+        min-width: 70px;
+    }
+
+    .info-item .value {
+        font-size: 13px;
+    }
+
+    .detail-tabs {
+        --tab-font-size: 14px;
+    }
+
+    .detail-tabs .adm-tabs-header {
+        padding: 0 16px;
+    }
+
+    .detail-tabs .adm-tabs-content {
+        min-height: 350px;
+    }
+
+    .mobile-content {
+        margin-bottom: 70px;
+    }
+
+    .bottom-actions {
+        padding: 10px 12px;
+    }
+
+    .bottom-actions .adm-button {
+        height: 44px;
+        --font-size: 15px;
+        min-width: 100px;
+    }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .task-detail-page {
+        background-color: #f5f5f5 !important;
+    }
+
+    .task-detail-nav {
+        --background: #ffffff !important;
+        --border-bottom: 1px solid #f0f0f0;
+    }
+
+    .task-type {
+        color: #333333;
+    }
+
+    .nav-subtitle {
+        color: #8c8c8c;
+    }
+
+    .nav-action-btn:active {
+        --background-color: #262626;
+    }
+
+    .task-header-card,
+    .process-panel-card {
+        background: #ffffff !important;
+        border: 1px solid #f0f0f0;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .task-title {
+        color: #333333;
+    }
+
+    .info-item .label {
+        color: #8c8c8c;
+    }
+
+    .info-item .value {
+        color: #333333;
+    }
+
+    .detail-tabs .adm-tabs-header,
+    .detail-tabs .adm-tabs-content {
+        background: #ffffff !important;
+        border-color: #f0f0f0;
+    }
+
+    .process-panel-card .adm-card-header {
+        border-bottom-color: #303030;
+    }
+
+    .process-panel-card .adm-card-header-title {
+        color: #333333;
+    }
+
+    .bottom-actions {
+        background: #ffffff !important;
+        border-top-color: #f0f0f0;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+
+    .task-header-card,
+    .process-panel-card {
+        border: 2px solid #000;
+    }
+
+    .detail-tabs .adm-tabs-header {
+        border-bottom: 2px solid #000;
+    }
+
+    .bottom-actions {
+        border-top: 2px solid #000;
+    }
+}
+
+/* 减少动画 */
+@media (prefers-reduced-motion: reduce) {
+
+    .task-header-card,
+    .process-panel-card,
+    .nav-action-btn {
+        transition: none;
+    }
+}
+
+/* 浮动按钮样式优化 */
+.adm-floating-bubble {
+    --background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+    --size: 56px;
+    box-shadow: 0 4px 16px rgba(24, 144, 255, 0.3);
+    backdrop-filter: blur(8px);
+}
+
+.adm-floating-bubble:active {
+    --background: linear-gradient(135deg, #096dd9 0%, #0050b3 100%);
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.4);
+}
+
+/* 超大屏适配 (1440px+) - iPad Pro等大屏设备 */
+@media (min-width: 1440px) {
+    .tablet-content {
+        max-width: 1600px;
+        grid-template-columns: 2fr 1fr;
+        gap: 40px;
+    }
+
+    .task-detail-page.tablet-view .page-content {
+        padding: 32px 48px;
+    }
+
+    .task-header-card {
+        --border-radius: 20px;
+    }
+
+    .left-panel .adm-tabs-content,
+    .right-panel .process-panel-card {
+        --border-radius: 16px;
+    }
+}
+
+/* ========== 屏幕方向适配 ========== */
+
+/* 手机竖屏 (最常见) */
+@media screen and (max-width: 767px) and (orientation: portrait) {
+    .task-detail-page {
+        padding-bottom: 80px;
+        /* 为底部按钮留空间 */
+    }
+
+    .task-header-card {
+        margin: 8px 12px 16px;
+        --border-radius: 12px;
+    }
+
+    .mobile-content .adm-tabs {
+        margin: 0 12px;
+    }
+
+    .mobile-content .adm-tabs-content {
+        padding: 16px 0;
+    }
+
+    .bottom-actions {
+        padding: 12px 16px;
+    }
+}
+
+/* 手机横屏 (需要特殊处理) */
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .task-detail-page {
+        padding-bottom: 60px;
+        /* 横屏时减少底部空间 */
+    }
+
+    .task-header-card {
+        margin: 6px 12px 12px;
+        --border-radius: 8px;
+        padding: 12px 16px;
+        /* 减少内边距 */
+    }
+
+    .task-header-card .task-title {
+        font-size: 18px;
+        /* 横屏时减小标题字体 */
+    }
+
+    .mobile-content .adm-tabs-content {
+        padding: 12px 0;
+        /* 减少内容区域padding */
+    }
+
+    .bottom-actions {
+        padding: 8px 16px;
+        /* 减少按钮区域高度 */
+    }
+
+    .bottom-actions .adm-button {
+        height: 36px;
+        /* 横屏时按钮稍小 */
+        font-size: 14px;
+    }
+}
+
+/* 平板竖屏 */
+@media screen and (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+    .tablet-content {
+        grid-template-columns: 1fr;
+        /* 竖屏时改为单列布局 */
+        gap: 16px;
+        max-width: 600px;
+    }
+
+    .right-panel {
+        order: 2;
+        /* 流程处理面板放在下方 */
+    }
+
+    .task-detail-page.tablet-view .page-content {
+        padding: 16px 20px;
+    }
+}
+
+/* 平板横屏 */
+@media screen and (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+    .tablet-content {
+        grid-template-columns: 3fr 2fr;
+        /* 横屏时使用双列 */
+        gap: 20px;
+        max-width: 1000px;
+    }
+
+    .task-detail-page.tablet-view .page-content {
+        padding: 16px 24px;
+    }
+}
+
+/* iPad Pro 竖屏 */
+@media screen and (min-width: 1024px) and (orientation: portrait) {
+    .tablet-content {
+        grid-template-columns: 1fr;
+        /* 竖屏时单列 */
+        gap: 24px;
+        max-width: 800px;
+    }
+
+    .right-panel {
+        order: 2;
+    }
+}
+
+/* iPad Pro 横屏 */
+@media screen and (min-width: 1024px) and (orientation: landscape) {
+    .tablet-content {
+        grid-template-columns: 2fr 1fr;
+        /* 横屏时双列 */
+        gap: 32px;
+        max-width: 1400px;
+    }
+}
+
+/* 超宽屏横屏 (桌面显示器等) */
+@media screen and (min-width: 1440px) and (orientation: landscape) {
+    .tablet-content {
+        grid-template-columns: 3fr 2fr;
+        gap: 40px;
+        max-width: 1600px;
+    }
+}

@@ -17,9 +17,22 @@ export function LoadMoreButton() {
             <button
                 onClick={handleLoadMore}
                 disabled={loading}
-                className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="relative px-8 py-3 bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white rounded-xl hover:from-cosmic-700 hover:to-nebula-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-cosmic hover:shadow-nebula hover:scale-105 group"
             >
-                {loading ? '加载中...' : '加载更多'}
+                {/* 加载动画 */}
+                {loading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    </div>
+                )}
+
+                {/* 按钮文本 */}
+                <span className={`transition-opacity duration-300 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+                    {loading ? '加载中...' : '加载更多'}
+                </span>
+
+                {/* 悬停时的光晕效果 */}
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cosmic-500/20 to-nebula-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </button>
         </div>
     );

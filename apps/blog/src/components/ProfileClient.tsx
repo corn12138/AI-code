@@ -10,6 +10,7 @@ type User = {
     username: string;
     email: string;
     avatar?: string;
+    bio?: string;
     roles?: string[];
 };
 
@@ -21,8 +22,8 @@ export default function ProfileClient({ initialUser }: ProfileClientProps) {
     const [user, setUser] = useState(initialUser);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
-        username: (user as any).username,
-        bio: (user as any).bio || '',
+        username: user?.username || '',
+        bio: user?.bio || '',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -48,16 +49,23 @@ export default function ProfileClient({ initialUser }: ProfileClientProps) {
     return (
         <ClientPageWrapper>
             <div className="container max-w-4xl mx-auto px-4 py-8">
-                <div className="bg-white rounded-lg shadow overflow-hidden">
-                    <div className="bg-primary-600 h-32 relative">
+                <div
+                    data-testid="profile-client"
+                    className="bg-space-900/40 backdrop-blur-xl rounded-2xl border border-cosmic-500/20 shadow-cosmic overflow-hidden"
+                >
+                    <div
+                        data-testid="profile-header"
+                        className="bg-gradient-to-r from-cosmic-600 to-nebula-600 h-32 relative"
+                    >
                         {/* 头像区域 */}
                         <div className="absolute -bottom-16 left-6">
-                            <div className="relative h-32 w-32 rounded-full border-4 border-white overflow-hidden">
+                            <div className="relative h-32 w-32 rounded-full border-4 border-space-900 overflow-hidden shadow-cosmic">
                                 <Image
-                                    src={user.avatar || "/default-avatar.svg"}
-                                    alt={user.username}
+                                    src={user?.avatar || "/default-avatar.svg"}
+                                    alt={user?.username || "用户头像"}
                                     fill
                                     style={{ objectFit: 'cover' }}
+                                    className="group-hover:scale-105 transition-transform duration-300"
                                 />
                             </div>
                         </div>
@@ -67,40 +75,44 @@ export default function ProfileClient({ initialUser }: ProfileClientProps) {
                         {isEditing ? (
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
-                                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">用户名</label>
+                                    <label htmlFor="username" className="block text-sm font-medium text-space-200">用户名</label>
                                     <input
                                         type="text"
                                         id="username"
                                         name="username"
                                         value={formData.username}
                                         onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                                        aria-label="用户名输入框"
+                                        className="mt-1 block w-full rounded-xl border border-cosmic-500/30 bg-space-800/60 text-space-200 placeholder-space-500 focus:border-cosmic-400/50 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 backdrop-blur-sm transition-all duration-300 px-4 py-3"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="bio" className="block text-sm font-medium text-gray-700">个人简介</label>
+                                    <label htmlFor="bio" className="block text-sm font-medium text-space-200">个人简介</label>
                                     <textarea
                                         id="bio"
                                         name="bio"
                                         rows={3}
                                         value={formData.bio}
                                         onChange={handleChange}
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                                        aria-label="个人简介输入框"
+                                        className="mt-1 block w-full rounded-xl border border-cosmic-500/30 bg-space-800/60 text-space-200 placeholder-space-500 focus:border-cosmic-400/50 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 backdrop-blur-sm transition-all duration-300 px-4 py-3"
                                     />
                                 </div>
 
                                 <div className="flex gap-2">
                                     <button
                                         type="submit"
-                                        className="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700"
+                                        aria-label="保存个人资料"
+                                        className="px-4 py-2 bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white rounded-lg hover:from-cosmic-700 hover:to-nebula-700 transition-all duration-300 shadow-cosmic"
                                     >
                                         保存
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setIsEditing(false)}
-                                        className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50"
+                                        aria-label="取消编辑"
+                                        className="px-4 py-2 border border-cosmic-500/30 text-space-300 rounded-lg hover:bg-space-800/60 transition-all duration-300 backdrop-blur-sm"
                                     >
                                         取消
                                     </button>
@@ -110,21 +122,22 @@ export default function ProfileClient({ initialUser }: ProfileClientProps) {
                             <div>
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h1 className="text-2xl font-bold text-gray-900">{user.username}</h1>
-                                        <p className="text-gray-500">{user.email}</p>
+                                        <h1 className="text-2xl font-bold text-space-200">{user?.username || '用户'}</h1>
+                                        <p className="text-space-400">{user?.email || '未设置邮箱'}</p>
                                     </div>
                                     <button
                                         onClick={() => setIsEditing(true)}
-                                        className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                                        aria-label="编辑个人资料"
+                                        className="px-4 py-2 border border-cosmic-500/30 text-space-300 rounded-lg hover:bg-space-800/60 hover:text-cosmic-300 transition-all duration-300 backdrop-blur-sm"
                                     >
                                         编辑资料
                                     </button>
                                 </div>
 
                                 <div className="mt-6">
-                                    <h2 className="text-lg font-semibold text-gray-900">个人简介</h2>
-                                    <p className="mt-2 text-gray-600">
-                                        {(user as any).bio || "用户还没有添加个人简介"}
+                                    <h2 className="text-lg font-semibold text-space-200">个人简介</h2>
+                                    <p className="mt-2 text-space-400">
+                                        {user?.bio || "用户还没有添加个人简介"}
                                     </p>
                                 </div>
                             </div>

@@ -28,74 +28,85 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
     }, [content]);
 
     return (
-        <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            components={{
-                // 代码块语法高亮
-                code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || '');
-                    return !inline && match ? (
-                        <SyntaxHighlighter
-                            style={tomorrow as any}
-                            language={match[1]}
-                            PreTag="div"
-                            {...props}
-                        >
-                            {String(children).replace(/\n$/, '')}
-                        </SyntaxHighlighter>
-                    ) : (
-                        <code className={className} {...props}>
-                            {children}
-                        </code>
-                    );
-                },
-                // 图片优化
-                img({ node, ...props }) {
-                    // 验证src是否为安全URL
-                    const src = props.src || '';
-                    // 只允许http, https或相对路径
-                    const isSafe = !src.match(/^(javascript|data):/i);
-
-                    if (!isSafe) return null;
-
-                    // 使用Next.js的Image组件优化图片
-                    return (
-                        <span className="block relative min-h-[200px] my-4">
-                            <Image
-                                src={src}
-                                alt={props.alt || ''}
-                                fill
-                                style={{ objectFit: 'contain' }}
-                                className="rounded"
-                            />
-                        </span>
-                    );
-                },
-                // 链接在新标签页打开
-                a({ node, ...props }) {
-                    // 验证href是否为安全URL
-                    const href = props.href || '';
-                    // 只允许http, https或相对路径
-                    const isSafe = !href.match(/^(javascript|data):/i);
-
-                    if (!isSafe) return <span>{props.children}</span>;
-
-                    return (
-                        <a
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:underline"
-                            {...props}
-                        >
-                            {props.children}
-                        </a>
-                    );
-                },
-            }}
+        <div
+            data-testid="markdown-renderer"
+            className="prose prose-headings:text-space-200 prose-p:text-space-400 prose-strong:text-cosmic-300 prose-a:text-cosmic-400 prose-a:hover:text-cosmic-300 prose-code:text-stardust-300 prose-pre:bg-space-800/60 prose-pre:border prose-pre:border-cosmic-500/20"
         >
-            {sanitizedContent}
-        </ReactMarkdown>
+            <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                    // 代码块语法高亮
+                    code({ node, inline, className, children, ...props }) {
+                        const match = /language-(\w+)/.exec(className || '');
+                        return !inline && match ? (
+                            <SyntaxHighlighter
+                                style={tomorrow as any}
+                                language={match[1]}
+                                PreTag="div"
+                                customStyle={{
+                                    backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                                    border: '1px solid rgba(139, 92, 246, 0.2)',
+                                    borderRadius: '12px',
+                                    backdropFilter: 'blur(12px)',
+                                }}
+                                {...props}
+                            >
+                                {String(children).replace(/\n$/, '')}
+                            </SyntaxHighlighter>
+                        ) : (
+                            <code className={`${className} bg-space-800/60 text-stardust-300 px-2 py-1 rounded border border-cosmic-500/20`} {...props}>
+                                {children}
+                            </code>
+                        );
+                    },
+                    // 图片优化
+                    img({ node, ...props }) {
+                        // 验证src是否为安全URL
+                        const src = props.src || '';
+                        // 只允许http, https或相对路径
+                        const isSafe = !src.match(/^(javascript|data):/i);
+
+                        if (!isSafe) return null;
+
+                        // 使用Next.js的Image组件优化图片
+                        return (
+                            <span className="block relative min-h-[200px] my-4 rounded-2xl overflow-hidden border border-cosmic-500/20 shadow-cosmic">
+                                <Image
+                                    src={src}
+                                    alt={props.alt || ''}
+                                    fill
+                                    style={{ objectFit: 'contain' }}
+                                    className="rounded-2xl"
+                                />
+                            </span>
+                        );
+                    },
+                    // 链接在新标签页打开
+                    a({ node, ...props }) {
+                        // 验证href是否为安全URL
+                        const href = props.href || '';
+                        // 只允许http, https或相对路径
+                        const isSafe = !href.match(/^(javascript|data):/i);
+
+                        if (!isSafe) return <span>{props.children}</span>;
+
+                        return (
+                            <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-cosmic-400 hover:text-cosmic-300 transition-colors duration-300"
+                                {...props}
+                            >
+                                {props.children}
+                            </a>
+                        );
+                    },
+                }}
+            >
+                {sanitizedContent}
+            </ReactMarkdown>
+        </div>
     );
 }

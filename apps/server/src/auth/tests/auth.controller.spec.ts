@@ -3,6 +3,7 @@ import { UsersService } from '../../users/users.service';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 
+import { vi, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
 describe('AuthController', () => {
     let controller: AuthController;
     let authService: AuthService;
@@ -11,12 +12,12 @@ describe('AuthController', () => {
     beforeEach(async () => {
         // 创建Mock服务
         const mockAuthService = {
-            login: jest.fn(),
-            logout: jest.fn(),
+            login: vi.fn(),
+            logout: vi.fn(),
         };
 
         const mockUsersService = {
-            findOne: jest.fn(),
+            findOne: vi.fn(),
         };
 
         // 创建测试模块
@@ -48,11 +49,11 @@ describe('AuthController', () => {
                 refreshToken: 'refresh-token',
                 user: { id: 'user-id' }
             };
-            (authService.login as jest.Mock).mockResolvedValue(loginResult);
+            (authService.login as vi.Mock).mockResolvedValue(loginResult);
 
             // 模拟Response对象
             const mockResponse = {
-                cookie: jest.fn(),
+                cookie: vi.fn(),
             };
 
             // 调用控制器方法

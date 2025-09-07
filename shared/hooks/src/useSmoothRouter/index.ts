@@ -1,6 +1,5 @@
-'use client';
-
-import { usePathname, useRouter } from 'next/navigation';
+// 通用化的平滑路由hook，兼容不同框架
+// 移除Next.js特定依赖，使用原生API
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 // ==================== 类型定义 ====================
@@ -116,8 +115,28 @@ const preloadRoute = (path: string): void => {
 
 export const useSmoothRouter = (options: SmoothRouterOptions = {}): UseSmoothRouterReturn => {
     const config = { ...defaultOptions, ...options };
-    const router = useRouter();
-    const pathname = usePathname();
+
+    // 使用原生API获取当前路径
+    const [pathname, setPathname] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return window.location.pathname;
+        }
+        return '/';
+    });
+
+    // 监听路径变化
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        const handlePopState = () => {
+            setPathname(window.location.pathname);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, []);
 
     // 状态管理
     const [navigationState, setNavigationState] = useState<NavigationState>({
@@ -279,9 +298,11 @@ export const useSmoothRouter = (options: SmoothRouterOptions = {}): UseSmoothRou
             }
 
             if (replace) {
-                router.replace(path);
+                window.history.replaceState(null, '', path);
+                setPathname(path);
             } else {
-                router.push(path);
+                window.history.pushState(null, '', path);
+                setPathname(path);
             }
 
             return true;
@@ -304,16 +325,16 @@ export const useSmoothRouter = (options: SmoothRouterOptions = {}): UseSmoothRou
 
         const navigationId = generateNavigationId();
         startNavigation('back', navigationId);
-        router.back();
-    }, [navigationState.isNavigating, router, startNavigation]);
+        window.history.back();
+    }, [navigationState.isNavigating, startNavigation]);
 
     const forward = useCallback(() => {
         if (navigationState.isNavigating) return;
 
         const navigationId = generateNavigationId();
         startNavigation('forward', navigationId);
-        router.forward();
-    }, [navigationState.isNavigating, router, startNavigation]);
+        window.history.forward();
+    }, [navigationState.isNavigating, startNavigation]);
 
     const cancelNavigation = useCallback(() => {
         resetNavigation();
@@ -342,8 +363,19 @@ export const useSmoothRouter = (options: SmoothRouterOptions = {}): UseSmoothRou
     const prefetch = useCallback((path: string) => {
         if (typeof window === 'undefined') return;
 
-        router.prefetch(path);
-    }, [router]);
+        // 使用原生预取，创建隐藏的link标签
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = path;
+        document.head.appendChild(link);
+
+        // 清理
+        setTimeout(() => {
+            if (link.parentNode) {
+                link.parentNode.removeChild(link);
+            }
+        }, 5000);
+    }, []);
 
     // ==================== 工具方法 ====================
 

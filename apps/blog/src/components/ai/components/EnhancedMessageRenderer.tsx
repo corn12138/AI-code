@@ -71,15 +71,15 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                         animate={{ rotate: 360 }}
                         transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
                     >
-                        <ClockIcon className="w-3 h-3 text-gray-400" />
+                        <ClockIcon className="w-3 h-3 text-space-400" />
                     </motion.div>
                 );
             case 'sent':
-                return <CheckIcon className="w-3 h-3 text-green-500" />;
+                return <CheckIcon className="w-3 h-3 text-nebula-400" />;
             case 'received':
-                return <CheckIcon className="w-3 h-3 text-blue-500" />;
+                return <CheckIcon className="w-3 h-3 text-cosmic-400" />;
             case 'error':
-                return <ExclamationTriangleIcon className="w-3 h-3 text-red-500" />;
+                return <ExclamationTriangleIcon className="w-3 h-3 text-red-400" />;
             default:
                 return null;
         }
@@ -132,7 +132,7 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
             if (inline) {
                 return (
                     <code
-                        className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono"
+                        className="bg-space-800/60 text-stardust-300 px-1.5 py-0.5 rounded text-sm font-mono border border-cosmic-500/20"
                         {...props}
                     >
                         {children}
@@ -142,11 +142,11 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
 
             return (
                 <div className="relative group">
-                    <div className="flex items-center justify-between bg-gray-800 text-gray-200 px-4 py-2 rounded-t-lg">
+                    <div className="flex items-center justify-between bg-space-800/80 backdrop-blur-sm text-space-200 px-4 py-2 rounded-t-lg border border-cosmic-500/20">
                         <span className="text-sm font-medium">{language || 'Code'}</span>
                         <button
                             onClick={() => copyToClipboard(String(children).replace(/\n$/, ''), 'code')}
-                            className="flex items-center space-x-1 text-xs text-gray-400 hover:text-white transition-colors"
+                            className="flex items-center space-x-1 text-xs text-space-400 hover:text-cosmic-300 transition-colors"
                         >
                             <DocumentDuplicateIcon className="w-4 h-4" />
                             <span>{copiedCode === 'code' ? 'Copied!' : 'Copy'}</span>
@@ -157,6 +157,12 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                         language={language}
                         PreTag="div"
                         className="!mt-0 !rounded-t-none"
+                        customStyle={{
+                            backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                            border: '1px solid rgba(139, 92, 246, 0.2)',
+                            borderRadius: '0 0 12px 12px',
+                            backdropFilter: 'blur(12px)',
+                        }}
                         {...props}
                     >
                         {String(children).replace(/\n$/, '')}
@@ -166,27 +172,27 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
         },
 
         blockquote: ({ children }: any) => (
-            <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-700 dark:text-gray-300 my-4">
+            <blockquote className="border-l-4 border-cosmic-500 pl-4 italic text-space-400 my-4 bg-space-800/40 backdrop-blur-sm rounded-r-lg p-3">
                 {children}
             </blockquote>
         ),
 
         table: ({ children }: any) => (
             <div className="overflow-x-auto my-4">
-                <table className="min-w-full border border-gray-300 dark:border-gray-600">
+                <table className="min-w-full border border-cosmic-500/20 bg-space-800/40 backdrop-blur-sm rounded-lg">
                     {children}
                 </table>
             </div>
         ),
 
         th: ({ children }: any) => (
-            <th className="border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 px-4 py-2 text-left font-semibold">
+            <th className="border border-cosmic-500/20 bg-space-800/60 backdrop-blur-sm px-4 py-2 text-left font-semibold text-space-200">
                 {children}
             </th>
         ),
 
         td: ({ children }: any) => (
-            <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
+            <td className="border border-cosmic-500/20 px-4 py-2 text-space-300">
                 {children}
             </td>
         )
@@ -194,12 +200,12 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
 
     // Message styling based on type and group position
     const getMessageClasses = () => {
-        const baseClasses = "max-w-[85%] p-4 rounded-2xl relative group";
+        const baseClasses = "max-w-[85%] p-4 rounded-2xl relative group backdrop-blur-sm";
         const typeClasses = message.type === 'user'
-            ? "bg-blue-600 text-white ml-auto"
+            ? "bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white ml-auto shadow-cosmic"
             : message.type === 'assistant'
-                ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-                : "bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200 border border-yellow-200 dark:border-yellow-800";
+                ? "bg-space-800/60 text-space-200 border border-cosmic-500/20"
+                : "bg-stardust-500/20 text-stardust-300 border border-stardust-500/30";
 
         const groupClasses = message.type === 'user'
             ? `${!isGroupStart ? 'rounded-br-md' : ''} ${!isGroupEnd ? 'rounded-tr-md' : ''}`
@@ -222,11 +228,11 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
             <div className={getMessageClasses()}>
                 {/* Streaming indicator */}
                 {message.streaming && (
-                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-blue-500 rounded-full animate-pulse" />
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-cosmic-400 rounded-full animate-pulse" />
                 )}
 
                 {/* Message content */}
-                <div className="prose prose-sm max-w-none dark:prose-invert">
+                <div className="prose prose-sm max-w-none prose-headings:text-space-200 prose-p:text-space-300 prose-strong:text-cosmic-300 prose-a:text-cosmic-400 prose-a:hover:text-cosmic-300 prose-code:text-stardust-300 prose-pre:bg-space-800/60 prose-pre:border prose-pre:border-cosmic-500/20">
                     {message.type === 'system' ? (
                         <div className="flex items-center space-x-2">
                             <ChatBubbleLeftIcon className="w-4 h-4" />
@@ -245,10 +251,10 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
 
                 {/* Error message */}
                 {message.error && (
-                    <div className="mt-2 p-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                    <div className="mt-2 p-2 bg-red-900/40 backdrop-blur-sm border border-red-500/20 rounded-lg">
                         <div className="flex items-center space-x-2">
-                            <ExclamationTriangleIcon className="w-4 h-4 text-red-500" />
-                            <span className="text-sm text-red-600 dark:text-red-400">{message.error}</span>
+                            <ExclamationTriangleIcon className="w-4 h-4 text-red-400" />
+                            <span className="text-sm text-red-300">{message.error}</span>
                         </div>
                     </div>
                 )}
@@ -257,27 +263,27 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                 {message.metadata && isGroupEnd && (
                     <div className="mt-2 text-xs opacity-70 flex flex-wrap gap-2">
                         {message.metadata.model && (
-                            <span className="bg-black/10 dark:bg-white/10 px-2 py-1 rounded">
+                            <span className="bg-space-700/60 backdrop-blur-sm px-2 py-1 rounded border border-cosmic-500/20">
                                 {message.metadata.model}
                             </span>
                         )}
                         {message.metadata.tokens && (
-                            <span className="bg-black/10 dark:bg-white/10 px-2 py-1 rounded">
+                            <span className="bg-space-700/60 backdrop-blur-sm px-2 py-1 rounded border border-cosmic-500/20">
                                 {message.metadata.tokens} tokens
                             </span>
                         )}
                         {message.metadata.cost && (
-                            <span className="bg-black/10 dark:bg-white/10 px-2 py-1 rounded">
+                            <span className="bg-space-700/60 backdrop-blur-sm px-2 py-1 rounded border border-cosmic-500/20">
                                 ${message.metadata.cost.toFixed(4)}
                             </span>
                         )}
                         {message.metadata.executionTime && (
-                            <span className="bg-black/10 dark:bg-white/10 px-2 py-1 rounded">
+                            <span className="bg-space-700/60 backdrop-blur-sm px-2 py-1 rounded border border-cosmic-500/20">
                                 {message.metadata.executionTime}ms
                             </span>
                         )}
                         {message.metadata.tools && message.metadata.tools.length > 0 && (
-                            <span className="bg-black/10 dark:bg-white/10 px-2 py-1 rounded">
+                            <span className="bg-space-700/60 backdrop-blur-sm px-2 py-1 rounded border border-cosmic-500/20">
                                 🔧 {message.metadata.tools.length} tools
                             </span>
                         )}
@@ -292,7 +298,7 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className={`mt-1 flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400 ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''
+                        className={`mt-1 flex items-center space-x-2 text-xs text-space-400 ${message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''
                             }`}
                     >
                         {/* Timestamp */}
@@ -309,7 +315,7 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                                 {/* Copy message */}
                                 <button
                                     onClick={() => copyToClipboard(message.content, 'message')}
-                                    className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                    className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-cosmic-300"
                                     title="Copy message"
                                 >
                                     <DocumentDuplicateIcon className="w-3 h-3" />
@@ -319,7 +325,7 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                                 {enableTTS && message.type === 'assistant' && (
                                     <button
                                         onClick={speakText}
-                                        className={`p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${isPlaying ? 'text-blue-500' : ''
+                                        className={`p-1 rounded hover:bg-space-700/60 transition-colors ${isPlaying ? 'text-cosmic-300' : 'text-space-400 hover:text-cosmic-300'
                                             }`}
                                         title={isPlaying ? 'Stop speaking' : 'Read aloud'}
                                     >
@@ -331,7 +337,7 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                                 {message.status === 'error' && onRetry && (
                                     <button
                                         onClick={onRetry}
-                                        className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-blue-500"
+                                        className="p-1 rounded hover:bg-space-700/60 transition-colors text-cosmic-400"
                                         title="Retry message"
                                     >
                                         <ArrowPathIcon className="w-3 h-3" />
@@ -343,14 +349,14 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                                     <>
                                         <button
                                             onClick={() => onFeedback(message.id, 'positive')}
-                                            className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:text-green-500"
+                                            className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-nebula-300"
                                             title="Good response"
                                         >
                                             <HandThumbUpIcon className="w-3 h-3" />
                                         </button>
                                         <button
                                             onClick={() => onFeedback(message.id, 'negative')}
-                                            className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors hover:text-red-500"
+                                            className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-red-400"
                                             title="Poor response"
                                         >
                                             <HandThumbDownIcon className="w-3 h-3" />
@@ -361,7 +367,7 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                                 {/* View details */}
                                 {message.metadata && (
                                     <button
-                                        className="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                        className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-cosmic-300"
                                         title="View details"
                                     >
                                         <EyeIcon className="w-3 h-3" />
@@ -380,7 +386,7 @@ export const EnhancedMessageRenderer: React.FC<EnhancedMessageRendererProps> = (
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-0 right-0 bg-green-500 text-white text-xs px-2 py-1 rounded shadow-lg"
+                        className="absolute top-0 right-0 bg-nebula-500 text-white text-xs px-2 py-1 rounded shadow-cosmic"
                     >
                         Copied!
                     </motion.div>

@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
                 conversationLength: eventData.conversationLength || 1,
                 deviceType: getDeviceType(request.headers.get('user-agent')),
                 userAgent: request.headers.get('user-agent') || '',
-                referrer: request.headers.get('referer'),
+                referrer: request.headers.get('referer') || undefined,
                 timezone: eventData.timezone || 'UTC'
             },
 

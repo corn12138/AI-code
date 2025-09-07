@@ -91,13 +91,13 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
     const getStatusIcon = () => {
         switch (message.status) {
             case 'sending':
-                return <ClockIcon className="w-3 h-3 text-gray-400 animate-pulse" />;
+                return <ClockIcon className="w-3 h-3 text-space-400 animate-pulse" />;
             case 'sent':
-                return <CheckIcon className="w-3 h-3 text-green-500" />;
+                return <CheckIcon className="w-3 h-3 text-nebula-400" />;
             case 'received':
-                return <CheckIcon className="w-3 h-3 text-blue-500" />;
+                return <CheckIcon className="w-3 h-3 text-cosmic-400" />;
             case 'error':
-                return <ExclamationTriangleIcon className="w-3 h-3 text-red-500" />;
+                return <ExclamationTriangleIcon className="w-3 h-3 text-red-400" />;
             default:
                 return null;
         }
@@ -115,16 +115,16 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
 
         return (
             <div className="relative group">
-                <div className="flex items-center justify-between bg-gray-800 px-4 py-2 rounded-t-lg">
-                    <span className="text-sm text-gray-300 font-mono">{language}</span>
+                <div className="flex items-center justify-between bg-space-800/80 backdrop-blur-sm px-4 py-2 rounded-t-lg border border-cosmic-500/20">
+                    <span className="text-sm text-stardust-300 font-mono">{language}</span>
                     <button
                         onClick={copyCode}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-gray-700"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-space-700/60 text-space-400 hover:text-cosmic-300"
                     >
                         {codeCopied ? (
-                            <CheckIcon className="w-4 h-4 text-green-400" />
+                            <CheckIcon className="w-4 h-4 text-nebula-400" />
                         ) : (
-                            <DocumentDuplicateIcon className="w-4 h-4 text-gray-400" />
+                            <DocumentDuplicateIcon className="w-4 h-4" />
                         )}
                     </button>
                 </div>
@@ -135,6 +135,10 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                         margin: 0,
                         borderTopLeftRadius: 0,
                         borderTopRightRadius: 0,
+                        backgroundColor: 'rgba(15, 23, 42, 0.6)',
+                        border: '1px solid rgba(139, 92, 246, 0.2)',
+                        borderRadius: '0 0 12px 12px',
+                        backdropFilter: 'blur(12px)',
                     }}
                 >
                     {children}
@@ -155,7 +159,7 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
 
             return (
                 <code
-                    className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm font-mono"
+                    className="bg-space-800/60 text-stardust-300 px-1 py-0.5 rounded text-sm font-mono border border-cosmic-500/20"
                     {...props}
                 >
                     {children}
@@ -167,7 +171,7 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
         table({ children }: any) {
             return (
                 <div className="overflow-x-auto my-4">
-                    <table className="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <table className="min-w-full border border-cosmic-500/20 rounded-lg bg-space-800/40 backdrop-blur-sm">
                         {children}
                     </table>
                 </div>
@@ -181,7 +185,7 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                    className="text-cosmic-400 hover:text-cosmic-300 transition-colors"
                 >
                     {children}
                 </a>
@@ -190,17 +194,17 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
 
         // 自定义列表样式
         ul({ children }: any) {
-            return <ul className="list-disc list-inside space-y-1 my-2">{children}</ul>;
+            return <ul className="list-disc list-inside space-y-1 my-2 text-space-300">{children}</ul>;
         },
 
         ol({ children }: any) {
-            return <ol className="list-decimal list-inside space-y-1 my-2">{children}</ol>;
+            return <ol className="list-decimal list-inside space-y-1 my-2 text-space-300">{children}</ol>;
         },
 
         // 自定义引用块
         blockquote({ children }: any) {
             return (
-                <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-600 dark:text-gray-400 my-4">
+                <blockquote className="border-l-4 border-cosmic-500 pl-4 italic text-space-400 my-4 bg-space-800/40 backdrop-blur-sm rounded-r-lg p-3">
                     {children}
                 </blockquote>
             );
@@ -220,10 +224,10 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                 {/* Avatar */}
                 <div className={`flex items-start space-x-3 ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`}>
                     <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${isUser
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-gradient-to-r from-cosmic-500 to-nebula-600 text-white shadow-cosmic'
                         : isSystem
-                            ? 'bg-gray-500 text-white'
-                            : 'bg-gradient-to-r from-purple-500 to-blue-600 text-white'
+                            ? 'bg-space-600 text-white'
+                            : 'bg-gradient-to-r from-nebula-500 to-stardust-600 text-white shadow-cosmic'
                         }`}>
                         {isUser ? (
                             <UserIcon className="w-5 h-5" />
@@ -237,10 +241,10 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                         {/* Message Bubble */}
                         <div
                             className={`inline-block px-4 py-3 rounded-2xl ${isUser
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white shadow-cosmic'
                                 : isSystem
-                                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300'
-                                    : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                                    ? 'bg-space-800/60 backdrop-blur-sm text-space-300 border border-cosmic-500/20'
+                                    : 'bg-space-800/60 backdrop-blur-sm text-space-200 border border-cosmic-500/20'
                                 } ${message.streaming ? 'animate-pulse' : ''}`}
                         >
                             {/* 思考过程 */}
@@ -248,7 +252,7 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                                 <div className="mb-3">
                                     <button
                                         onClick={() => setShowThinking(!showThinking)}
-                                        className="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                                        className="text-xs text-space-400 hover:text-cosmic-300 transition-colors"
                                     >
                                         💭 {showThinking ? 'Hide thinking' : 'Show thinking'}
                                     </button>
@@ -257,7 +261,7 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                                         <motion.div
                                             initial={{ height: 0, opacity: 0 }}
                                             animate={{ height: 'auto', opacity: 1 }}
-                                            className="mt-2 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm text-gray-600 dark:text-gray-300 border-l-4 border-yellow-400"
+                                            className="mt-2 p-3 bg-space-700/60 backdrop-blur-sm rounded-lg text-sm text-space-300 border-l-4 border-stardust-400"
                                         >
                                             <ReactMarkdown
                                                 remarkPlugins={[remarkGfm, remarkMath]}
@@ -272,7 +276,7 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                             )}
 
                             {/* 主要内容 */}
-                            <div className="prose prose-sm max-w-none dark:prose-invert">
+                            <div className="prose prose-sm max-w-none prose-headings:text-space-200 prose-p:text-space-300 prose-strong:text-cosmic-300 prose-a:text-cosmic-400 prose-a:hover:text-cosmic-300 prose-code:text-stardust-300 prose-pre:bg-space-800/60 prose-pre:border prose-pre:border-cosmic-500/20">
                                 {isUser ? (
                                     <div className="whitespace-pre-wrap">{message.content}</div>
                                 ) : (
@@ -292,14 +296,14 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                                     {message.metadata.attachments.map((attachment) => (
                                         <div
                                             key={attachment.id}
-                                            className="flex items-center space-x-2 p-2 bg-white/10 rounded-lg"
+                                            className="flex items-center space-x-2 p-2 bg-space-700/40 backdrop-blur-sm rounded-lg border border-cosmic-500/20"
                                         >
-                                            <div className="w-8 h-8 bg-white/20 rounded flex items-center justify-center">
+                                            <div className="w-8 h-8 bg-space-600/60 rounded flex items-center justify-center">
                                                 📎
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-medium truncate">{attachment.name}</p>
-                                                <p className="text-xs opacity-75">
+                                                <p className="text-sm font-medium truncate text-space-200">{attachment.name}</p>
+                                                <p className="text-xs opacity-75 text-space-400">
                                                     {(attachment.size / 1024).toFixed(1)} KB
                                                 </p>
                                             </div>
@@ -314,7 +318,7 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                                     {message.metadata.tools.map((tool, index) => (
                                         <span
                                             key={index}
-                                            className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200"
+                                            className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-cosmic-500/20 text-cosmic-300 border border-cosmic-500/30"
                                         >
                                             🔧 {tool}
                                         </span>
@@ -328,13 +332,13 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                             <div className="flex items-center space-x-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button
                                     onClick={() => copyToClipboard(message.content)}
-                                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-cosmic-300"
                                     title="Copy message"
                                 >
                                     {copied ? (
-                                        <CheckIcon className="w-4 h-4 text-green-500" />
+                                        <CheckIcon className="w-4 h-4 text-nebula-400" />
                                     ) : (
-                                        <DocumentDuplicateIcon className="w-4 h-4 text-gray-500" />
+                                        <DocumentDuplicateIcon className="w-4 h-4" />
                                     )}
                                 </button>
 
@@ -343,8 +347,8 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
                                     <button
                                         onClick={speakMessage}
                                         className={`p-1 rounded transition-colors ${isPlaying
-                                            ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-400'
-                                            : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500'
+                                            ? 'bg-cosmic-500/20 text-cosmic-300'
+                                            : 'hover:bg-space-700/60 text-space-400 hover:text-cosmic-300'
                                             }`}
                                         title={isPlaying ? 'Stop speaking' : 'Read aloud'}
                                     >
@@ -354,23 +358,23 @@ export const MessageRenderer: React.FC<MessageRendererProps> = ({ message }) => 
 
                                 {/* 反馈按钮 */}
                                 <button
-                                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-nebula-300"
                                     title="Good response"
                                 >
-                                    <HandThumbUpIcon className="w-4 h-4 text-gray-500 hover:text-green-500" />
+                                    <HandThumbUpIcon className="w-4 h-4" />
                                 </button>
 
                                 <button
-                                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-red-400"
                                     title="Poor response"
                                 >
-                                    <HandThumbDownIcon className="w-4 h-4 text-gray-500 hover:text-red-500" />
+                                    <HandThumbDownIcon className="w-4 h-4" />
                                 </button>
                             </div>
                         )}
 
                         {/* Metadata */}
-                        <div className={`flex items-center space-x-2 mt-1 text-xs text-gray-500 ${isUser ? 'justify-end' : 'justify-start'
+                        <div className={`flex items-center space-x-2 mt-1 text-xs text-space-400 ${isUser ? 'justify-end' : 'justify-start'
                             }`}>
                             <span>{message.timestamp.toLocaleTimeString()}</span>
 

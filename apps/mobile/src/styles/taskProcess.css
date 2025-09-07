@@ -1,0 +1,196 @@
+/**
+ * 任务处理模块通用样式
+ * 参考uis图片的商务风格配色方案
+ */
+
+:root {
+    /* 主色调 - 蓝色系 */
+    --tp-primary-color: #1890ff;
+    --tp-primary-light: #40a9ff;
+    --tp-primary-dark: #096dd9;
+    --tp-primary-bg: #ffffff;
+
+    /* 辅助色调 */
+    --tp-success-color: #52c41a;
+    --tp-success-light: #73d13d;
+    --tp-success-bg: #ffffff;
+
+    --tp-warning-color: #faad14;
+    --tp-warning-light: #ffc53d;
+    --tp-warning-bg: #ffffff;
+
+    --tp-error-color: #f5222d;
+    --tp-error-light: #ff4d4f;
+    --tp-error-bg: #ffffff;
+
+    --tp-info-color: #722ed1;
+    --tp-info-light: #9254de;
+    --tp-info-bg: #ffffff;
+
+    /* 中性色调 - 黑色字体 */
+    --tp-text-primary: #000000;
+    --tp-text-secondary: #333333;
+    --tp-text-tertiary: #666666;
+    --tp-text-quaternary: #999999;
+
+    --tp-border-color: #e0e0e0;
+    --tp-border-light: #f0f0f0;
+    --tp-border-dark: #d0d0d0;
+
+    --tp-bg-color: #ffffff;
+    --tp-bg-secondary: #ffffff;
+    --tp-bg-tertiary: #ffffff;
+
+    /* 阴影 */
+    --tp-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --tp-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --tp-shadow-lg: 0 6px 20px rgba(0, 0, 0, 0.10);
+
+    /* 圆角 */
+    --tp-border-radius-sm: 4px;
+    --tp-border-radius-md: 6px;
+    --tp-border-radius-lg: 8px;
+
+    /* 间距 */
+    --tp-spacing-xs: 4px;
+    --tp-spacing-sm: 8px;
+    --tp-spacing-md: 12px;
+    --tp-spacing-lg: 16px;
+    --tp-spacing-xl: 20px;
+    --tp-spacing-xxl: 24px;
+}
+
+/* 状态色彩映射 */
+.tp-status-pending {
+    color: var(--tp-warning-color);
+    background-color: var(--tp-warning-bg);
+}
+
+.tp-status-processing {
+    color: var(--tp-primary-color);
+    background-color: var(--tp-primary-bg);
+}
+
+.tp-status-completed {
+    color: var(--tp-success-color);
+    background-color: var(--tp-success-bg);
+}
+
+.tp-status-rejected {
+    color: var(--tp-error-color);
+    background-color: var(--tp-error-bg);
+}
+
+.tp-status-cancelled {
+    color: var(--tp-text-tertiary);
+    background-color: var(--tp-bg-tertiary);
+}
+
+/* 优先级色彩映射 */
+.tp-priority-high {
+    color: var(--tp-error-color);
+    background-color: var(--tp-error-bg);
+}
+
+.tp-priority-medium {
+    color: var(--tp-warning-color);
+    background-color: var(--tp-warning-bg);
+}
+
+.tp-priority-low {
+    color: var(--tp-success-color);
+    background-color: var(--tp-success-bg);
+}
+
+/* 通用卡片样式 */
+.tp-card {
+    background: var(--tp-bg-color);
+    border-radius: var(--tp-border-radius-md);
+    box-shadow: var(--tp-shadow-sm);
+    border: 1px solid var(--tp-border-light);
+    transition: all 0.3s ease;
+}
+
+.tp-card:hover {
+    box-shadow: var(--tp-shadow-md);
+    border-color: var(--tp-primary-light);
+}
+
+.tp-card-active {
+    border-color: var(--tp-primary-color);
+    box-shadow: var(--tp-shadow-md);
+}
+
+/* 通用按钮样式 */
+.tp-btn-primary {
+    background: var(--tp-primary-color);
+    border: none;
+    color: white;
+    box-shadow: var(--tp-shadow-sm);
+}
+
+.tp-btn-primary:hover {
+    background: var(--tp-primary-dark);
+    box-shadow: var(--tp-shadow-md);
+}
+
+.tp-btn-secondary {
+    background: var(--tp-bg-color);
+    border: 1px solid var(--tp-border-color);
+    color: var(--tp-text-primary);
+}
+
+.tp-btn-secondary:hover {
+    border-color: var(--tp-primary-color);
+    color: var(--tp-primary-color);
+}
+
+/* 通用标签样式 */
+.tp-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--tp-border-radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* 通用分隔线 */
+.tp-divider {
+    border-color: var(--tp-border-light);
+    margin: var(--tp-spacing-lg) 0;
+}
+
+/* 通用表单样式 */
+.tp-form-item {
+    margin-bottom: var(--tp-spacing-lg);
+}
+
+.tp-form-label {
+    color: var(--tp-text-primary);
+    font-weight: 500;
+    margin-bottom: var(--tp-spacing-sm);
+}
+
+.tp-form-input {
+    border-color: var(--tp-border-color);
+    border-radius: var(--tp-border-radius-sm);
+}
+
+.tp-form-input:focus {
+    border-color: var(--tp-primary-color);
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* 响应式断点 */
+@media (max-width: 768px) {
+    :root {
+        --tp-spacing-xs: 3px;
+        --tp-spacing-sm: 6px;
+        --tp-spacing-md: 10px;
+        --tp-spacing-lg: 14px;
+        --tp-spacing-xl: 18px;
+        --tp-spacing-xxl: 22px;
+    }
+}

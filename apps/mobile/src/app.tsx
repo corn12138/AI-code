@@ -1,9 +1,9 @@
 import { ConfigProvider } from 'antd-mobile'
 import zhCN from 'antd-mobile/es/locales/zh-CN'
-import React from 'react'
-import { appConfig } from './config/env'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import ToastContainer from './components/Toast/ToastContainer'
+import { appConfig } from './config/env'
+import { TaskProcessProvider } from './stores/taskProcessStore'
 
 // 全局样式
 import './index.css'
@@ -25,10 +25,10 @@ if (appConfig.isDev) {
         console.log('vConsole 初始化完成')
       }
     })
-    
-    // 添加到全局对象，方便调试
-    ;(window as any).vConsole = vConsole
-    
+
+      // 添加到全局对象，方便调试
+      ; (window as any).vConsole = vConsole
+
     console.log('vConsole 已启用并挂载到 window.vConsole')
   }).catch(error => {
     console.error('vConsole 加载失败:', error)
@@ -41,9 +41,19 @@ if (appConfig.isDev) {
 export function rootContainer(container: any) {
   return (
     <ErrorBoundary>
-      <ConfigProvider locale={zhCN}>
-        {container}
-        <ToastContainer />
+      <ConfigProvider
+        locale={zhCN}
+        theme={{
+          '--adm-color-background': '#f5f5f5',
+          '--adm-color-background-light': '#ffffff',
+          '--adm-color-text': '#333333',
+          '--adm-color-text-secondary': '#666666'
+        }}
+      >
+        <TaskProcessProvider>
+          {container}
+          <ToastContainer />
+        </TaskProcessProvider>
       </ConfigProvider>
     </ErrorBoundary>
   )

@@ -148,29 +148,29 @@ export default function LoginForm() {
             <div className="flex min-h-[calc(100vh-200px)] items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-md space-y-8">
                     <div className="text-center">
-                        <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+                        <h2 className="mt-6 text-3xl font-bold tracking-tight text-space-200">
                             登录账户
                         </h2>
-                        <p className="mt-2 text-sm text-gray-600">
+                        <p className="mt-2 text-sm text-space-400">
                             没有账户?{" "}
-                            <Link href="/register" className="font-medium text-primary-600 hover:text-primary-500">
+                            <Link href="/register" className="font-medium text-cosmic-400 hover:text-cosmic-300 transition-colors duration-300">
                                 立即注册
                             </Link>
                         </p>
-                        <div className="mt-4 p-3 bg-blue-50 rounded-md text-sm text-blue-700">
+                        <div className="mt-4 p-4 bg-cosmic-600/10 backdrop-blur-sm border border-cosmic-500/20 rounded-xl text-sm text-cosmic-300">
                             <p>测试账户: test@example.com</p>
                             <p>测试密码: Password123!</p>
                         </div>
                     </div>
 
                     {/* 登录方式切换 */}
-                    <div className="flex rounded-lg bg-gray-100 p-1">
+                    <div className="flex rounded-xl bg-space-800/60 p-1 backdrop-blur-sm border border-cosmic-500/20">
                         <button
                             type="button"
                             onClick={() => setLoginMode('password')}
-                            className={`flex-1 rounded-md py-2 px-3 text-sm font-medium transition-colors ${loginMode === 'password'
-                                ? 'bg-white text-gray-900 shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            className={`flex-1 rounded-lg py-2 px-3 text-sm font-medium transition-all duration-300 ${loginMode === 'password'
+                                ? 'bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white shadow-cosmic'
+                                : 'text-space-400 hover:text-cosmic-300'
                                 }`}
                         >
                             密码登录
@@ -178,9 +178,9 @@ export default function LoginForm() {
                         <button
                             type="button"
                             onClick={() => setLoginMode('email-code')}
-                            className={`flex-1 rounded-md py-2 px-3 text-sm font-medium transition-colors ${loginMode === 'email-code'
-                                ? 'bg-white text-gray-900 shadow-sm'
-                                : 'text-gray-500 hover:text-gray-700'
+                            className={`flex-1 rounded-lg py-2 px-3 text-sm font-medium transition-all duration-300 ${loginMode === 'email-code'
+                                ? 'bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white shadow-cosmic'
+                                : 'text-space-400 hover:text-cosmic-300'
                                 }`}
                         >
                             验证码登录
@@ -188,7 +188,7 @@ export default function LoginForm() {
                     </div>
 
                     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                        <div className="space-y-4 rounded-md shadow-sm">
+                        <div className="space-y-4">
                             <div>
                                 <label htmlFor="email-address" className="sr-only">
                                     邮箱地址
@@ -201,7 +201,7 @@ export default function LoginForm() {
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+                                    className="relative block w-full appearance-none rounded-xl border border-cosmic-500/30 px-4 py-3 text-space-200 placeholder-space-500 focus:z-10 focus:border-cosmic-400/50 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 bg-space-800/60 backdrop-blur-sm transition-all duration-300 sm:text-sm"
                                     placeholder="邮箱地址"
                                 />
                             </div>
@@ -220,20 +220,20 @@ export default function LoginForm() {
                                             required
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 pr-10 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+                                            className="relative block w-full appearance-none rounded-xl border border-cosmic-500/30 px-4 py-3 pr-10 text-space-200 placeholder-space-500 focus:z-10 focus:border-cosmic-400/50 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 bg-space-800/60 backdrop-blur-sm transition-all duration-300 sm:text-sm"
                                             placeholder="密码"
                                         />
                                         <button
                                             type="button"
-                                            className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                            className="absolute inset-y-0 right-0 flex items-center pr-4"
                                             onClick={() => setShowPassword(!showPassword)}
                                         >
                                             {showPassword ? (
-                                                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="h-5 w-5 text-space-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464 9.878 9.878zM14.12 14.12l1.415 1.415L14.12 14.12zM14.12 14.12L9.88 9.88 14.12 14.12z" />
                                                 </svg>
                                             ) : (
-                                                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="h-5 w-5 text-space-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                 </svg>
@@ -254,7 +254,7 @@ export default function LoginForm() {
                                             required
                                             value={verificationCode}
                                             onChange={(e) => setVerificationCode(e.target.value)}
-                                            className="flex-1 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-primary-500 sm:text-sm"
+                                            className="flex-1 appearance-none rounded-xl border border-cosmic-500/30 px-4 py-3 text-space-200 placeholder-space-500 focus:border-cosmic-400/50 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 bg-space-800/60 backdrop-blur-sm transition-all duration-300 sm:text-sm"
                                             placeholder="请输入6位验证码"
                                             maxLength={6}
                                         />
@@ -262,7 +262,7 @@ export default function LoginForm() {
                                             type="button"
                                             onClick={handleSendCode}
                                             disabled={isSendingCode || countdown > 0}
-                                            className="whitespace-nowrap rounded-md border border-primary-600 bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="whitespace-nowrap rounded-xl border border-cosmic-600 bg-gradient-to-r from-cosmic-600 to-nebula-600 px-4 py-3 text-sm font-medium text-white hover:from-cosmic-700 hover:to-nebula-700 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-cosmic"
                                         >
                                             {isSendingCode ? '发送中...' : countdown > 0 ? `${countdown}s` : '获取验证码'}
                                         </button>
@@ -278,15 +278,15 @@ export default function LoginForm() {
                                         id="remember-me"
                                         name="remember-me"
                                         type="checkbox"
-                                        className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                                        className="h-4 w-4 rounded border-cosmic-500/30 text-cosmic-600 focus:ring-cosmic-500/20 bg-space-800/60"
                                     />
-                                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                                    <label htmlFor="remember-me" className="ml-2 block text-sm text-space-300">
                                         记住我
                                     </label>
                                 </div>
 
                                 <div className="text-sm">
-                                    <Link href="/forgot-password" className="font-medium text-primary-600 hover:text-primary-500">
+                                    <Link href="/forgot-password" className="font-medium text-cosmic-400 hover:text-cosmic-300 transition-colors duration-300">
                                         忘记密码?
                                     </Link>
                                 </div>
@@ -297,14 +297,14 @@ export default function LoginForm() {
                             <button
                                 type="submit"
                                 disabled={isLoading || (loginMode === 'email-code' && !isCodeSent)}
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-primary-600 py-2 px-4 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="group relative flex w-full justify-center rounded-xl border border-transparent bg-gradient-to-r from-cosmic-600 to-nebula-600 py-3 px-4 text-sm font-medium text-white hover:from-cosmic-700 hover:to-nebula-700 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-cosmic"
                             >
                                 {isLoading ? '登录中...' : loginMode === 'password' ? '登录' : '验证码登录'}
                             </button>
                         </div>
 
                         {loginMode === 'email-code' && !isCodeSent && (
-                            <p className="text-center text-sm text-gray-500">
+                            <p className="text-center text-sm text-space-500">
                                 请先获取验证码
                             </p>
                         )}
@@ -313,23 +313,23 @@ export default function LoginForm() {
                     <div className="mt-6">
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-300" />
+                                <div className="w-full border-t border-space-700/50" />
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="bg-white px-2 text-gray-500">快捷操作</span>
+                                <span className="bg-space-900 px-2 text-space-500">快捷操作</span>
                             </div>
                         </div>
 
                         <div className="mt-6 grid grid-cols-2 gap-3">
                             <Link
                                 href="/forgot-password"
-                                className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                                className="inline-flex w-full justify-center rounded-xl border border-cosmic-500/30 bg-space-800/60 backdrop-blur-sm py-2 px-4 text-sm font-medium text-space-400 shadow-sm hover:bg-space-700/60 hover:text-cosmic-300 transition-all duration-300"
                             >
                                 忘记密码
                             </Link>
                             <Link
                                 href="/register"
-                                className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
+                                className="inline-flex w-full justify-center rounded-xl border border-cosmic-500/30 bg-space-800/60 backdrop-blur-sm py-2 px-4 text-sm font-medium text-space-400 shadow-sm hover:bg-space-700/60 hover:text-cosmic-300 transition-all duration-300"
                             >
                                 注册账户
                             </Link>

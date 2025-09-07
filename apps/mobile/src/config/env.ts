@@ -34,9 +34,9 @@ export interface AppConfig {
 
 // 获取环境变量的辅助函数
 const getEnvVar = (key: string, defaultValue: string = ''): string => {
-  // UMI构建时使用process.env，运行时使用import.meta.env
-  const env = typeof process !== 'undefined' ? process.env : (import.meta as any)?.env || {}
-  return env[key] || defaultValue
+    // UMI构建时使用process.env，运行时使用import.meta.env
+    const env = typeof process !== 'undefined' ? process.env : (import.meta as any)?.env || {}
+    return env[key] || defaultValue
 }
 
 const getEnvBoolean = (key: string, defaultValue: boolean = false): boolean => {
@@ -73,10 +73,10 @@ export const appConfig: AppConfig = {
     cdnBaseUrl: getEnvVar('VITE_CDN_BASE_URL', 'https://cdn.yourdomain.com'),
     staticBaseUrl: getEnvVar('VITE_STATIC_BASE_URL', '/static'),
 
-      // 环境信息
-  isDev: process.env.NODE_ENV === 'development',
-  isProd: process.env.NODE_ENV === 'production',
-  isTest: process.env.NODE_ENV === 'test',
+    // 环境信息
+    isDev: process.env.NODE_ENV === 'development',
+    isProd: process.env.NODE_ENV === 'production',
+    isTest: process.env.NODE_ENV === 'test',
 }
 
 // 主题配置

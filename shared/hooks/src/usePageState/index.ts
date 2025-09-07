@@ -1,6 +1,5 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+// 通用化的页面状态管理hook，兼容不同框架
+// 移除Next.js特定依赖
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 // ==================== 类型定义 ====================
@@ -118,7 +117,7 @@ const safeStorage = {
 
 export const usePageState = (options: PageStateOptions = {}): UsePageStateReturn => {
     const config = { ...defaultOptions, ...options };
-    const router = useRouter();
+    // 移除router依赖，使用原生API
 
     // 状态管理
     const [scrollPosition, setScrollPosition] = useState<ScrollPosition>({ x: 0, y: 0 });

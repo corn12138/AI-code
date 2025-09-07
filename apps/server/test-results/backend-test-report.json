@@ -1,0 +1,81 @@
+{
+  "timestamp": "2025-08-30T14:36:52.042Z",
+  "summary": {
+    "totalModules": 10,
+    "modulesWithTests": 0,
+    "totalTestFiles": 5,
+    "coverage": null
+  },
+  "suggestions": [
+    {
+      "type": "missing-tests",
+      "priority": "high",
+      "message": "发现 10 个模块缺少测试",
+      "action": "为以下模块创建测试文件",
+      "modules": [
+        "article",
+        "articles",
+        "auth",
+        "upload",
+        "health",
+        "lowcode",
+        "metrics",
+        "tags",
+        "user",
+        "users"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "name": "article",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "articles",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "auth",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "upload",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "health",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "lowcode",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "metrics",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "tags",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "user",
+      "hasTests": false,
+      "testQuality": 0
+    },
+    {
+      "name": "users",
+      "hasTests": false,
+      "testQuality": 0
+    }
+  ]
+}

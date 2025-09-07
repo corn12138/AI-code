@@ -16,20 +16,20 @@ export default function TagList({ tags, selectedTag, onTagSelect }: TagListProps
     const visibleTags = expanded ? tags : tags.slice(0, 10);
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
                 {visibleTags.map((tag) => (
                     <button
                         key={tag.id}
                         onClick={() => onTagSelect(tag.name)}
-                        className={`px-3 py-1.5 rounded-full text-sm transition-all ${selectedTag === tag.name
-                            ? 'bg-primary-500 text-white font-medium shadow-sm'
-                            : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
+                        className={`px-3 py-1.5 rounded-lg text-sm transition-all duration-300 ${selectedTag === tag.name
+                            ? 'bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white font-medium shadow-cosmic'
+                            : 'bg-space-800/60 text-space-300 hover:bg-cosmic-600/20 hover:text-cosmic-300 hover:border hover:border-cosmic-500/30 backdrop-blur-sm'
                             }`}
                     >
                         {tag.name}
                         {tag.count && (
-                            <span className={`ml-1.5 text-xs ${selectedTag === tag.name ? 'text-white/80' : 'text-secondary-500'
+                            <span className={`ml-1.5 text-xs ${selectedTag === tag.name ? 'text-white/80' : 'text-space-500'
                                 }`}>
                                 {tag.count}
                             </span>
@@ -41,12 +41,12 @@ export default function TagList({ tags, selectedTag, onTagSelect }: TagListProps
             {tags.length > 10 && (
                 <button
                     onClick={() => setExpanded(!expanded)}
-                    className="text-sm text-primary-600 hover:text-primary-700 flex items-center"
+                    className="text-sm text-cosmic-400 hover:text-cosmic-300 flex items-center transition-colors duration-300 px-3 py-1.5 bg-space-800/60 rounded-lg hover:bg-cosmic-600/20 hover:border hover:border-cosmic-500/30 backdrop-blur-sm"
                 >
                     {expanded ? '收起' : `显示更多 (${tags.length - 10})`}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`h-4 w-4 ml-0.5 transition-transform ${expanded ? 'rotate-180' : ''}`}
+                        className={`h-4 w-4 ml-1 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                     >

@@ -4,7 +4,7 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/login","layout":false,"meta":{"title":"登录","requireAuth":false},"id":"1"},"2":{"path":"/register","layout":false,"meta":{"title":"注册","requireAuth":false},"id":"2"},"3":{"path":"/forgot-password","layout":false,"meta":{"title":"忘记密码","requireAuth":false},"id":"3"},"4":{"path":"/","meta":{"requireAuth":true},"id":"4"},"5":{"path":"/","meta":{"title":"首页","icon":"home","keepAlive":true},"parentId":"4","id":"5"},"6":{"path":"/apps","meta":{"title":"应用","icon":"apps","keepAlive":true},"parentId":"4","id":"6"},"7":{"path":"/message","meta":{"title":"消息","icon":"message","keepAlive":true},"parentId":"4","id":"7"},"8":{"path":"/profile","meta":{"title":"我的","icon":"profile","keepAlive":true},"parentId":"4","id":"8"},"9":{"path":"/settings","meta":{"title":"设置","requireAuth":true},"parentId":"4","id":"9"},"10":{"path":"/notifications","meta":{"title":"通知","requireAuth":true},"parentId":"4","id":"10"},"11":{"path":"/documents","meta":{"title":"文档","requireAuth":true},"parentId":"4","id":"11"},"12":{"path":"/apps/:id","meta":{"title":"应用详情","requireAuth":true,"hidden":true},"parentId":"4","id":"12"},"13":{"path":"/message/:id","meta":{"title":"消息详情","requireAuth":true,"hidden":true},"parentId":"4","id":"13"},"14":{"path":"/profile/edit","meta":{"title":"编辑资料","requireAuth":true,"hidden":true},"parentId":"4","id":"14"},"15":{"path":"/404","layout":false,"meta":{"title":"页面不存在","requireAuth":false,"hidden":true},"id":"15"},"16":{"path":"/403","layout":false,"meta":{"title":"访问被拒绝","requireAuth":false,"hidden":true},"id":"16"},"17":{"path":"/500","layout":false,"meta":{"title":"服务器错误","requireAuth":false,"hidden":true},"id":"17"},"18":{"path":"*","redirect":"/404","id":"18"}} as const;
+  const routes = {"1":{"path":"/login","layout":false,"meta":{"title":"登录","requireAuth":false},"id":"1"},"2":{"path":"/register","layout":false,"meta":{"title":"注册","requireAuth":false},"id":"2"},"3":{"path":"/forgot-password","layout":false,"meta":{"title":"忘记密码","requireAuth":false},"id":"3"},"4":{"path":"/","meta":{"requireAuth":true},"id":"4"},"5":{"path":"/","meta":{"title":"首页","icon":"home","keepAlive":true},"parentId":"4","id":"5"},"6":{"path":"/apps","meta":{"title":"应用","icon":"apps","keepAlive":true},"parentId":"4","id":"6"},"7":{"path":"/message","meta":{"title":"消息","icon":"message","keepAlive":true},"parentId":"4","id":"7"},"8":{"path":"/profile","meta":{"title":"我的","icon":"profile","keepAlive":true},"parentId":"4","id":"8"},"9":{"path":"/settings","meta":{"title":"设置","requireAuth":true},"parentId":"4","id":"9"},"10":{"path":"/notifications","meta":{"title":"通知","requireAuth":true},"parentId":"4","id":"10"},"11":{"path":"/documents","meta":{"title":"文档","requireAuth":true},"parentId":"4","id":"11"},"12":{"path":"/checkin","meta":{"title":"打卡","requireAuth":true},"parentId":"4","id":"12"},"13":{"path":"/task-process","meta":{"title":"任务处理","requireAuth":true},"parentId":"4","id":"13"},"14":{"path":"/apps/:id","meta":{"title":"应用详情","requireAuth":true,"hidden":true},"parentId":"4","id":"14"},"15":{"path":"/task-process/detail/:id","meta":{"title":"任务详情","requireAuth":true,"hidden":true},"parentId":"4","id":"15"},"16":{"path":"/task-process/file-list","meta":{"title":"文件列表","requireAuth":true,"hidden":true},"parentId":"4","id":"16"},"17":{"path":"/message/:id","meta":{"title":"消息详情","requireAuth":true,"hidden":true},"parentId":"4","id":"17"},"18":{"path":"/profile/edit","meta":{"title":"编辑资料","requireAuth":true,"hidden":true},"parentId":"4","id":"18"},"19":{"path":"/404","layout":false,"meta":{"title":"页面不存在","requireAuth":false,"hidden":true},"id":"19"},"20":{"path":"/403","layout":false,"meta":{"title":"访问被拒绝","requireAuth":false,"hidden":true},"id":"20"},"21":{"path":"/500","layout":false,"meta":{"title":"服务器错误","requireAuth":false,"hidden":true},"id":"21"},"22":{"path":"*","redirect":"/404","id":"22"}} as const;
   return {
     routes,
     routeComponents: {
@@ -19,13 +19,17 @@ export async function getRoutes() {
 '9': React.lazy(() => import(/* webpackChunkName: "p__Settings__Settings" */'@/pages/Settings/Settings.tsx')),
 '10': React.lazy(() => import(/* webpackChunkName: "p__Notifications__Notifications" */'@/pages/Notifications/Notifications.tsx')),
 '11': React.lazy(() => import(/* webpackChunkName: "p__Documents__Documents" */'@/pages/Documents/Documents.tsx')),
-'12': React.lazy(() => import(/* webpackChunkName: "p__Apps__AppDetail" */'@/pages/Apps/AppDetail.tsx')),
-'13': React.lazy(() => import(/* webpackChunkName: "p__Message__MessageDetail" */'@/pages/Message/MessageDetail.tsx')),
-'14': React.lazy(() => import(/* webpackChunkName: "p__Profile__EditProfile" */'@/pages/Profile/EditProfile.tsx')),
-'15': React.lazy(() => import(/* webpackChunkName: "p__NotFound__NotFound" */'@/pages/NotFound/NotFound.tsx')),
-'16': React.lazy(() => import(/* webpackChunkName: "p__Error__Forbidden" */'@/pages/Error/Forbidden.tsx')),
-'17': React.lazy(() => import(/* webpackChunkName: "p__Error__ServerError" */'@/pages/Error/ServerError.tsx')),
-'18': React.lazy(() => import('./EmptyRoute')),
+'12': React.lazy(() => import(/* webpackChunkName: "p__Checkin__Checkin" */'@/pages/Checkin/Checkin.tsx')),
+'13': React.lazy(() => import(/* webpackChunkName: "p__TaskProcess__TaskList__index" */'@/pages/TaskProcess/TaskList/index.tsx')),
+'14': React.lazy(() => import(/* webpackChunkName: "p__Apps__AppDetail" */'@/pages/Apps/AppDetail.tsx')),
+'15': React.lazy(() => import(/* webpackChunkName: "p__TaskProcess__TaskDetail__index" */'@/pages/TaskProcess/TaskDetail/index.tsx')),
+'16': React.lazy(() => import(/* webpackChunkName: "p__TaskProcess__FileList__index" */'@/pages/TaskProcess/FileList/index.tsx')),
+'17': React.lazy(() => import(/* webpackChunkName: "p__Message__MessageDetail" */'@/pages/Message/MessageDetail.tsx')),
+'18': React.lazy(() => import(/* webpackChunkName: "p__Profile__EditProfile" */'@/pages/Profile/EditProfile.tsx')),
+'19': React.lazy(() => import(/* webpackChunkName: "p__NotFound__NotFound" */'@/pages/NotFound/NotFound.tsx')),
+'20': React.lazy(() => import(/* webpackChunkName: "p__Error__Forbidden" */'@/pages/Error/Forbidden.tsx')),
+'21': React.lazy(() => import(/* webpackChunkName: "p__Error__ServerError" */'@/pages/Error/ServerError.tsx')),
+'22': React.lazy(() => import('./EmptyRoute')),
 },
   };
 }

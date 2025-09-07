@@ -5,7 +5,8 @@ import { Repository } from 'typeorm';
 import { User } from '../../user/entities/user.entity'; // 修复导入路径
 import { UsersService } from '../users.service';
 
-jest.mock('bcrypt');
+import { vi, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
+vi.mock('bcrypt');
 
 describe('UsersService', () => {
     let service: UsersService;
@@ -18,12 +19,12 @@ describe('UsersService', () => {
                 {
                     provide: getRepositoryToken(User),
                     useValue: {
-                        findOne: jest.fn(),
-                        save: jest.fn(),
-                        create: jest.fn(),
-                        update: jest.fn(),
-                        delete: jest.fn(),
-                        find: jest.fn(),
+                        findOne: vi.fn(),
+                        save: vi.fn(),
+                        create: vi.fn(),
+                        update: vi.fn(),
+                        delete: vi.fn(),
+                        find: vi.fn(),
                     },
                 },
             ],
@@ -40,7 +41,7 @@ describe('UsersService', () => {
     describe('findOne', () => {
         it('should return a user by id', async () => {
             const mockUser = { id: 'test-id', username: 'testuser' };
-            jest.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
+            vi.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
 
             const result = await service.findOne('test-id');
             expect(result).toEqual(mockUser);
@@ -53,7 +54,7 @@ describe('UsersService', () => {
     describe('findByEmail', () => {
         it('should return a user by email', async () => {
             const mockUser = { email: 'test@example.com', username: 'testuser' };
-            jest.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
+            vi.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
 
             const result = await service.findByEmail('test@example.com');
             expect(result).toEqual(mockUser);
@@ -66,7 +67,7 @@ describe('UsersService', () => {
     describe('findByUsername', () => {
         it('should return a user by username', async () => {
             const mockUser = { username: 'testuser', email: 'test@example.com' };
-            jest.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
+            vi.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
 
             const result = await service.findByUsername('testuser');
             expect(result).toEqual(mockUser);
@@ -79,7 +80,7 @@ describe('UsersService', () => {
     describe('findByUsernameOrEmail', () => {
         it('should return a user by username or email', async () => {
             const mockUser = { username: 'testuser', email: 'test@example.com' };
-            jest.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
+            vi.spyOn(repository, 'findOne').mockResolvedValue(mockUser as User);
 
             const result = await service.findByUsernameOrEmail('testuser');
             expect(result).toEqual(mockUser);
@@ -95,7 +96,7 @@ describe('UsersService', () => {
     describe('updateRefreshToken', () => {
         it('should update user refresh token', async () => {
             const mockHashedToken = 'hashed-token';
-            (bcrypt.hash as jest.Mock).mockResolvedValue(mockHashedToken);
+            (bcrypt.hash as vi.Mock).mockResolvedValue(mockHashedToken);
 
             await service.updateRefreshToken('user-id', 'refresh-token');
 

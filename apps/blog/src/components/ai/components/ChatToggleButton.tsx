@@ -24,7 +24,7 @@ export const ChatToggleButton: React.FC<ChatToggleButtonProps> = ({
   return (
     <motion.button
       onClick={onClick}
-      className={`relative w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg flex items-center justify-center text-white hover:shadow-xl transition-all duration-200 ${className}`}
+      className={`relative w-14 h-14 bg-gradient-to-r from-cosmic-600 to-nebula-600 rounded-full shadow-cosmic flex items-center justify-center text-white hover:shadow-xl transition-all duration-200 ${className}`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label={isExpanded ? 'Close AI Assistant' : 'Open AI Assistant'}
@@ -54,10 +54,9 @@ export const ChatToggleButton: React.FC<ChatToggleButtonProps> = ({
       </AnimatePresence>
 
       {/* Connection indicator */}
-      <motion.div 
-        className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${
-          isConnected ? 'bg-green-500' : 'bg-red-500'
-        }`}
+      <motion.div
+        className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-space-900 ${isConnected ? 'bg-nebula-400' : 'bg-red-400'
+          }`}
         animate={isConnected ? {} : { scale: [1, 1.2, 1] }}
         transition={isConnected ? {} : { duration: 2, repeat: Infinity }}
       />
@@ -69,7 +68,7 @@ export const ChatToggleButton: React.FC<ChatToggleButtonProps> = ({
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            className="absolute -top-2 -left-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center"
+            className="absolute -top-2 -left-2 w-6 h-6 bg-red-400 rounded-full flex items-center justify-center shadow-cosmic"
           >
             <span className="text-xs font-bold text-white">
               {unreadCount > 99 ? '99+' : unreadCount}
@@ -85,9 +84,9 @@ export const ChatToggleButton: React.FC<ChatToggleButtonProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 rounded-full bg-black/20 flex items-center justify-center"
+            className="absolute inset-0 rounded-full bg-space-900/20 backdrop-blur-sm flex items-center justify-center"
           >
-            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-cosmic-500/30 border-t-cosmic-500 rounded-full animate-spin" />
           </motion.div>
         )}
       </AnimatePresence>

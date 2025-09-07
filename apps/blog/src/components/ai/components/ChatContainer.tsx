@@ -1,13 +1,13 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ChatSettings } from '../ChatSettings';
 import { useChat } from '../context/ChatContext';
 import { ChatHeader } from './ChatHeader';
 import { ChatInput } from './ChatInput';
-import { ChatSettings } from '../ChatSettings';
-import { MessageList } from './MessageList';
 import { ErrorBoundary } from './ErrorBoundary';
+import { MessageList } from './MessageList';
 
 interface ChatContainerProps {
   onClose: () => void;
@@ -66,12 +66,12 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ 
+        transition={{
           type: 'spring',
           stiffness: 300,
           damping: 30
         }}
-        className={`w-${maxWidth} max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden backdrop-blur-sm ${className}`}
+        className={`w-${maxWidth} max-w-[calc(100vw-2rem)] bg-space-900/90 backdrop-blur-xl rounded-2xl shadow-cosmic border border-cosmic-500/20 flex flex-col overflow-hidden ${className}`}
         style={{ height: maxHeight }}
         onClick={handleBackdropClick}
       >
@@ -90,12 +90,12 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="border-b border-gray-200 dark:border-gray-700 overflow-hidden"
+              className="border-b border-cosmic-500/20 overflow-hidden"
             >
-              <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
+              <div className="p-4 bg-space-800/40 backdrop-blur-sm">
                 <ErrorBoundary
                   fallback={
-                    <div className="text-center py-4 text-red-500">
+                    <div className="text-center py-4 text-red-400">
                       Settings panel failed to load
                     </div>
                   }
@@ -165,10 +165,10 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center p-8">
                   <div className="text-6xl mb-4">💬</div>
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-medium text-space-200 mb-2">
                     Chat temporarily unavailable
                   </h3>
-                  <p className="text-gray-500 dark:text-gray-400">
+                  <p className="text-space-400">
                     Please refresh the page or try again later
                   </p>
                 </div>
@@ -176,7 +176,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
             }
             resetKeys={[state.messages.length]}
           >
-            <MessageList 
+            <MessageList
               enableVirtualization={enableVirtualization}
               showTimestamps={true}
               groupMessages={true}
@@ -187,8 +187,8 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
         {/* Input Area */}
         <ErrorBoundary
           fallback={
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-              <div className="text-center text-red-500">
+            <div className="p-4 border-t border-cosmic-500/20">
+              <div className="text-center text-red-400">
                 Input temporarily unavailable
               </div>
             </div>

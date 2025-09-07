@@ -15,6 +15,23 @@ export { useNotificationStore, type AppNotification } from './notification/useNo
 // UI Store
 export { loading, toast, useUIStore, type ModalState, type ToastMessage } from './ui/useUIStore'
 
+// Task Process Store
+export { useTaskProcessStore } from './taskProcess/useTaskProcessStore'
+export type { TaskProcessStore } from './taskProcess/useTaskProcessStore'
+
+// Task Process Types
+export {
+    TaskPriority,
+    TaskStatus,
+    type Organization,
+    type Pagination,
+    type ProcessRecord,
+    type ProcessStep,
+    type TaskDetail,
+    type TaskFilter,
+    type TaskItem
+} from './taskProcess/types'
+
 // Store工具函数
 export const resetAllStores = () => {
     // 重置所有store到初始状态（除了持久化的数据）

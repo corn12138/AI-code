@@ -45,12 +45,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <ClientPageWrapper>
             <div className="container mx-auto px-4 py-8">
                 <article className="max-w-3xl mx-auto">
-                    <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+                    <h1 className="text-3xl font-bold mb-4 text-space-200">{article.title}</h1>
 
                     {/* 文章元信息 */}
-                    <div className="flex items-center mb-6 text-gray-600">
+                    <div className="flex items-center mb-6 text-space-400">
                         <div className="flex items-center mr-4">
-                            <div className="relative w-10 h-10 rounded-full overflow-hidden mr-2">
+                            <div className="relative w-10 h-10 rounded-full overflow-hidden mr-2 border border-cosmic-500/20">
                                 <Image
                                     src={article.author.avatar || "/default-avatar.svg"}
                                     alt={article.author.username}
@@ -58,7 +58,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                                     style={{ objectFit: 'cover' }}
                                 />
                             </div>
-                            <span>{article.author.username}</span>
+                            <span className="text-space-300">{article.author.username}</span>
                         </div>
                         <span className="mr-4">{formatDate(article.createdAt)}</span>
                         <span>{article.readingTime} 分钟阅读</span>
@@ -66,19 +66,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
                     {/* 文章封面图 */}
                     {article.coverImage && (
-                        <div className="relative h-80 w-full mb-8">
+                        <div className="relative h-80 w-full mb-8 rounded-2xl overflow-hidden border border-cosmic-500/20 shadow-cosmic">
                             <Image
                                 src={article.coverImage}
                                 alt={article.title}
                                 fill
                                 style={{ objectFit: 'cover' }}
-                                className="rounded-lg"
+                                className="rounded-2xl"
                             />
                         </div>
                     )}
 
                     {/* 文章内容 - 使用Markdown渲染器 */}
-                    <div className="prose prose-lg max-w-none">
+                    <div className="prose prose-lg max-w-none prose-headings:text-space-200 prose-p:text-space-400 prose-strong:text-cosmic-300 prose-a:text-cosmic-400 prose-a:hover:text-cosmic-300 prose-code:text-stardust-300 prose-pre:bg-space-800/60 prose-pre:border prose-pre:border-cosmic-500/20">
                         <MarkdownRenderer content={article.content} />
                     </div>
                 </article>

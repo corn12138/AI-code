@@ -1,0 +1,709 @@
+/* 设备特定适配样式 */
+
+/* ===== iPhone 系列适配 ===== */
+
+/* iPhone SE (第1代) - 4英寸 */
+@media screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) {
+    :root {
+        --adm-font-size-main: 12px;
+        --adm-spacing-lg: 12px;
+        --adm-spacing-xl: 16px;
+    }
+
+    .adm-card {
+        margin-bottom: var(--adm-spacing-sm);
+    }
+
+    .adm-button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .adm-nav-bar-title {
+        font-size: 16px;
+    }
+}
+
+/* iPhone 6/7/8 - 4.7英寸 */
+@media screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) {
+    :root {
+        --adm-font-size-main: 13px;
+        --adm-spacing-lg: 14px;
+    }
+}
+
+/* iPhone 6/7/8 Plus - 5.5英寸 */
+@media screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+}
+
+/* iPhone X/XS - 5.8英寸 */
+@media screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    /* 适配刘海屏 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+
+    .adm-popup {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* iPhone XR/11 - 6.1英寸 */
+@media screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) {
+    :root {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    /* 适配刘海屏 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* iPhone XS Max/11 Pro Max - 6.5英寸 */
+@media screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 15px;
+        --adm-spacing-lg: 18px;
+    }
+
+    /* 适配刘海屏 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* iPhone 12/13 mini - 5.4英寸 */
+@media screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 13px;
+        --adm-spacing-lg: 14px;
+    }
+
+    /* 适配刘海屏 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* iPhone 12/13/14 - 6.1英寸 */
+@media screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    /* 适配刘海屏 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* iPhone 12/13/14 Pro Max - 6.7英寸 */
+@media screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 15px;
+        --adm-spacing-lg: 18px;
+    }
+
+    /* 适配刘海屏 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* iPhone 15/15 Pro - 6.1英寸 */
+@media screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    /* 适配灵动岛 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* iPhone 15 Plus/15 Pro Max - 6.7英寸 */
+@media screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) {
+    :root {
+        --adm-font-size-main: 15px;
+        --adm-spacing-lg: 18px;
+    }
+
+    /* 适配灵动岛 */
+    .adm-nav-bar {
+        padding-top: env(safe-area-inset-top);
+    }
+}
+
+/* ===== Android 设备适配 ===== */
+
+/* 小米手机适配 */
+@media screen and (min-width: 360px) and (max-width: 480px) {
+
+    /* 小米数字系列 */
+    .xiaomi-optimized {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    /* 小米MIUI系统优化 */
+    .xiaomi-optimized .adm-button {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .xiaomi-optimized .adm-card {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* 华为手机适配 */
+@media screen and (min-width: 360px) and (max-width: 480px) {
+
+    /* 华为EMUI/HarmonyOS优化 */
+    .huawei-optimized {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    .huawei-optimized .adm-button {
+        border-radius: 6px;
+        font-weight: 600;
+    }
+
+    .huawei-optimized .adm-card {
+        border-radius: 10px;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* OPPO/一加手机适配 */
+@media screen and (min-width: 360px) and (max-width: 480px) {
+
+    /* ColorOS/OxygenOS优化 */
+    .oppo-optimized {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    .oppo-optimized .adm-button {
+        border-radius: 10px;
+        font-weight: 500;
+    }
+
+    .oppo-optimized .adm-card {
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* vivo手机适配 */
+@media screen and (min-width: 360px) and (max-width: 480px) {
+
+    /* FuntouchOS/OriginOS优化 */
+    .vivo-optimized {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    .vivo-optimized .adm-button {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .vivo-optimized .adm-card {
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* 三星手机适配 */
+@media screen and (min-width: 360px) and (max-width: 480px) {
+
+    /* OneUI优化 */
+    .samsung-optimized {
+        --adm-font-size-main: 14px;
+        --adm-spacing-lg: 16px;
+    }
+
+    .samsung-optimized .adm-button {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .samsung-optimized .adm-card {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* ===== 高分辨率屏幕适配 ===== */
+
+/* 2K屏幕适配 */
+@media screen and (min-resolution: 2dppx) {
+    .high-dpi {
+        --adm-font-size-main: 15px;
+        --adm-spacing-lg: 18px;
+    }
+
+    .high-dpi .adm-button {
+        font-size: 15px;
+        padding: 12px 20px;
+    }
+
+    .high-dpi .adm-card {
+        border-radius: 16px;
+    }
+}
+
+/* 3K屏幕适配 */
+@media screen and (min-resolution: 3dppx) {
+    .ultra-high-dpi {
+        --adm-font-size-main: 16px;
+        --adm-spacing-lg: 20px;
+    }
+
+    .ultra-high-dpi .adm-button {
+        font-size: 16px;
+        padding: 14px 24px;
+    }
+
+    .ultra-high-dpi .adm-card {
+        border-radius: 20px;
+    }
+}
+
+/* ===== 特殊屏幕比例适配 ===== */
+
+/* 超宽屏适配 (21:9) */
+@media screen and (aspect-ratio: 21/9) {
+    .ultra-wide {
+        --adm-spacing-lg: 20px;
+        --adm-spacing-xl: 28px;
+    }
+
+    .ultra-wide .adm-card {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .ultra-wide .adm-nav-bar {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+/* 超长屏适配 (18:9+) */
+@media screen and (min-aspect-ratio: 18/9) {
+    .tall-screen {
+        --adm-spacing-lg: 18px;
+    }
+
+    .tall-screen .adm-card {
+        margin-bottom: var(--adm-spacing-lg);
+    }
+}
+
+/* ===== 系统特定优化 ===== */
+
+/* iOS系统优化 */
+@supports (-webkit-touch-callout: none) {
+    .ios-optimized {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .ios-optimized .adm-button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .ios-optimized .adm-card {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Android系统优化 */
+@supports not (-webkit-touch-callout: none) {
+    .android-optimized {
+        font-smooth: never;
+        -webkit-font-smoothing: none;
+    }
+
+    .android-optimized .adm-button {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* ===== 设备检测工具类 ===== */
+
+/* 设备类型检测 */
+.device-iphone {
+    /* iPhone特定样式 */
+}
+
+.device-android {
+    /* Android特定样式 */
+}
+
+.device-tablet {
+    /* 平板特定样式 */
+}
+
+/* 屏幕尺寸检测 */
+.screen-small {
+    /* 小屏设备 */
+}
+
+.screen-medium {
+    /* 中等屏幕 */
+}
+
+.screen-large {
+    /* 大屏设备 */
+}
+
+.screen-extra-large {
+    /* 超大屏设备 */
+}
+
+/* ===== 性能优化 ===== */
+
+/* 低端设备优化 */
+@media (max-device-memory: 2gb) {
+    .low-memory {
+        --adm-transition-fast: 0.1s ease-in-out;
+        --adm-transition-normal: 0.2s ease-in-out;
+        --adm-transition-slow: 0.3s ease-in-out;
+    }
+
+    .low-memory .adm-card {
+        box-shadow: none;
+    }
+
+    .low-memory .adm-button::before {
+        display: none;
+    }
+}
+
+/* 高端设备增强 */
+@media (min-device-memory: 4gb) {
+    .high-performance {
+        --adm-transition-fast: 0.15s ease-in-out;
+        --adm-transition-normal: 0.3s ease-in-out;
+        --adm-transition-slow: 0.5s ease-in-out;
+    }
+
+    .high-performance .adm-card {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+}
+
+/* ===== 无障碍优化 ===== */
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .high-contrast {
+        --adm-color-primary: #0000ff;
+        --adm-color-success: #008000;
+        --adm-color-warning: #ff8000;
+        --adm-color-danger: #ff0000;
+    }
+
+    .high-contrast .adm-card {
+        border: 2px solid #000;
+    }
+
+    .high-contrast .adm-button {
+        border: 2px solid currentColor;
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    .reduced-motion * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== 横屏优化 ===== */
+
+/* 横屏模式优化 */
+@media (orientation: landscape) {
+    .landscape-optimized {
+        --adm-spacing-lg: 14px;
+        --adm-spacing-xl: 18px;
+    }
+
+    .landscape-optimized .adm-nav-bar {
+        padding: var(--adm-spacing-sm) var(--adm-spacing-lg);
+    }
+
+    .landscape-optimized .adm-nav-bar-title {
+        font-size: 16px;
+    }
+
+    .landscape-optimized .adm-card {
+        margin-bottom: var(--adm-spacing-sm);
+    }
+
+    .landscape-optimized .adm-card-body {
+        padding: var(--adm-spacing-md);
+    }
+
+    .landscape-optimized .test-result-card .metric-value {
+        font-size: 20px;
+    }
+
+    .landscape-optimized .test-result-card .metric {
+        padding: var(--adm-spacing-md);
+    }
+}
+
+/* ===== 设备方向检测 ===== */
+
+/* 竖屏模式 */
+@media (orientation: portrait) {
+    .portrait-mode {
+        /* 竖屏特定样式 */
+    }
+}
+
+/* 横屏模式 */
+@media (orientation: landscape) {
+    .landscape-mode {
+        /* 横屏特定样式 */
+    }
+}
+
+/* ===== 设备像素比优化 ===== */
+
+/* 1x像素比 */
+@media (-webkit-device-pixel-ratio: 1) {
+    .pixel-ratio-1x {
+        /* 标准分辨率优化 */
+    }
+}
+
+/* 2x像素比 */
+@media (-webkit-device-pixel-ratio: 2) {
+    .pixel-ratio-2x {
+        /* 高分辨率优化 */
+    }
+}
+
+/* 3x像素比 */
+@media (-webkit-device-pixel-ratio: 3) {
+    .pixel-ratio-3x {
+        /* 超高分辨率优化 */
+    }
+}
+
+/* ===== 设备类型检测 ===== */
+
+/* 触摸设备 */
+@media (hover: none) and (pointer: coarse) {
+    .touch-device {
+        --adm-spacing-lg: 18px;
+    }
+
+    .touch-device .adm-button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .touch-device .adm-list-item {
+        min-height: 44px;
+    }
+}
+
+/* 鼠标设备 */
+@media (hover: hover) and (pointer: fine) {
+    .mouse-device {
+        --adm-spacing-lg: 16px;
+    }
+
+    .mouse-device .adm-button:hover {
+        transform: translateY(-1px);
+    }
+
+    .mouse-device .adm-card:hover {
+        transform: translateY(-2px);
+    }
+}
+
+/* ===== 网络条件优化 ===== */
+
+/* 慢速网络优化 */
+@media (prefers-reduced-data: reduce) {
+    .slow-network {
+        --adm-transition-fast: 0.1s ease-in-out;
+        --adm-transition-normal: 0.2s ease-in-out;
+        --adm-transition-slow: 0.3s ease-in-out;
+    }
+
+    .slow-network .adm-card {
+        box-shadow: none;
+    }
+
+    .slow-network .adm-button::before {
+        display: none;
+    }
+
+    .slow-network .test-result-card::before {
+        display: none;
+    }
+}
+
+/* ===== 电池优化 ===== */
+
+/* 低电量模式 */
+@media (prefers-reduced-data: reduce) {
+    .low-battery {
+        --adm-transition-fast: 0.1s ease-in-out;
+        --adm-transition-normal: 0.2s ease-in-out;
+        --adm-transition-slow: 0.3s ease-in-out;
+    }
+
+    .low-battery .adm-card {
+        box-shadow: none;
+    }
+
+    .low-battery .adm-button::before {
+        display: none;
+    }
+}
+
+/* ===== 自定义设备检测 ===== */
+
+/* 设备检测JavaScript辅助类 */
+.device-detected-iphone {
+    /* iPhone检测到的样式 */
+}
+
+.device-detected-android {
+    /* Android检测到的样式 */
+}
+
+.device-detected-tablet {
+    /* 平板检测到的样式 */
+}
+
+.device-detected-desktop {
+    /* 桌面检测到的样式 */
+}
+
+/* ===== 响应式图片优化 ===== */
+
+/* 不同像素比的图片优化 */
+@media (-webkit-device-pixel-ratio: 1) {
+    .optimized-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+@media (-webkit-device-pixel-ratio: 2) {
+    .optimized-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+@media (-webkit-device-pixel-ratio: 3) {
+    .optimized-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* ===== 字体渲染优化 ===== */
+
+/* iOS字体渲染 */
+@supports (-webkit-touch-callout: none) {
+    .ios-font-rendering {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+/* Android字体渲染 */
+@supports not (-webkit-touch-callout: none) {
+    .android-font-rendering {
+        font-smooth: never;
+        -webkit-font-smoothing: none;
+        text-rendering: optimizeSpeed;
+    }
+}
+
+/* ===== 滚动优化 ===== */
+
+/* iOS滚动优化 */
+@supports (-webkit-touch-callout: none) {
+    .ios-scroll {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+}
+
+/* Android滚动优化 */
+@supports not (-webkit-touch-callout: none) {
+    .android-scroll {
+        scroll-behavior: smooth;
+    }
+}
+
+/* ===== 输入优化 ===== */
+
+/* 虚拟键盘优化 */
+@media (max-height: 600px) {
+    .virtual-keyboard {
+        --adm-spacing-lg: 12px;
+        --adm-spacing-xl: 16px;
+    }
+
+    .virtual-keyboard .adm-nav-bar {
+        padding: var(--adm-spacing-sm) var(--adm-spacing-md);
+    }
+
+    .virtual-keyboard .adm-nav-bar-title {
+        font-size: 16px;
+    }
+}
+
+/* ===== 设备特定修复 ===== */
+
+/* 修复特定设备的已知问题 */
+.device-fix-iphone-se {
+    /* iPhone SE特定修复 */
+}
+
+.device-fix-iphone-x {
+    /* iPhone X系列特定修复 */
+}
+
+.device-fix-android-notch {
+    /* Android刘海屏修复 */
+}
+
+.device-fix-android-gesture {
+    /* Android手势导航修复 */
+}

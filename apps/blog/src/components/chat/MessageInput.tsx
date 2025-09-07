@@ -41,7 +41,7 @@ export default function MessageInput({
     };
 
     return (
-        <div className="bg-white border-t border-gray-200 p-4">
+        <div className="bg-space-900/40 backdrop-blur-xl border-t border-cosmic-500/20 p-4">
             <div className="flex items-end space-x-3 max-w-4xl mx-auto">
                 <div className="flex-1">
                     <textarea
@@ -52,7 +52,7 @@ export default function MessageInput({
                         onInput={handleInput}
                         placeholder={placeholder}
                         disabled={loading}
-                        className="w-full resize-none border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="w-full resize-none border border-cosmic-500/30 rounded-xl px-4 py-3 bg-space-800/60 backdrop-blur-sm text-space-200 placeholder-space-500 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 focus:border-cosmic-400/50 disabled:bg-space-700/60 disabled:cursor-not-allowed transition-all duration-300"
                         style={{ minHeight: '44px', maxHeight: '200px' }}
                         rows={1}
                     />
@@ -61,7 +61,7 @@ export default function MessageInput({
                 <button
                     onClick={handleSend}
                     disabled={!message.trim() || loading}
-                    className="bg-blue-500 text-white rounded-lg px-6 py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                    className="bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white rounded-xl px-6 py-3 hover:from-cosmic-700 hover:to-nebula-700 focus:outline-none focus:ring-2 focus:ring-cosmic-500/20 focus:ring-offset-2 focus:ring-offset-space-900 disabled:bg-space-700 disabled:cursor-not-allowed transition-all duration-300 shadow-cosmic"
                 >
                     {loading ? (
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -71,7 +71,7 @@ export default function MessageInput({
                 </button>
             </div>
 
-            <p className="text-xs text-gray-500 text-center mt-2">
+            <p className="text-xs text-space-400 text-center mt-2">
                 按 Enter 发送，Shift + Enter 换行
             </p>
         </div>

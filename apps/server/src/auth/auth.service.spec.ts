@@ -6,7 +6,8 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
 
-jest.mock('bcrypt');
+import { vi, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
+vi.mock('bcrypt');
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -15,21 +16,21 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const mockUserService = {
-      findByUsernameOrEmail: jest.fn(),
-      findByEmail: jest.fn(),
-      findByUsername: jest.fn(),
-      create: jest.fn(),
-      findOne: jest.fn(),
-      update: jest.fn(),
-      updateRefreshToken: jest.fn(),
+      findByUsernameOrEmail: vi.fn(),
+      findByEmail: vi.fn(),
+      findByUsername: vi.fn(),
+      create: vi.fn(),
+      findOne: vi.fn(),
+      update: vi.fn(),
+      updateRefreshToken: vi.fn(),
     };
 
     const mockJwtService = {
-      signAsync: jest.fn(),
+      signAsync: vi.fn(),
     };
 
     const mockConfigService = {
-      get: jest.fn(),
+      get: vi.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -46,7 +47,7 @@ describe('AuthService', () => {
     jwtService = module.get<JwtService>(JwtService);
 
     // 模拟配置服务返回值
-    (mockConfigService.get as jest.Mock).mockImplementation(key => {
+    (mockConfigService.get as vi.Mock).mockImplementation(key => {
       if (key === 'JWT_SECRET') return 'test-secret';
       if (key === 'JWT_REFRESH_SECRET') return 'test-refresh-secret';
       if (key === 'JWT_ACCESS_EXPIRATION') return '15m';
@@ -56,7 +57,7 @@ describe('AuthService', () => {
     });
 
     // 模拟 getTokens 方法
-    jest.spyOn(service as any, 'getTokens').mockResolvedValue({
+    vi.spyOn(service as any, 'getTokens').mockResolvedValue({
       accessToken: 'test-access-token',
       refreshToken: 'test-refresh-token',
     });
@@ -69,7 +70,7 @@ describe('AuthService', () => {
   describe('register', () => {
     it('should throw ConflictException if user already exists', async () => {
       // 模拟用户已存在
-      (userService.findByEmail as jest.Mock).mockResolvedValue({ id: 'exists' });
+      (userService.findByEmail as vi.Mock).mockResolvedValue({ id: 'exists' });
 
       await expect(
         service.register({
@@ -82,14 +83,14 @@ describe('AuthService', () => {
 
     it('should create a new user with hashed password', async () => {
       // 模拟用户不存在
-      (userService.findByEmail as jest.Mock).mockResolvedValue(null);
-      (userService.findByUsername as jest.Mock).mockResolvedValue(null);
+      (userService.findByEmail as vi.Mock).mockResolvedValue(null);
+      (userService.findByUsername as vi.Mock).mockResolvedValue(null);
 
       // 模拟密码哈希
-      (bcrypt.hash as jest.Mock).mockResolvedValue('hashed_password');
+      (bcrypt.hash as vi.Mock).mockResolvedValue('hashed_password');
 
       // 模拟用户创建
-      (userService.create as jest.Mock).mockResolvedValue({
+      (userService.create as vi.Mock).mockResolvedValue({
         id: 'new-user-id',
         email: 'new@example.com',
         username: 'newuser',

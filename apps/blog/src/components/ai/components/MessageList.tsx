@@ -161,7 +161,7 @@ export const MessageList: React.FC<MessageListProps> = ({
     return (
         <div
             ref={messagesContainerRef}
-            className={`flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent ${className}`}
+            className={`flex-1 overflow-auto scrollbar-thin scrollbar-thumb-space-600 scrollbar-track-transparent ${className}`}
             role="log"
             aria-live="polite"
             aria-label="Chat messages"
@@ -175,13 +175,13 @@ export const MessageList: React.FC<MessageListProps> = ({
                         className="flex-1 flex items-center justify-center p-8"
                     >
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="w-16 h-16 bg-gradient-to-r from-cosmic-500 to-nebula-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-cosmic">
                                 <span className="text-2xl">💬</span>
                             </div>
-                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                            <h3 className="text-lg font-medium text-space-200 mb-2">
                                 Start a conversation
                             </h3>
-                            <p className="text-gray-500 dark:text-gray-400 max-w-sm">
+                            <p className="text-space-400 max-w-sm">
                                 Ask me anything! I can help with code, writing, analysis, and more.
                             </p>
                         </div>
@@ -238,7 +238,7 @@ export const MessageList: React.FC<MessageListProps> = ({
                                 {[0, 1, 2].map((i) => (
                                     <motion.div
                                         key={i}
-                                        className="w-2 h-2 bg-blue-500 rounded-full"
+                                        className="w-2 h-2 bg-cosmic-400 rounded-full"
                                         animate={{
                                             scale: [1, 1.2, 1],
                                             opacity: [0.7, 1, 0.7]
@@ -251,7 +251,7 @@ export const MessageList: React.FC<MessageListProps> = ({
                                     />
                                 ))}
                             </div>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                            <span className="text-sm text-space-400">
                                 AI is thinking...
                             </span>
                         </motion.div>

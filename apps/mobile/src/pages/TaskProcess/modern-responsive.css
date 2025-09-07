@@ -1,0 +1,270 @@
+/**
+ * 现代CSS响应式设计方案
+ * 使用最新的CSS特性，同时保留@media查询作为兼容
+ */
+
+/* ========== 1. CSS自定义属性 (CSS Variables) ========== */
+:root {
+    /* 流体字体大小 - 使用clamp()函数 */
+    --font-size-xs: clamp(0.75rem, 2vw, 0.875rem);
+    --font-size-sm: clamp(0.875rem, 2.5vw, 1rem);
+    --font-size-base: clamp(1rem, 3vw, 1.125rem);
+    --font-size-lg: clamp(1.125rem, 3.5vw, 1.25rem);
+    --font-size-xl: clamp(1.25rem, 4vw, 1.5rem);
+    --font-size-2xl: clamp(1.5rem, 5vw, 2rem);
+
+    /* 流体间距 */
+    --spacing-xs: clamp(0.25rem, 1vw, 0.5rem);
+    --spacing-sm: clamp(0.5rem, 2vw, 1rem);
+    --spacing-md: clamp(1rem, 3vw, 1.5rem);
+    --spacing-lg: clamp(1.5rem, 4vw, 2rem);
+    --spacing-xl: clamp(2rem, 5vw, 3rem);
+
+    /* 流体圆角 */
+    --radius-sm: clamp(0.25rem, 1vw, 0.5rem);
+    --radius-md: clamp(0.5rem, 2vw, 1rem);
+    --radius-lg: clamp(1rem, 3vw, 1.5rem);
+
+    /* 响应式网格列数 */
+    --grid-columns: 1;
+    --grid-gap: var(--spacing-md);
+
+    /* 响应式容器宽度 */
+    --container-width: min(100% - 2rem, 1200px);
+    --content-width: min(100% - 1rem, 800px);
+}
+
+/* ========== 2. Container Queries (现代浏览器) ========== */
+.task-container {
+    container-type: inline-size;
+    container-name: task-layout;
+}
+
+/* 当容器宽度 >= 600px 时使用双列 */
+@container task-layout (min-width: 600px) {
+    .task-grid-modern {
+        --grid-columns: 2;
+    }
+}
+
+/* 当容器宽度 >= 900px 时使用三列 */
+@container task-layout (min-width: 900px) {
+    .task-grid-modern {
+        --grid-columns: 3;
+    }
+}
+
+/* ========== 3. 现代网格布局 ========== */
+.task-grid-modern {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    gap: var(--grid-gap);
+    padding: var(--spacing-md);
+}
+
+/* 自适应网格 - 不依赖媒体查询 */
+.task-grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+}
+
+/* ========== 4. 流体排版 ========== */
+.task-title-modern {
+    font-size: var(--font-size-xl);
+    line-height: 1.2;
+    margin-block-end: var(--spacing-sm);
+}
+
+.task-content-modern {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    padding: var(--spacing-md);
+}
+
+/* ========== 5. 逻辑属性 (支持RTL) ========== */
+.task-card-modern {
+    padding-block: var(--spacing-md);
+    padding-inline: var(--spacing-lg);
+    margin-block-end: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border-inline-start: 4px solid var(--color-primary, #1890ff);
+}
+
+/* ========== 6. 现代Flexbox布局 ========== */
+.task-layout-modern {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+}
+
+.task-item-modern {
+    flex: 1 1 min(300px, 100%);
+    min-width: 0;
+    /* 防止flex item溢出 */
+}
+
+/* ========== 7. 响应式按钮 ========== */
+.button-modern {
+    /* 使用逻辑属性 */
+    padding-block: var(--spacing-sm);
+    padding-inline: var(--spacing-lg);
+
+    /* 流体字体大小 */
+    font-size: var(--font-size-base);
+
+    /* 自适应圆角 */
+    border-radius: var(--radius-md);
+
+    /* 现代触摸目标 */
+    min-block-size: 44px;
+    /* 最小触摸目标 */
+    min-inline-size: 44px;
+}
+
+/* ========== 8. 现代卡片布局 ========== */
+.card-modern {
+    container-type: inline-size;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    background: white;
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+@container (min-width: 400px) {
+    .card-modern {
+        padding: var(--spacing-lg);
+    }
+}
+
+/* ========== 9. 现代导航布局 ========== */
+.nav-modern {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-items-modern {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+/* ========== 10. 兼容性回退 ========== */
+/* 为不支持现代特性的浏览器提供回退 */
+
+/* 回退：不支持clamp()的浏览器 */
+@supports not (font-size: clamp(1rem, 4vw, 1.5rem)) {
+    :root {
+        --font-size-base: 1rem;
+        --font-size-lg: 1.25rem;
+        --font-size-xl: 1.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        :root {
+            --font-size-base: 1.125rem;
+            --font-size-lg: 1.375rem;
+            --font-size-xl: 1.75rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+        }
+    }
+}
+
+/* 回退：不支持Container Queries的浏览器 */
+@supports not (container-type: inline-size) {
+    .task-grid-modern {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    @media (min-width: 600px) {
+        .task-grid-modern {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 900px) {
+        .task-grid-modern {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
+/* 回退：不支持逻辑属性的浏览器 */
+@supports not (padding-block: 1rem) {
+    .task-card-modern {
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        padding-left: var(--spacing-lg);
+        padding-right: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+        border-left: 4px solid var(--color-primary, #1890ff);
+    }
+
+    .button-modern {
+        padding-top: var(--spacing-sm);
+        padding-bottom: var(--spacing-sm);
+        padding-left: var(--spacing-lg);
+        padding-right: var(--spacing-lg);
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* ========== 11. 现代动画 ========== */
+@media (prefers-reduced-motion: no-preference) {
+    .task-card-modern {
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .task-card-modern:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 4px 6px rgba(0, 0, 0, 0.1),
+            0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+}
+
+/* ========== 12. 暗色模式支持 ========== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --text-primary: #ffffff;
+        --text-secondary: #b3b3b3;
+    }
+
+    .card-modern {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        box-shadow:
+            0 1px 3px rgba(255, 255, 255, 0.1),
+            0 1px 2px rgba(255, 255, 255, 0.06);
+    }
+}
+
+/* ========== 13. 高对比度模式支持 ========== */
+@media (prefers-contrast: high) {
+    .task-card-modern {
+        border: 2px solid;
+    }
+
+    .button-modern {
+        border: 2px solid;
+        font-weight: bold;
+    }
+}

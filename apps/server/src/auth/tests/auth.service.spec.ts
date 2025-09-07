@@ -5,8 +5,9 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../../users/users.service';
 import { AuthService } from '../auth.service';
 
+import { vi, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
 // 正确地模拟bcrypt
-jest.mock('bcrypt');
+vi.mock('bcrypt');
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -17,20 +18,20 @@ describe('AuthService', () => {
     beforeEach(async () => {
         // 创建所有依赖的Mock
         const mockUsersService = {
-            findByUsernameOrEmail: jest.fn(),
-            findOne: jest.fn(),
-            updateRefreshToken: jest.fn(),
-            findByEmail: jest.fn(),
-            findByUsername: jest.fn(),
-            create: jest.fn()
+            findByUsernameOrEmail: vi.fn(),
+            findOne: vi.fn(),
+            updateRefreshToken: vi.fn(),
+            findByEmail: vi.fn(),
+            findByUsername: vi.fn(),
+            create: vi.fn()
         };
 
         const mockJwtService = {
-            signAsync: jest.fn().mockResolvedValue('test-token'),
+            signAsync: vi.fn().mockResolvedValue('test-token'),
         };
 
         const mockConfigService = {
-            get: jest.fn().mockImplementation((key) => {
+            get: vi.fn().mockImplementation((key) => {
                 if (key === 'JWT_SECRET') return 'test-secret';
                 if (key === 'JWT_REFRESH_SECRET') return 'refresh-secret';
                 return null;
@@ -54,7 +55,7 @@ describe('AuthService', () => {
         configService = module.get<ConfigService>(ConfigService);
 
         // 为 getTokens 方法提供一个简单的实现
-        jest.spyOn(service as any, 'getTokens').mockImplementation(() => {
+        vi.spyOn(service as any, 'getTokens').mockImplementation(() => {
             return {
                 accessToken: 'access-token',
                 refreshToken: 'refresh-token'
@@ -70,7 +71,7 @@ describe('AuthService', () => {
     // 添加validateUser方法测试
     describe('validateUser', () => {
         it('should return null when user is not found', async () => {
-            (usersService.findByUsernameOrEmail as jest.Mock).mockResolvedValue(null);
+            (usersService.findByUsernameOrEmail as vi.Mock).mockResolvedValue(null);
 
             const result = await service.validateUser('nonexistent', 'password');
 
@@ -86,8 +87,8 @@ describe('AuthService', () => {
                 roles: ['user']
             };
 
-            (usersService.findByUsernameOrEmail as jest.Mock).mockResolvedValue(mockUser);
-            (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+            (usersService.findByUsernameOrEmail as vi.Mock).mockResolvedValue(mockUser);
+            (bcrypt.compare as vi.Mock).mockResolvedValue(true);
 
             const result = await service.validateUser('testuser', 'correct_password');
 
@@ -108,8 +109,8 @@ describe('AuthService', () => {
                 password: 'hashed_password'
             };
 
-            (usersService.findByUsernameOrEmail as jest.Mock).mockResolvedValue(mockUser);
-            (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+            (usersService.findByUsernameOrEmail as vi.Mock).mockResolvedValue(mockUser);
+            (bcrypt.compare as vi.Mock).mockResolvedValue(true);
 
             const result = await service.login({
                 usernameOrEmail: 'testuser',

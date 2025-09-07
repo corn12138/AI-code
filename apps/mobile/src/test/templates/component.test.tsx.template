@@ -1,0 +1,115 @@
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ComponentName } from '../ComponentName';
+
+// Mock hooks
+vi.mock('@/hooks/useHookName', () => ({
+  useHookName: vi.fn(() => ({
+    // 默认返回值
+  })),
+}));
+
+// Mock API服务
+vi.mock('@/services/serviceName', () => ({
+  serviceFunction: vi.fn(),
+}));
+
+// Mock 路由
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+
+describe('ComponentName组件', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('应该正确渲染组件', () => {
+    render(<ComponentName />);
+    expect(screen.getByText('组件标题')).toBeInTheDocument();
+  });
+
+  it('应该处理用户交互', () => {
+    const handleClick = vi.fn();
+    render(<ComponentName onClick={handleClick} />);
+    
+    const button = screen.getByRole('button');
+    fireEvent.click(button);
+    
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('应该显示加载状态', () => {
+    render(<ComponentName loading={true} />);
+    expect(screen.getByText('加载中...')).toBeInTheDocument();
+  });
+
+  it('应该处理错误状态', () => {
+    render(<ComponentName error="错误信息" />);
+    expect(screen.getByText('错误信息')).toBeInTheDocument();
+  });
+
+  it('应该处理异步操作', async () => {
+    render(<ComponentName />);
+    
+    const button = screen.getByRole('button', { name: /提交/i });
+    fireEvent.click(button);
+    
+    await waitFor(() => {
+      expect(screen.getByText('操作成功')).toBeInTheDocument();
+    });
+  });
+
+  it('应该支持不同的props', () => {
+    const { rerender } = render(<ComponentName variant="primary" />);
+    expect(screen.getByRole('button')).toHaveClass('btn-primary');
+
+    rerender(<ComponentName variant="secondary" />);
+    expect(screen.getByRole('button')).toHaveClass('btn-secondary');
+  });
+
+  it('应该在禁用状态下不响应点击', () => {
+    const handleClick = vi.fn();
+    render(<ComponentName disabled onClick={handleClick} />);
+    
+    const button = screen.getByRole('button');
+    expect(button).toBeDisabled();
+    
+    fireEvent.click(button);
+    expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it('应该正确传递数据', () => {
+    const testData = { id: 1, name: '测试数据' };
+    render(<ComponentName data={testData} />);
+    
+    expect(screen.getByText('测试数据')).toBeInTheDocument();
+  });
+
+  it('应该处理空数据状态', () => {
+    render(<ComponentName data={null} />);
+    expect(screen.getByText('暂无数据')).toBeInTheDocument();
+  });
+
+  it('应该支持键盘导航', () => {
+    render(<ComponentName />);
+    
+    const button = screen.getByRole('button');
+    button.focus();
+    
+    fireEvent.keyDown(button, { key: 'Enter' });
+    expect(button).toHaveFocus();
+  });
+
+  it('应该支持无障碍功能', () => {
+    render(<ComponentName aria-label="操作按钮" />);
+    
+    const button = screen.getByLabelText('操作按钮');
+    expect(button).toBeInTheDocument();
+  });
+});

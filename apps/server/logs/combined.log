@@ -7454,3 +7454,426 @@
 {"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-24T14:45:56.572Z"}
 {"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-24T14:45:56.572Z"}
 {"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-24T14:45:56.875Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-29T17:07:15.499Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-29T17:07:15.508Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-29T17:07:15.508Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-29T17:07:15.508Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-29T17:07:15.508Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-29T17:07:15.509Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-29T17:07:15.509Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-29T17:07:15.510Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-29T17:07:15.532Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-29T17:07:15.537Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-29T17:07:15.537Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-29T17:07:15.537Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-29T17:07:15.537Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-29T17:07:15.666Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T00:23:09.190Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T00:23:09.199Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T00:23:09.200Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T00:23:09.200Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T00:23:09.200Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T00:23:09.200Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T00:23:09.200Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T00:23:09.201Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T00:23:09.216Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T00:23:09.221Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T00:23:09.221Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T00:23:09.222Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T00:23:09.222Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T00:23:09.343Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:17:43.428Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:17:43.436Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:17:43.437Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:17:43.437Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:17:43.437Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:17:43.438Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:17:43.438Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:17:43.438Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:17:43.456Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:17:43.461Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:17:43.461Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:17:43.461Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:17:43.462Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:17:43.601Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:17:52.899Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:17:52.907Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:17:52.907Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:17:52.907Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:17:52.907Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:17:52.908Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:17:52.908Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:17:52.908Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:17:52.919Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:17:52.924Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:17:52.924Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:17:52.924Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:17:52.924Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:17:53.043Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:24:24.609Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:24:24.616Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:24:24.617Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:24:24.617Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:24:24.617Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:24:24.617Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:24:24.618Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:24:24.618Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:24:24.629Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:24:24.634Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:24:24.634Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:24:24.634Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:24:24.634Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:24:24.791Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:24:40.396Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:24:40.405Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:24:40.405Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:24:40.405Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:24:40.405Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:24:40.406Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:24:40.406Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:24:40.406Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:24:40.416Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:24:40.421Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:24:40.421Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:24:40.421Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:24:40.421Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:24:40.544Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:55:05.637Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:55:05.645Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:55:05.645Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:55:05.646Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:55:05.646Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:55:05.646Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:55:05.646Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:55:05.647Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:55:05.664Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:55:05.669Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:55:05.669Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:55:05.669Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:55:05.669Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:55:05.800Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:55:12.755Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:55:12.764Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:55:12.764Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:55:12.764Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:55:12.764Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:55:12.765Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:55:12.765Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:55:12.765Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:55:12.775Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:55:12.780Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:55:12.780Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:55:12.780Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:55:12.780Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:55:12.893Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:55:26.991Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:55:26.999Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:55:26.999Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:55:27.000Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:55:27.000Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:55:27.001Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:55:27.001Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:55:27.001Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:55:27.011Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:55:27.016Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:55:27.016Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:55:27.016Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:55:27.016Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:55:27.128Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:56:16.684Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:56:16.693Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:56:16.693Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:56:16.693Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:56:16.694Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:56:16.694Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:56:16.694Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:56:16.695Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:56:16.706Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:56:16.711Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:56:16.711Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:56:16.711Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:56:16.711Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:56:16.827Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:57:47.031Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:57:47.039Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:57:47.039Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:57:47.039Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:57:47.040Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:57:47.040Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:57:47.040Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:57:47.041Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:57:47.050Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:57:47.055Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:57:47.056Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:57:47.056Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:57:47.056Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:57:47.181Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:58:55.444Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:58:55.455Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:58:55.455Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:58:55.455Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:58:55.456Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:58:55.456Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:58:55.456Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:58:55.457Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:58:55.464Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:58:55.469Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:58:55.469Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:58:55.469Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:58:55.469Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:58:55.582Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T14:59:58.610Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T14:59:58.620Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T14:59:58.620Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T14:59:58.621Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T14:59:58.621Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:59:58.621Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T14:59:58.621Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T14:59:58.622Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T14:59:58.630Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T14:59:58.635Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T14:59:58.635Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T14:59:58.635Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T14:59:58.635Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T14:59:58.765Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T15:00:38.830Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:00:38.839Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T15:00:38.840Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T15:00:38.840Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T15:00:38.840Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T15:00:38.840Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T15:00:38.841Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T15:00:38.841Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T15:00:38.850Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T15:00:38.854Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T15:00:38.854Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T15:00:38.855Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T15:00:38.855Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T15:00:38.967Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:00:38.967Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:00:38.967Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:00:38.967Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:00:38.967Z"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","timestamp":"2025-08-30T15:00:38.967Z"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","timestamp":"2025-08-30T15:00:38.967Z"}
+{"context":"InstanceLoader","level":"info","message":"MetricsModule dependencies initialized","timestamp":"2025-08-30T15:00:38.968Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2025-08-30T15:00:38.968Z"}
+{"context":"InstanceLoader","level":"info","message":"UserModule dependencies initialized","timestamp":"2025-08-30T15:00:38.968Z"}
+{"context":"InstanceLoader","level":"info","message":"TagsModule dependencies initialized","timestamp":"2025-08-30T15:00:38.968Z"}
+{"context":"InstanceLoader","level":"info","message":"ArticleModule dependencies initialized","timestamp":"2025-08-30T15:00:38.969Z"}
+{"context":"InstanceLoader","level":"info","message":"LowcodeModule dependencies initialized","timestamp":"2025-08-30T15:00:38.969Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2025-08-30T15:00:38.969Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:","timestamp":"2025-08-30T15:00:38.993Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} route","timestamp":"2025-08-30T15:00:38.993Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/logout, POST} route","timestamp":"2025-08-30T15:00:38.993Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RoutesResolver","level":"info","message":"UserController {/api/users}:","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, DELETE} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RoutesResolver","level":"info","message":"ArticleController {/api/articles}:","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, GET} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, GET} route","timestamp":"2025-08-30T15:00:38.994Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, POST} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, PATCH} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, DELETE} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/publish, POST} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/unpublish, POST} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RoutesResolver","level":"info","message":"LowcodeController {/api/lowcode}:","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, GET} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, GET} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, POST} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, PATCH} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, DELETE} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id/publish, POST} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/preview/:id, GET} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/templates, GET} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/from-template/:templateId, POST} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health/db, GET} route","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RoutesResolver","level":"info","message":"TagsController {/api/tags}:","timestamp":"2025-08-30T15:00:38.995Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags, GET} route","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/:id, GET} route","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"RoutesResolver","level":"info","message":"MetricsController {/api/metrics}:","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/metrics, GET} route","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/metrics/custom, GET} route","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"RoutesResolver","level":"info","message":"PrometheusController {/api/api/metrics}:","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/api/metrics, GET} route","timestamp":"2025-08-30T15:00:38.996Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-08-30T15:00:38.997Z"}
+{"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3001","timestamp":"2025-08-30T15:00:38.999Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-08-30T15:11:00.098Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:11:00.107Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-08-30T15:11:00.107Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-08-30T15:11:00.108Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-08-30T15:11:00.108Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T15:11:00.108Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-08-30T15:11:00.108Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-08-30T15:11:00.109Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-08-30T15:11:00.117Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-08-30T15:11:00.122Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-08-30T15:11:00.122Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-08-30T15:11:00.123Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-08-30T15:11:00.123Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized","timestamp":"2025-08-30T15:11:00.253Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:11:00.253Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:11:00.253Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:11:00.253Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-08-30T15:11:00.253Z"}
+{"context":"InstanceLoader","level":"info","message":"DatabaseModule dependencies initialized","timestamp":"2025-08-30T15:11:00.253Z"}
+{"context":"InstanceLoader","level":"info","message":"HealthModule dependencies initialized","timestamp":"2025-08-30T15:11:00.254Z"}
+{"context":"InstanceLoader","level":"info","message":"MetricsModule dependencies initialized","timestamp":"2025-08-30T15:11:00.254Z"}
+{"context":"InstanceLoader","level":"info","message":"UsersModule dependencies initialized","timestamp":"2025-08-30T15:11:00.254Z"}
+{"context":"InstanceLoader","level":"info","message":"UserModule dependencies initialized","timestamp":"2025-08-30T15:11:00.254Z"}
+{"context":"InstanceLoader","level":"info","message":"TagsModule dependencies initialized","timestamp":"2025-08-30T15:11:00.254Z"}
+{"context":"InstanceLoader","level":"info","message":"ArticleModule dependencies initialized","timestamp":"2025-08-30T15:11:00.255Z"}
+{"context":"InstanceLoader","level":"info","message":"LowcodeModule dependencies initialized","timestamp":"2025-08-30T15:11:00.255Z"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized","timestamp":"2025-08-30T15:11:00.255Z"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/api/auth}:","timestamp":"2025-08-30T15:11:00.274Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/login, POST} route","timestamp":"2025-08-30T15:11:00.275Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/logout, POST} route","timestamp":"2025-08-30T15:11:00.276Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/refresh, POST} route","timestamp":"2025-08-30T15:11:00.276Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/auth/register, POST} route","timestamp":"2025-08-30T15:11:00.276Z"}
+{"context":"RoutesResolver","level":"info","message":"UserController {/api/users}:","timestamp":"2025-08-30T15:11:00.276Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, GET} route","timestamp":"2025-08-30T15:11:00.276Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, PATCH} route","timestamp":"2025-08-30T15:11:00.276Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/:id, GET} route","timestamp":"2025-08-30T15:11:00.276Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/users/me, DELETE} route","timestamp":"2025-08-30T15:11:00.277Z"}
+{"context":"RoutesResolver","level":"info","message":"ArticleController {/api/articles}:","timestamp":"2025-08-30T15:11:00.277Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, GET} route","timestamp":"2025-08-30T15:11:00.277Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, GET} route","timestamp":"2025-08-30T15:11:00.277Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles, POST} route","timestamp":"2025-08-30T15:11:00.277Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, PATCH} route","timestamp":"2025-08-30T15:11:00.277Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id, DELETE} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/publish, POST} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/articles/:id/unpublish, POST} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RoutesResolver","level":"info","message":"LowcodeController {/api/lowcode}:","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, GET} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, GET} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages, POST} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, PATCH} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id, DELETE} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/:id/publish, POST} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/preview/:id, GET} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/templates, GET} route","timestamp":"2025-08-30T15:11:00.278Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/lowcode/pages/from-template/:templateId, POST} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RoutesResolver","level":"info","message":"HealthController {/api/health}:","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/health/db, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RoutesResolver","level":"info","message":"TagsController {/api/tags}:","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/:id, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/tags/slug/:slug, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RoutesResolver","level":"info","message":"MetricsController {/api/metrics}:","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/metrics, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/metrics/custom, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RoutesResolver","level":"info","message":"PrometheusController {/api/api/metrics}:","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/api/api/metrics, GET} route","timestamp":"2025-08-30T15:11:00.279Z"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started","timestamp":"2025-08-30T15:11:00.281Z"}
+{"context":"Bootstrap","level":"info","message":"应用已启动: http://[::1]:3001","timestamp":"2025-08-30T15:11:00.282Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/health 200 - 26ms","timestamp":"2025-08-30T15:11:34.163Z"}
+{"context":"ResponseTransform","level":"info","message":"GET /api/metrics 200 - 2ms","timestamp":"2025-08-30T15:11:54.528Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-09-05T13:36:32.181Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-09-05T13:36:32.190Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-09-05T13:36:32.190Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-09-05T13:36:32.190Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-09-05T13:36:32.190Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T13:36:32.191Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T13:36:32.191Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-09-05T13:36:32.191Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-09-05T13:36:32.208Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-09-05T13:36:32.212Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-09-05T13:36:32.213Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-09-05T13:36:32.213Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-09-05T13:36:32.213Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (1)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:32.218Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (2)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:35.222Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (3)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:38.225Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (4)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:41.228Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (5)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:44.231Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (6)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:47.234Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (7)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:50.239Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (8)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:53.241Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (9)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:56.246Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (10)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T13:36:59.250Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-09-05T14:42:44.568Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-09-05T14:42:44.575Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-09-05T14:42:44.576Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-09-05T14:42:44.576Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-09-05T14:42:44.576Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T14:42:44.576Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T14:42:44.577Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-09-05T14:42:44.577Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-09-05T14:42:44.591Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-09-05T14:42:44.596Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-09-05T14:42:44.596Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-09-05T14:42:44.596Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-09-05T14:42:44.596Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (1)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:42:44.599Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (2)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:42:47.602Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (3)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:42:50.605Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (4)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:42:53.611Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (5)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:42:56.615Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (6)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:42:59.622Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (7)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:43:02.626Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (8)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:43:05.629Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (9)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:43:08.639Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (10)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-05T14:43:11.647Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-09-05T15:12:44.023Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-09-05T15:12:44.032Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-09-05T15:12:44.032Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-09-05T15:12:44.032Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-09-05T15:12:44.032Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T15:12:44.033Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T15:12:44.033Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-09-05T15:12:44.033Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-09-05T15:12:44.048Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-09-05T15:12:44.053Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-09-05T15:12:44.053Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-09-05T15:12:44.053Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-09-05T15:12:44.053Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (1)...","stack":["Error: read ECONNRESET\n    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)"],"timestamp":"2025-09-05T15:12:44.070Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (2)...","stack":["Error: read ECONNRESET\n    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)"],"timestamp":"2025-09-05T15:12:47.088Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (3)...","stack":["Error: read ECONNRESET\n    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)"],"timestamp":"2025-09-05T15:12:50.104Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (4)...","stack":["Error: read ECONNRESET\n    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)"],"timestamp":"2025-09-05T15:12:53.119Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (5)...","stack":["Error: read ECONNRESET\n    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)"],"timestamp":"2025-09-05T15:12:56.134Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-09-05T15:14:08.041Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-09-05T15:14:08.051Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-09-05T15:14:08.051Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-09-05T15:14:08.052Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-09-05T15:14:08.052Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T15:14:08.052Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-05T15:14:08.052Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-09-05T15:14:08.053Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-09-05T15:14:08.068Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-09-05T15:14:08.073Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-09-05T15:14:08.073Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-09-05T15:14:08.073Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-09-05T15:14:08.073Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (1)...","stack":["Error: read ECONNRESET\n    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)"],"timestamp":"2025-09-05T15:14:08.091Z"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application...","timestamp":"2025-09-06T14:02:40.952Z"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized","timestamp":"2025-09-06T14:02:40.961Z"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized","timestamp":"2025-09-06T14:02:40.961Z"}
+{"context":"InstanceLoader","level":"info","message":"PrometheusModule dependencies initialized","timestamp":"2025-09-06T14:02:40.962Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized","timestamp":"2025-09-06T14:02:40.962Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-06T14:02:40.962Z"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized","timestamp":"2025-09-06T14:02:40.962Z"}
+{"context":"DatabaseModule","level":"info","message":"通过SSH隧道连接远程数据库: localhost:6543/blogdb (转发到华为云5432端口)","timestamp":"2025-09-06T14:02:40.963Z"}
+{"context":"InstanceLoader","level":"info","message":"CommonModule dependencies initialized","timestamp":"2025-09-06T14:02:40.979Z"}
+{"context":"InstanceLoader","level":"info","message":"ThrottlerModule dependencies initialized","timestamp":"2025-09-06T14:02:40.984Z"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized","timestamp":"2025-09-06T14:02:40.984Z"}
+{"context":"InstanceLoader","level":"info","message":"CacheModule dependencies initialized","timestamp":"2025-09-06T14:02:40.984Z"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized","timestamp":"2025-09-06T14:02:40.984Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (1)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:02:40.987Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (2)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:02:43.990Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (3)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:02:46.992Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (4)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:02:49.997Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (5)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:02:53.000Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (6)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:02:56.004Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (7)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:02:59.009Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (8)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:03:02.013Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (9)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:03:05.018Z"}
+{"context":"TypeOrmModule","level":"error","message":"Unable to connect to the database. Retrying (10)...","stack":["AggregateError: \n    at internalConnectMultiple (node:net:1139:18)\n    at afterConnectMultiple (node:net:1714:7)"],"timestamp":"2025-09-06T14:03:08.022Z"}

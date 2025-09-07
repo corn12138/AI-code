@@ -1,0 +1,22 @@
+{
+  "cache": {
+    "dir": ".vitest",
+    "include": [
+      "**/*.{test,spec}.{js,ts,jsx,tsx}"
+    ],
+    "exclude": [
+      "node_modules",
+      "dist",
+      "coverage"
+    ]
+  },
+  "pool": "forks",
+  "poolOptions": {
+    "forks": {
+      "singleFork": true
+    }
+  },
+  "maxConcurrency": 4,
+  "testTimeout": 10000,
+  "hookTimeout": 10000
+}

@@ -5,6 +5,7 @@ import { UsersService } from '../users/users.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
+import { vi, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
 describe('AuthController', () => {
     let controller: AuthController;
     let authService: AuthService;
@@ -13,20 +14,20 @@ describe('AuthController', () => {
     beforeEach(async () => {
         // 创建模拟服务
         const mockAuthService = {
-            login: jest.fn().mockResolvedValue({
+            login: vi.fn().mockResolvedValue({
                 accessToken: 'test-access-token',
                 refreshToken: 'test-refresh-token',
                 user: { id: '1', username: 'testuser' }
             }),
-            logout: jest.fn().mockResolvedValue({ success: true }),
-            refreshTokens: jest.fn().mockResolvedValue({
+            logout: vi.fn().mockResolvedValue({ success: true }),
+            refreshTokens: vi.fn().mockResolvedValue({
                 accessToken: 'new-access-token',
                 refreshToken: 'new-refresh-token'
             })
         };
 
         const mockUsersService = {
-            findOne: jest.fn().mockResolvedValue({
+            findOne: vi.fn().mockResolvedValue({
                 id: '1',
                 username: 'testuser',
                 email: 'test@example.com',
@@ -39,7 +40,7 @@ describe('AuthController', () => {
             providers: [
                 { provide: AuthService, useValue: mockAuthService },
                 { provide: UsersService, useValue: mockUsersService },
-                { provide: ConfigService, useValue: { get: jest.fn() } }
+                { provide: ConfigService, useValue: { get: vi.fn() } }
             ],
         }).compile();
 
@@ -58,7 +59,7 @@ describe('AuthController', () => {
             // 模拟请求和响应对象
             const loginDto = { usernameOrEmail: 'testuser', password: 'password123' };
             const res = {
-                cookie: jest.fn()
+                cookie: vi.fn()
             } as unknown as Response;
 
             const result = await controller.login(loginDto, res);
@@ -83,7 +84,7 @@ describe('AuthController', () => {
         it('should clear refresh token cookie', async () => {
             // 模拟请求和响应对象
             const req = { user: { userId: '1' } };
-            const res = { clearCookie: jest.fn() } as unknown as Response;
+            const res = { clearCookie: vi.fn() } as unknown as Response;
 
             const result = await controller.logout(req as any, res);
 

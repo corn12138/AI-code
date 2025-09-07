@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
 }
 
 // 获取用户个人统计
-export async function getUserStats(request: NextRequest) {
+async function getUserStats(request: NextRequest) {
     try {
         const user = await requireAuth(request);
         const { searchParams } = new URL(request.url);
@@ -136,7 +136,7 @@ export async function getUserStats(request: NextRequest) {
 }
 
 // 获取模型统计
-export async function getModelStats(request: NextRequest) {
+async function getModelStats(request: NextRequest) {
     try {
         await requireAuth(request);
         const { searchParams } = new URL(request.url);
@@ -172,7 +172,7 @@ export async function getModelStats(request: NextRequest) {
 }
 
 // 获取实时统计
-export async function getRealTimeStats(request: NextRequest) {
+async function getRealTimeStats(request: NextRequest) {
     try {
         const user = await requireAuth(request);
 

@@ -2,12 +2,13 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import * as request from 'supertest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/user.entity';
 
 // 在文件顶部正确模拟 bcrypt
-jest.mock('bcrypt', () => ({
-    compare: jest.fn().mockImplementation(() => Promise.resolve(true)),
+vi.mock('bcrypt', () => ({
+    compare: vi.fn().mockImplementation(() => Promise.resolve(true)),
 }));
 
 describe('AuthController (e2e)', () => {
@@ -21,8 +22,8 @@ describe('AuthController (e2e)', () => {
             // 如果需要，可以重写数据库依赖项，避免测试影响实际数据库
             .overrideProvider(getRepositoryToken(User))
             .useValue({
-                findOne: jest.fn(),
-                save: jest.fn(),
+                findOne: vi.fn(),
+                save: vi.fn(),
             })
             .compile();
 
@@ -42,7 +43,7 @@ describe('AuthController (e2e)', () => {
         it('should return 401 on invalid credentials', () => {
             userRepository.findOne.mockResolvedValue(null);
             // 设置 bcrypt.compare 为 false
-            require('bcrypt').compare.mockResolvedValueOnce(false);
+            vi.mocked(require('bcrypt')).compare.mockResolvedValueOnce(false);
 
             return request(app.getHttpServer())
                 .post('/api/auth/login')
@@ -61,7 +62,7 @@ describe('AuthController (e2e)', () => {
 
             userRepository.findOne.mockResolvedValue(mockUser);
             // 设置 bcrypt.compare 为 true
-            require('bcrypt').compare.mockResolvedValueOnce(true);
+            vi.mocked(require('bcrypt')).compare.mockResolvedValueOnce(true);
 
             return request(app.getHttpServer())
                 .post('/api/auth/login')

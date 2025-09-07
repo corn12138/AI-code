@@ -131,92 +131,37 @@ export const routes: RouteConfig[] = [
                 },
             },
             {
-                path: '/calendar',
-                component: '@/pages/Calendar/Calendar',
+                path: '/task-process',
+                component: '@/pages/TaskProcess/TaskList',
                 meta: {
-                    title: '日历',
+                    title: '任务处理',
                     requireAuth: true,
                 },
             },
-            {
-                path: '/chat',
-                component: '@/pages/Chat/Chat',
-                meta: {
-                    title: '聊天',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/tasks',
-                component: '@/pages/Tasks/Tasks',
-                meta: {
-                    title: '任务',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/meeting',
-                component: '@/pages/Meeting/Meeting',
-                meta: {
-                    title: '会议',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/drive',
-                component: '@/pages/Drive/Drive',
-                meta: {
-                    title: '云盘',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/approval',
-                component: '@/pages/Approval/Approval',
-                meta: {
-                    title: '审批',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/report',
-                component: '@/pages/Report/Report',
-                meta: {
-                    title: '报表',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/hr',
-                component: '@/pages/HR/HR',
-                meta: {
-                    title: '人事',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/finance',
-                component: '@/pages/Finance/Finance',
-                meta: {
-                    title: '财务',
-                    requireAuth: true,
-                },
-            },
-            {
-                path: '/settings',
-                component: '@/pages/Settings/Settings',
-                meta: {
-                    title: '设置',
-                    requireAuth: true,
-                },
-            },
-
             // 详情页
             {
                 path: '/apps/:id',
                 component: '@/pages/Apps/AppDetail',
                 meta: {
                     title: '应用详情',
+                    requireAuth: true,
+                    hidden: true,
+                },
+            },
+            {
+                path: '/task-process/detail/:id',
+                component: '@/pages/TaskProcess/TaskDetail',
+                meta: {
+                    title: '任务详情',
+                    requireAuth: true,
+                    hidden: true,
+                },
+            },
+            {
+                path: '/task-process/file-list',
+                component: '@/pages/TaskProcess/FileList',
+                meta: {
+                    title: '文件列表',
                     requireAuth: true,
                     hidden: true,
                 },

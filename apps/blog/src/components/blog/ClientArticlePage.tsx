@@ -1,8 +1,8 @@
 'use client';
 
+import ClientOnly from '@/components/ClientOnly';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import { Article } from '@/types';
-import { ClientOnly } from '@/utils/hydrationHelper';
 import Image from 'next/image';
 import Link from 'next/link';
 

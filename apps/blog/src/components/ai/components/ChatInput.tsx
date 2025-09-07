@@ -10,9 +10,9 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useCallback, useRef, useState, useEffect } from 'react';
-import { useChat } from '../context/ChatContext';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSpeechRecognition } from '../../../hooks/useSpeechRecognition';
+import { useChat } from '../context/ChatContext';
 
 interface ChatInputProps {
   placeholder?: string;
@@ -35,7 +35,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
 
   const [inputValue, setInputValue] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
-  
+
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -98,7 +98,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   // Handle file upload
   const handleFileUpload = useCallback((files: FileList | File[]) => {
     const fileArray = Array.from(files);
-    
+
     fileArray.forEach(file => {
       // Validate file size (10MB max)
       if (file.size > 10 * 1024 * 1024) {
@@ -108,15 +108,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({
 
       const attachment = {
         id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-        type: file.type.startsWith('image/') 
+        type: file.type.startsWith('image/')
           ? 'image' as const
           : file.type.startsWith('audio/')
-          ? 'audio' as const
-          : file.type.startsWith('video/')
-          ? 'video' as const
-          : file.type.includes('pdf') || file.type.includes('document')
-          ? 'document' as const
-          : 'code' as const,
+            ? 'audio' as const
+            : file.type.startsWith('video/')
+              ? 'video' as const
+              : file.type.includes('pdf') || file.type.includes('document')
+                ? 'document' as const
+                : 'code' as const,
         name: file.name,
         url: URL.createObjectURL(file),
         size: file.size,
@@ -149,7 +149,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    
+
     if (e.dataTransfer.files) {
       handleFileUpload(e.dataTransfer.files);
     }
@@ -179,7 +179,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   const isOverLimit = charCount > maxLength;
 
   return (
-    <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+    <div className="p-4 border-t border-cosmic-500/20 bg-space-900/40 backdrop-blur-xl">
       {/* Attachments Preview */}
       <AnimatePresence>
         {attachments.length > 0 && (
@@ -187,7 +187,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="mb-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
+            className="mb-3 p-3 bg-space-800/40 backdrop-blur-sm rounded-xl border border-cosmic-500/20"
           >
             <div className="flex flex-wrap gap-2">
               {attachments.map((attachment) => (
@@ -196,25 +196,25 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
-                  className="flex items-center space-x-2 bg-white dark:bg-gray-700 rounded-lg p-2 border border-gray-200 dark:border-gray-600 shadow-sm"
+                  className="flex items-center space-x-2 bg-space-800/60 backdrop-blur-sm rounded-lg p-2 border border-cosmic-500/20 shadow-cosmic"
                 >
                   {attachment.type === 'image' ? (
-                    <PhotoIcon className="w-4 h-4 text-blue-500" />
+                    <PhotoIcon className="w-4 h-4 text-cosmic-400" />
                   ) : (
-                    <DocumentTextIcon className="w-4 h-4 text-green-500" />
+                    <DocumentTextIcon className="w-4 h-4 text-nebula-400" />
                   )}
-                  <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[120px]" title={attachment.name}>
+                  <span className="text-sm text-space-300 truncate max-w-[120px]" title={attachment.name}>
                     {attachment.name}
                   </span>
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs text-space-400">
                     {(attachment.size / 1024).toFixed(1)}KB
                   </span>
                   <button
                     onClick={() => removeAttachment(attachment.id)}
-                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                    className="p-1 rounded hover:bg-space-700/60 transition-colors text-space-400 hover:text-cosmic-300"
                     title="Remove attachment"
                   >
-                    <XMarkIcon className="w-3 h-3 text-gray-400" />
+                    <XMarkIcon className="w-3 h-3" />
                   </button>
                 </motion.div>
               ))}
@@ -224,8 +224,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
       </AnimatePresence>
 
       {/* Input Area */}
-      <div 
-        className={`relative ${isDragOver ? 'ring-2 ring-blue-500 ring-opacity-50' : ''}`}
+      <div
+        className={`relative ${isDragOver ? 'ring-2 ring-cosmic-500 ring-opacity-50' : ''}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -239,13 +239,12 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               onKeyDown={handleKeyDown}
               placeholder={isListening ? 'Listening...' : placeholder}
               disabled={isLoading || isListening}
-              className={`w-full resize-none rounded-lg border bg-white dark:bg-gray-800 px-3 py-2 pr-20 text-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 transition-all ${
-                isOverLimit
-                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20'
-                  : isListening
-                  ? 'border-blue-300 focus:border-blue-500 focus:ring-blue-500/20 bg-blue-50 dark:bg-blue-900/20'
-                  : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500/20'
-              } ${isLoading ? 'opacity-50' : ''}`}
+              className={`w-full resize-none rounded-xl border bg-space-800/60 backdrop-blur-sm px-3 py-2 pr-20 text-sm text-space-200 placeholder-space-500 focus:outline-none focus:ring-2 transition-all ${isOverLimit
+                ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20'
+                : isListening
+                  ? 'border-cosmic-400 focus:border-cosmic-500 focus:ring-cosmic-500/20 bg-cosmic-500/20'
+                  : 'border-cosmic-500/30 focus:border-cosmic-400/50 focus:ring-cosmic-500/20'
+                } ${isLoading ? 'opacity-50' : ''}`}
               rows={1}
               style={{
                 minHeight: '44px',
@@ -268,13 +267,13 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                   />
                   <motion.button
                     onClick={() => fileInputRef.current?.click()}
-                    className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
+                    className="p-1.5 rounded-lg hover:bg-space-700/60 transition-colors disabled:opacity-50 text-space-400 hover:text-cosmic-300"
                     title="Attach file"
                     disabled={isLoading}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <DocumentTextIcon className="w-4 h-4 text-gray-400" />
+                    <DocumentTextIcon className="w-4 h-4" />
                   </motion.button>
                 </>
               )}
@@ -282,11 +281,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               {enableVoice && speechSupported && settings.enableSpeech && (
                 <motion.button
                   onClick={toggleVoiceInput}
-                  className={`p-1.5 rounded-lg transition-colors ${
-                    isListening
-                      ? 'bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400'
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-400'
-                  }`}
+                  className={`p-1.5 rounded-lg transition-colors ${isListening
+                    ? 'bg-red-900/40 text-red-300'
+                    : 'hover:bg-space-700/60 text-space-400 hover:text-cosmic-300'
+                    }`}
                   title={isListening ? 'Stop recording' : 'Start voice input'}
                   disabled={isLoading}
                   whileHover={{ scale: 1.1 }}
@@ -306,7 +304,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           <motion.button
             onClick={handleSendMessage}
             disabled={!canSend || isOverLimit}
-            className="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors shadow-sm"
+            className="p-3 bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white rounded-xl hover:from-cosmic-700 hover:to-nebula-700 disabled:bg-space-700 disabled:cursor-not-allowed transition-all duration-300 shadow-cosmic"
             title={isLoading ? 'Sending...' : 'Send message'}
             whileHover={canSend && !isOverLimit ? { scale: 1.05 } : {}}
             whileTap={canSend && !isOverLimit ? { scale: 0.95 } : {}}
@@ -320,9 +318,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         </div>
 
         {/* Character count and model info */}
-        <div className="mt-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-2 flex items-center justify-between text-xs text-space-400">
           <span>Model: {settings.selectedModel}</span>
-          <span className={charCount > maxLength * 0.9 ? 'text-orange-500' : ''}>
+          <span className={charCount > maxLength * 0.9 ? 'text-stardust-400' : ''}>
             {charCount}{maxLength ? `/${maxLength}` : ''} chars
           </span>
         </div>
@@ -335,11 +333,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-blue-500/10 border-2 border-dashed border-blue-500 rounded-lg flex items-center justify-center"
+            className="absolute inset-0 bg-cosmic-500/10 border-2 border-dashed border-cosmic-500 rounded-xl flex items-center justify-center backdrop-blur-sm"
           >
             <div className="text-center">
-              <DocumentTextIcon className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-              <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+              <DocumentTextIcon className="w-8 h-8 text-cosmic-400 mx-auto mb-2" />
+              <p className="text-sm text-cosmic-300 font-medium">
                 Drop files here to attach
               </p>
             </div>

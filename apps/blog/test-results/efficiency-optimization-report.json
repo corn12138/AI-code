@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-08-30T13:56:52.943Z",
+  "performance": {},
+  "testFiles": {
+    "total": 25,
+    "optimized": 0,
+    "needsOptimization": 0
+  },
+  "recommendations": [],
+  "summary": {
+    "totalTests": 0,
+    "averageTime": 0,
+    "slowTests": 0,
+    "optimizationScore": 100
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "participants": [],
+  "modules": [
+    {
+      "id": "basic-1",
+      "name": "测试基础概念",
+      "level": "basic",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "测试基础概念-guide.md",
+          "测试基础概念-examples.md",
+          "测试基础概念-exercises.md"
+        ],
+        "videos": [
+          "测试基础概念-introduction.mp4",
+          "测试基础概念-hands-on.mp4"
+        ],
+        "exercises": [
+          "测试基础概念-practice.tsx",
+          "测试基础概念-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "basic-2",
+      "name": "React组件测试",
+      "level": "basic",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "React组件测试-guide.md",
+          "React组件测试-examples.md",
+          "React组件测试-exercises.md"
+        ],
+        "videos": [
+          "React组件测试-introduction.mp4",
+          "React组件测试-hands-on.mp4"
+        ],
+        "exercises": [
+          "React组件测试-practice.tsx",
+          "React组件测试-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "basic-3",
+      "name": "测试驱动开发",
+      "level": "basic",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "测试驱动开发-guide.md",
+          "测试驱动开发-examples.md",
+          "测试驱动开发-exercises.md"
+        ],
+        "videos": [
+          "测试驱动开发-introduction.mp4",
+          "测试驱动开发-hands-on.mp4"
+        ],
+        "exercises": [
+          "测试驱动开发-practice.tsx",
+          "测试驱动开发-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "basic-4",
+      "name": "测试覆盖率",
+      "level": "basic",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "测试覆盖率-guide.md",
+          "测试覆盖率-examples.md",
+          "测试覆盖率-exercises.md"
+        ],
+        "videos": [
+          "测试覆盖率-introduction.mp4",
+          "测试覆盖率-hands-on.mp4"
+        ],
+        "exercises": [
+          "测试覆盖率-practice.tsx",
+          "测试覆盖率-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "advanced-1",
+      "name": "测试策略设计",
+      "level": "advanced",
+      "duration": 3,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "测试策略设计-guide.md",
+          "测试策略设计-examples.md",
+          "测试策略设计-exercises.md"
+        ],
+        "videos": [
+          "测试策略设计-introduction.mp4",
+          "测试策略设计-hands-on.mp4"
+        ],
+        "exercises": [
+          "测试策略设计-practice.tsx",
+          "测试策略设计-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "advanced-2",
+      "name": "Mock和Stub技术",
+      "level": "advanced",
+      "duration": 3,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "Mock和Stub技术-guide.md",
+          "Mock和Stub技术-examples.md",
+          "Mock和Stub技术-exercises.md"
+        ],
+        "videos": [
+          "Mock和Stub技术-introduction.mp4",
+          "Mock和Stub技术-hands-on.mp4"
+        ],
+        "exercises": [
+          "Mock和Stub技术-practice.tsx",
+          "Mock和Stub技术-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "advanced-3",
+      "name": "集成测试",
+      "level": "advanced",
+      "duration": 3,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "集成测试-guide.md",
+          "集成测试-examples.md",
+          "集成测试-exercises.md"
+        ],
+        "videos": [
+          "集成测试-introduction.mp4",
+          "集成测试-hands-on.mp4"
+        ],
+        "exercises": [
+          "集成测试-practice.tsx",
+          "集成测试-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "advanced-4",
+      "name": "E2E测试",
+      "level": "advanced",
+      "duration": 3,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "E2E测试-guide.md",
+          "E2E测试-examples.md",
+          "E2E测试-exercises.md"
+        ],
+        "videos": [
+          "E2E测试-introduction.mp4",
+          "E2E测试-hands-on.mp4"
+        ],
+        "exercises": [
+          "E2E测试-practice.tsx",
+          "E2E测试-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "tools-1",
+      "name": "测试工具使用",
+      "level": "tools",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "测试工具使用-guide.md",
+          "测试工具使用-examples.md",
+          "测试工具使用-exercises.md"
+        ],
+        "videos": [
+          "测试工具使用-introduction.mp4",
+          "测试工具使用-hands-on.mp4"
+        ],
+        "exercises": [
+          "测试工具使用-practice.tsx",
+          "测试工具使用-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "tools-2",
+      "name": "性能监控",
+      "level": "tools",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "性能监控-guide.md",
+          "性能监控-examples.md",
+          "性能监控-exercises.md"
+        ],
+        "videos": [
+          "性能监控-introduction.mp4",
+          "性能监控-hands-on.mp4"
+        ],
+        "exercises": [
+          "性能监控-practice.tsx",
+          "性能监控-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "tools-3",
+      "name": "自动化测试",
+      "level": "tools",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "自动化测试-guide.md",
+          "自动化测试-examples.md",
+          "自动化测试-exercises.md"
+        ],
+        "videos": [
+          "自动化测试-introduction.mp4",
+          "自动化测试-hands-on.mp4"
+        ],
+        "exercises": [
+          "自动化测试-practice.tsx",
+          "自动化测试-assignment.md"
+        ]
+      }
+    },
+    {
+      "id": "tools-4",
+      "name": "CI/CD集成",
+      "level": "tools",
+      "duration": 2,
+      "status": "pending",
+      "completedBy": [],
+      "materials": {
+        "documents": [
+          "CI/CD集成-guide.md",
+          "CI/CD集成-examples.md",
+          "CI/CD集成-exercises.md"
+        ],
+        "videos": [
+          "CI/CD集成-introduction.mp4",
+          "CI/CD集成-hands-on.mp4"
+        ],
+        "exercises": [
+          "CI/CD集成-practice.tsx",
+          "CI/CD集成-assignment.md"
+        ]
+      }
+    }
+  ],
+  "assessments": [],
+  "lastUpdated": "2025-08-30T14:03:10.996Z"
+}

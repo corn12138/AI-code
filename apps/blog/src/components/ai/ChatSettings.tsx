@@ -68,10 +68,10 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
 
     const getSpeedIcon = (speed: string) => {
         switch (speed) {
-            case 'fast': return <BoltIcon className="w-4 h-4 text-green-500" />;
-            case 'medium': return <ChartBarIcon className="w-4 h-4 text-yellow-500" />;
-            case 'slow': return <ClockIcon className="w-4 h-4 text-red-500" />;
-            default: return <ClockIcon className="w-4 h-4 text-gray-500" />;
+            case 'fast': return <BoltIcon className="w-4 h-4 text-nebula-400" />;
+            case 'medium': return <ChartBarIcon className="w-4 h-4 text-stardust-400" />;
+            case 'slow': return <ClockIcon className="w-4 h-4 text-red-400" />;
+            default: return <ClockIcon className="w-4 h-4 text-space-400" />;
         }
     };
 
@@ -84,7 +84,7 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
         <div className="p-4 space-y-6">
             {/* Model Selection */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-medium text-space-200 mb-3">
                     Model Selection
                 </label>
                 <div className="grid grid-cols-1 gap-3">
@@ -93,34 +93,34 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                             key={modelId}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${selectedModel === modelId
-                                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                            className={`p-3 rounded-xl border-2 transition-all cursor-pointer backdrop-blur-sm ${selectedModel === modelId
+                                ? 'border-cosmic-500 bg-cosmic-500/20 shadow-cosmic'
+                                : 'border-cosmic-500/30 bg-space-800/40 hover:border-cosmic-500/50 hover:bg-space-800/60'
                                 }`}
                             onClick={() => onModelChange(modelId)}
                         >
                             <div className="flex items-center justify-between">
                                 <div className="flex-1">
                                     <div className="flex items-center space-x-2">
-                                        <h4 className="font-medium text-gray-900 dark:text-white">{model.name}</h4>
+                                        <h4 className="font-medium text-space-200">{model.name}</h4>
                                         {getSpeedIcon(model.speed)}
                                         {model.multimodal && (
-                                            <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs rounded-full">
+                                            <span className="px-2 py-1 bg-nebula-500/20 text-nebula-300 text-xs rounded-full border border-nebula-500/30">
                                                 Vision
                                             </span>
                                         )}
                                         {model.tools && (
-                                            <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full">
+                                            <span className="px-2 py-1 bg-stardust-500/20 text-stardust-300 text-xs rounded-full border border-stardust-500/30">
                                                 Tools
                                             </span>
                                         )}
                                     </div>
-                                    <div className="flex items-center space-x-4 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                    <div className="flex items-center space-x-4 mt-1 text-xs text-space-400">
                                         <span>Max: {model.maxTokens.toLocaleString()} tokens</span>
                                         <span>Cost: {formatCost(model.costPerToken)}/token</span>
                                     </div>
                                 </div>
-                                <CpuChipIcon className="w-5 h-5 text-gray-400" />
+                                <CpuChipIcon className="w-5 h-5 text-space-400" />
                             </div>
                         </motion.div>
                     ))}
@@ -129,7 +129,7 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
 
             {/* Temperature Presets */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-medium text-space-200 mb-3">
                     Response Style
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -141,20 +141,20 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                             <motion.button
                                 key={preset.name}
                                 onClick={() => handlePresetSelect(preset.value)}
-                                className={`p-3 rounded-lg border text-left transition-all ${isSelected
-                                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-                                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                className={`p-3 rounded-xl border text-left transition-all backdrop-blur-sm ${isSelected
+                                    ? 'border-cosmic-500 bg-cosmic-500/20 shadow-cosmic'
+                                    : 'border-cosmic-500/30 bg-space-800/40 hover:border-cosmic-500/50 hover:bg-space-800/60'
                                     }`}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
                                 <div className="flex items-center space-x-2">
-                                    <Icon className={`w-4 h-4 ${isSelected ? 'text-blue-500' : 'text-gray-500'}`} />
-                                    <span className={`font-medium ${isSelected ? 'text-blue-900 dark:text-blue-100' : 'text-gray-900 dark:text-white'}`}>
+                                    <Icon className={`w-4 h-4 ${isSelected ? 'text-cosmic-300' : 'text-space-400'}`} />
+                                    <span className={`font-medium ${isSelected ? 'text-cosmic-200' : 'text-space-200'}`}>
                                         {preset.name}
                                     </span>
                                 </div>
-                                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                <p className="text-xs text-space-400 mt-1">
                                     {preset.description}
                                 </p>
                             </motion.button>
@@ -165,7 +165,7 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
 
             {/* Advanced Settings */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-medium text-space-200 mb-3">
                     Advanced Parameters
                 </label>
 
@@ -173,8 +173,8 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                     {/* Temperature Slider */}
                     <div>
                         <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm text-gray-600 dark:text-gray-400">Temperature</label>
-                            <span className="text-sm font-mono text-gray-900 dark:text-white">{temperature.toFixed(2)}</span>
+                            <label className="text-sm text-space-400">Temperature</label>
+                            <span className="text-sm font-mono text-space-200">{temperature.toFixed(2)}</span>
                         </div>
                         <input
                             type="range"
@@ -183,9 +183,9 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                             step="0.1"
                             value={temperature}
                             onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                            className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                            className="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer slider"
                         />
-                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                        <div className="flex justify-between text-xs text-space-400 mt-1">
                             <span>Focused</span>
                             <span>Creative</span>
                         </div>
@@ -194,8 +194,8 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                     {/* Max Tokens */}
                     <div>
                         <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm text-gray-600 dark:text-gray-400">Max Tokens</label>
-                            <span className="text-sm font-mono text-gray-900 dark:text-white">{maxTokens}</span>
+                            <label className="text-sm text-space-400">Max Tokens</label>
+                            <span className="text-sm font-mono text-space-200">{maxTokens}</span>
                         </div>
                         <input
                             type="range"
@@ -204,15 +204,15 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                             step="100"
                             value={maxTokens}
                             onChange={(e) => setMaxTokens(parseInt(e.target.value))}
-                            className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                            className="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer slider"
                         />
                     </div>
 
                     {/* Top P */}
                     <div>
                         <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm text-gray-600 dark:text-gray-400">Top P</label>
-                            <span className="text-sm font-mono text-gray-900 dark:text-white">{topP.toFixed(2)}</span>
+                            <label className="text-sm text-space-400">Top P</label>
+                            <span className="text-sm font-mono text-space-200">{topP.toFixed(2)}</span>
                         </div>
                         <input
                             type="range"
@@ -221,7 +221,7 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                             step="0.05"
                             value={topP}
                             onChange={(e) => setTopP(parseFloat(e.target.value))}
-                            className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                            className="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer slider"
                         />
                     </div>
 
@@ -229,8 +229,8 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <label className="text-sm text-gray-600 dark:text-gray-400">Presence</label>
-                                <span className="text-sm font-mono text-gray-900 dark:text-white">{presencePenalty.toFixed(2)}</span>
+                                <label className="text-sm text-space-400">Presence</label>
+                                <span className="text-sm font-mono text-space-200">{presencePenalty.toFixed(2)}</span>
                             </div>
                             <input
                                 type="range"
@@ -239,14 +239,14 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                                 step="0.1"
                                 value={presencePenalty}
                                 onChange={(e) => setPresencePenalty(parseFloat(e.target.value))}
-                                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                                className="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer slider"
                             />
                         </div>
 
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <label className="text-sm text-gray-600 dark:text-gray-400">Frequency</label>
-                                <span className="text-sm font-mono text-gray-900 dark:text-white">{frequencyPenalty.toFixed(2)}</span>
+                                <label className="text-sm text-space-400">Frequency</label>
+                                <span className="text-sm font-mono text-space-200">{frequencyPenalty.toFixed(2)}</span>
                             </div>
                             <input
                                 type="range"
@@ -255,7 +255,7 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                                 step="0.1"
                                 value={frequencyPenalty}
                                 onChange={(e) => setFrequencyPenalty(parseFloat(e.target.value))}
-                                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                                className="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer slider"
                             />
                         </div>
                     </div>
@@ -264,17 +264,17 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
 
             {/* Feature Toggles */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-medium text-space-200 mb-3">
                     Features
                 </label>
                 <div className="space-y-3">
                     {currentModel?.tools && (
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
-                                <CpuChipIcon className="w-5 h-5 text-gray-500" />
+                                <CpuChipIcon className="w-5 h-5 text-space-400" />
                                 <div>
-                                    <span className="text-sm font-medium text-gray-900 dark:text-white">Tool Usage</span>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">Allow AI to use external tools</p>
+                                    <span className="text-sm font-medium text-space-200">Tool Usage</span>
+                                    <p className="text-xs text-space-400">Allow AI to use external tools</p>
                                 </div>
                             </div>
                             <label className="relative inline-flex items-center cursor-pointer">
@@ -284,17 +284,17 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                                     onChange={(e) => setEnableTools(e.target.checked)}
                                     className="sr-only peer"
                                 />
-                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <div className="w-11 h-6 bg-space-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all border-space-600 peer-checked:bg-cosmic-600"></div>
                             </label>
                         </div>
                     )}
 
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                            <GlobeAltIcon className="w-5 h-5 text-gray-500" />
+                            <GlobeAltIcon className="w-5 h-5 text-space-400" />
                             <div>
-                                <span className="text-sm font-medium text-gray-900 dark:text-white">Conversation Memory</span>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">Remember context across messages</p>
+                                <span className="text-sm font-medium text-space-200">Conversation Memory</span>
+                                <p className="text-xs text-space-400">Remember context across messages</p>
                             </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -304,17 +304,17 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                                 onChange={(e) => setEnableMemory(e.target.checked)}
                                 className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            <div className="w-11 h-6 bg-space-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all border-space-600 peer-checked:bg-cosmic-600"></div>
                         </label>
                     </div>
 
                     {currentModel?.streaming && (
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
-                                <BoltIcon className="w-5 h-5 text-gray-500" />
+                                <BoltIcon className="w-5 h-5 text-space-400" />
                                 <div>
-                                    <span className="text-sm font-medium text-gray-900 dark:text-white">Streaming Response</span>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">Show response as it's generated</p>
+                                    <span className="text-sm font-medium text-space-200">Streaming Response</span>
+                                    <p className="text-xs text-space-400">Show response as it's generated</p>
                                 </div>
                             </div>
                             <label className="relative inline-flex items-center cursor-pointer">
@@ -324,7 +324,7 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
                                     onChange={(e) => setStreamingMode(e.target.checked)}
                                     className="sr-only peer"
                                 />
-                                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <div className="w-11 h-6 bg-space-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all border-space-600 peer-checked:bg-cosmic-600"></div>
                             </label>
                         </div>
                     )}
@@ -333,32 +333,32 @@ export const ChatSettings: React.FC<ChatSettingsProps> = ({
 
             {/* System Prompt */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <label className="block text-sm font-medium text-space-200 mb-3">
                     System Prompt
                 </label>
                 <textarea
                     value={systemPrompt}
                     onChange={(e) => setSystemPrompt(e.target.value)}
                     placeholder="Enter custom system instructions..."
-                    className="w-full h-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    className="w-full h-24 px-3 py-2 border border-cosmic-500/30 rounded-lg bg-space-800/60 backdrop-blur-sm text-space-200 placeholder-space-500 focus:ring-2 focus:ring-cosmic-500/20 focus:border-cosmic-400/50 resize-none"
                 />
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <p className="text-xs text-space-400 mt-1">
                     Custom instructions that will be included with every message
                 </p>
             </div>
 
             {/* Cost Estimation */}
             {currentModel && (
-                <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div className="p-3 bg-space-800/40 backdrop-blur-sm rounded-xl border border-cosmic-500/20">
                     <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <span className="text-sm font-medium text-space-200">
                             Estimated Cost per Message
                         </span>
-                        <span className="text-sm font-mono text-gray-900 dark:text-white">
+                        <span className="text-sm font-mono text-space-200">
                             {formatCost(currentModel.costPerToken * maxTokens)}
                         </span>
                     </div>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-xs text-space-400 mt-1">
                         Based on {maxTokens} tokens at {formatCost(currentModel.costPerToken)} per token
                     </p>
                 </div>

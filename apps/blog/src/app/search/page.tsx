@@ -29,7 +29,7 @@ export default async function SearchPage({ searchParams }: Props) {
 
     return (
         <div className="container-content mt-8 mb-16">
-            <h1 className="text-3xl font-bold mb-6">文章搜索</h1>
+            <h1 className="text-3xl font-bold mb-6 text-space-200">文章搜索</h1>
 
             <div className="mb-8 max-w-2xl">
                 <SearchForm initialQuery={query} />
@@ -37,7 +37,7 @@ export default async function SearchPage({ searchParams }: Props) {
 
             {query && (
                 <div className="mb-6">
-                    <h2 className="text-xl font-semibold mb-2">
+                    <h2 className="text-xl font-semibold mb-2 text-space-200">
                         "{query}" 的搜索结果 ({articles.length})
                     </h2>
                 </div>
@@ -46,7 +46,7 @@ export default async function SearchPage({ searchParams }: Props) {
             {query ? (
                 <ArticleList initialArticles={articles} />
             ) : (
-                <div className="text-center py-16 text-gray-500">
+                <div className="text-center py-16 text-space-500 bg-space-900/40 backdrop-blur-xl border border-cosmic-500/20 rounded-xl">
                     <p>请输入搜索关键词以查找文章</p>
                 </div>
             )}

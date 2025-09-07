@@ -1,0 +1,22 @@
+[
+  {
+    "id": "basic-1",
+    "type": "multiple-choice",
+    "question": "什么是测试金字塔？",
+    "options": [
+      "A. 测试用例的数量金字塔",
+      "B. 测试覆盖率的层次结构",
+      "C. 单元测试、集成测试、E2E测试的比例关系",
+      "D. 测试执行时间的分布"
+    ],
+    "correct": 2,
+    "explanation": "测试金字塔描述了不同级别测试的理想比例：单元测试最多，集成测试中等，E2E测试最少。"
+  },
+  {
+    "id": "basic-2",
+    "type": "true-false",
+    "question": "测试覆盖率100%意味着代码没有bug。",
+    "correct": false,
+    "explanation": "测试覆盖率只表示代码被执行过，不能保证没有bug。"
+  }
+]

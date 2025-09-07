@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 import nprogress from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/nprogress@0.2.0/node_modules/nprogress';
 import './nprogress.css';
-import UserLoading from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@swc+helpers@0.5.15_@types+node@20.17.46_@types+react@18.3.21_eslint@8.57.1_aa4e53bacd92d18024734bf09cc6329f/node_modules/dumi/dist/client/pages/Loading';
+import UserLoading from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.15_@types+node@20.17.46_@types+react@18_a8ac41f25939d5d8f9ab7e25c0abd3bc/node_modules/dumi/dist/client/pages/Loading';
 import React, { useLayoutEffect, type FC } from 'react';
 import { useSiteData } from 'dumi';
 

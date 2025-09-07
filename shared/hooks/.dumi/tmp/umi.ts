@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 import './core/polyfill';
 import { getPluginManager as getDumiPluginManager } from './core/plugin';
-import { setPluginManager as setDumiPluginManager } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@swc+helpers@0.5.15_@types+node@20.17.46_@types+react@18.3.21_eslint@8.57.1_aa4e53bacd92d18024734bf09cc6329f/node_modules/dumi/dist/client/theme-api/utils.js';
+import { setPluginManager as setDumiPluginManager } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/dumi@2.4.21_@babel+core@7.27.1_@swc+helpers@0.5.15_@types+node@20.17.46_@types+react@18_a8ac41f25939d5d8f9ab7e25c0abd3bc/node_modules/dumi/dist/client/theme-api/utils.js';
 import { renderClient } from '/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+renderer-react@4.4.11_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@umijs/renderer-react';
 import { getRoutes } from './core/route';
 import { createPluginManager } from './core/plugin';

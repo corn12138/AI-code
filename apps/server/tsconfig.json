@@ -2,6 +2,7 @@
     "extends": "../../config/typescript/tsconfig.nestjs.json",
     "compilerOptions": {
         "baseUrl": ".",
+        "outDir": "./dist",
         "paths": {
             "@/*": [
                 "src/*"
@@ -13,8 +14,7 @@
         ],
         "types": [
             "node",
-            "express",
-            "jest"
+            "express"
         ]
     },
     "include": [
@@ -23,6 +23,8 @@
     "exclude": [
         "node_modules",
         "dist",
-        "test"
+        "test",
+        "**/*.spec.ts",
+        "**/*.test.ts"
     ]
 }

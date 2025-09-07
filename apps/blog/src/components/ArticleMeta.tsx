@@ -19,37 +19,38 @@ interface ArticleMetaProps {
 
 export default function ArticleMeta({ author, date, readingTime, views }: ArticleMetaProps) {
     return (
-        <div className="flex items-center text-gray-500 text-sm">
+        <div className="flex items-center text-space-400 text-sm bg-space-900/40 backdrop-blur-xl rounded-xl border border-cosmic-500/20 p-4">
             {/* 作者头像和链接 */}
             <Link href={`/user/${author.id}`} className="flex items-center mr-6 group">
-                <div className="relative w-8 h-8 rounded-full overflow-hidden mr-2">
+                <div className="relative w-8 h-8 rounded-lg overflow-hidden mr-2 border border-cosmic-500/30">
                     <Image
                         src={author.avatar || '/default-avatar.svg'}
                         alt={author.username}
                         fill
                         style={{ objectFit: 'cover' }}
+                        className="group-hover:scale-105 transition-transform duration-300"
                     />
                 </div>
-                <span className="group-hover:text-blue-600">{author.username}</span>
+                <span className="group-hover:text-cosmic-300 transition-colors duration-300">{author.username}</span>
             </Link>
 
-            <span className="mx-2">•</span>
+            <span className="mx-2 text-space-500">•</span>
 
             {/* 发布日期 */}
             <time dateTime={date} className="mr-6">
                 {formatDate(date)}
             </time>
 
-            <span className="mx-2">•</span>
+            <span className="mx-2 text-space-500">•</span>
 
             {/* 阅读时间 */}
             <span className="mr-6">{readingTime}</span>
 
-            <span className="mx-2">•</span>
+            <span className="mx-2 text-space-500">•</span>
 
             {/* 阅读量 */}
             <span className="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-cosmic-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>

@@ -22,6 +22,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
+import { StarryBackground, StarryParticles } from '../ui/StarryBackground';
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -75,26 +76,29 @@ export default function MainLayout({
     const NavItem = ({ item, section = '' }: { item: any; section?: string }) => (
         <Link
             href={item.href}
-            className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 touch-target ${item.current
-                ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+            className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ease-out touch-target group ${item.current
+                ? 'bg-gradient-to-r from-cosmic-600/20 to-nebula-600/20 text-cosmic-300 border border-cosmic-500/30 shadow-cosmic backdrop-blur-sm'
+                : 'text-space-300 hover:text-cosmic-300 hover:bg-space-800/50 hover:border hover:border-cosmic-500/20 backdrop-blur-sm'
                 }`}
             onClick={() => {
                 setSelectedCategory(item.name);
-                setIsMobileSidebarOpen(false); // 移动端点击后关闭侧边栏
+                setIsMobileSidebarOpen(false);
             }}
         >
-            <item.icon className="mr-3 h-5 w-5" />
+            <item.icon className={`mr-3 h-5 w-5 transition-all duration-300 ${item.current ? 'text-cosmic-400' : 'text-space-400 group-hover:text-cosmic-400'
+                }`} />
             {item.name}
         </Link>
     );
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <StarryBackground>
+            <StarryParticles />
+
             {/* 移动端侧边栏背景遮罩 */}
             {isMobileSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden animate-fade-in"
                     onClick={() => setIsMobileSidebarOpen(false)}
                 />
             )}
@@ -103,15 +107,15 @@ export default function MainLayout({
                 {/* 移动端侧边栏按钮 */}
                 {showSidebar && (
                     <button
-                        className="fixed top-4 left-4 z-50 lg:hidden bg-white rounded-md p-2 shadow-md border border-gray-200 touch-target"
+                        className="fixed top-4 left-4 z-50 lg:hidden bg-space-800/80 backdrop-blur-md rounded-xl p-3 shadow-space-glow border border-cosmic-500/30 touch-target transition-all duration-300 hover:bg-space-700/80 hover:shadow-cosmic"
                         onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
                     >
                         {isMobileSidebarOpen ? (
-                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="h-5 w-5 text-cosmic-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         ) : (
-                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="h-5 w-5 text-cosmic-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         )}
@@ -121,11 +125,26 @@ export default function MainLayout({
                 {/* 左侧导航栏 */}
                 {showSidebar && (
                     <div className={`
-                        fixed lg:relative lg:block w-64 bg-white shadow-sm border-r border-gray-200 min-h-screen z-40
-                        transition-transform duration-300 ease-in-out
+                        fixed lg:relative lg:block w-72 bg-space-900/80 backdrop-blur-xl border-r border-cosmic-500/20 min-h-screen z-40
+                        transition-all duration-500 ease-out
                         ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
                     `}>
-                        <div className="sticky top-0 p-4 lg:p-6 space-y-4 lg:space-y-6 pt-16 lg:pt-6">
+                        <div className="sticky top-0 p-6 space-y-6 pt-20 lg:pt-6">
+                            {/* Logo区域 */}
+                            <div className="mb-8">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-cosmic-500 to-nebula-500 rounded-xl flex items-center justify-center shadow-cosmic">
+                                        <span className="text-white font-bold text-lg">✨</span>
+                                    </div>
+                                    <div>
+                                        <h1 className="text-xl font-bold bg-gradient-to-r from-cosmic-300 to-nebula-300 bg-clip-text text-transparent">
+                                            Cosmic Blog
+                                        </h1>
+                                        <p className="text-xs text-space-400">探索技术的无限可能</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* 公开导航 */}
                             <nav className="space-y-2">
                                 {publicNavItems.map((item) => (
@@ -136,7 +155,7 @@ export default function MainLayout({
                             {/* 登录后的导航 */}
                             {isAuthenticated && (
                                 <>
-                                    <div className="pt-4 border-t border-gray-200">
+                                    <div className="pt-6 border-t border-space-700/50">
                                         <nav className="space-y-2">
                                             {authenticatedNavItems.map((item) => (
                                                 <NavItem key={item.name} item={item} />
@@ -145,8 +164,8 @@ export default function MainLayout({
                                     </div>
 
                                     {/* 我的空间 */}
-                                    <div className="pt-4 border-t border-gray-200">
-                                        <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                                    <div className="pt-6 border-t border-space-700/50">
+                                        <h3 className="px-4 text-xs font-semibold text-space-400 uppercase tracking-wider mb-3">
                                             我的空间
                                         </h3>
                                         <nav className="space-y-2">
@@ -157,8 +176,8 @@ export default function MainLayout({
                                     </div>
 
                                     {/* 开发者工具 */}
-                                    <div className="pt-4 border-t border-gray-200">
-                                        <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                                    <div className="pt-6 border-t border-space-700/50">
+                                        <h3 className="px-4 text-xs font-semibold text-space-400 uppercase tracking-wider mb-3">
                                             开发者工具
                                         </h3>
                                         <nav className="space-y-2">
@@ -172,29 +191,29 @@ export default function MainLayout({
 
                             {/* 未登录提示 */}
                             {!isAuthenticated && (
-                                <div className="pt-4 border-t border-gray-200">
-                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+                                <div className="pt-6 border-t border-space-700/50">
+                                    <div className="bg-gradient-to-r from-cosmic-600/10 to-nebula-600/10 rounded-xl p-4 border border-cosmic-500/20 backdrop-blur-sm">
                                         <div className="flex items-center">
-                                            <LightBulbIcon className="h-8 w-8 text-blue-600 mr-3" />
+                                            <LightBulbIcon className="h-8 w-8 text-stardust-400 mr-3" />
                                             <div>
-                                                <h3 className="text-sm font-medium text-gray-900">
+                                                <h3 className="text-sm font-medium text-space-200">
                                                     发现更多功能
                                                 </h3>
-                                                <p className="text-xs text-gray-600 mt-1">
+                                                <p className="text-xs text-space-400 mt-1">
                                                     登录后解锁AI助手、个人仪表板等功能
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="mt-3 space-y-2">
+                                        <div className="mt-4 space-y-2">
                                             <Link
                                                 href="/login"
-                                                className="block w-full text-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+                                                className="block w-full text-center px-4 py-2 bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white text-sm font-medium rounded-lg hover:from-cosmic-700 hover:to-nebula-700 transition-all duration-300 shadow-cosmic"
                                             >
                                                 立即登录
                                             </Link>
                                             <Link
                                                 href="/register"
-                                                className="block w-full text-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-50 transition-colors"
+                                                className="block w-full text-center px-4 py-2 border border-cosmic-500/30 text-space-300 text-sm font-medium rounded-lg hover:bg-space-800/50 transition-all duration-300"
                                             >
                                                 注册账号
                                             </Link>
@@ -208,47 +227,47 @@ export default function MainLayout({
 
                 {/* 主内容区域 */}
                 <div className={`flex-1 ${showSidebar ? 'lg:ml-0' : ''} ${showRightSidebar ? 'lg:mr-0' : ''} ${showSidebar ? 'pl-0 lg:pl-0' : ''}`}>
-                    <main className="bg-white min-h-screen mobile-padding pt-4 lg:pt-0">
+                    <main className="min-h-screen p-4 lg:p-6 animate-fade-in">
                         {children}
                     </main>
                 </div>
 
                 {/* 右侧边栏 */}
                 {showRightSidebar && (
-                    <div className="hidden xl:block w-80 bg-white border-l border-gray-200 min-h-screen">
+                    <div className="hidden xl:block w-80 bg-space-900/80 backdrop-blur-xl border-l border-cosmic-500/20 min-h-screen">
                         <div className="sticky top-0 p-6 space-y-6">
                             {/* 用户信息卡片 */}
                             {isAuthenticated && user && (
-                                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
+                                <div className="bg-gradient-to-r from-cosmic-600/10 to-nebula-600/10 rounded-xl p-4 border border-cosmic-500/20 backdrop-blur-sm">
                                     <div className="flex items-center">
-                                        <div className="h-12 w-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg">
+                                        <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-cosmic-500 to-nebula-600 flex items-center justify-center text-white font-bold text-lg shadow-cosmic">
                                             {(user as any).username?.charAt(0).toUpperCase()}
                                         </div>
                                         <div className="ml-3">
-                                            <h3 className="text-sm font-medium text-gray-900">
+                                            <h3 className="text-sm font-medium text-space-200">
                                                 {(user as any).username}
                                             </h3>
-                                            <p className="text-xs text-gray-600">
+                                            <p className="text-xs text-space-400">
                                                 {(user as any).email}
                                             </p>
                                         </div>
                                     </div>
                                     <div className="mt-4 grid grid-cols-4 gap-2 text-center">
                                         <div>
-                                            <div className="text-lg font-semibold text-gray-900">1</div>
-                                            <div className="text-xs text-gray-600">获赞</div>
+                                            <div className="text-lg font-semibold text-cosmic-300">1</div>
+                                            <div className="text-xs text-space-400">获赞</div>
                                         </div>
                                         <div>
-                                            <div className="text-lg font-semibold text-gray-900">2</div>
-                                            <div className="text-xs text-gray-600">文章</div>
+                                            <div className="text-lg font-semibold text-nebula-300">2</div>
+                                            <div className="text-xs text-space-400">文章</div>
                                         </div>
                                         <div>
-                                            <div className="text-lg font-semibold text-gray-900">5</div>
-                                            <div className="text-xs text-gray-600">关注</div>
+                                            <div className="text-lg font-semibold text-stardust-300">5</div>
+                                            <div className="text-xs text-space-400">关注</div>
                                         </div>
                                         <div>
-                                            <div className="text-lg font-semibold text-gray-900">11</div>
-                                            <div className="text-xs text-gray-600">关注者</div>
+                                            <div className="text-lg font-semibold text-cosmic-300">11</div>
+                                            <div className="text-xs text-space-400">关注者</div>
                                         </div>
                                     </div>
                                 </div>
@@ -256,16 +275,16 @@ export default function MainLayout({
 
                             {/* 精选沸点 */}
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-gray-900">精选沸点</h3>
+                                <h3 className="text-lg font-semibold text-space-200">精选沸点</h3>
                                 <div className="space-y-3">
                                     {[
                                         { title: '92年，33岁女，谈情期间被辞退分手，最近看天朝精神保险，心', time: '42分钟' },
                                         { title: '没想到公司高层这么善意的事也能处理得如此不堪，防火', time: '20分钟' },
                                         { title: '因为小伙子被宜家行程辞退，盘点目前违背心得。。。', time: '55分钟' }
                                     ].map((item, index) => (
-                                        <div key={index} className="border-l-2 border-blue-100 pl-3">
-                                            <p className="text-sm text-gray-700 line-clamp-2 mb-1">{item.title}</p>
-                                            <p className="text-xs text-gray-500">{item.time} · 647评论</p>
+                                        <div key={index} className="border-l-2 border-cosmic-500/50 pl-3 hover:border-cosmic-400 transition-colors duration-300">
+                                            <p className="text-sm text-space-300 line-clamp-2 mb-1">{item.title}</p>
+                                            <p className="text-xs text-space-500">{item.time} · 647评论</p>
                                         </div>
                                     ))}
                                 </div>
@@ -274,8 +293,8 @@ export default function MainLayout({
                             {/* 推荐话题 */}
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-lg font-semibold text-gray-900">推荐话题</h3>
-                                    <button className="text-sm text-blue-600 hover:text-blue-700">换一换</button>
+                                    <h3 className="text-lg font-semibold text-space-200">推荐话题</h3>
+                                    <button className="text-sm text-cosmic-400 hover:text-cosmic-300 transition-colors duration-300">换一换</button>
                                 </div>
                                 <div className="space-y-2">
                                     {[
@@ -286,10 +305,10 @@ export default function MainLayout({
                                         { tag: '#金石庐条新#', count: '2.5m' }
                                     ].map((topic, index) => (
                                         <div key={index} className="flex items-center justify-between">
-                                            <span className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer">
+                                            <span className="text-sm text-cosmic-400 hover:text-cosmic-300 cursor-pointer transition-colors duration-300">
                                                 {topic.tag}
                                             </span>
-                                            <span className="text-xs text-gray-500">{topic.count}</span>
+                                            <span className="text-xs text-space-500">{topic.count}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -297,19 +316,19 @@ export default function MainLayout({
 
                             {/* 快捷操作 */}
                             {isAuthenticated && (
-                                <div className="bg-gray-50 rounded-lg p-4">
-                                    <h3 className="text-sm font-medium text-gray-900 mb-3">快捷操作</h3>
+                                <div className="bg-space-800/50 rounded-xl p-4 border border-space-700/30 backdrop-blur-sm">
+                                    <h3 className="text-sm font-medium text-space-200 mb-3">快捷操作</h3>
                                     <div className="grid grid-cols-2 gap-2">
                                         <Link
                                             href="/editor"
-                                            className="flex items-center justify-center px-3 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
+                                            className="flex items-center justify-center px-3 py-2 bg-gradient-to-r from-cosmic-600 to-nebula-600 text-white text-sm rounded-lg hover:from-cosmic-700 hover:to-nebula-700 transition-all duration-300 shadow-cosmic"
                                         >
                                             <PencilSquareIcon className="h-4 w-4 mr-1" />
                                             写文章
                                         </Link>
                                         <Link
                                             href="/chat"
-                                            className="flex items-center justify-center px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-colors"
+                                            className="flex items-center justify-center px-3 py-2 bg-gradient-to-r from-stardust-600 to-stardust-700 text-white text-sm rounded-lg hover:from-stardust-700 hover:to-stardust-800 transition-all duration-300 shadow-stardust"
                                         >
                                             <ChatBubbleLeftIcon className="h-4 w-4 mr-1" />
                                             AI助手
@@ -321,6 +340,6 @@ export default function MainLayout({
                     </div>
                 )}
             </div>
-        </div>
+        </StarryBackground>
     );
 } 

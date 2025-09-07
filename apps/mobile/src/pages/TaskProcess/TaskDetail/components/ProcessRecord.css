@@ -1,0 +1,620 @@
+/**
+ * 流程记录组件样式 - 参考ui2.jpg和ui3.jpg设计
+ */
+
+/* ========== 流程记录容器 ========== */
+
+.process-record-container {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ========== 当前处理信息区域 ========== */
+
+.current-process-info {
+    background: linear-gradient(135deg, #f6f8ff 0%, #e8f4fd 100%);
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.current-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.step-label {
+    font-size: 14px;
+    color: #666;
+    margin-right: 8px;
+}
+
+.step-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1890ff;
+}
+
+/* ========== 用户列表样式 ========== */
+
+.user-list-container {
+    margin-bottom: 12px;
+}
+
+.user-list-container:last-child {
+    margin-bottom: 0;
+}
+
+.user-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.user-list-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.expand-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #1890ff;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.expand-toggle:hover {
+    background-color: rgba(24, 144, 255, 0.08);
+}
+
+.expand-icon {
+    transition: transform 0.2s ease;
+    font-size: 12px;
+}
+
+.expand-icon.expanded {
+    transform: rotate(90deg);
+}
+
+.user-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+    font-size: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.user-icon {
+    color: #1890ff;
+    font-size: 14px;
+}
+
+.user-name {
+    color: #333;
+    font-weight: 500;
+}
+
+.user-id {
+    color: #999;
+}
+
+/* ========== 流程时间线 ========== */
+
+.process-timeline {
+    padding: 16px;
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* 当前正在处理的节点 - 参考ui2.jpg中的审核（会办） */
+.timeline-item.current .timeline-content {
+    background: rgba(24, 144, 255, 0.04);
+    border-left: 3px solid #1890ff;
+}
+
+/* 已完成的节点 - 参考ui2.jpg中的审核（交办）和拟稿 */
+.timeline-item.completed .timeline-content {
+    background: rgba(0, 0, 0, 0.02);
+    border-left: 3px solid #d9d9d9;
+    opacity: 0.9;
+}
+
+/* 时间线左侧 */
+.timeline-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 12px;
+    position: relative;
+}
+
+.timeline-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    z-index: 2;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 当前正在处理节点的圆点 */
+.timeline-dot.processing {
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 0 4px rgba(24, 144, 255, 0.2);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(24, 144, 255, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 6px rgba(24, 144, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(24, 144, 255, 0);
+    }
+}
+
+/* 已完成节点的圆点 */
+.timeline-dot.completed {
+    opacity: 0.7;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-line {
+    width: 2px;
+    background: #e8e8e8;
+    flex: 1;
+    margin-top: 8px;
+    min-height: 40px;
+}
+
+/* 时间线内容 */
+.timeline-content {
+    flex: 1;
+    background: #fafafa;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.timeline-action {
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.current-badge {
+    background: rgba(24, 144, 255, 0.1);
+    color: #1890ff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: normal;
+}
+
+/* 已完成节点的交办标识 */
+.completed-badge {
+    background: rgba(0, 0, 0, 0.05);
+    color: #666;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: normal;
+}
+
+.meeting-record {
+    font-size: 12px;
+    color: #1890ff;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.meeting-record:hover {
+    background-color: rgba(24, 144, 255, 0.08);
+}
+
+.timeline-time {
+    font-size: 12px;
+    color: #999;
+}
+
+/* 时间线主体 */
+.timeline-body {
+    margin-top: 12px;
+}
+
+.handler-info {
+    margin-bottom: 12px;
+}
+
+/* 处理人信息头部 - 参考ui2.jpg布局 */
+.handler-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.handler-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.handler-right {
+    flex-shrink: 0;
+}
+
+.handler-icon {
+    color: #1890ff;
+    font-size: 16px;
+}
+
+.handler-name {
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+.handler-id {
+    color: #999;
+    font-size: 12px;
+}
+
+.handler-time {
+    color: #999;
+    font-size: 12px;
+}
+
+/* 处理人部门信息 - 第二行 */
+.handler-department {
+    color: #666;
+    font-size: 12px;
+    margin-left: 24px;
+    /* 与图标对齐 */
+    line-height: 1.4;
+}
+
+/* ========== 意见容器 ========== */
+
+.opinion-container {
+    background: #fff;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.opinion-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.opinion-text {
+    flex: 1;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.copy-btn {
+    flex-shrink: 0;
+    color: #1890ff;
+    padding: 4px;
+    min-width: auto;
+    height: auto;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:active {
+    background-color: rgba(24, 144, 255, 0.1);
+    transform: scale(0.95);
+}
+
+/* ========== 附件容器 ========== */
+
+.attachments-container {
+    margin-top: 8px;
+    padding: 8px;
+    background: #f8f8f8;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.attachment-icon {
+    color: #1890ff;
+    font-size: 16px;
+}
+
+/* ========== 空状态 ========== */
+
+.empty-records {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #999;
+    text-align: center;
+}
+
+.empty-records p {
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+/* ========== 响应式适配 ========== */
+
+@media (max-width: 768px) {
+    .process-record-container {
+        margin: 12px;
+    }
+
+    .current-process-info {
+        padding: 12px;
+    }
+
+    .process-timeline {
+        padding: 12px;
+    }
+
+    .timeline-item {
+        margin-bottom: 20px;
+    }
+
+    .timeline-content {
+        padding: 10px;
+    }
+
+    /* 移动端处理人信息布局 - 保持左右布局 */
+    .handler-header {
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .handler-left {
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .handler-right {
+        flex-shrink: 0;
+        margin-left: 8px;
+    }
+
+    .handler-name {
+        font-size: 13px;
+    }
+
+    .handler-id {
+        font-size: 11px;
+    }
+
+    .handler-time {
+        font-size: 11px;
+    }
+
+    .handler-department {
+        margin-left: 22px;
+        font-size: 11px;
+    }
+
+    .user-item {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .opinion-text {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 768px) {
+    .process-record-container {
+        margin: 0 0 20px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .current-process-info {
+        padding: 20px;
+    }
+
+    .process-timeline {
+        padding: 20px;
+    }
+
+    .timeline-dot {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .timeline-content {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .handler-name {
+        font-size: 15px;
+    }
+
+    .opinion-text {
+        font-size: 15px;
+    }
+}
+
+/* ========== 深色模式适配 ========== */
+
+@media (prefers-color-scheme: dark) {
+    .process-record-container {
+        background: #1f1f1f;
+        border: 1px solid #303030;
+    }
+
+    .current-process-info {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-bottom-color: #404040;
+    }
+
+    .step-label {
+        color: #d9d9d9;
+    }
+
+    .user-list-label {
+        color: #d9d9d9;
+    }
+
+    .timeline-content {
+        background: #2a2a2a;
+        border-color: #404040;
+    }
+
+    .timeline-line {
+        background: #404040;
+    }
+
+    .user-item {
+        background: #2a2a2a;
+        border-color: #404040;
+        color: #fff;
+    }
+
+    .user-name {
+        color: #fff;
+    }
+
+    .handler-name {
+        color: #fff;
+    }
+
+    .opinion-container {
+        background: #2a2a2a;
+        border-color: #404040;
+    }
+
+    .opinion-text {
+        color: #fff;
+    }
+
+    .attachments-container {
+        background: #2a2a2a;
+    }
+
+    .empty-records {
+        color: #8c8c8c;
+    }
+}
+
+/* ========== 高对比度模式 ========== */
+
+@media (prefers-contrast: high) {
+    .process-record-container {
+        border: 2px solid #000;
+    }
+
+    .timeline-content {
+        border: 2px solid #000;
+    }
+
+    .user-item {
+        border: 2px solid #000;
+    }
+
+    .opinion-container {
+        border: 2px solid #000;
+    }
+}
+
+/* ========== 动画效果 ========== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timeline-item {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.user-item {
+    transition: all 0.2s ease;
+}
+
+.user-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.copy-btn {
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    transform: scale(1.05);
+}

@@ -1,173 +1,340 @@
-# iOS 原生应用 - 工作台容器
+# iOS 原生应用
 
-## 📱 项目概述
+这是工作台应用的iOS原生版本，提供H5容器和原生功能桥接。
 
-这是一个iOS原生应用，作为H5移动端应用的容器，提供"工作台"功能入口。
+## 功能特性
 
-## 🏗️ 架构设计
+- 🚀 **WKWebView容器**: 高性能H5应用加载
+- 🔗 **原生桥接**: 提供设备信息、相机、存储等原生功能
+- 📱 **响应式设计**: 适配iPhone和iPad
+- 🔄 **下拉刷新**: 支持页面刷新
+- 📊 **网络监控**: 实时网络状态检测
+- 🔔 **推送通知**: Firebase集成
+- 🧪 **完整测试**: 单元测试和UI测试
 
-```
-iOS Native App
-├── 主界面 (Tab/Navigation)
-│   ├── 首页
-│   ├── 工作台 → H5 Mobile App
-│   ├── 消息
-│   └── 我的
-└── WebView 容器
-    └── 加载 H5 Mobile 应用
-```
+## 技术栈
 
-## 🎯 核心功能
+- **语言**: Swift 5.0+
+- **架构**: MVVM + Coordinator
+- **UI**: UIKit + SwiftUI (混合)
+- **网络**: URLSession + Combine
+- **图片**: Photos Framework
+- **存储**: UserDefaults + Core Data
+- **测试**: XCTest + XCUITest
+- **推送**: Firebase Cloud Messaging
 
-### 1. 工作台入口
-- **图标**: 工作台 icon
-- **标题**: "工作台"
-- **点击**: 进入 H5 移动端应用
-
-### 2. WebView 集成
-- 使用 `WKWebView` 加载 H5 应用
-- 支持 JavaScript Bridge 通信
-- 自动适配屏幕尺寸
-- 支持下拉刷新
-
-### 3. 原生功能扩展
-- 推送通知
-- 相机/相册调用
-- 文件上传下载
-- 设备信息获取
-- 网络状态监测
-
-## 🛠️ 技术栈
-
-- **开发语言**: Swift
-- **UI框架**: SwiftUI / UIKit
-- **WebView**: WKWebView
-- **网络**: URLSession
-- **存储**: UserDefaults / Core Data
-- **推送**: APNs
-
-## 📦 项目结构
+## 项目结构
 
 ```
 WorkbenchApp/
 ├── App/
-│   ├── WorkbenchApp.swift          # App入口
-│   ├── ContentView.swift           # 主界面
-│   └── Info.plist                  # 应用配置
+│   ├── AppDelegate.swift           # 应用代理
+│   └── SceneDelegate.swift         # 场景代理
 ├── Views/
-│   ├── HomeView.swift              # 首页
-│   ├── WorkbenchView.swift         # 工作台(WebView)
-│   ├── MessageView.swift           # 消息
-│   └── ProfileView.swift           # 我的
+│   ├── MainViewController.swift    # 主视图控制器
+│   └── WebViewController.swift     # WebView控制器
 ├── WebView/
-│   ├── WebViewController.swift     # WebView控制器
-│   ├── JSBridge.swift              # JS桥接
-│   └── WebViewConfig.swift         # WebView配置
+│   ├── WebViewBridge.swift         # 原生桥接
+│   └── WebViewManager.swift        # WebView管理
 ├── Utils/
-│   ├── NetworkManager.swift        # 网络管理
-│   ├── StorageManager.swift        # 存储管理
-│   └── DeviceInfo.swift            # 设备信息
+│   ├── NetworkMonitor.swift        # 网络监控
+│   └── Logger.swift                # 日志工具
 └── Resources/
-    ├── Assets.xcassets             # 图片资源
-    └── Localizable.strings         # 多语言
+    ├── Info.plist                  # 应用配置
+    └── Assets.xcassets             # 资源文件
 ```
 
-## 🚀 开发步骤
+## 快速开始
 
-### 1. 创建 Xcode 项目
+### 环境要求
+
+- Xcode 14.0+
+- iOS 13.0+
+- Swift 5.0+
+- CocoaPods 或 Swift Package Manager
+
+### 安装依赖
+
 ```bash
-# 使用 Xcode 创建新项目
-# 选择 iOS App
-# 语言: Swift
-# 界面: SwiftUI
-# Bundle ID: com.yourcompany.workbench
+# 克隆项目
+git clone <repository-url>
+cd apps/ios-native
+
+# 安装依赖 (如果使用CocoaPods)
+pod install
+
+# 打开工作空间
+open WorkbenchApp.xcworkspace
 ```
 
-### 2. 配置 WebView
-```swift
-import WebKit
+### 开发配置
 
-class WebViewController: UIViewController, WKNavigationDelegate {
-    var webView: WKWebView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupWebView()
-        loadH5App()
-    }
-    
-    private func loadH5App() {
-        let url = URL(string: "http://your-domain.com:8002")!
-        webView.load(URLRequest(url: url))
+1. **配置H5地址**:
+   在 `package.json` 中修改 `config` 部分：
+
+   ```json
+   {
+     "config": {
+       "h5_dev_url": "http://localhost:8002",
+       "h5_prod_url": "https://your-production-domain.com"
+     }
+   }
+   ```
+
+2. **配置应用信息**:
+   ```json
+   {
+     "config": {
+       "bundle_id": "com.yourcompany.workbench",
+       "app_name": "工作台",
+       "version": "1.0.0",
+       "build_number": "1"
+     }
+   }
+   ```
+
+### 构建和运行
+
+```bash
+# 构建调试版本
+npm run ios:build
+
+# 清理构建
+npm run ios:clean
+
+# 生成归档
+npm run ios:archive
+
+# 导出IPA
+npm run ios:export
+```
+
+## 原生桥接功能
+
+### 设备信息
+```swift
+// 获取设备信息
+let deviceInfo = webViewBridge.getDeviceInfo()
+```
+
+### 网络状态
+```swift
+// 获取网络状态
+let networkInfo = webViewBridge.getNetworkStatus()
+```
+
+### 相机功能
+```swift
+// 调用相机
+webViewBridge.openCamera { result in
+    switch result {
+    case .success(let imagePath):
+        // 处理图片路径
+        print("拍照成功: \(imagePath)")
+    case .failure(let error):
+        // 处理错误
+        print("拍照失败: \(error)")
     }
 }
 ```
 
-### 3. JavaScript Bridge
+### 图片选择
 ```swift
-// 注入 JavaScript 桥接方法
-webView.configuration.userContentController.add(self, name: "nativeHandler")
-
-// 处理 H5 调用原生功能
-func userContentController(_ userContentController: WKUserContentController, 
-                          didReceive message: WKScriptMessage) {
-    // 处理 H5 发来的消息
+// 选择图片
+webViewBridge.pickImage(maxCount: 3) { result in
+    switch result {
+    case .success(let imagePaths):
+        // 处理图片路径列表
+        print("选择图片: \(imagePaths)")
+    case .failure(let error):
+        // 处理错误
+        print("选择图片失败: \(error)")
+    }
 }
 ```
 
-## 🔗 H5 集成配置
+### 本地存储
+```swift
+// 设置存储
+webViewBridge.setStorage(key: "key", value: "value")
 
-在 H5 应用中添加原生检测和调用：
+// 获取存储
+let value = webViewBridge.getStorage(key: "key")
+```
+
+## 测试
+
+### 单元测试
+```bash
+# 运行单元测试
+xcodebuild test -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -destination 'platform=iOS Simulator,name=iPhone 14'
+
+# 运行特定测试
+xcodebuild test -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -only-testing:WebViewBridgeTests
+```
+
+### UI测试
+```bash
+# 运行UI测试
+xcodebuild test -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -destination 'platform=iOS Simulator,name=iPhone 14' -only-testing:WorkbenchAppUITests
+```
+
+### 测试覆盖率
+```bash
+# 生成测试覆盖率报告
+xcodebuild test -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -enableCodeCoverage YES
+```
+
+## 部署
+
+### 生成IPA
+```bash
+# 构建归档
+xcodebuild archive -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -archivePath build/WorkbenchApp.xcarchive
+
+# 导出IPA
+xcodebuild -exportArchive -archivePath build/WorkbenchApp.xcarchive -exportPath build/ipa -exportOptionsPlist ExportOptions.plist
+```
+
+### App Store发布
+1. 在Xcode中配置证书和描述文件
+2. 构建Release版本
+3. 上传到App Store Connect
+4. 提交审核
+
+## 与H5集成
+
+### H5端调用原生功能
 
 ```javascript
-// 检测是否在原生应用中
-const isInNativeApp = window.webkit && window.webkit.messageHandlers;
+import { nativeBridge } from '@/utils/nativeBridge';
 
-// 调用原生功能
-function callNativeMethod(method, params) {
-    if (isInNativeApp) {
-        window.webkit.messageHandlers.nativeHandler.postMessage({
-            method: method,
-            params: params
-        });
+// 获取设备信息
+const deviceInfo = await nativeBridge.getDeviceInfo();
+
+// 调用相机
+const imagePath = await nativeBridge.openCamera();
+
+// 选择图片
+const imagePaths = await nativeBridge.pickImage(3);
+
+// 显示Toast
+await nativeBridge.showToast('操作成功');
+
+// 存储数据
+await nativeBridge.setStorage('key', 'value');
+const value = await nativeBridge.getStorage('key');
+```
+
+### 原生端接收H5消息
+
+```swift
+// 在WebViewBridge中处理H5调用
+@objc func openCamera(_ callbackId: String) {
+    bridgeCallback.openCamera { [weak self] result in
+        DispatchQueue.main.async {
+            self?.callJsCallback(callbackId: callbackId, result: result)
+        }
     }
 }
 ```
 
-## 📱 界面设计
+## 配置说明
 
-### 底部Tab设计
-- 🏠 首页
-- 💼 工作台 (主要功能)
-- 💬 消息
-- 👤 我的
+### 权限配置
+在 `Info.plist` 中配置所需权限：
 
-### 工作台页面
-- 全屏 WebView
-- 无边框设计
-- 支持手势导航
-- 加载指示器
+```xml
+<key>NSCameraUsageDescription</key>
+<string>需要访问相机进行拍照</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>需要访问相册选择图片</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>需要访问麦克风进行录音</string>
+```
 
-## 🔧 环境配置
+### 功能配置
+```json
+{
+  "features": {
+    "webview": {
+      "javascript_enabled": true,
+      "local_storage": true,
+      "pull_to_refresh": true
+    },
+    "native_integration": {
+      "camera": true,
+      "photo_picker": true,
+      "push_notifications": true
+    }
+  }
+}
+```
 
-### 开发环境
-- H5应用地址: `http://localhost:8002`
-- 调试模式: 启用 Web Inspector
+## 故障排除
 
-### 生产环境
-- H5应用地址: `https://your-production-domain.com`
-- HTTPS证书验证
-- 性能优化
+### 常见问题
 
-## 📋 待实现功能
+1. **H5页面无法加载**
+   - 检查网络连接
+   - 确认H5服务器地址配置正确
+   - 检查WKWebView设置
 
-- [ ] 项目基础结构搭建
-- [ ] WebView 容器实现
-- [ ] JavaScript Bridge 通信
-- [ ] 底部导航栏
-- [ ] 启动页面
-- [ ] 图标和资源
-- [ ] 网络状态处理
-- [ ] 错误页面
-- [ ] 推送通知集成
-- [ ] App Store 发布准备
+2. **原生功能调用失败**
+   - 确认权限已授予
+   - 检查桥接接口实现
+   - 查看控制台日志
+
+3. **构建失败**
+   - 清理项目: `xcodebuild clean`
+   - 重置模拟器
+   - 检查证书和描述文件
+
+### 调试技巧
+
+1. **启用WebView调试**:
+   ```swift
+   #if DEBUG
+   WKWebView.setWebContentsDebuggingEnabled(true)
+   #endif
+   ```
+
+2. **查看日志**:
+   ```bash
+   # 在Xcode控制台查看日志
+   # 或使用 Console.app 查看设备日志
+   ```
+
+3. **远程调试WebView**:
+   - 在Safari中启用开发者菜单
+   - 连接设备或模拟器
+   - 在Safari开发者工具中调试WebView
+
+## 性能优化
+
+### WebView优化
+- 启用WKWebView的预加载功能
+- 配置合适的缓存策略
+- 优化JavaScript执行
+
+### 内存管理
+- 及时释放WebView资源
+- 使用弱引用避免循环引用
+- 监控内存使用情况
+
+### 网络优化
+- 实现请求缓存
+- 使用CDN加速
+- 压缩传输数据
+
+## 贡献指南
+
+1. Fork 项目
+2. 创建功能分支
+3. 提交更改
+4. 推送到分支
+5. 创建 Pull Request
+
+## 许可证
+
+MIT License
