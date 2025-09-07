@@ -492,32 +492,29 @@
     }
 }
 
-/* 平板横屏适配 - 修复网格布局错乱问题 */
+/* 平板横屏适配 - 使用flexbox双列布局 */
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .file-list-content {
-        display: block;
-        /* 改为普通布局，避免网格错乱 */
-        columns: 2;
-        /* 使用CSS列布局 */
-        column-gap: 16px;
-        padding: 16px;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-content: flex-start !important;
+        padding: 16px 24px;
         padding-bottom: calc(80px + env(safe-area-inset-bottom));
+        gap: 12px;
     }
 
     .file-item {
-        break-inside: avoid;
-        /* 防止项目被分割到不同列 */
-        margin-bottom: 12px;
-        display: block;
-        /* 重置为块级元素 */
-        width: 100%;
-        /* 确保宽度填满列 */
+        width: calc(50% - 6px) !important;
+        /* 两列，减去gap的一半 */
+        margin-bottom: 0 !important;
+        flex-shrink: 0 !important;
+        display: block !important;
     }
 
     .file-header {
-        display: flex;
-        align-items: center;
-        padding: 14px;
+        padding: 12px;
         gap: 10px;
     }
 
@@ -534,7 +531,6 @@
 
     .file-meta {
         font-size: 12px;
-        gap: 8px;
     }
 }
 

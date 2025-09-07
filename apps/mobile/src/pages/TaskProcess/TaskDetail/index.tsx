@@ -39,6 +39,7 @@ const TaskDetail: React.FC = () => {
         }
     }, [id])
 
+
     const loadTaskDetailData = async () => {
         if (!id) return
 

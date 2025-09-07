@@ -15,26 +15,132 @@
     flex-direction: column;
 }
 
-/* 导航栏 */
-.task-detail-nav {
-    background: #ffffff;
-    border-bottom: 1px solid #f0f0f0;
-    --adm-color-text: #333333;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* 导航栏 - 直接在组合类选择器上覆盖display:none */
+.adm-nav-bar.task-detail-nav {
+    display: flex !important;
+    /* 覆盖任何可能的display:none */
+    background: #ffffff !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    --adm-color-text: #333333 !important;
+    --adm-nav-bar-icon-color: #333333 !important;
+    --adm-nav-bar-text-color: #333333 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1001 !important;
 }
 
-/* 确保返回按钮在所有设备上都可见 */
-.task-detail-nav .adm-nav-bar-back-arrow {
+/* 特别针对平板设备 */
+@media screen and (min-width: 768px) {
+    .adm-nav-bar.task-detail-nav {
+        display: flex !important;
+        /* 强制覆盖平板上的display:none */
+    }
+
+    .adm-nav-bar.task-detail-nav .adm-nav-bar-left {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* 全局覆盖 - 针对可能的display:none规则 */
+@media screen and (min-width: 768px) {
+
+    /* 最高优先级覆盖任何可能的display:none */
+    .task-detail-nav[class*="adm-nav-bar"] * {
+        display: revert !important;
+    }
+
+    .task-detail-nav .adm-nav-bar-left {
+        display: flex !important;
+    }
+
+    /* 直接覆盖可能存在的tablet-hidden类 */
+    .task-detail-nav .tablet-hidden {
+        display: flex !important;
+    }
+
+    /* 覆盖任何可能的隐藏规则 */
+    .task-detail-nav [style*="display: none"],
+    .task-detail-nav [style*="display:none"] {
+        display: flex !important;
+    }
+}
+
+/* 强制显示原生返回按钮，覆盖所有可能的隐藏样式 */
+.task-detail-nav .adm-nav-bar-left {
+    display: flex !important;
+    align-items: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 40px !important;
+}
+
+/* 特别针对平板设备，使用样式穿透强制显示返回按钮 */
+@media screen and (min-width: 768px) {
+
+    /* 使用更高优先级的选择器 */
+    .task-detail-page .task-detail-nav .adm-nav-bar-left,
+    .task-detail-page .task-detail-nav :deep(.adm-nav-bar-left),
+    .task-detail-page .task-detail-nav>>>.adm-nav-bar-left {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: auto !important;
+        min-width: 44px !important;
+    }
+
+    .task-detail-page .task-detail-nav .adm-nav-bar-back,
+    .task-detail-page .task-detail-nav :deep(.adm-nav-bar-back),
+    .task-detail-page .task-detail-nav>>>.adm-nav-bar-back {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .task-detail-page .task-detail-nav svg,
+    .task-detail-page .task-detail-nav :deep(svg),
+    .task-detail-page .task-detail-nav>>>svg {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #333333 !important;
+        fill: #333333 !important;
+    }
+
+    /* 覆盖可能的隐藏类 */
+    .task-detail-page .task-detail-nav .tablet-hidden,
+    .task-detail-page .task-detail-nav :deep(.tablet-hidden),
+    .task-detail-page .task-detail-nav>>>.tablet-hidden {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+.task-detail-nav .adm-nav-bar-back {
+    display: flex !important;
+    align-items: center !important;
     color: #333333 !important;
     font-size: 18px !important;
-    font-weight: bold !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-.task-detail-nav .adm-nav-bar-left {
+/* 确保SVG图标显示 */
+.task-detail-nav svg {
+    display: block !important;
     color: #333333 !important;
+    fill: #333333 !important;
+    width: 20px !important;
+    height: 20px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
+
+/* 移除平板专用备用按钮，直接修复原生返回按钮 */
+
+/* 清理重复的CSS规则 */
 
 .task-detail-nav .adm-nav-bar-title {
     color: #333333 !important;
