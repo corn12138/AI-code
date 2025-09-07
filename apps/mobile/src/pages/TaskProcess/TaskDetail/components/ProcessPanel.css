@@ -34,13 +34,13 @@
 }
 
 .step-label {
-    font-size: 14px;
+    font-size: var(--tp-font-sm);
     color: #666666;
     font-weight: 500;
 }
 
 .step-value {
-    font-size: 14px;
+    font-size: var(--tp-font-sm);
     color: #1890ff;
     font-weight: 600;
 }
@@ -96,7 +96,7 @@
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 44px;
+    min-height: var(--tp-button-height-base);
 }
 
 /* 新的表单行布局 - 参考ui16.jpg */
@@ -115,7 +115,7 @@
     /* 移除圆角 */
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 44px;
+    min-height: var(--tp-button-height-base);
     margin: 2px;
     /* 减少外边距 */
 }
@@ -234,7 +234,7 @@
     /* 移除圆角 */
     cursor: pointer;
     transition: all 0.2s ease;
-    min-height: 44px;
+    min-height: var(--tp-button-height-base);
     margin: 2px;
     /* 减少外边距 */
 }

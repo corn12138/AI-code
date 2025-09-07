@@ -1,5 +1,77 @@
 /* apps/mobile/src/styles/taskProcess.css */
 :root {
+    /* ==================== 精细化移动端单位系统 ==================== */
+
+    /* 基础字体单位 (基于16px = 1rem) */
+    --tp-font-xs: 0.75rem;
+    /* 12px - 辅助文字 */
+    --tp-font-sm: 0.875rem;
+    /* 14px - 次要文字 */
+    --tp-font-base: 1rem;
+    /* 16px - 基础文字 */
+    --tp-font-lg: 1.125rem;
+    /* 18px - 重要文字 */
+    --tp-font-xl: 1.25rem;
+    /* 20px - 标题 */
+    --tp-font-2xl: 1.5rem;
+    /* 24px - 大标题 */
+
+    /* 间距单位系统 */
+    --tp-space-xs: 0.25rem;
+    /* 4px - 最小间距 */
+    --tp-space-sm: 0.5rem;
+    /* 8px - 小间距 */
+    --tp-space-base: 1rem;
+    /* 16px - 基础间距 */
+    --tp-space-lg: 1.5rem;
+    /* 24px - 大间距 */
+    --tp-space-xl: 2rem;
+    /* 32px - 超大间距 */
+    --tp-space-2xl: 3rem;
+    /* 48px - 页面级间距 */
+
+    /* 组件尺寸 */
+    --tp-button-height-sm: 2rem;
+    /* 32px - 小按钮 */
+    --tp-button-height-base: 2.75rem;
+    /* 44px - 标准按钮 */
+    --tp-button-height-lg: 3.5rem;
+    /* 56px - 大按钮 */
+
+    /* 图标尺寸 */
+    --tp-icon-xs: 1rem;
+    /* 16px */
+    --tp-icon-sm: 1.25rem;
+    /* 20px */
+    --tp-icon-base: 1.5rem;
+    /* 24px */
+    --tp-icon-lg: 2rem;
+    /* 32px */
+    --tp-icon-xl: 3rem;
+    /* 48px */
+
+    /* 圆角 - 保持px单位，因为视觉效果固定 */
+    --tp-radius-sm: 4px;
+    --tp-radius-base: 8px;
+    --tp-radius-lg: 12px;
+    --tp-radius-xl: 16px;
+
+    /* 边框宽度 - 保持px单位 */
+    --tp-border-thin: 1px;
+    --tp-border-base: 2px;
+
+    /* 响应式断点 - 使用em单位，基于用户字体大小 */
+    --tp-breakpoint-xs: 20em;
+    /* 320px @ 16px base */
+    --tp-breakpoint-sm: 23.4375em;
+    /* 375px @ 16px base */
+    --tp-breakpoint-md: 48em;
+    /* 768px @ 16px base */
+    --tp-breakpoint-lg: 64em;
+    /* 1024px @ 16px base */
+    --tp-breakpoint-xl: 75em;
+    /* 1200px @ 16px base */
+
     /* Primary Colors */
     --tp-primary: #1890ff;
     /* Blue */

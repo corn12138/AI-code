@@ -43,8 +43,8 @@
     --background-color: var(--tp-bg-tertiary);
     --border-color: transparent;
     --text-color: #666;
-    width: 44px;
-    height: 44px;
+    width: var(--tp-button-height-base);
+    height: var(--tp-button-height-base);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,7 +70,7 @@
 
 .task-tabs .adm-tabs-tab {
     padding: var(--tp-spacing-md) var(--tp-spacing-sm);
-    font-size: 15px;
+    font-size: var(--tp-font-sm);
     font-weight: 500;
     color: #666666;
 }
@@ -81,8 +81,8 @@
 
 .task-tabs .adm-tabs-tab-line {
     background: var(--tp-primary);
-    height: 3px;
-    border-radius: 1.5px;
+    height: var(--tp-space-xs);
+    border-radius: calc(var(--tp-space-xs) / 2);
 }
 
 /* 任务列表容器 */
@@ -105,10 +105,10 @@
 .task-card {
     background: #ffffff !important;
     /* Ensure white background */
-    border: 1px solid #f0f0f0;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
+    border: var(--tp-border-thin) solid #f0f0f0;
+    border-radius: var(--tp-radius-lg);
+    padding: var(--tp-space-base);
+    margin-bottom: var(--tp-space-sm);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     transition: all 0.2s ease;
     cursor: pointer;
@@ -133,18 +133,18 @@
 }
 
 .task-id {
-    font-size: 12px;
+    font-size: var(--tp-font-xs);
     color: #999999;
-    margin-bottom: 4px;
+    margin-bottom: var(--tp-space-xs);
     font-family: 'SF Mono', Monaco, monospace;
 }
 
 .task-title {
-    font-size: 16px;
+    font-size: var(--tp-font-base);
     font-weight: 600;
     color: #333333;
     line-height: 1.4;
-    margin-bottom: 8px;
+    margin-bottom: var(--tp-space-sm);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -162,8 +162,8 @@
 .task-priority,
 .task-status,
 .task-deadline {
-    font-size: 12px;
-    padding: 2px 8px;
+    font-size: var(--tp-font-xs);
+    padding: var(--tp-space-xs) var(--tp-space-sm);
     border-radius: 12px;
     font-weight: 500;
     white-space: nowrap;
@@ -258,10 +258,10 @@
     }
 }
 
-/* 小屏手机适配 (320px - 375px) */
-@media screen and (max-width: 375px) {
+/* 小屏手机适配 (320px - 375px) - 使用em单位 */
+@media screen and (max-width: 23.4375em) {
     .task-list-page {
-        font-size: 13px;
+        font-size: var(--tp-font-sm);
     }
 
     .search-header {
@@ -289,7 +289,7 @@
     }
 
     .task-title {
-        font-size: 14px;
+        font-size: var(--tp-font-sm);
     }
 
     .task-meta {
@@ -313,7 +313,8 @@
 }
 
 /* 平板竖屏适配 */
-@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+/* 平板竖屏适配 (768px - 1024px) - 使用em单位 */
+@media screen and (min-width: 48em) and (max-width: 64em) and (orientation: portrait) {
     .task-list-page {
         max-width: 600px;
         margin: 0 auto;
@@ -333,7 +334,7 @@
     }
 
     .task-title {
-        font-size: 17px;
+        font-size: var(--tp-font-lg);
     }
 
     .task-meta {
@@ -341,8 +342,8 @@
     }
 }
 
-/* 大平板适配 (1024px+) */
-@media screen and (min-width: 1024px) {
+/* 大平板适配 (1024px+) - 使用em单位 */
+@media screen and (min-width: 64em) {
     .task-list-page {
         max-width: 800px;
         margin: 0 auto;
@@ -369,12 +370,12 @@
     }
 
     .task-title {
-        font-size: 18px;
+        font-size: var(--tp-font-xl);
     }
 }
 
-/* 手机横屏适配 */
-@media screen and (max-width: 767px) and (orientation: landscape) {
+/* 手机横屏适配 - 使用em单位 */
+@media screen and (max-width: 47.9375em) and (orientation: landscape) {
     .search-header {
         padding: 8px 16px;
     }
@@ -398,7 +399,7 @@
     }
 
     .task-title {
-        font-size: 14px;
+        font-size: var(--tp-font-sm);
         -webkit-line-clamp: 1;
         /* Reduce to single line in landscape */
     }
@@ -427,14 +428,14 @@
 
 /* 特定设备适配 */
 
-/* iPhone SE 1st/2nd gen (320px width) */
-@media screen and (max-width: 320px) {
+/* iPhone SE 1st/2nd gen (320px width) - 使用em单位 */
+@media screen and (max-width: 20em) {
     .search-header {
         padding: 6px 8px;
     }
 
     .task-search-bar {
-        font-size: 13px;
+        font-size: var(--tp-font-sm);
     }
 
     .filter-button {
@@ -451,12 +452,12 @@
     }
 
     .task-title {
-        font-size: 13px;
+        font-size: var(--tp-font-sm);
     }
 
     .task-meta {
-        font-size: 11px;
-        gap: 6px;
+        font-size: var(--tp-font-xs);
+        gap: var(--tp-space-xs);
     }
 }
 
@@ -467,7 +468,7 @@
     }
 
     .task-title {
-        font-size: 16px;
+        font-size: var(--tp-font-base);
     }
 }
 
