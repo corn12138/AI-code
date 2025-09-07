@@ -84,20 +84,26 @@ src/api/taskProcess/
 ### 🗂️ **全局样式**
 ```
 src/styles/
-├── taskProcess.css              # 任务处理模块全局样式和响应式适配
-├── antd-mobile.css              # Ant Design Mobile 主题定制
-└── device-specific.css          # 设备特定样式
+├── taskProcess.css              # ✅ 任务处理模块全局样式（含CSS变量系统）
+├── antd-mobile.css              # 🔶 Ant Design Mobile 主题定制
+└── device-specific.css          # 🔶 设备特定样式
+
+注意：taskProcess.css 是必需的，包含完整的CSS变量系统
 ```
 
-### 🗂️ **模块内样式**
+### 🗂️ **模块内文档**
 ```
 src/pages/TaskProcess/
-├── modern-responsive.css        # 现代响应式样式（备用）
-├── CSS_COMPARISON.md            # 样式对比文档
-├── CSS_RESTORE_SUMMARY.md       # 样式恢复总结
-├── RESPONSIVE_COMPATIBILITY_SUMMARY.md  # 响应式兼容总结
-├── FILE_LIST_FIX_SUMMARY.md     # 文件列表修复总结
-└── OPTIMIZATION_SUMMARY.md      # 优化总结文档
+├── modern-responsive.css        # 📄 现代响应式样式（备用参考）
+├── CSS_MODERNIZATION_SUMMARY.md # 📄 CSS现代化改造总结
+├── MIGRATION_GUIDE.md           # 📄 完整迁移指南
+├── API_INTEGRATION_GUIDE.md     # 📄 API集成指南
+├── MODULE_FILE_LIST.md          # 📄 模块文件清单（本文件）
+├── CSS_COMPARISON.md            # 📄 样式对比文档
+├── CSS_RESTORE_SUMMARY.md       # 📄 样式恢复总结
+├── RESPONSIVE_COMPATIBILITY_SUMMARY.md  # 📄 响应式兼容总结
+├── FILE_LIST_FIX_SUMMARY.md     # 📄 文件列表修复总结
+└── OPTIMIZATION_SUMMARY.md      # 📄 优化总结文档
 ```
 
 ---
@@ -301,3 +307,59 @@ src/pages/TaskProcess/
 - `OPTIMIZATION_SUMMARY.md` - 性能优化建议
 
 或者检查各组件的注释和 TODO 标记，了解具体的实现细节和注意事项。
+
+---
+
+## ✅ **快速迁移检查清单**
+
+### **🔥 核心必需文件（必须复制）**
+- [ ] `TaskList/index.tsx` + `index.css` + `index.ts`
+- [ ] `TaskDetail/index.tsx` + `index.css` + `index.ts`  
+- [ ] `TaskDetail/components/` 整个目录（6个文件）
+- [ ] `FileList/index.tsx` + `index.css`
+- [ ] `src/stores/taskProcessStore.ts` 状态管理
+- [ ] `src/styles/taskProcess.css` CSS变量系统
+
+### **📦 依赖安装**
+- [ ] `npm install antd-mobile antd-mobile-icons`
+- [ ] 检查React版本 >= 18.0.0
+- [ ] 检查TypeScript版本 >= 5.0.0
+
+### **⚙️ 配置集成**
+- [ ] 添加路由配置（3个路由）
+- [ ] 导入CSS样式文件
+- [ ] 包装TaskProcessProvider
+- [ ] 添加类型定义
+
+### **🔌 API适配**
+- [ ] 创建API服务文件
+- [ ] 替换模拟数据为真实接口
+- [ ] 配置接口域名和路径
+- [ ] 实现错误处理
+
+### **🧪 功能验证**
+- [ ] 任务列表页面加载正常
+- [ ] 任务详情页面跳转正常
+- [ ] 流程处理功能正常
+- [ ] 文件列表功能正常
+- [ ] 响应式布局适配正常
+- [ ] 大字体模式适配正常
+
+### **📱 设备测试**
+- [ ] iPhone Safari 测试
+- [ ] Android Chrome 测试
+- [ ] iPad 平板测试
+- [ ] 微信内置浏览器测试
+
+---
+
+## 🎯 **迁移成功标志**
+
+当以下条件全部满足时，表示迁移成功：
+
+✅ **无错误运行**：控制台无报错，页面正常加载  
+✅ **功能完整**：所有页面和交互功能正常  
+✅ **样式正确**：响应式布局和视觉效果符合预期  
+✅ **性能良好**：页面加载速度和交互响应及时
+
+**恭喜！TaskProcess模块迁移完成！** 🎉
