@@ -475,7 +475,8 @@
     }
 
     .detail-grid {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        /* 保持2列，避免过度拥挤 */
         gap: 16px 20px;
     }
 
@@ -534,23 +535,30 @@
     }
 }
 
-/* 大平板适配 (1024px+) */
+/* 大平板适配 (1024px+) - 使用Flex布局替代Grid */
 @media screen and (min-width: 1024px) {
     .file-list-page {
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
     }
 
     .file-list-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 20px;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-content: flex-start !important;
+        gap: 16px;
         padding: 32px;
         padding-bottom: calc(120px + env(safe-area-inset-bottom));
     }
 
     .file-item {
-        margin-bottom: 0;
+        width: calc(50% - 8px) !important;
+        /* 2列布局，减去gap的一半 */
+        margin-bottom: 0 !important;
+        flex-shrink: 0 !important;
+        display: block !important;
     }
 
     .file-header {
