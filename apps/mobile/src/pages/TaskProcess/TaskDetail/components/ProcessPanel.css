@@ -1,274 +1,121 @@
+/* apps/mobile/src/pages/TaskProcess/TaskDetail/components/ProcessPanel.css */
 /**
- * 流程处理组件样式
+ * 流程处理组件样式 - 参考ui7.jpg
  */
 
-.process-panel-container {
+@import '../../../../styles/taskProcess.css';
+
+.process-panel {
+    padding: 16px;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-height: 400px;
 }
 
-.process-form-card {
-    --border-radius: 12px;
-    --header-padding: 0;
-    --body-padding: 20px;
-    border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    margin: 0 16px;
-    flex: 1;
-}
-
-/* 表单样式 */
-.process-form {
-    --border-top: none;
-    --border-bottom: none;
-}
-
-.process-form .adm-form-item {
-    --border-bottom: none;
-    --padding-left: 0;
-    --padding-right: 0;
+/* 当前处理步骤信息 - 参考ui7.jpg顶部 */
+.current-step-info {
+    background: rgba(24, 144, 255, 0.05);
+    border: 1px solid rgba(24, 144, 255, 0.2);
+    border-radius: 8px;
+    padding: 16px;
     margin-bottom: 20px;
 }
 
-.process-form .adm-form-item:last-child {
-    margin-bottom: 0;
-}
-
-.process-form .adm-form-item-label {
-    font-size: 15px;
-    font-weight: 500;
-    color: #262626;
-    margin-bottom: 8px;
+.current-step-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 4px;
 }
 
-.process-form .adm-form-item-label::after {
-    content: '*';
-    color: #ff4d4f;
+.step-label {
     font-size: 14px;
-    margin-left: 2px;
+    color: #666666;
+    font-weight: 500;
 }
 
-.process-form .adm-form-item[name="notifyUsers"] .adm-form-item-label::after,
-.process-form .adm-form-item[name="urgentLevel"] .adm-form-item-label::after,
-.process-form .adm-form-item[name="attachments"] .adm-form-item-label::after {
-    display: none;
-}
-
-.process-form .adm-form-item-extra {
-    font-size: 12px;
-    color: #8c8c8c;
-    margin-top: 4px;
-    line-height: 1.4;
-}
-
-/* 表单分组 */
-.form-section {
-    margin-bottom: 24px;
-}
-
-.form-section:last-child {
-    margin-bottom: 0;
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 16px;
+.step-value {
+    font-size: 14px;
+    color: #1890ff;
     font-weight: 600;
-    color: #262626;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #f0f0f0;
 }
 
-.section-title svg {
-    font-size: 18px;
-    color: #1890ff;
-}
-
-/* 选择器样式 */
-.process-form .adm-selector {
-    --border-radius: 8px;
-    --border-color: #d9d9d9;
-    --background: #fafafa;
-    --padding: 12px;
-    min-height: 44px;
-}
-
-.process-form .adm-selector:focus-within {
-    --border-color: #1890ff;
-    --background: #fff;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
-}
-
-.process-form .adm-selector[disabled] {
-    --background: #f5f5f5;
-    --border-color: #e8e8e8;
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.process-form .adm-selector-item {
-    --border-radius: 6px;
-    --background: #fff;
-    --border-color: #d9d9d9;
-    --text-color: #595959;
-    --checked-border-color: #1890ff;
-    --checked-background: #e6f7ff;
-    --checked-text-color: #1890ff;
-    font-size: 14px;
-    padding: 8px 12px;
-    transition: all 0.3s ease;
-}
-
-.process-form .adm-selector-item:hover {
-    --border-color: #1890ff;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.1);
-}
-
-.process-form .adm-selector-item[disabled] {
-    --background: #fafafa;
-    --text-color: #bfbfbf;
-    --border-color: #f0f0f0;
-    cursor: not-allowed;
-}
-
-/* 文本域样式 */
-.process-form .adm-text-area {
-    --font-size: 15px;
-    --color: #262626;
-    --background-color: #fafafa;
-    --border-radius: 8px;
-    --border-color: #d9d9d9;
-    --border-width: 1px;
-    --padding-horizontal: 12px;
-    --padding-vertical: 12px;
-}
-
-.process-form .adm-text-area:focus {
-    --background-color: #fff;
-    --border-color: #1890ff;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
-}
-
-.process-form .adm-text-area .adm-text-area-element {
-    min-height: 100px;
-    resize: vertical;
-}
-
-/* 紧急程度控件 */
-.urgent-controls {
+/* 表单容器 */
+.process-form-container {
+    flex: 1;
     display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    background: #fafafa;
-    border: 1px solid #e8e8e8;
-    border-radius: 8px;
+    flex-direction: column;
 }
 
-.urgent-label {
-    font-size: 14px;
-    color: #595959;
+.form-section {
+    flex: 1;
+}
+
+/* 表单项 - 参考ui7.jpg的布局 */
+.form-item {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-size: 15px;
+    color: #333333;
     font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
 }
 
-.urgent-controls .adm-switch {
-    --checked-color: #1890ff;
-    --background-color: #e8e8e8;
+.required-mark {
+    color: #ff4d4f;
+    margin-left: 4px;
 }
 
-.urgent-controls .adm-stepper {
-    --button-background-color: #f0f0f0;
-    --button-text-color: #666;
-    --active-button-background-color: #1890ff;
-    --active-button-text-color: #fff;
-    --input-background-color: #fff;
-    --input-text-color: #262626;
-    --border-color: #e8e8e8;
+.form-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #333333;
+    background: transparent;
 }
 
-/* 图片上传 */
-.process-form .adm-image-uploader {
-    --cell-size: 80px;
-    --border-radius: 8px;
-    --border-color: #d9d9d9;
-    --border-style: dashed;
+.form-input::placeholder {
+    color: #cccccc;
 }
 
-.process-form .adm-image-uploader-cell {
-    background: #fafafa;
-    border: 2px dashed #d9d9d9;
-    transition: all 0.3s ease;
-}
-
-.process-form .adm-image-uploader-cell:hover {
-    border-color: #1890ff;
-    background: #f6ffed;
-}
-
-.process-form .adm-image-uploader-cell-add {
-    color: #8c8c8c;
-    font-size: 24px;
-}
-
-.process-form .adm-image-uploader-cell-add:hover {
-    color: #1890ff;
-}
-
-/* 底部操作区域 */
-.panel-actions {
-    padding: 16px;
-    background: #fff;
-    border-top: 1px solid #f0f0f0;
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
-}
-
-/* 使用antd-mobile默认按钮样式，无需额外自定义 */
-
-/* ========== 自定义选择器样式 ========== */
-
-/* 选择器输入框 */
-.selector-input {
+.form-input-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
-    background: #fff;
+    background: #ffffff;
     border: 1px solid #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
+    min-height: 44px;
 }
 
-.selector-input:active {
-    background: #f5f5f5;
-    border-color: #1890ff;
+.form-input-container:active {
+    border-color: var(--tp-primary);
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
 }
 
-.selector-input .selected-text {
-    color: #262626;
-    font-weight: 400;
+.input-text {
+    color: #333333;
+    flex: 1;
+    font-size: 14px;
 }
 
-.selector-input .placeholder-text {
-    color: #bfbfbf;
+.input-placeholder {
+    color: #cccccc;
+    flex: 1;
+    font-size: 14px;
 }
 
-/* 知悉人选择器容器 */
-.user-selector-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.input-arrow {
+    font-size: 14px;
+    color: #999999;
+    margin-left: 8px;
 }
 
 /* 已选择用户标签 */
@@ -279,596 +126,372 @@
     margin-top: 8px;
 }
 
-/* ========== 弹出选择器样式 ========== */
+.selected-users-tags .adm-tag {
+    background-color: var(--tp-primary-light);
+    color: var(--tp-primary);
+    border: 1px solid var(--tp-primary);
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 13px;
+    cursor: pointer;
+}
 
-/* 基础选择器弹窗 */
-.selector-popup {
-    background: #fff;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    max-height: 50vh;
+/* 处理意见容器 */
+.opinion-input-container {
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.opinion-textarea {
+    border: none;
+    background: transparent;
+    resize: none;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.opinion-textarea::placeholder {
+    color: #cccccc;
+}
+
+.opinion-actions {
+    display: flex;
+    gap: 8px;
+    padding: 8px 16px;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.opinion-actions .adm-button {
+    --text-color: var(--tp-primary);
+    --background-color: transparent;
+    --border-color: var(--tp-primary);
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 14px;
+    font-size: 12px;
+}
+
+.char-count {
+    text-align: right;
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #999999;
+    background: #fafafa;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* 底部操作按钮 - 参考ui7.jpg */
+.form-actions {
+    display: flex;
+    gap: 8px;
+    padding: 16px 0;
+    margin-top: auto;
+}
+
+.action-btn {
+    flex: 1;
+    height: 44px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: none;
+}
+
+.secondary-btn {
+    background-color: #f5f5f5;
+    color: #666666;
+    --background-color: #f5f5f5;
+    --text-color: #666666;
+}
+
+.secondary-btn:active {
+    background-color: #e8e8e8;
+}
+
+.primary-btn {
+    background-color: var(--tp-primary);
+    color: white;
+    --background-color: var(--tp-primary);
+    --text-color: white;
+}
+
+.primary-btn:active {
+    background-color: var(--tp-primary-dark);
+}
+
+.btn-icon {
+    font-size: 16px;
+}
+
+.btn-text {
+    font-size: 12px;
+}
+
+/* 弹窗样式 */
+.process-popup-container {
+    height: 80vh;
     display: flex;
     flex-direction: column;
+    background: #f5f5f5;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    overflow: hidden;
 }
 
 .popup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.popup-header .close-btn {
+    font-size: 20px;
+    color: #999999;
+    cursor: pointer;
+}
+
+.popup-search-bar {
+    padding: 8px 16px;
+    background: #ffffff;
     border-bottom: 1px solid #f0f0f0;
 }
 
-.popup-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #262626;
+.popup-search-bar .adm-search-bar {
+    --border-radius: 22px;
+    --background: #f8f9fa;
 }
 
 .popup-content {
     flex: 1;
     overflow-y: auto;
-    max-height: 300px;
-}
-
-.popup-option {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    border-bottom: 1px solid #f5f5f5;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.popup-option:hover {
+    padding: 0 16px;
     background: #f5f5f5;
 }
 
-.popup-option.selected {
-    background: #e6f7ff;
-    color: #1890ff;
+.popup-list-item {
+    background: #ffffff;
+    border-radius: 8px;
+    margin-top: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.popup-list-item .adm-list-item-content-main {
+    font-size: 15px;
+    color: #333333;
+}
+
+.popup-list-item .adm-list-item-content-extra {
+    font-size: 13px;
+    color: #999999;
+}
+
+.popup-list-item.selected {
+    border: 1px solid var(--tp-primary);
+    background-color: var(--tp-primary-light);
+}
+
+.popup-list-item.selected .adm-list-item-content-main {
+    color: var(--tp-primary);
 }
 
 .popup-footer {
-    padding: 16px 20px;
-    border-top: 1px solid #f0f0f0;
-}
-
-/* ========== 知悉人选择器样式 ========== */
-
-.user-selector-popup {
-    background: #fff;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    height: 70vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.user-selector-popup .popup-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.cancel-text {
-    color: #8c8c8c;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-/* 搜索容器 */
-.search-container {
-    padding: 12px 20px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-/* 面包屑导航 */
-.breadcrumb {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    background: #fafafa;
-    font-size: 12px;
-    color: #595959;
-    gap: 4px;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-/* 用户列表 */
-.user-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 20px;
-}
-
-.user-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #f5f5f5;
-    cursor: pointer;
-    gap: 12px;
-}
-
-.user-item:last-child {
-    border-bottom: none;
-}
-
-.user-item.selected {
-    background: rgba(24, 144, 255, 0.04);
-}
-
-/* 用户复选框 */
-.user-checkbox {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.checkbox-empty {
-    width: 16px;
-    height: 16px;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
-}
-
-/* 用户头像 */
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 50%;
-}
-
-/* 用户信息 */
-.user-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.user-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #262626;
-}
-
-.user-id {
-    font-size: 12px;
-    color: #8c8c8c;
-}
-
-/* 底部操作栏 */
-.user-selector-popup .popup-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    background: #ffffff;
     border-top: 1px solid #f0f0f0;
-    background: #fff;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+    z-index: 10;
 }
 
-.selected-count {
-    display: flex;
-    gap: 16px;
-    font-size: 14px;
-    color: #595959;
+.popup-footer .adm-button {
+    flex: 1;
+    margin: 0 8px;
+    height: 44px;
+    border-radius: 22px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
-.selected-count span:first-child {
-    color: #1890ff;
-    cursor: pointer;
+.popup-footer .adm-button-default {
+    background-color: #f5f5f5;
+    color: #333333;
+    border: none;
 }
 
-/* ========== 响应式适配 ========== */
-
-@media (max-width: 768px) {
-    .selector-popup {
-        max-height: 60vh;
-    }
-
-    .user-selector-popup {
-        height: 80vh;
-    }
-
-    .popup-content {
-        max-height: 400px;
-    }
+.popup-footer .adm-button-primary {
+    background-color: var(--tp-primary);
+    color: white;
+    border: none;
 }
 
-.panel-actions .adm-button-text {
+/* 用户列表项 */
+.user-list-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-}
-
-/* 操作菜单额外内容 */
-.action-sheet-extra {
-    padding: 16px;
-    text-align: center;
+    padding: 12px 0;
     border-bottom: 1px solid #f0f0f0;
 }
 
-.extra-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #262626;
-    margin-bottom: 4px;
+.user-list-item:last-child {
+    border-bottom: none;
 }
 
-.extra-desc {
-    font-size: 13px;
-    color: #8c8c8c;
-    line-height: 1.4;
-}
-
-/* 空状态 */
-.process-panel-empty {
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e6f7ff;
+    color: var(--tp-primary);
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 16px;
-    text-align: center;
-    height: 100%;
-    min-height: 300px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 12px;
+    flex-shrink: 0;
 }
 
-.process-panel-empty p {
-    font-size: 14px;
-    color: #999;
-    margin: 12px 0 0 0;
+.user-info {
+    flex: 1;
+    min-width: 0;
 }
 
-/* 分割线 */
-.adm-divider {
-    --background-color: #f0f0f0;
-    --text-color: #8c8c8c;
-    --font-size: 12px;
+.user-name {
+    font-size: 15px;
+    color: #333333;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* 加载状态 */
-.process-form .adm-selector[data-loading="true"] {
-    position: relative;
+.user-department {
+    font-size: 13px;
+    color: #999999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.process-form .adm-selector[data-loading="true"]::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    width: 16px;
-    height: 16px;
-    border: 2px solid #f0f0f0;
-    border-top: 2px solid #1890ff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    transform: translateY(-50%);
-}
-
-@keyframes spin {
-    0% {
-        transform: translateY(-50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translateY(-50%) rotate(360deg);
-    }
-}
-
-/* 平板适配 */
-@media (min-width: 768px) {
-    .process-form-card {
-        margin: 0;
-        --body-padding: 24px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    }
-
-    .form-section {
-        margin-bottom: 28px;
-    }
-
-    .section-title {
-        font-size: 17px;
-        margin-bottom: 20px;
-        padding-bottom: 12px;
-    }
-
-    .section-title svg {
-        font-size: 20px;
-    }
-
-    .process-form .adm-form-item {
-        margin-bottom: 24px;
-    }
-
-    .process-form .adm-form-item-label {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-
-    .process-form .adm-selector,
-    .process-form .adm-text-area {
-        min-height: 48px;
-        --font-size: 16px;
-    }
-
-    .process-form .adm-selector {
-        --padding: 14px;
-    }
-
-    .process-form .adm-text-area {
-        --padding-horizontal: 14px;
-        --padding-vertical: 14px;
-    }
-
-    .process-form .adm-selector-item {
-        font-size: 15px;
-        padding: 10px 14px;
-    }
-
-    .urgent-controls {
-        padding: 14px;
-    }
-
-    .urgent-label {
-        font-size: 15px;
-    }
-
-    .process-form .adm-image-uploader {
-        --cell-size: 90px;
-    }
-
-    .panel-actions {
-        padding: 20px 24px;
-    }
-
-    .panel-actions .adm-button {
-        height: 52px;
-        --font-size: 17px;
-    }
-
-    .action-sheet-extra {
-        padding: 20px;
-    }
-
-    .extra-title {
-        font-size: 17px;
-    }
-
-    .extra-desc {
-        font-size: 14px;
-    }
-}
-
-/* 大屏适配 */
-@media (min-width: 1024px) {
-    .process-form-card {
-        --border-radius: 16px;
-    }
-
-    .process-form .adm-selector,
-    .process-form .adm-text-area,
-    .urgent-controls {
-        border-radius: 12px;
-    }
-
-    .process-form .adm-selector-item {
-        border-radius: 8px;
-    }
-
-    .panel-actions .adm-button {
-        --border-radius: 28px;
-    }
-}
-
-/* 小屏适配 */
-@media (max-width: 375px) {
-    .process-form-card {
-        margin: 0 12px;
-        --body-padding: 16px;
-    }
-
-    .form-section {
-        margin-bottom: 20px;
-    }
-
-    .section-title {
-        font-size: 15px;
-        margin-bottom: 12px;
-        padding-bottom: 8px;
-    }
-
-    .section-title svg {
-        font-size: 16px;
-    }
-
-    .process-form .adm-form-item {
-        margin-bottom: 16px;
-    }
-
-    .process-form .adm-form-item-label {
-        font-size: 14px;
-        margin-bottom: 6px;
-    }
-
-    .process-form .adm-form-item-extra {
-        font-size: 11px;
-    }
-
-    .process-form .adm-selector {
-        --padding: 10px;
-        min-height: 40px;
-        --font-size: 14px;
-    }
-
-    .process-form .adm-text-area {
-        --padding-horizontal: 10px;
-        --padding-vertical: 10px;
-        --font-size: 14px;
-    }
-
-    .process-form .adm-selector-item {
-        font-size: 13px;
-        padding: 6px 10px;
-    }
-
-    .urgent-controls {
-        padding: 10px;
-        gap: 8px;
-    }
-
-    .urgent-label {
-        font-size: 13px;
-    }
-
-    .process-form .adm-image-uploader {
-        --cell-size: 70px;
-    }
-
-    .panel-actions {
-        padding: 12px;
-    }
-
-    .panel-actions .adm-button {
-        height: 44px;
-        --font-size: 15px;
-    }
-
-    .action-sheet-extra {
-        padding: 12px;
-    }
-
-    .extra-title {
-        font-size: 15px;
-    }
-
-    .extra-desc {
-        font-size: 12px;
-    }
-}
-
-/* 深色模式 */
+/* Dark mode adaptation */
 @media (prefers-color-scheme: dark) {
-    .process-form-card {
-        background: #ffffff !important;
-        border: 1px solid #f0f0f0;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    .process-panel {
+        background: #ffffff;
     }
 
-    .section-title {
-        color: #fff;
-        border-bottom-color: #303030;
+    .current-step-info {
+        background: rgba(24, 144, 255, 0.08);
+        border-color: rgba(24, 144, 255, 0.3);
     }
 
-    .process-form .adm-form-item-label {
-        color: #fff;
+    .step-label {
+        color: #666666;
     }
 
-    .process-form .adm-form-item-extra {
-        color: #8c8c8c;
+    .step-value {
+        color: #1890ff;
     }
 
-    .process-form .adm-selector,
-    .process-form .adm-text-area,
-    .urgent-controls {
-        --background: #ffffff !important;
-        --border-color: #e0e0e0;
-        --color: #000000;
+    .form-label {
+        color: #333333;
     }
 
-    .process-form .adm-selector:focus-within,
-    .process-form .adm-text-area:focus {
-        --background: #1f1f1f;
-        --border-color: #1890ff;
+    .form-input-container {
+        background: #ffffff;
+        border-color: #d9d9d9;
     }
 
-    .process-form .adm-selector-item {
-        --background: #1f1f1f;
-        --text-color: #d9d9d9;
-        --border-color: #404040;
+    .input-text {
+        color: #333333;
     }
 
-    .urgent-label {
-        color: #d9d9d9;
+    .input-placeholder {
+        color: #cccccc;
     }
 
-    .process-form .adm-image-uploader-cell {
-        background: #262626;
-        border-color: #404040;
+    .input-arrow {
+        color: #999999;
     }
 
-    .process-form .adm-image-uploader-cell:hover {
-        border-color: #1890ff;
-        background: #0f1419;
+    .opinion-input-container {
+        background: #ffffff;
+        border-color: #d9d9d9;
     }
 
-    .panel-actions {
-        background: #1f1f1f;
-        border-top-color: #303030;
+    .opinion-textarea {
+        background: transparent;
     }
 
-    .action-sheet-extra {
-        border-bottom-color: #303030;
+    .opinion-actions {
+        background: #fafafa;
+        border-top-color: #f0f0f0;
     }
 
-    .extra-title {
-        color: #fff;
-    }
-}
-
-/* 高对比度模式 */
-@media (prefers-contrast: high) {
-    .process-form-card {
-        border: 2px solid #000;
+    .char-count {
+        background: #fafafa;
+        border-top-color: #f0f0f0;
+        color: #999999;
     }
 
-    .process-form .adm-selector,
-    .process-form .adm-text-area,
-    .urgent-controls {
-        border: 2px solid #000;
+    .secondary-btn {
+        background-color: #f5f5f5;
+        color: #666666;
     }
 
-    .panel-actions {
-        border-top: 2px solid #000;
-    }
-}
-
-/* 减少动画 */
-@media (prefers-reduced-motion: reduce) {
-
-    .process-form .adm-selector-item,
-    .panel-actions .adm-button,
-    .process-form .adm-image-uploader-cell {
-        transition: none;
+    .primary-btn {
+        background-color: var(--tp-primary);
+        color: white;
     }
 
-    .process-form .adm-selector-item:hover {
-        transform: none;
-        box-shadow: none;
+    .popup-header {
+        background: #ffffff;
+        border-bottom-color: #f0f0f0;
+        color: #333333;
     }
 
-    .panel-actions .adm-button[color="primary"]:active {
-        transform: none;
+    .popup-search-bar {
+        background: #ffffff;
+        border-bottom-color: #f0f0f0;
     }
 
-    @keyframes spin {
+    .popup-content {
+        background: #f5f5f5;
+    }
 
-        0%,
-        100% {
-            transform: translateY(-50%) rotate(0deg);
-        }
+    .popup-list-item {
+        background: #ffffff;
+    }
+
+    .popup-footer {
+        background: #ffffff;
+        border-top-color: #f0f0f0;
+    }
+
+    .user-name {
+        color: #333333;
+    }
+
+    .user-department {
+        color: #999999;
     }
 }

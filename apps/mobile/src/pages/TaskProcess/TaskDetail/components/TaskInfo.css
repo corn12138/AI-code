@@ -1,520 +1,125 @@
+/* apps/mobile/src/pages/TaskProcess/TaskDetail/components/TaskInfo.css */
 /**
- * 任务信息组件样式
+ * 任务信息组件样式 - 参考ui1.jpg的左右布局
  */
 
+@import '../../../../styles/taskProcess.css';
+
 .task-info-container {
-    padding: 0 16px 16px;
+    padding: 16px;
+    background: #ffffff;
 }
 
-/* 信息区块 */
-.info-section {
-    --border-radius: 12px;
-    --header-padding: 16px;
-    --body-padding: 16px;
-    margin-bottom: 16px;
-    border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+/* 报告信息容器 - 参考ui1.jpg */
+.report-info-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
 }
 
-.info-section .adm-card-header {
-    border-bottom: 1px solid #f5f5f5;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-}
-
-.info-section .adm-card-header-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #262626;
-}
-
-/* 基本信息列表 */
-.info-section .adm-list {
-    --border-top: none;
-    --border-bottom: none;
-    --border-inner: 1px solid #f5f5f5;
-    --padding-left: 0;
-    --padding-right: 0;
-}
-
-.info-section .adm-list-item {
-    --padding-left: 0;
-    --padding-right: 0;
-    min-height: 48px;
-}
-
-.info-section .adm-list-item-content {
+/* 信息网格布局 - 左右模式 */
+.info-grid {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.info-section .adm-list-item-content-prefix {
-    margin-right: 12px;
-    color: #1890ff;
-    font-size: 16px;
+/* 信息行 - 左右布局 */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    min-height: 44px;
 }
 
-.info-section .adm-list-item-content-main {
-    flex: 1;
+.info-row:last-child {
+    border-bottom: none;
+}
+
+/* 标签样式 - 左侧 */
+.info-label {
     font-size: 15px;
-    color: #262626;
+    color: #333333;
     font-weight: 500;
-}
-
-.info-section .adm-list-item-content-extra {
-    color: #595959;
-    font-size: 14px;
-    max-width: 200px;
-    text-align: right;
-    word-break: break-word;
-}
-
-/* 报告信息表单 */
-.report-form {
-    --border-top: none;
-    --border-bottom: none;
-}
-
-.report-form .adm-form-item {
-    --border-bottom: none;
-    --padding-left: 0;
-    --padding-right: 0;
-    margin-bottom: 20px;
-}
-
-.report-form .adm-form-item:last-child {
-    margin-bottom: 0;
-}
-
-.report-form .adm-form-item-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #262626;
-    margin-bottom: 8px;
-}
-
-.report-form .adm-form-item-extra {
-    font-size: 12px;
-    color: #8c8c8c;
-    margin-top: 4px;
+    min-width: 100px;
+    flex-shrink: 0;
     line-height: 1.4;
 }
 
-/* 表单控件样式 */
-.report-form .adm-input {
-    --font-size: 15px;
-    --color: #262626;
-    --background-color: #fafafa;
-    --border-radius: 8px;
-    --border-color: transparent;
-    --border-width: 1px;
-    --padding-horizontal: 12px;
-    min-height: 44px;
-}
-
-.report-form .adm-input:focus {
-    --background-color: #fff;
-    --border-color: #1890ff;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
-}
-
-.report-form .adm-text-area {
-    --font-size: 15px;
-    --color: #262626;
-    --background-color: #fafafa;
-    --border-radius: 8px;
-    --border-color: transparent;
-    --padding-horizontal: 12px;
-    --padding-vertical: 12px;
-}
-
-.report-form .adm-text-area:focus {
-    --background-color: #fff;
-    --border-color: #1890ff;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
-}
-
-.report-form .adm-selector {
-    --border-radius: 8px;
-    --border-color: transparent;
-    --background: #fafafa;
-    --padding: 12px;
-}
-
-.report-form .adm-selector-item {
-    --border-radius: 6px;
-    --background: #fff;
-    --border-color: #d9d9d9;
-    --text-color: #595959;
-    --checked-border-color: #1890ff;
-    --checked-background: #e6f7ff;
-    --checked-text-color: #1890ff;
+/* 值样式 - 右侧 */
+.info-value {
     font-size: 14px;
-    padding: 8px 12px;
-}
-
-.report-form .adm-date-picker {
-    --background-color: #fafafa;
-    --border-radius: 8px;
-    --padding: 12px;
-    font-size: 15px;
-    color: #262626;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-}
-
-/* 附件列表 */
-.empty-attachments {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 16px;
-    text-align: center;
-}
-
-.empty-attachments p {
-    font-size: 14px;
-    color: #999;
-    margin: 12px 0 0 0;
-}
-
-.attachments-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.attachment-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px;
-    background: #fafafa;
-    border-radius: 8px;
-    border: 1px solid #f0f0f0;
-}
-
-.attachment-info {
-    display: flex;
-    align-items: center;
+    color: #666666;
+    text-align: right;
     flex: 1;
-    min-width: 0;
+    margin-left: 16px;
+    line-height: 1.4;
+    word-break: break-all;
 }
 
-.attachment-icon {
-    font-size: 20px;
-    color: #1890ff;
-    margin-right: 12px;
-    flex-shrink: 0;
-}
-
-.attachment-details {
-    flex: 1;
-    min-width: 0;
-}
-
-.attachment-name {
+/* 可点击的值样式 - 文件链接 */
+.info-value-clickable {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    color: var(--tp-primary);
+    cursor: pointer;
     font-size: 14px;
-    font-weight: 500;
-    color: #262626;
-    margin-bottom: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    flex: 1;
+    margin-left: 16px;
+    text-align: right;
 }
 
-.attachment-size {
+.info-value-clickable:active {
+    color: var(--tp-primary-dark);
+}
+
+.info-value-clickable .anticon {
     font-size: 12px;
-    color: #8c8c8c;
 }
 
-.attachment-actions {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.attachment-actions .adm-button {
-    --border-radius: 50%;
-    --background-color: transparent;
-    --text-color: #666;
-    --border-color: transparent;
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.attachment-actions .adm-button:active {
-    --background-color: #f5f5f5;
-}
-
-/* 空状态 */
-.task-info-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 16px;
-    text-align: center;
-}
-
-.task-info-empty p {
-    font-size: 14px;
-    color: #999;
-    margin: 12px 0 0 0;
-}
-
-/* 分割线 */
-.adm-divider {
-    --background-color: #f0f0f0;
-    --text-color: #8c8c8c;
-    --font-size: 12px;
-    margin: 16px 0;
-}
-
-/* 平板适配 */
-@media (min-width: 768px) {
-    .task-info-container {
-        padding: 0 20px 20px;
-    }
-
-    .info-section {
-        --header-padding: 20px;
-        --body-padding: 20px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    }
-
-    .info-section .adm-card-header-title {
-        font-size: 17px;
-    }
-
-    .info-section .adm-list-item {
-        min-height: 52px;
-    }
-
-    .info-section .adm-list-item-content-main {
-        font-size: 16px;
-    }
-
-    .info-section .adm-list-item-content-extra {
-        font-size: 15px;
-        max-width: 300px;
-    }
-
-    .report-form .adm-form-item {
-        margin-bottom: 24px;
-    }
-
-    .report-form .adm-form-item-label {
-        font-size: 15px;
-    }
-
-    .report-form .adm-input,
-    .report-form .adm-text-area textarea,
-    .report-form .adm-date-picker {
-        font-size: 16px;
-    }
-
-    .report-form .adm-input,
-    .report-form .adm-date-picker {
-        min-height: 48px;
-    }
-
-    .attachment-item {
-        padding: 16px;
-    }
-
-    .attachment-icon {
-        font-size: 22px;
-        margin-right: 16px;
-    }
-
-    .attachment-name {
-        font-size: 15px;
-    }
-
-    .attachment-size {
-        font-size: 13px;
-    }
-
-    .attachment-actions .adm-button {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-    }
-}
-
-/* 大屏适配 */
-@media (min-width: 1024px) {
-    .info-section {
-        --border-radius: 16px;
-    }
-
-    .report-form .adm-input,
-    .report-form .adm-text-area,
-    .report-form .adm-date-picker,
-    .attachment-item {
-        border-radius: 12px;
-    }
-}
-
-/* 小屏适配 */
-@media (max-width: 375px) {
-    .task-info-container {
-        padding: 0 12px 12px;
-    }
-
-    .info-section {
-        --header-padding: 12px;
-        --body-padding: 12px;
-        margin-bottom: 12px;
-    }
-
-    .info-section .adm-card-header-title {
-        font-size: 15px;
-    }
-
-    .info-section .adm-list-item {
-        min-height: 44px;
-    }
-
-    .info-section .adm-list-item-content-main {
+/* 响应式适配 */
+@media (max-width: 480px) {
+    .info-label {
+        min-width: 80px;
         font-size: 14px;
     }
 
-    .info-section .adm-list-item-content-extra {
+    .info-value,
+    .info-value-clickable {
         font-size: 13px;
-        max-width: 150px;
+        margin-left: 12px;
     }
 
-    .report-form .adm-form-item {
-        margin-bottom: 16px;
-    }
-
-    .report-form .adm-form-item-label {
-        font-size: 13px;
-    }
-
-    .report-form .adm-input,
-    .report-form .adm-text-area textarea,
-    .report-form .adm-date-picker {
-        font-size: 14px;
-    }
-
-    .report-form .adm-input,
-    .report-form .adm-date-picker {
-        min-height: 40px;
-    }
-
-    .attachment-item {
-        padding: 10px;
-    }
-
-    .attachment-icon {
-        font-size: 18px;
-        margin-right: 10px;
-    }
-
-    .attachment-name {
-        font-size: 13px;
-    }
-
-    .attachment-size {
-        font-size: 11px;
-    }
-
-    .attachment-actions .adm-button {
-        width: 28px;
-        height: 28px;
-        min-width: 28px;
+    .info-row {
+        padding: 10px 0;
     }
 }
 
-/* 深色模式 */
+/* Dark mode adaptation */
 @media (prefers-color-scheme: dark) {
-    .info-section {
-        background: #ffffff !important;
-        border: 1px solid #f0f0f0;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    .task-info-container,
+    .report-info-container {
+        background: #ffffff;
     }
 
-    .info-section .adm-card-header {
-        border-bottom-color: #303030;
+    .info-row {
+        border-bottom-color: #f0f0f0;
     }
 
-    .info-section .adm-card-header-title {
-        color: #fff;
+    .info-label {
+        color: #333333;
     }
 
-    .info-section .adm-list {
-        --border-inner: 1px solid #303030;
+    .info-value {
+        color: #666666;
     }
 
-    .info-section .adm-list-item-content-main {
-        color: #fff;
-    }
-
-    .info-section .adm-list-item-content-extra {
-        color: #d9d9d9;
-    }
-
-    .report-form .adm-form-item-label {
-        color: #fff;
-    }
-
-    .report-form .adm-input,
-    .report-form .adm-text-area,
-    .report-form .adm-selector,
-    .report-form .adm-date-picker {
-        --background-color: #ffffff !important;
-        --color: #000000;
-        --border-color: #e0e0e0;
-    }
-
-    .report-form .adm-input:focus,
-    .report-form .adm-text-area:focus {
-        --background-color: #ffffff !important;
-        --border-color: #1890ff;
-    }
-
-    .attachment-item {
-        background: #ffffff !important;
-        border-color: #e0e0e0;
-    }
-
-    .attachment-name {
-        color: #fff;
-    }
-
-    .attachment-size {
-        color: #8c8c8c;
-    }
-
-    .attachment-actions .adm-button:active {
-        --background-color: #404040;
-    }
-}
-
-/* 高对比度模式 */
-@media (prefers-contrast: high) {
-    .info-section {
-        border: 2px solid #000;
-    }
-
-    .attachment-item {
-        border: 2px solid #000;
-    }
-
-    .report-form .adm-input,
-    .report-form .adm-text-area,
-    .report-form .adm-selector {
-        border: 2px solid #000;
+    .info-value-clickable {
+        color: var(--tp-primary);
     }
 }

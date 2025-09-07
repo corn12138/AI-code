@@ -1,127 +1,224 @@
-/* 文件列表页面样式 - 参考ui8.jpg */
+/* apps/mobile/src/pages/TaskProcess/FileList/index.css */
+/**
+ * 文件列表页面样式 - 参考ui9.jpg和ui12.jpg
+ */
 
 .file-list-page {
+    height: 100vh;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    background: #ffffff;
     position: relative;
 }
 
-/* ========== 导航栏 ========== */
-
+/* 导航栏 */
 .file-list-nav {
     background: #ffffff;
     border-bottom: 1px solid #f0f0f0;
-    --border-bottom: 1px solid #f0f0f0;
+    --adm-color-text: #333333;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* ========== 文件列表内容 ========== */
-
+/* 文件列表内容区域 */
 .file-list-content {
     flex: 1;
+    padding: 16px;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
     overflow-y: auto;
-    padding: 12px 12px calc(80px + env(safe-area-inset-bottom)) 12px;
-    /* 底部增加padding，为吸底操作栏留出空间，包含安全区域 */
-    background: #f8f9fa;
 }
 
-/* ========== 文件项卡片 ========== */
-
-.file-item-card {
-    margin-bottom: 12px;
+/* 文件卡片 - 参考ui9.jpg */
+.file-item {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --padding: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease;
 }
 
-.file-item-header {
+.file-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* 文件头部 */
+.file-header {
     display: flex;
     align-items: center;
+    padding: 16px;
     gap: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.file-header.expanded {
+    border-bottom: none;
 }
 
 .file-checkbox {
     flex-shrink: 0;
 }
 
+.file-checkbox .adm-checkbox-icon {
+    --checked-color: #1890ff;
+}
+
 .file-icon {
-    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    background: #f5f5f5;
 }
 
-.file-basic-info {
+.file-icon.word {
+    background: linear-gradient(135deg, #2b5ce6 0%, #4285f4 100%);
+}
+
+.file-icon.excel {
+    background: linear-gradient(135deg, #217346 0%, #0f7b0f 100%);
+}
+
+.file-icon.pdf {
+    background: linear-gradient(135deg, #d93025 0%, #ea4335 100%);
+}
+
+.file-icon.image {
+    background: linear-gradient(135deg, #f4b400 0%, #ff9800 100%);
+}
+
+.file-icon.other {
+    background: linear-gradient(135deg, #666666 0%, #888888 100%);
+}
+
+.file-info {
     flex: 1;
     min-width: 0;
 }
 
 .file-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 1.3;
     margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    word-break: break-all;
 }
 
 .file-meta {
     display: flex;
+    align-items: center;
     gap: 12px;
     font-size: 12px;
-    color: #999;
+    color: #666666;
 }
 
 .file-type {
-    padding: 2px 6px;
-    background: #f0f0f0;
-    border-radius: 4px;
-    font-size: 11px;
+    color: #999999;
+    text-transform: uppercase;
 }
 
-.file-size::after {
-    content: ' MB';
+.file-size {
+    color: #999999;
 }
 
-.file-expand-btn {
+.expand-button {
     flex-shrink: 0;
+    --text-color: #666666;
+    --background-color: transparent;
+    --border-color: transparent;
+    padding: 0;
+    min-width: auto;
+    height: auto;
 }
 
-/* ========== 文件详细信息 ========== */
+.expand-icon {
+    font-size: 16px;
+    transition: transform 0.2s ease;
+}
 
-.file-detail-info {
-    margin-top: 12px;
-    padding-top: 12px;
+.expand-icon.expanded {
+    transform: rotate(180deg);
+}
+
+/* 文件详情 - 参考ui9.jpg展开状态 */
+.file-details {
+    padding: 16px;
+    background: #f8f9fa;
     border-top: 1px solid #f0f0f0;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
 }
 
 .detail-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    font-size: 13px;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .detail-label {
-    color: #666;
-    flex-shrink: 0;
-    width: 80px;
+    font-size: 12px;
+    color: #666666;
+    font-weight: 500;
 }
 
 .detail-value {
-    color: #333;
-    flex: 1;
-    text-align: right;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 13px;
+    color: #333333;
+    word-break: break-all;
 }
 
-/* ========== 底部操作栏 ========== */
+.detail-value.highlight {
+    color: #1890ff;
+    font-weight: 500;
+}
 
+/* 状态样式 */
+.status-pending {
+    color: #faad14;
+}
+
+.status-electronic {
+    color: #1890ff;
+}
+
+.status-archive {
+    color: #52c41a;
+}
+
+.status-manual {
+    color: #ff4d4f;
+}
+
+.status-marked {
+    color: #722ed1;
+}
+
+/* 空状态 */
+.empty-file-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+    color: #999999;
+}
+
+/* 底部吸底操作栏 - 参考ui9.jpg底部 */
 .file-list-footer {
     position: fixed;
     bottom: 0;
@@ -131,191 +228,169 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
-    /* 安全区域适配 */
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
     background: #ffffff;
     border-top: 1px solid #f0f0f0;
     box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
-    /* 确保在其他元素之上 */
-
-    /* 增强视觉效果 */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-
-    /* 渐变背景增强层次感 */
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 1));
 }
 
 .footer-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
+}
+
+.select-all-btn {
+    --text-color: #1890ff;
+    --background-color: transparent;
+    --border-color: transparent;
+    padding: 0;
+    min-width: auto;
+    height: auto;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .selected-count {
     font-size: 14px;
-    color: #666;
+    color: #666666;
 }
 
-.footer-right {
-    /* 操作按钮容器 */
+.selected-count .count {
+    color: #1890ff;
+    font-weight: 600;
 }
 
-/* ========== 响应式适配 ========== */
+.operation-btn {
+    height: 36px;
+    padding: 0 24px;
+    border-radius: 18px;
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 80px;
+}
 
-@media (max-width: 768px) {
+.operation-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 操作弹窗样式 - 参考ui12.jpg */
+.adm-action-sheet-button {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px 0;
+    color: #333333;
+}
+
+.adm-action-sheet-button:active {
+    background-color: #f5f5f5;
+}
+
+.adm-action-sheet-cancel-button {
+    font-size: 16px;
+    font-weight: 500;
+    color: #666666;
+}
+
+/* 手机端适配 */
+@media (max-width: 480px) {
     .file-list-content {
-        padding: 8px 8px calc(70px + env(safe-area-inset-bottom)) 8px;
-        /* 移动端底部padding适配 */
+        padding: 12px;
     }
 
-    .file-item-card {
-        margin-bottom: 8px;
-        --padding: 10px;
+    .file-header {
+        padding: 12px;
+        gap: 10px;
     }
 
-    .file-item-header {
-        gap: 8px;
+    .file-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
     }
 
     .file-name {
-        font-size: 13px;
+        font-size: 14px;
     }
 
-    .file-meta {
+    .detail-grid {
+        grid-template-columns: 1fr;
         gap: 8px;
-        font-size: 11px;
-    }
-
-    .detail-row {
-        padding: 4px 0;
-        font-size: 12px;
-    }
-
-    .detail-label {
-        width: 70px;
     }
 
     .file-list-footer {
         padding: 10px 12px;
-        /* 移动端底部操作栏适配安全区域 */
         padding-bottom: calc(10px + env(safe-area-inset-bottom));
     }
-}
 
-/* ========== 状态颜色 ========== */
-
-.detail-value {
-    color: #333;
-}
-
-/* 不同状态的颜色 */
-.file-item-card[data-status="待用印"] .detail-value {
-    color: #faad14;
-}
-
-.file-item-card[data-status="电子用印"] .detail-value {
-    color: #1890ff;
-}
-
-.file-item-card[data-status="推至数字档案"] .detail-value {
-    color: #52c41a;
-}
-
-.file-item-card[data-status="手工印印确认"] .detail-value {
-    color: #722ed1;
-}
-
-.file-item-card[data-status="标记不用印"] .detail-value {
-    color: #999;
-}
-
-/* ========== 选中状态 ========== */
-
-.file-item-card.selected {
-    border: 1px solid #1890ff;
-    background: rgba(24, 144, 255, 0.02);
-}
-
-.file-item-card.selected .file-name {
-    color: #1890ff;
-}
-
-/* ========== 动画效果 ========== */
-
-.file-detail-info {
-    animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        max-height: 0;
-        padding-top: 0;
-        margin-top: 0;
-    }
-
-    to {
-        opacity: 1;
-        max-height: 300px;
-        padding-top: 12px;
-        margin-top: 12px;
+    .footer-left {
+        gap: 12px;
     }
 }
 
-/* ========== 深色模式适配 ========== */
-
+/* Dark mode adaptation */
 @media (prefers-color-scheme: dark) {
     .file-list-page {
-        background: #1f1f1f !important;
+        background-color: #ffffff;
     }
 
     .file-list-nav {
-        background: #1f1f1f !important;
-        border-color: #303030 !important;
+        background: #ffffff;
+        border-bottom-color: #f0f0f0;
+        --adm-color-text: #333333;
     }
 
-    .file-list-content {
-        background: #141414 !important;
+    .file-item {
+        background: #ffffff;
+        border-color: #f0f0f0;
     }
 
-    .file-item-card {
-        background: #1f1f1f !important;
-        border-color: #303030 !important;
+    .file-header {
+        border-bottom-color: #f0f0f0;
     }
 
     .file-name {
-        color: #d9d9d9 !important;
+        color: #333333;
     }
 
-    .file-meta {
-        color: #999 !important;
+    .file-meta,
+    .file-type,
+    .file-size {
+        color: #666666;
     }
 
-    .file-type {
-        background: #303030 !important;
-        color: #d9d9d9 !important;
+    .file-details {
+        background: #f8f9fa;
+        border-top-color: #f0f0f0;
     }
 
     .detail-label {
-        color: #999 !important;
+        color: #666666;
     }
 
     .detail-value {
-        color: #d9d9d9 !important;
+        color: #333333;
     }
 
-    .file-detail-info {
-        border-color: #303030 !important;
+    .detail-value.highlight {
+        color: #1890ff;
     }
 
     .file-list-footer {
-        background: #1f1f1f !important;
-        border-color: #303030 !important;
+        background: #ffffff;
+        border-top-color: #f0f0f0;
+        box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.2);
     }
 
     .selected-count {
-        color: #999 !important;
+        color: #666666;
+    }
+
+    .selected-count .count {
+        color: #1890ff;
     }
 }

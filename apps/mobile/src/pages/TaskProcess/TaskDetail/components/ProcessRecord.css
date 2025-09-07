@@ -1,50 +1,51 @@
+/* apps/mobile/src/pages/TaskProcess/TaskDetail/components/ProcessRecord.css */
 /**
- * 流程记录组件样式 - 参考ui2.jpg和ui3.jpg设计
+ * 流程记录组件样式 - 参考ui2.jpg和ui3.jpg
  */
 
-/* ========== 流程记录容器 ========== */
+@import '../../../../styles/taskProcess.css';
 
 .process-record-container {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    margin: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    padding: 16px;
+    background: #ffffff;
 }
 
-/* ========== 当前处理信息区域 ========== */
-
+/* 当前处理信息 - 参考ui2.jpg顶部 */
 .current-process-info {
-    background: linear-gradient(135deg, #f6f8ff 0%, #e8f4fd 100%);
+    background: rgba(24, 144, 255, 0.05);
+    border: 1px solid rgba(24, 144, 255, 0.2);
+    border-radius: 8px;
     padding: 16px;
+    margin-bottom: 20px;
+}
+
+.current-step-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
     border-bottom: 1px solid #f0f0f0;
 }
 
-.current-step {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.step-label {
+.current-step-label {
     font-size: 14px;
-    color: #666;
-    margin-right: 8px;
-}
-
-.step-value {
-    font-size: 14px;
+    color: #666666;
     font-weight: 500;
+}
+
+.current-step-value {
+    font-size: 14px;
     color: #1890ff;
+    font-weight: 600;
+    margin-left: 8px;
 }
 
-/* ========== 用户列表样式 ========== */
-
-.user-list-container {
-    margin-bottom: 12px;
+/* 用户列表区域 */
+.user-list-section {
+    margin-bottom: 16px;
 }
 
-.user-list-container:last-child {
+.user-list-section:last-child {
     margin-bottom: 0;
 }
 
@@ -52,34 +53,46 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.user-list-title {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.user-icon {
+    font-size: 16px;
+    color: #999999;
+    margin-right: 8px;
 }
 
 .user-list-label {
     font-size: 14px;
-    color: #666;
+    color: #666666;
     font-weight: 500;
+    margin-right: 8px;
+}
+
+.user-count {
+    font-size: 14px;
+    color: #333333;
+    flex: 1;
 }
 
 .expand-toggle {
     display: flex;
     align-items: center;
+    font-size: 13px;
+    color: var(--tp-primary);
     gap: 4px;
-    font-size: 12px;
-    color: #1890ff;
-    cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-}
-
-.expand-toggle:hover {
-    background-color: rgba(24, 144, 255, 0.08);
 }
 
 .expand-icon {
-    transition: transform 0.2s ease;
     font-size: 12px;
+    transition: transform 0.2s ease;
 }
 
 .expand-icon.expanded {
@@ -87,46 +100,37 @@
 }
 
 .user-list {
+    padding: 8px 0 0 24px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .user-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    border-radius: 16px;
-    font-size: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.user-icon {
-    color: #1890ff;
     font-size: 14px;
 }
 
 .user-name {
-    color: #333;
+    color: #333333;
     font-weight: 500;
+    margin-right: 4px;
 }
 
 .user-id {
-    color: #999;
+    color: #999999;
+    font-size: 13px;
 }
 
-/* ========== 流程时间线 ========== */
-
-.process-timeline {
-    padding: 16px;
+/* 时间线 - 参考ui3.jpg */
+.timeline {
+    position: relative;
 }
 
 .timeline-item {
     display: flex;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     position: relative;
 }
 
@@ -134,99 +138,100 @@
     margin-bottom: 0;
 }
 
-/* 当前正在处理的节点 - 参考ui2.jpg中的审核（会办） */
-.timeline-item.current .timeline-content {
-    background: rgba(24, 144, 255, 0.04);
-    border-left: 3px solid #1890ff;
-}
-
-/* 已完成的节点 - 参考ui2.jpg中的审核（交办）和拟稿 */
-.timeline-item.completed .timeline-content {
-    background: rgba(0, 0, 0, 0.02);
-    border-left: 3px solid #d9d9d9;
-    opacity: 0.9;
-}
-
-/* 时间线左侧 */
 .timeline-left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 12px;
+    margin-right: 16px;
     position: relative;
 }
 
 .timeline-dot {
-    width: 24px;
-    height: 24px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
+    background-color: #d9d9d9;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 12px;
-    z-index: 2;
     position: relative;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* 当前正在处理节点的圆点 */
-.timeline-dot.processing {
-    animation: pulse 2s infinite;
-    box-shadow: 0 0 0 4px rgba(24, 144, 255, 0.2);
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(24, 144, 255, 0.4);
-    }
-
-    70% {
-        box-shadow: 0 0 0 6px rgba(24, 144, 255, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(24, 144, 255, 0);
-    }
-}
-
-/* 已完成节点的圆点 */
-.timeline-dot.completed {
-    opacity: 0.7;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    box-shadow: 0 0 0 3px #ffffff;
 }
 
 .timeline-line {
     width: 2px;
-    background: #e8e8e8;
     flex: 1;
-    margin-top: 8px;
+    background-color: #f0f0f0;
+    margin-top: 4px;
     min-height: 40px;
 }
 
-/* 时间线内容 */
 .timeline-content {
     flex: 1;
-    background: #fafafa;
+    background: #f8f9fa;
     border-radius: 8px;
-    padding: 12px;
-    border: 1px solid #f0f0f0;
-    transition: all 0.2s ease;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .timeline-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .timeline-action {
-    font-weight: 500;
-    font-size: 14px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.timeline-time {
+    font-size: 13px;
+    color: #999999;
+}
+
+/* 当前处理节点样式 - 参考ui2.jpg中的蓝色高亮 */
+.timeline-item.current .timeline-dot {
+    background-color: #1890ff;
+    position: relative;
+}
+
+.timeline-item.current .timeline-dot::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #1890ff;
+    animation: pulse 2s infinite;
+}
+
+.pulse-dot {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(24, 144, 255, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.timeline-item.current .timeline-line {
+    background-color: #1890ff;
+}
+
+.timeline-item.current .timeline-content {
+    background: rgba(24, 144, 255, 0.04);
+    border-left: 3px solid #1890ff;
+}
+
+.timeline-item.current .timeline-action {
+    color: #1890ff;
 }
 
 .current-badge {
@@ -235,386 +240,211 @@
     font-size: 11px;
     padding: 2px 6px;
     border-radius: 4px;
-    margin-left: 8px;
-    font-weight: normal;
+    font-weight: 500;
 }
 
-/* 已完成节点的交办标识 */
-.completed-badge {
-    background: rgba(0, 0, 0, 0.05);
-    color: #666;
-    font-size: 11px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-left: 8px;
-    font-weight: normal;
+/* 已完成节点样式 */
+.timeline-item.completed .timeline-dot {
+    background-color: #999999;
 }
 
-.meeting-record {
-    font-size: 12px;
-    color: #1890ff;
-    cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+.timeline-item.completed .timeline-line {
+    background-color: #f0f0f0;
 }
 
-.meeting-record:hover {
-    background-color: rgba(24, 144, 255, 0.08);
+.timeline-item.completed .timeline-action {
+    color: #666666;
 }
 
-.timeline-time {
-    font-size: 12px;
-    color: #999;
+.timeline-item.completed .timeline-content {
+    background: #f8f9fa;
 }
 
-/* 时间线主体 */
-.timeline-body {
-    margin-top: 12px;
-}
-
+/* 处理人信息 */
 .handler-info {
     margin-bottom: 12px;
 }
 
-/* 处理人信息头部 - 参考ui2.jpg布局 */
 .handler-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .handler-left {
     display: flex;
     align-items: center;
-    gap: 8px;
-}
-
-.handler-right {
-    flex-shrink: 0;
+    gap: 6px;
 }
 
 .handler-icon {
-    color: #1890ff;
     font-size: 16px;
+    color: #999999;
 }
 
 .handler-name {
     font-weight: 500;
-    color: #333;
+    color: #333333;
     font-size: 14px;
 }
 
 .handler-id {
-    color: #999;
-    font-size: 12px;
+    font-size: 13px;
+    color: #999999;
 }
 
-.handler-time {
-    color: #999;
-    font-size: 12px;
-}
-
-/* 处理人部门信息 - 第二行 */
 .handler-department {
-    color: #666;
-    font-size: 12px;
-    margin-left: 24px;
-    /* 与图标对齐 */
+    font-size: 13px;
+    color: #666666;
+    margin-left: 22px;
     line-height: 1.4;
 }
 
-/* ========== 意见容器 ========== */
-
+/* 意见容器 - 参考ui3.jpg */
 .opinion-container {
-    background: #fff;
+    background: #ffffff;
     border-radius: 6px;
     padding: 12px;
+    border: 1px solid #f0f0f0;
     margin-top: 8px;
-    border: 1px solid #e8e8e8;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .opinion-content {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     gap: 8px;
 }
 
 .opinion-text {
     flex: 1;
-    color: #333;
     font-size: 14px;
+    color: #333333;
     line-height: 1.5;
     word-break: break-word;
 }
 
 .copy-btn {
-    flex-shrink: 0;
-    color: #1890ff;
-    padding: 4px;
+    --text-color: #999999;
+    --background-color: transparent;
+    --border-color: transparent;
+    padding: 0;
     min-width: auto;
     height: auto;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    font-size: 16px;
+    flex-shrink: 0;
 }
 
-.copy-btn:active {
-    background-color: rgba(24, 144, 255, 0.1);
-    transform: scale(0.95);
-}
-
-/* ========== 附件容器 ========== */
-
-.attachments-container {
+.expand-opinion-btn {
+    --text-color: var(--tp-primary);
+    --background-color: transparent;
+    --border-color: transparent;
+    padding: 4px 0 0 0;
+    min-width: auto;
+    height: auto;
+    font-size: 13px;
     margin-top: 8px;
-    padding: 8px;
-    background: #f8f8f8;
-    border-radius: 6px;
+}
+
+/* 附件 */
+.attachments-container {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--tp-primary);
 }
 
 .attachment-icon {
-    color: #1890ff;
     font-size: 16px;
 }
 
-/* ========== 空状态 ========== */
+/* 脉冲动画 */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
 
-.empty-records {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-    color: #999;
-    text-align: center;
+    50% {
+        transform: scale(1.2);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
 }
 
-.empty-records p {
-    margin-top: 16px;
-    font-size: 14px;
-}
-
-/* ========== 响应式适配 ========== */
-
-@media (max-width: 768px) {
+/* Dark mode adaptation */
+@media (prefers-color-scheme: dark) {
     .process-record-container {
-        margin: 12px;
+        background: #ffffff;
     }
 
     .current-process-info {
-        padding: 12px;
+        background: rgba(24, 144, 255, 0.08);
+        border-color: rgba(24, 144, 255, 0.3);
     }
 
-    .process-timeline {
-        padding: 12px;
+    .current-step-info {
+        border-bottom-color: #f0f0f0;
     }
 
-    .timeline-item {
-        margin-bottom: 20px;
+    .current-step-label,
+    .user-list-label {
+        color: #666666;
     }
 
-    .timeline-content {
-        padding: 10px;
+    .current-step-value {
+        color: #1890ff;
     }
 
-    /* 移动端处理人信息布局 - 保持左右布局 */
-    .handler-header {
-        justify-content: space-between;
-        align-items: flex-start;
+    .user-count,
+    .user-name,
+    .timeline-action,
+    .handler-name,
+    .opinion-text {
+        color: #333333;
     }
 
-    .handler-left {
-        gap: 6px;
-        flex: 1;
-        min-width: 0;
-    }
-
-    .handler-right {
-        flex-shrink: 0;
-        margin-left: 8px;
-    }
-
-    .handler-name {
-        font-size: 13px;
-    }
-
+    .user-icon,
+    .user-id,
+    .timeline-time,
+    .handler-icon,
     .handler-id {
-        font-size: 11px;
-    }
-
-    .handler-time {
-        font-size: 11px;
+        color: #999999;
     }
 
     .handler-department {
-        margin-left: 22px;
-        font-size: 11px;
-    }
-
-    .user-item {
-        padding: 4px 8px;
-        font-size: 11px;
-    }
-
-    .opinion-text {
-        font-size: 13px;
-    }
-}
-
-@media (min-width: 768px) {
-    .process-record-container {
-        margin: 0 0 20px;
-        border-radius: 16px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    }
-
-    .current-process-info {
-        padding: 20px;
-    }
-
-    .process-timeline {
-        padding: 20px;
+        color: #666666;
     }
 
     .timeline-dot {
-        width: 28px;
-        height: 28px;
-        font-size: 14px;
+        box-shadow: 0 0 0 3px #ffffff;
     }
 
     .timeline-content {
-        padding: 16px;
-        border-radius: 12px;
-    }
-
-    .handler-name {
-        font-size: 15px;
-    }
-
-    .opinion-text {
-        font-size: 15px;
-    }
-}
-
-/* ========== 深色模式适配 ========== */
-
-@media (prefers-color-scheme: dark) {
-    .process-record-container {
-        background: #1f1f1f;
-        border: 1px solid #303030;
-    }
-
-    .current-process-info {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        border-bottom-color: #404040;
-    }
-
-    .step-label {
-        color: #d9d9d9;
-    }
-
-    .user-list-label {
-        color: #d9d9d9;
-    }
-
-    .timeline-content {
-        background: #2a2a2a;
-        border-color: #404040;
-    }
-
-    .timeline-line {
-        background: #404040;
-    }
-
-    .user-item {
-        background: #2a2a2a;
-        border-color: #404040;
-        color: #fff;
-    }
-
-    .user-name {
-        color: #fff;
-    }
-
-    .handler-name {
-        color: #fff;
+        background: #f8f9fa;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     }
 
     .opinion-container {
-        background: #2a2a2a;
-        border-color: #404040;
+        background: #ffffff;
+        border-color: #f0f0f0;
     }
 
-    .opinion-text {
-        color: #fff;
+    .copy-btn {
+        --text-color: #999999;
+    }
+
+    .expand-opinion-btn {
+        --text-color: var(--tp-primary);
     }
 
     .attachments-container {
-        background: #2a2a2a;
+        color: var(--tp-primary);
     }
-
-    .empty-records {
-        color: #8c8c8c;
-    }
-}
-
-/* ========== 高对比度模式 ========== */
-
-@media (prefers-contrast: high) {
-    .process-record-container {
-        border: 2px solid #000;
-    }
-
-    .timeline-content {
-        border: 2px solid #000;
-    }
-
-    .user-item {
-        border: 2px solid #000;
-    }
-
-    .opinion-container {
-        border: 2px solid #000;
-    }
-}
-
-/* ========== 动画效果 ========== */
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.timeline-item {
-    animation: fadeIn 0.3s ease-out;
-}
-
-.user-item {
-    transition: all 0.2s ease;
-}
-
-.user-item:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.copy-btn {
-    transition: all 0.2s ease;
-}
-
-.copy-btn:hover {
-    transform: scale(1.05);
 }

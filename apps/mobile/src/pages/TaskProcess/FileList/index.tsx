@@ -1,342 +1,307 @@
-/**
- * 文件列表页面
- * 参考ui8.jpg的设计，支持选择、展开、操作等功能
- */
-
 import {
     ActionSheet,
     Button,
-    Card,
     Checkbox,
+    Empty,
     NavBar,
     Toast
 } from 'antd-mobile'
 import {
     DownOutline,
-    FileOutline,
-    LeftOutline,
-    UpOutline
+    LeftOutline
 } from 'antd-mobile-icons'
-import React, { useState } from 'react'
-import { history } from 'umi'
+import React, { useCallback, useEffect, useState } from 'react'
+import { history, useLocation } from 'umi'
 import './index.css'
 
-// 文件信息接口
-interface FileInfo {
+interface FileItem {
     id: string
     name: string
-    type: string
+    type: 'word' | 'excel' | 'pdf' | 'image' | 'other'
     size: string
-    status: string
+    status: 'pending' | 'electronic' | 'archive' | 'manual' | 'marked'
     modifyTime: string
-    serialNumber?: string
-    legalId?: string
-    documentNumber?: string
-    printCount?: number
+    serialNumber: string
+    legalId: string
+    documentNumber: string
+    printCount: number
 }
 
-// 模拟文件数据
-const mockFiles: FileInfo[] = [
-    {
-        id: '1',
-        name: '远程办公VPN申请手册手...word',
-        type: '其他',
-        size: '12',
-        status: '待用印',
-        modifyTime: '2023-10-10 10:00:00',
-        printCount: 12,
-        serialNumber: 'SLCM202311090008',
-        legalId: '取消编号',
-        documentNumber: '——'
-    },
-    {
-        id: '2',
-        name: '远程办公VPN申请手册.excel',
-        type: 'excel',
-        size: '8',
-        status: '待用印',
-        modifyTime: '2023-10-10 10:00:00',
-        printCount: 8
-    },
-    {
-        id: '3',
-        name: '远程办公VPN申请手册.pdf',
-        type: 'pdf',
-        size: '15',
-        status: '电子用印',
-        modifyTime: '2023-10-10 10:00:00'
-    },
-    {
-        id: '4',
-        name: '远程办公VPN申请手册.excel',
-        type: 'excel',
-        size: '12',
-        status: '推至数字档案',
-        modifyTime: '2023-10-10 10:00:00'
-    },
-    {
-        id: '5',
-        name: '远程办公VPN申请手册手...word',
-        type: 'word',
-        size: '10',
-        status: '手工印印确认',
-        modifyTime: '2023-10-10 10:00:00'
-    },
-    {
-        id: '6',
-        name: '远程办公VPN申请手册',
-        type: 'other',
-        size: '5',
-        status: '标记不用印',
-        modifyTime: '2023-10-10 10:00:00'
-    }
-]
+interface TaskFileData {
+    fileType: 'template' | 'attachment'
+    files: FileItem[]
+    taskId?: string
+    taskTitle?: string
+}
 
 interface FileListProps {
     fileType?: 'template' | 'attachment'
-    files?: string[]
+    files?: FileItem[]
 }
 
 const FileList: React.FC<FileListProps> = ({
     fileType: propFileType,
     files: propFiles
 }) => {
-    const [selectedFiles, setSelectedFiles] = useState<Set<string>>(new Set())
-    const [expandedFiles, setExpandedFiles] = useState<Set<string>>(new Set())
-    const [showActionSheet, setShowActionSheet] = useState(false)
+    const location = useLocation()
     const [fileType, setFileType] = useState<'template' | 'attachment'>('template')
-    const [files, setFiles] = useState<string[]>([])
+    const [files, setFiles] = useState<FileItem[]>([])
+    const [taskInfo, setTaskInfo] = useState<{ taskId?: string, taskTitle?: string }>({})
+    const [selectedFiles, setSelectedFiles] = useState<string[]>([])
+    const [expandedFiles, setExpandedFiles] = useState<string[]>([])
+    const [showActions, setShowActions] = useState(false)
 
-    // 从URL参数获取文件类型和文件列表
-    React.useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search)
-        const typeParam = urlParams.get('type') as 'template' | 'attachment'
-        const filesParam = urlParams.get('files')
+    // 初始化数据
+    useEffect(() => {
+        console.log('🗂️ FileList 初始化，获取文件数据', { location, propFileType, propFiles })
 
-        if (typeParam) {
-            setFileType(typeParam)
-        } else if (propFileType) {
-            setFileType(propFileType)
-        }
-
-        if (filesParam) {
-            try {
-                const parsedFiles = JSON.parse(filesParam)
-                setFiles(parsedFiles)
-            } catch (error) {
-                console.error('解析文件列表失败:', error)
-            }
-        } else if (propFiles) {
-            setFiles(propFiles)
-        }
-    }, [propFileType, propFiles])
-
-    // 全选/取消全选
-    const handleSelectAll = () => {
-        if (selectedFiles.size === mockFiles.length) {
-            setSelectedFiles(new Set())
-        } else {
-            setSelectedFiles(new Set(mockFiles.map(file => file.id)))
-        }
-    }
-
-    // 选择单个文件
-    const handleSelectFile = (fileId: string) => {
-        const newSelected = new Set(selectedFiles)
-        if (newSelected.has(fileId)) {
-            newSelected.delete(fileId)
-        } else {
-            newSelected.add(fileId)
-        }
-        setSelectedFiles(newSelected)
-    }
-
-    // 展开/收起文件详情
-    const toggleFileExpand = (fileId: string) => {
-        const newExpanded = new Set(expandedFiles)
-        if (newExpanded.has(fileId)) {
-            newExpanded.delete(fileId)
-        } else {
-            newExpanded.add(fileId)
-        }
-        setExpandedFiles(newExpanded)
-    }
-
-    // 文件操作
-    const handleFileOperation = (operation: 'view' | 'download') => {
-        const selectedCount = selectedFiles.size
-        if (selectedCount === 0) {
-            Toast.show({
-                content: '请先选择文件',
-                icon: 'fail'
+        // 优先从路由状态获取数据
+        const routeState = location.state as TaskFileData | undefined
+        if (routeState) {
+            console.log('📋 从路由状态获取文件数据:', routeState)
+            setFileType(routeState.fileType)
+            setFiles(routeState.files || [])
+            setTaskInfo({
+                taskId: routeState.taskId,
+                taskTitle: routeState.taskTitle
             })
+        } else {
+            // 回退到URL参数和props
+            const urlParams = new URLSearchParams(location.search)
+            const urlFileType = urlParams.get('type') as 'template' | 'attachment'
+
+            if (urlFileType) {
+                setFileType(urlFileType)
+                console.log('📋 从URL参数获取文件类型:', urlFileType)
+            } else if (propFileType) {
+                setFileType(propFileType)
+                console.log('📋 从props获取文件类型:', propFileType)
+            }
+
+            if (propFiles) {
+                setFiles(propFiles)
+                console.log('📋 从props获取文件列表:', propFiles)
+            }
+        }
+    }, [location, propFileType, propFiles])
+
+    const handleSelectAll = useCallback(() => {
+        if (selectedFiles.length === files.length) {
+            setSelectedFiles([])
+        } else {
+            setSelectedFiles(files.map(f => f.id))
+        }
+    }, [selectedFiles, files])
+
+    const handleSelectFile = useCallback((fileId: string) => {
+        setSelectedFiles(prev =>
+            prev.includes(fileId)
+                ? prev.filter(id => id !== fileId)
+                : [...prev, fileId]
+        )
+    }, [])
+
+    const toggleFileExpand = useCallback((fileId: string) => {
+        setExpandedFiles(prev =>
+            prev.includes(fileId)
+                ? prev.filter(id => id !== fileId)
+                : [...prev, fileId]
+        )
+    }, [])
+
+    const handleOperation = () => {
+        if (selectedFiles.length === 0) {
+            Toast.show('请先选择文件')
             return
         }
-
-        const operationText = operation === 'view' ? '查看' : '下载'
-        Toast.show({
-            content: `${operationText}${selectedCount}个文件`,
-            icon: 'success'
-        })
-
-        // 这里实现具体的查看或下载逻辑
-        console.log(`${operationText}文件:`, Array.from(selectedFiles))
-        setShowActionSheet(false)
+        setShowActions(true)
     }
 
-    // 获取文件类型图标颜色
-    const getFileTypeColor = (type: string) => {
-        switch (type.toLowerCase()) {
-            case 'word':
-                return '#1890ff'
-            case 'excel':
-                return '#52c41a'
-            case 'pdf':
-                return '#f5222d'
-            default:
-                return '#666'
+    const handleView = () => {
+        Toast.show(`查看 ${selectedFiles.length} 个文件`)
+        setShowActions(false)
+    }
+
+    const handleDownload = () => {
+        Toast.show(`下载 ${selectedFiles.length} 个文件`)
+        setShowActions(false)
+    }
+
+    const getFileIcon = (type: FileItem['type']) => {
+        const iconMap = {
+            word: '📄',
+            excel: '📊',
+            pdf: '📕',
+            image: '🖼️',
+            other: '📋'
         }
+        return iconMap[type] || '📋'
     }
 
-    // 渲染文件项
-    const renderFileItem = (file: FileInfo) => {
-        const isSelected = selectedFiles.has(file.id)
-        const isExpanded = expandedFiles.has(file.id)
+    const getStatusText = (status: FileItem['status']) => {
+        const statusMap = {
+            pending: '待用印',
+            electronic: '电子用印',
+            archive: '推至数字档案',
+            manual: '手工印印确认',
+            marked: '标记不印印'
+        }
+        return statusMap[status] || status
+    }
+
+    const renderFileItem = (file: FileItem) => {
+        const isSelected = selectedFiles.includes(file.id)
+        const isExpanded = expandedFiles.includes(file.id)
 
         return (
-            <Card key={file.id} className="file-item-card">
-                <div className="file-item-header">
-                    <div className="file-checkbox">
-                        <Checkbox
-                            checked={isSelected}
-                            onChange={() => handleSelectFile(file.id)}
-                        />
+            <div key={file.id} className="file-item">
+                <div className={`file-header ${isExpanded ? 'expanded' : ''}`}>
+                    <Checkbox
+                        className="file-checkbox"
+                        checked={isSelected}
+                        onChange={() => handleSelectFile(file.id)}
+                    />
+                    <div className={`file-icon ${file.type}`}>
+                        {getFileIcon(file.type)}
                     </div>
-                    <div className="file-icon">
-                        <FileOutline
-                            style={{
-                                color: getFileTypeColor(file.type),
-                                fontSize: '24px'
-                            }}
-                        />
-                    </div>
-                    <div className="file-basic-info">
+                    <div className="file-info">
                         <div className="file-name">{file.name}</div>
                         <div className="file-meta">
-                            <span className="file-type">{file.type}</span>
-                            <span className="file-size">{file.size}</span>
+                            <span className="file-type">{file.type === 'other' ? '其他' : file.type}</span>
+                            <span className="file-size">{file.size}MB</span>
                         </div>
                     </div>
-                    <div className="file-expand-btn">
-                        <Button
-                            fill="none"
-                            size="small"
-                            onClick={() => toggleFileExpand(file.id)}
-                        >
-                            {isExpanded ? <UpOutline /> : <DownOutline />}
-                        </Button>
-                    </div>
+                    <Button
+                        className="expand-button"
+                        onClick={() => toggleFileExpand(file.id)}
+                    >
+                        <DownOutline className={`expand-icon ${isExpanded ? 'expanded' : ''}`} />
+                    </Button>
                 </div>
-
-                {/* 展开的详细信息 */}
                 {isExpanded && (
-                    <div className="file-detail-info">
-                        <div className="detail-row">
-                            <span className="detail-label">类型</span>
-                            <span className="detail-value">{file.type}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">份数</span>
-                            <span className="detail-value">{file.size}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">法审情况</span>
-                            <span className="detail-value">——</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">法审ID</span>
-                            <span className="detail-value">——</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">文本编号</span>
-                            <span className="detail-value">{file.serialNumber || '——'}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">状态</span>
-                            <span className="detail-value">{file.status}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">文本修改时间</span>
-                            <span className="detail-value">{file.modifyTime}</span>
-                        </div>
-                        <div className="detail-row">
-                            <span className="detail-label">用印说明</span>
-                            <span className="detail-value">{file.printCount || '——'}</span>
+                    <div className="file-details">
+                        <div className="detail-grid">
+                            <div className="detail-row">
+                                <span className="detail-label">类型</span>
+                                <span className="detail-value">{file.type === 'other' ? '其他' : file.type}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">份数</span>
+                                <span className="detail-value">{Math.floor(Math.random() * 20 + 1)}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">法审情况</span>
+                                <span className="detail-value">——</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">法审ID</span>
+                                <span className="detail-value">——</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">文本编号</span>
+                                <span className="detail-value highlight">{file.serialNumber}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">状态</span>
+                                <span className={`detail-value status-${file.status}`}>
+                                    {getStatusText(file.status)}
+                                </span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">文本修改时间</span>
+                                <span className="detail-value">{file.modifyTime}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">用印说明</span>
+                                <span className="detail-value">{Math.floor(Math.random() * 20 + 1)}</span>
+                            </div>
                         </div>
                     </div>
                 )}
-            </Card>
+            </div>
         )
     }
 
     return (
         <div className="file-list-page">
-            {/* 导航栏 */}
             <NavBar
                 className="file-list-nav"
-                onBack={() => history.back()}
+                onBack={() => {
+                    console.log('🔙 文件列表页返回按钮点击')
+                    try {
+                        history.back()
+                    } catch (error) {
+                        console.error('返回失败，使用备用方案:', error)
+                        if (taskInfo.taskId) {
+                            history.push(`/task-process/detail/${taskInfo.taskId}`)
+                        } else {
+                            history.push('/task-process')
+                        }
+                    }
+                }}
                 backIcon={<LeftOutline />}
             >
-                {fileType === 'template' ? '目录模板' : '附件列表'}
+                {fileType === 'template' ? '用印文本列表' : '附件列表'}
             </NavBar>
 
-            {/* 文件列表 */}
             <div className="file-list-content">
-                {mockFiles.map(renderFileItem)}
+                {files.length === 0 ? (
+                    <Empty
+                        className="empty-file-list"
+                        description="暂无文件"
+                        imageStyle={{ width: 64, height: 64 }}
+                    />
+                ) : (
+                    files.map(renderFileItem)
+                )}
             </div>
 
-            {/* 底部操作栏 */}
             <div className="file-list-footer">
                 <div className="footer-left">
                     <Button
-                        fill="none"
-                        size="small"
+                        className="select-all-btn"
                         onClick={handleSelectAll}
                     >
-                        全选
+                        {selectedFiles.length === files.length ? '取消' : '全选'}
                     </Button>
                     <span className="selected-count">
-                        已选择 {selectedFiles.size} 个
+                        已选择 <span className="count">{selectedFiles.length}</span> 个
                     </span>
                 </div>
-                <div className="footer-right">
-                    <Button
-                        color="primary"
-                        onClick={() => setShowActionSheet(true)}
-                        disabled={selectedFiles.size === 0}
-                    >
-                        操作
-                    </Button>
-                </div>
+                <Button
+                    className="operation-btn"
+                    color="primary"
+                    disabled={selectedFiles.length === 0}
+                    onClick={handleOperation}
+                >
+                    操作
+                </Button>
             </div>
 
-            {/* 操作菜单 */}
+            {/* 操作弹窗 - 参考ui12.jpg，只保留查看和下载 */}
             <ActionSheet
-                visible={showActionSheet}
-                onClose={() => setShowActionSheet(false)}
+                visible={showActions}
                 actions={[
                     {
-                        key: 'view',
                         text: '查看',
-                        onClick: () => handleFileOperation('view')
+                        key: 'view',
+                        style: { color: '#333333' }
                     },
                     {
-                        key: 'download',
                         text: '下载',
-                        onClick: () => handleFileOperation('download')
+                        key: 'download',
+                        style: { color: '#333333' }
                     }
                 ]}
                 cancelText="取消"
+                onClose={() => setShowActions(false)}
+                onAction={(action) => {
+                    if (action.key === 'view') {
+                        handleView()
+                    } else if (action.key === 'download') {
+                        handleDownload()
+                    }
+                }}
             />
         </div>
     )

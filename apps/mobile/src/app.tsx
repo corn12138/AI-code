@@ -44,7 +44,7 @@ export function rootContainer(container: any) {
       <ConfigProvider
         locale={zhCN}
         theme={{
-          '--adm-color-background': '#f5f5f5',
+          '--adm-color-background': '#ffffff',
           '--adm-color-background-light': '#ffffff',
           '--adm-color-text': '#333333',
           '--adm-color-text-secondary': '#666666'

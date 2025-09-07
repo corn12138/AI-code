@@ -1,191 +1,162 @@
-/**
- * 报告信息组件
- * 展示报告的详细信息，参考pc.jpg和ui1.jpg的设计
- */
-
-import { TaskDetail } from '@/stores/taskProcess/types'
+import { TaskItem } from '@/stores/taskProcessStore'
 import {
-    Button,
-    Card,
-    List
-} from 'antd-mobile'
-import {
-    CalendarOutline,
-    FileOutline,
-    RightOutline,
-    TeamOutline,
-    UserOutline
+    RightOutline
 } from 'antd-mobile-icons'
 import React from 'react'
 import { history } from 'umi'
 import './TaskInfo.css'
 
 interface TaskInfoProps {
-    task: TaskDetail | null
+    task?: TaskItem | null
 }
 
-// 模拟报告信息数据
+// 模拟报告数据 - 参考pc.jpg中的字段
 const mockReportData = {
-    reportNumber: '20250107/10',
-    reportName: '测试123',
-    reportType: '定期报告',
-    reportLevel: '普通密级',
-    classifyBasis: '测试1',
-    reportInitiator: '010080 (010080)',
-    reportDescription: '111',
-    officialTemplate: [
-        '60b93085a6b448a982',
-        '20250107/10_175671294297_G00800001.docx'
-    ],
-    directory: 'abb3a3e86e8b42d9af5c1433e8d8f01',
-    attachments: [
-        '兴业银行2024年年度报告正文报告.docx'
-    ],
-    knowledgeLink: 'https://www.financialreports.com/trends-in-corporate-financial-reporting'
+    reportNumber: 'SLCM202501071017567129429',
+    reportName: '报告申请 - 差旅费用报销',
+    reportType: '费用报销',
+    reportLevel: '内部',
+    classifyBasis: '——',
+    reportInitiator: '张三',
+    reportDescription: '出差北京参加会议产生的差旅费用报销申请',
+    templates: ['公务模板1.docx', '公务模板2.pdf'],
+    directory: '目录1',
+    attachments: ['60b93085a6b448a982', '20250107/10_175671294297_G00800001.docx'],
+    knowledgeBase: 'https://your.financial.reports'
+}
+
+// 文件类型判断
+const getFileTypeFromName = (fileName: string): 'word' | 'excel' | 'pdf' | 'image' | 'other' => {
+    const ext = fileName.split('.').pop()?.toLowerCase()
+    switch (ext) {
+        case 'doc':
+        case 'docx':
+            return 'word'
+        case 'xls':
+        case 'xlsx':
+            return 'excel'
+        case 'pdf':
+            return 'pdf'
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'gif':
+            return 'image'
+        default:
+            return 'other'
+    }
+}
+
+// 随机状态生成
+const getRandomStatus = (): 'pending' | 'electronic' | 'archive' | 'manual' | 'marked' => {
+    const statuses: ('pending' | 'electronic' | 'archive' | 'manual' | 'marked')[] =
+        ['pending', 'electronic', 'archive', 'manual', 'marked']
+    return statuses[Math.floor(Math.random() * statuses.length)]
 }
 
 const TaskInfo: React.FC<TaskInfoProps> = ({ task }) => {
-    // 导航到文件列表页面
+    // 跳转到文件列表页面
     const navigateToFileList = (fileType: 'template' | 'attachment', files: string[]) => {
-        // 构建文件列表页面URL
-        const params = new URLSearchParams({
-            type: fileType,
-            files: JSON.stringify(files)
+        console.log('🗂️ 跳转到文件列表页面:', { fileType, files, task })
+
+        // 构造文件列表数据
+        const fileList = files.map((fileName, index) => ({
+            id: `${fileType}_${index + 1}`,
+            name: fileName,
+            type: getFileTypeFromName(fileName),
+            size: Math.floor(Math.random() * 20 + 5).toString(), // 模拟文件大小
+            status: getRandomStatus(),
+            modifyTime: new Date().toLocaleString(),
+            serialNumber: `SLCM${Date.now()}${index}`,
+            legalId: '取消编号',
+            documentNumber: '——',
+            printCount: Math.floor(Math.random() * 20 + 1)
+        }))
+
+        // 使用路由状态传递数据
+        history.push('/task-process/file-list', {
+            fileType,
+            files: fileList,
+            taskId: task?.id,
+            taskTitle: task?.title
         })
-
-        // 使用umi的history进行路由跳转
-        history.push(`/task-process/file-list?${params.toString()}`)
     }
 
-    // 渲染基本信息部分
-    const renderBasicInfo = () => (
-        <Card className="info-section" title="基本信息">
-            <List>
-                <List.Item
-                    prefix={<FileOutline />}
-                    extra={task?.type || '投诉申请'}
-                >
-                    任务类型
-                </List.Item>
-                <List.Item
-                    prefix={<UserOutline />}
-                    extra={task?.applicant || '张三'}
-                >
-                    申请人
-                </List.Item>
-                <List.Item
-                    prefix={<TeamOutline />}
-                    extra={task?.applicantDept || '技术部'}
-                >
-                    申请部门
-                </List.Item>
-                <List.Item
-                    prefix={<CalendarOutline />}
-                    extra={task?.createdAt ? new Date(task.createdAt).toLocaleDateString() : '2024/12/1 17:00:00'}
-                >
-                    创建时间
-                </List.Item>
-                <List.Item
-                    prefix={<CalendarOutline />}
-                    extra={task?.deadline ? new Date(task.deadline).toLocaleDateString() : '2024/12/11 02:00:00'}
-                >
-                    截止时间
-                </List.Item>
-                <List.Item
-                    prefix={<FileOutline />}
-                    extra={task?.currentStep || '复审'}
-                >
-                    当前步骤
-                </List.Item>
-            </List>
-        </Card>
-    )
-
-    // 渲染报告信息部分 - 参考pc.jpg的字段，ui1.jpg的布局
+    // 渲染报告信息部分 - 参考ui1.jpg的左右模式布局
     const renderReportInfo = () => (
-        <Card className="info-section" /* title="报告信息" */>
-            <List>
-                <List.Item extra="请输入报告编号">
-                    披露报告编号
-                </List.Item>
-                <List.Item extra={mockReportData.reportNumber}>
-                    报告编号
-                </List.Item>
-                <List.Item extra={mockReportData.reportName}>
-                    披露报告名称
-                </List.Item>
-                <List.Item extra={mockReportData.reportType}>
-                    披露报告类型
-                </List.Item>
-                <List.Item extra={mockReportData.reportLevel}>
-                    披露报告密级
-                </List.Item>
-                <List.Item extra={mockReportData.classifyBasis}>
-                    定密依据
-                </List.Item>
-                <List.Item extra={mockReportData.reportInitiator}>
-                    披露报告发起人
-                </List.Item>
-                <List.Item extra={mockReportData.reportDescription}>
-                    披露报告说明
-                </List.Item>
-                {/* 公务模板 - 参考ui1.jpg用印文本的样式 */}
-                <List.Item
-                    extra={
-                        <Button
-                            fill="none"
-                            color="primary"
-                            size="small"
-                            onClick={() => navigateToFileList('template', mockReportData.officialTemplate)}
-                        >
-                            查看{mockReportData.officialTemplate.length}个文件
-                        </Button>
-                    }
-                    arrow={<RightOutline />}
-                    onClick={() => navigateToFileList('template', mockReportData.officialTemplate)}
-                >
-                    公务模板
-                </List.Item>
-                <List.Item extra={mockReportData.directory}>
-                    目录
-                </List.Item>
-                {/* 附件 - 参考ui1.jpg用印文本的样式 */}
-                <List.Item
-                    extra={
-                        <Button
-                            fill="none"
-                            color="primary"
-                            size="small"
-                            onClick={() => navigateToFileList('attachment', mockReportData.attachments)}
-                        >
-                            查看{mockReportData.attachments.length}个文件
-                        </Button>
-                    }
-                    arrow={<RightOutline />}
-                    onClick={() => navigateToFileList('attachment', mockReportData.attachments)}
-                >
-                    附件
-                </List.Item>
-                <List.Item extra={mockReportData.knowledgeLink}>
-                    知识库连接
-                </List.Item>
-            </List>
-        </Card>
-    )
+        <div className="report-info-container">
+            <div className="info-grid">
+                <div className="info-row">
+                    <span className="info-label">披露报告编号</span>
+                    <span className="info-value">请输入报告编号</span>
+                </div>
 
-    if (!task) {
-        return (
-            <div className="task-info-empty">
-                <FileOutline style={{ fontSize: 48, color: '#ccc' }} />
-                <p>暂无报告信息</p>
+                <div className="info-row">
+                    <span className="info-label">报告编号</span>
+                    <span className="info-value">{mockReportData.reportNumber}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">披露报告名称</span>
+                    <span className="info-value">{mockReportData.reportName}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">披露报告类型</span>
+                    <span className="info-value">{mockReportData.reportType}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">披露报告密级</span>
+                    <span className="info-value">{mockReportData.reportLevel}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">定密依据</span>
+                    <span className="info-value">{mockReportData.classifyBasis}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">披露报告发起人</span>
+                    <span className="info-value">{mockReportData.reportInitiator}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">披露报告说明</span>
+                    <span className="info-value">{mockReportData.reportDescription}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">公务模板</span>
+                    <div className="info-value-clickable" onClick={() => navigateToFileList('template', mockReportData.templates)}>
+                        <span>查看{mockReportData.templates.length}个文件</span>
+                        <RightOutline />
+                    </div>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">目录</span>
+                    <span className="info-value">{mockReportData.directory}</span>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">附件</span>
+                    <div className="info-value-clickable" onClick={() => navigateToFileList('attachment', mockReportData.attachments)}>
+                        <span>查看{mockReportData.attachments.length}个文件</span>
+                        <RightOutline />
+                    </div>
+                </div>
+
+                <div className="info-row">
+                    <span className="info-label">知识库连接</span>
+                    <span className="info-value">{mockReportData.knowledgeBase}</span>
+                </div>
             </div>
-        )
-    }
+        </div>
+    )
 
     return (
         <div className="task-info-container">
-            {/* {renderBasicInfo()}
-            <Divider style={{ margin: '16px 0' }} /> */}
             {renderReportInfo()}
         </div>
     )
