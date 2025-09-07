@@ -272,6 +272,12 @@
     margin-bottom: 4px;
 }
 
+.timeline-time {
+    font-size: 13px;
+    color: #999999;
+    flex-shrink: 0;
+}
+
 .handler-left {
     display: flex;
     align-items: center;

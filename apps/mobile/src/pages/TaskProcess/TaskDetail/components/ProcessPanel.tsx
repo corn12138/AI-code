@@ -4,7 +4,6 @@ import {
     List,
     Popup,
     SearchBar,
-    Tag,
     TextArea,
     Toast
 } from 'antd-mobile'
@@ -49,10 +48,9 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
     const { submitProcess } = useTaskProcessStore()
 
     const [selectedNextStep, setSelectedNextStep] = useState<string>('')
-    const [selectedNextOrg, setSelectedNextOrg] = useState<string>('')
+    const [selectedNextOrg, setSelectedNextOrg] = useState<string[]>([]) // 改为多选数组
     const [selectedNotifyUsers, setSelectedNotifyUsers] = useState<string[]>([])
     const [processOpinion, setProcessOpinion] = useState<string>('')
-    const [nextHandler, setNextHandler] = useState<string>('')
 
     // 控制弹窗显示
     const [showStepSelector, setShowStepSelector] = useState(false)
@@ -79,8 +77,8 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
             return
         }
 
-        if (!nextHandler.trim()) {
-            Toast.show('请输入下一处理人')
+        if (selectedNextOrg.length === 0) {
+            Toast.show('请选择下一处理机构')
             return
         }
 
@@ -93,7 +91,7 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
             await submitProcess({
                 taskId: task?.id || '',
                 nextStep: selectedNextStep,
-                nextOrg: selectedNextOrg || nextHandler, // 使用下一处理人作为机构
+                nextOrg: selectedNextOrg.join(','), // 多选机构用逗号分隔
                 notifyUsers: selectedNotifyUsers,
                 comment: processOpinion,
                 attachments: []
@@ -121,6 +119,18 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
     const getUserName = (userId: string) => {
         const user = mockUsers.find(u => u.id === userId)
         return user?.name || ''
+    }
+
+    const getOrgNames = (orgIds: string[]) => {
+        return orgIds.map(id => {
+            const org = mockOrganizations.find(o => o.id === id)
+            return org?.name || ''
+        }).join(', ')
+    }
+
+    // 快速填入处理意见
+    const handleQuickOpinion = (opinion: string) => {
+        setProcessOpinion(opinion)
     }
 
     const filteredUsers = mockUsers.filter(user =>
@@ -212,7 +222,7 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
 
     return (
         <div className="process-panel">
-            {/* 当前处理步骤信息 - 参考ui7.jpg顶部 */}
+            {/* 当前处理步骤信息 - 参考ui16.jpg顶部，左右布局 */}
             <div className="current-step-info">
                 <div className="current-step-row">
                     <span className="step-label">当前处理步骤</span>
@@ -220,35 +230,60 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
                 </div>
             </div>
 
-            {/* 处理表单 - 参考ui7.jpg布局 */}
+            {/* 处理表单 - 参考ui16.jpg样式 */}
             <div className="process-form-container">
                 <div className="form-section">
-                    {/* 下一处理步骤 - 永远显示 */}
+                    {/* 下一处理步骤 - 单行，左标签右选择 */}
                     <div className="form-item">
-                        <div className="form-label">下一处理步骤 <span className="required-mark">*</span></div>
-                        <div
-                            className="form-input-container"
-                            onClick={() => setShowStepSelector(true)}
-                        >
-                            <span className={selectedNextStep ? 'input-text' : 'input-placeholder'}>
-                                {selectedNextStep ? getStepName(selectedNextStep) : '请选择'}
-                            </span>
-                            <RightOutline className="input-arrow" />
+                        <div className="form-row-layout">
+                            <div className="form-label">下一处理步骤 <span className="required-mark">*</span></div>
+                            <div
+                                className="form-select-container"
+                                onClick={() => setShowStepSelector(true)}
+                            >
+                                <span className={selectedNextStep ? 'select-text' : 'select-placeholder'}>
+                                    {selectedNextStep ? getStepName(selectedNextStep) : '审核（会办）'}
+                                </span>
+                                <RightOutline className="select-arrow" />
+                            </div>
                         </div>
                     </div>
 
-                    {/* 下一处理人 - 条件显示 */}
+                    {/* 下一处理机构 - 条件显示 */}
                     {showNextOrgAndUsers && (
                         <div className="form-item">
-                            <div className="form-label">下一处理人 <span className="required-mark">*</span></div>
-                            <div className="form-input-container">
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    placeholder="输入名称或NotesID"
-                                    value={nextHandler}
-                                    onChange={(e) => setNextHandler(e.target.value)}
-                                />
+                            <div className="form-row-layout">
+                                <div className="form-label">下一处理机构 <span className="required-mark">*</span></div>
+                                <div
+                                    className="form-select-container"
+                                    onClick={() => setShowOrgSelector(true)}
+                                >
+                                    <div className="select-content">
+                                        {selectedNextOrg.length > 0 ? (
+                                            <div className="selected-items">
+                                                {selectedNextOrg.map(orgId => (
+                                                    <span key={orgId} className="selected-item">
+                                                        {getOrgName(orgId)}
+                                                        <span
+                                                            className="remove-item"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                setSelectedNextOrg(prev =>
+                                                                    prev.filter(id => id !== orgId)
+                                                                )
+                                                            }}
+                                                        >
+                                                            ×
+                                                        </span>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <span className="select-placeholder">请选择</span>
+                                        )}
+                                    </div>
+                                    <RightOutline className="select-arrow" />
+                                </div>
                             </div>
                         </div>
                     )}
@@ -256,31 +291,39 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
                     {/* 知悉人 - 条件显示 */}
                     {showNextOrgAndUsers && (
                         <div className="form-item">
-                            <div className="form-label">知悉人</div>
-                            <div
-                                className="form-input-container"
-                                onClick={() => setShowUserSelector(true)}
-                            >
-                                <span className="input-placeholder">输入名称或NotesID</span>
-                                <RightOutline className="input-arrow" />
-                            </div>
-                            {selectedNotifyUsers.length > 0 && (
-                                <div className="selected-users-tags">
-                                    {selectedNotifyUsers.map(userId => (
-                                        <Tag
-                                            key={userId}
-                                            color="primary"
-                                            onClick={() => {
-                                                setSelectedNotifyUsers(prev =>
-                                                    prev.filter(id => id !== userId)
-                                                )
-                                            }}
-                                        >
-                                            {getUserName(userId)} ×
-                                        </Tag>
-                                    ))}
+                            <div className="form-row-layout">
+                                <div className="form-label">知悉人</div>
+                                <div
+                                    className="form-select-container"
+                                    onClick={() => setShowUserSelector(true)}
+                                >
+                                    <div className="select-content">
+                                        {selectedNotifyUsers.length > 0 ? (
+                                            <div className="selected-items">
+                                                {selectedNotifyUsers.map(userId => (
+                                                    <span key={userId} className="selected-item">
+                                                        {getUserName(userId)}
+                                                        <span
+                                                            className="remove-item"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                setSelectedNotifyUsers(prev =>
+                                                                    prev.filter(id => id !== userId)
+                                                                )
+                                                            }}
+                                                        >
+                                                            ×
+                                                        </span>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <span className="select-placeholder">请选择</span>
+                                        )}
+                                    </div>
+                                    <RightOutline className="select-arrow" />
                                 </div>
-                            )}
+                            </div>
                         </div>
                     )}
 
@@ -288,6 +331,11 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
                     <div className="form-item">
                         <div className="form-label">处理意见 <span className="required-mark">*</span></div>
                         <div className="opinion-input-container">
+                            <div className="opinion-actions">
+                                <Button size="mini" color="primary" onClick={() => handleQuickOpinion('同意')}>同意</Button>
+                                <Button size="mini" onClick={() => handleQuickOpinion('请办理')}>请办理</Button>
+                                <Button size="mini" onClick={() => handleQuickOpinion('请审核')}>请审核</Button>
+                            </div>
                             <TextArea
                                 className="opinion-textarea"
                                 placeholder="请输入"
@@ -296,10 +344,6 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
                                 rows={4}
                                 maxLength={500}
                             />
-                            <div className="opinion-actions">
-                                <Button size="mini" color="primary">快速文办</Button>
-                                <Button size="mini">存为快速文办</Button>
-                            </div>
                             <div className="char-count">{processOpinion.length}/500</div>
                         </div>
                     </div>
@@ -352,6 +396,58 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
                                 </List.Item>
                             ))}
                         </List>
+                    </div>
+                </div>
+            </Popup>
+
+            {/* 机构选择弹窗 */}
+            <Popup
+                visible={showOrgSelector}
+                onMaskClick={() => setShowOrgSelector(false)}
+                bodyStyle={{ height: '50vh' }}
+            >
+                <div className="process-popup-container">
+                    <div className="popup-header">
+                        <span>选择下一处理机构</span>
+                        <CloseOutline
+                            className="close-btn"
+                            onClick={() => setShowOrgSelector(false)}
+                        />
+                    </div>
+                    <div className="popup-content">
+                        <List>
+                            {mockOrganizations.map(org => (
+                                <List.Item
+                                    key={org.id}
+                                    className={`popup-list-item ${selectedNextOrg.includes(org.id) ? 'selected' : ''}`}
+                                    onClick={() => {
+                                        const isSelected = selectedNextOrg.includes(org.id)
+                                        if (isSelected) {
+                                            setSelectedNextOrg(prev => prev.filter(id => id !== org.id))
+                                        } else {
+                                            setSelectedNextOrg(prev => [...prev, org.id])
+                                        }
+                                    }}
+                                    extra={org.description}
+                                >
+                                    {org.name}
+                                </List.Item>
+                            ))}
+                        </List>
+                    </div>
+                    <div className="popup-footer">
+                        <Button
+                            color="default"
+                            onClick={() => setShowOrgSelector(false)}
+                        >
+                            取消
+                        </Button>
+                        <Button
+                            color="primary"
+                            onClick={() => setShowOrgSelector(false)}
+                        >
+                            确定
+                        </Button>
                     </div>
                 </div>
             </Popup>

@@ -6,11 +6,14 @@
 @import '../../../../styles/taskProcess.css';
 
 .process-panel {
-    padding: 16px;
+    padding: 8px;
+    /* 减少内边距，避免挤在中间 */
     background: #ffffff;
     display: flex;
     flex-direction: column;
     height: 100%;
+    gap: 16px;
+    /* 添加上下间距 */
 }
 
 /* 当前处理步骤信息 - 参考ui7.jpg顶部 */
@@ -19,12 +22,14 @@
     border: 1px solid rgba(24, 144, 255, 0.2);
     border-radius: 8px;
     padding: 16px;
-    margin-bottom: 20px;
+    margin: 4px;
+    /* 减少外边距 */
 }
 
 .current-step-row {
     display: flex;
     justify-content: space-between;
+    /* 左右分布：左边标签，右边值 */
     align-items: center;
 }
 
@@ -53,7 +58,139 @@
 
 /* 表单项 - 参考ui7.jpg的布局 */
 .form-item {
+    margin: 4px;
+    /* 减少外边距 */
+    margin-bottom: 16px;
+    /* 减少底部间距 */
+}
+
+/* 左右布局容器 - 参考ui16.jpg */
+.form-row-container {
+    display: flex;
+    gap: 12px;
+    margin: 8px;
     margin-bottom: 20px;
+}
+
+.form-item-half {
+    flex: 1;
+    min-width: 0;
+    /* 防止内容溢出 */
+}
+
+.form-item-half .form-label {
+    font-size: 15px;
+    color: #333333;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-item-half .form-input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 44px;
+}
+
+/* 新的表单行布局 - 参考ui16.jpg */
+.form-row-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 8px;
+    /* 减少左右内边距 */
+    background: #ffffff;
+    border: none;
+    /* 移除所有边框 */
+    border-bottom: 1px solid #f0f0f0;
+    /* 只保留底边框 */
+    border-radius: 0;
+    /* 移除圆角 */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 44px;
+    margin: 2px;
+    /* 减少外边距 */
+}
+
+.form-row-layout .form-label {
+    font-size: 15px;
+    color: #333333;
+    font-weight: 500;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.form-select-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.select-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 0;
+}
+
+.select-text {
+    color: #333333;
+    font-size: 14px;
+}
+
+.select-placeholder {
+    color: #cccccc;
+    font-size: 14px;
+}
+
+.select-arrow {
+    font-size: 14px;
+    color: #999999;
+    flex-shrink: 0;
+}
+
+.selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.selected-item {
+    background-color: rgba(24, 144, 255, 0.1);
+    color: #1890ff;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.remove-item {
+    cursor: pointer;
+    font-weight: bold;
+    color: #1890ff;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.remove-item:hover {
+    color: #ff4d4f;
 }
 
 .form-label {
@@ -86,18 +223,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
+    padding: 12px 8px;
+    /* 减少左右内边距 */
     background: #ffffff;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
+    border: none;
+    /* 移除所有边框 */
+    border-bottom: 1px solid #f0f0f0;
+    /* 只保留底边框 */
+    border-radius: 0;
+    /* 移除圆角 */
     cursor: pointer;
     transition: all 0.2s ease;
     min-height: 44px;
+    margin: 2px;
+    /* 减少外边距 */
 }
 
 .form-input-container:active {
-    border-color: var(--tp-primary);
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    border-bottom-color: var(--tp-primary);
+    background-color: rgba(24, 144, 255, 0.02);
 }
 
 .input-text {
@@ -138,10 +282,16 @@
 
 /* 处理意见容器 */
 .opinion-input-container {
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
+    border: none;
+    /* 移除边框 */
+    border-bottom: 1px solid #f0f0f0;
+    /* 只保留底边框 */
+    border-radius: 0;
+    /* 移除圆角 */
     background: #ffffff;
     overflow: hidden;
+    margin: 2px;
+    /* 减少外边距 */
 }
 
 .opinion-textarea {
@@ -161,8 +311,11 @@
     display: flex;
     gap: 8px;
     padding: 8px 16px;
-    border-top: 1px solid #f0f0f0;
     background: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+    /* 改为底部边框，按钮在上方 */
+    order: -1;
+    /* 将按钮移到文本框上方 */
 }
 
 .opinion-actions .adm-button {
@@ -188,7 +341,10 @@
 .form-actions {
     display: flex;
     gap: 8px;
-    padding: 16px 0;
+    padding: 16px 8px;
+    /* 调整左右内边距 */
+    margin: 4px;
+    /* 减少外边距 */
     margin-top: auto;
 }
 

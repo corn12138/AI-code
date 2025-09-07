@@ -25,6 +25,22 @@
     z-index: 100;
 }
 
+/* 确保返回按钮在所有设备上都可见 */
+.task-detail-nav .adm-nav-bar-back-arrow {
+    color: #333333 !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+.task-detail-nav .adm-nav-bar-left {
+    color: #333333 !important;
+}
+
+.task-detail-nav .adm-nav-bar-title {
+    color: #333333 !important;
+    font-weight: 600 !important;
+}
+
 .nav-action-btn {
     --text-color: var(--tp-primary);
     --border-color: transparent;
@@ -408,40 +424,66 @@
 
 /* ==================== 响应式兼容性增强 ==================== */
 
+/* 平板设备专用修复 - 不影响手机端 */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+    /* 修复平板上返回按钮不显示的问题 */
+    .task-detail-nav {
+        --adm-nav-bar-icon-color: #333333 !important;
+        --adm-nav-bar-text-color: #333333 !important;
+    }
+
+    .task-detail-nav .adm-nav-bar-left {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .task-detail-nav .adm-nav-bar-left .adm-nav-bar-back {
+        display: flex !important;
+        align-items: center !important;
+        color: #333333 !important;
+    }
+
+    .task-detail-nav svg {
+        color: #333333 !important;
+        fill: #333333 !important;
+    }
+}
+
 /* 小屏手机适配 (320px - 375px) */
 @media screen and (max-width: 375px) {
     .task-detail-page {
         font-size: 13px;
     }
-    
+
     .task-header-card {
         padding: 12px;
         margin-bottom: 8px;
     }
-    
+
     .task-title {
         font-size: 16px;
         margin-bottom: 8px;
     }
-    
+
     .task-meta-row {
         font-size: 12px;
         margin-bottom: 6px;
     }
-    
+
     .detail-tabs .adm-tabs-header {
         padding: 0 12px;
     }
-    
+
     .detail-tabs .adm-tabs-content {
         padding: 12px;
     }
-    
+
     .bottom-actions {
         padding: 10px 12px;
         padding-bottom: calc(10px + env(safe-area-inset-bottom));
     }
-    
+
     .bottom-actions .adm-button {
         height: 40px;
         font-size: 14px;
@@ -453,19 +495,19 @@
     .task-header-card {
         padding: 20px;
     }
-    
+
     .task-title {
         font-size: 22px;
     }
-    
+
     .detail-tabs .adm-tabs-header {
         padding: 0 20px;
     }
-    
+
     .detail-tabs .adm-tabs-content {
         padding: 20px;
     }
-    
+
     .bottom-actions {
         padding: 16px 20px;
         padding-bottom: calc(16px + env(safe-area-inset-bottom));
@@ -545,29 +587,29 @@
     .task-header-card {
         padding: 10px;
     }
-    
+
     .task-title {
         font-size: 15px;
     }
-    
+
     .task-meta-row {
         font-size: 11px;
         margin-bottom: 4px;
     }
-    
+
     .detail-tabs .adm-tabs-header {
         padding: 0 8px;
     }
-    
+
     .detail-tabs .adm-tabs-content {
         padding: 8px;
     }
-    
+
     .bottom-actions {
         padding: 8px;
         padding-bottom: calc(8px + env(safe-area-inset-bottom));
     }
-    
+
     .bottom-actions .adm-button {
         height: 36px;
         font-size: 13px;
@@ -579,19 +621,19 @@
     .task-header-card {
         border-radius: 0 0 16px 16px;
     }
-    
+
     .task-title {
         font-size: 22px;
     }
 }
 
 /* 高分辨率屏幕优化 */
-@media screen and (-webkit-min-device-pixel-ratio: 2), 
-       screen and (min-resolution: 192dpi) {
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+screen and (min-resolution: 192dpi) {
     .task-header-card {
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     }
-    
+
     .bottom-actions {
         box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1);
     }
@@ -600,14 +642,15 @@
 /* 触摸设备优化 */
 @media (hover: none) and (pointer: coarse) {
     .bottom-actions .adm-button {
-        min-height: 44px; /* 确保触摸目标足够大 */
+        min-height: 44px;
+        /* 确保触摸目标足够大 */
     }
-    
+
     .floating-button {
         min-width: 56px;
         min-height: 56px;
     }
-    
+
     .detail-tabs .adm-tabs-tab {
         min-height: 44px;
         padding: 12px 8px;

@@ -21,6 +21,30 @@
     z-index: 1000;
 }
 
+/* 平板设备专用修复 - 不影响手机端 */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .file-list-nav {
+        --adm-nav-bar-icon-color: #333333 !important;
+        --adm-nav-bar-text-color: #333333 !important;
+    }
+
+    .file-list-nav .adm-nav-bar-left {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .file-list-nav .adm-nav-bar-left .adm-nav-bar-back {
+        display: flex !important;
+        align-items: center !important;
+        color: #333333 !important;
+    }
+
+    .file-list-nav svg {
+        color: #333333 !important;
+        fill: #333333 !important;
+    }
+}
+
 /* 文件列表内容区域 */
 .file-list-content {
     flex: 1;
@@ -468,18 +492,49 @@
     }
 }
 
-/* 平板横屏适配 */
+/* 平板横屏适配 - 修复网格布局错乱问题 */
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .file-list-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        display: block;
+        /* 改为普通布局，避免网格错乱 */
+        columns: 2;
+        /* 使用CSS列布局 */
+        column-gap: 16px;
         padding: 16px;
         padding-bottom: calc(80px + env(safe-area-inset-bottom));
     }
 
     .file-item {
-        margin-bottom: 0;
+        break-inside: avoid;
+        /* 防止项目被分割到不同列 */
+        margin-bottom: 12px;
+        display: block;
+        /* 重置为块级元素 */
+        width: 100%;
+        /* 确保宽度填满列 */
+    }
+
+    .file-header {
+        display: flex;
+        align-items: center;
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .file-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+
+    .file-name {
+        font-size: 14px;
+        -webkit-line-clamp: 2;
+    }
+
+    .file-meta {
+        font-size: 12px;
+        gap: 8px;
     }
 }
 

@@ -188,7 +188,6 @@ const ProcessRecord: React.FC<ProcessRecordProps> = ({ taskId }) => {
                                 <span>{record.step}</span>
                                 {record.isCurrent && <span className="current-badge">会办</span>}
                             </div>
-                            <div className="timeline-time">{record.handler.time}</div>
                         </div>
 
                         <div className="timeline-body">
@@ -199,6 +198,7 @@ const ProcessRecord: React.FC<ProcessRecordProps> = ({ taskId }) => {
                                         <span className="handler-name">{record.handler.name}</span>
                                         <span className="handler-id">{record.handler.userId}</span>
                                     </div>
+                                    <div className="timeline-time">{record.handler.time}</div>
                                 </div>
                                 <div className="handler-department">{record.handler.department}</div>
                             </div>
