@@ -1,6 +1,6 @@
 /* apps/mobile/src/pages/TaskProcess/FileList/index.css */
 /**
- * 文件列表页面样式 - 参考ui9.jpg和ui12.jpg
+ * 文件列表页面样式 - 优化版本
  */
 
 .file-list-page {
@@ -9,6 +9,9 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 }
 
 /* 导航栏 */
@@ -19,10 +22,13 @@
     position: sticky;
     top: 0;
     z-index: 1000;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 }
 
-/* 平板设备专用修复 - 不影响手机端，使用em单位 */
-@media screen and (min-width: 48em) and (max-width: 64em) {
+/* 平板设备导航栏修复 */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
     .file-list-nav {
         --adm-nav-bar-icon-color: #333333 !important;
         --adm-nav-bar-text-color: #333333 !important;
@@ -50,21 +56,19 @@
     flex: 1;
     padding: 16px;
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
     overflow-y: auto;
 }
 
-/* 文件卡片 - 参考ui9.jpg */
+/* 文件卡片 */
 .file-item {
     background: #ffffff;
-    border: var(--tp-border-thin) solid #f0f0f0;
-    border-radius: var(--tp-radius-base);
-    margin-bottom: var(--tp-space-sm);
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    margin-bottom: 12px;
     overflow: hidden;
     transition: all 0.2s ease;
-}
-
-.file-item:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 /* 文件头部 */
@@ -89,13 +93,13 @@
 }
 
 .file-icon {
-    width: calc(var(--tp-icon-xl) + var(--tp-space-sm));
-    height: calc(var(--tp-icon-xl) + var(--tp-space-sm));
-    border-radius: var(--tp-radius-sm);
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--tp-icon-base);
+    font-size: 24px;
     flex-shrink: 0;
     background: #f5f5f5;
 }
@@ -126,11 +130,11 @@
 }
 
 .file-name {
-    font-size: var(--tp-font-sm);
+    font-size: 14px;
     font-weight: 600;
     color: #333333;
     line-height: 1.3;
-    margin-bottom: var(--tp-space-xs);
+    margin-bottom: 4px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -141,8 +145,8 @@
 .file-meta {
     display: flex;
     align-items: center;
-    gap: var(--tp-space-sm);
-    font-size: var(--tp-font-xs);
+    gap: 12px;
+    font-size: 12px;
     color: #666666;
 }
 
@@ -166,7 +170,7 @@
 }
 
 .expand-icon {
-    font-size: var(--tp-icon-sm);
+    font-size: 16px;
     transition: transform 0.2s ease;
 }
 
@@ -174,7 +178,7 @@
     transform: rotate(180deg);
 }
 
-/* 文件详情 - 参考ui9.jpg展开状态 */
+/* 文件详情 */
 .file-details {
     padding: 16px;
     background: #f8f9fa;
@@ -242,7 +246,7 @@
     color: #999999;
 }
 
-/* 底部吸底操作栏 - 参考ui9.jpg底部 */
+/* 底部吸底操作栏 */
 .file-list-footer {
     position: fixed;
     bottom: 0;
@@ -252,7 +256,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
     background: #ffffff;
     border-top: 1px solid #f0f0f0;
     box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
@@ -302,16 +308,12 @@
     cursor: not-allowed;
 }
 
-/* 操作弹窗样式 - 参考ui12.jpg */
+/* 操作弹窗样式 */
 .adm-action-sheet-button {
     font-size: 16px;
     font-weight: 500;
     padding: 16px 0;
     color: #333333;
-}
-
-.adm-action-sheet-button:active {
-    background-color: #f5f5f5;
 }
 
 .adm-action-sheet-cancel-button {
@@ -320,11 +322,13 @@
     color: #666666;
 }
 
-/* 手机端适配 */
-/* 小屏手机适配 - 使用em单位 */
-@media (max-width: 30em) {
+/* 响应式适配 */
+
+/* 小屏手机适配 */
+@media (max-width: 375px) {
     .file-list-content {
         padding: 12px;
+        padding-bottom: calc(70px + env(safe-area-inset-bottom));
     }
 
     .file-header {
@@ -339,7 +343,12 @@
     }
 
     .file-name {
-        font-size: 14px;
+        font-size: 13px;
+    }
+
+    .file-meta {
+        font-size: 11px;
+        gap: 8px;
     }
 
     .detail-grid {
@@ -355,51 +364,6 @@
     .footer-left {
         gap: 12px;
     }
-}
-
-/* ==================== 响应式兼容性增强 ==================== */
-
-/* 小屏手机适配 (320px - 375px) */
-/* iPhone标准尺寸适配 - 使用em单位 */
-@media screen and (max-width: 23.4375em) {
-    .file-list-content {
-        padding: 8px;
-        padding-bottom: calc(70px + env(safe-area-inset-bottom));
-    }
-
-    .file-header {
-        padding: 10px;
-        gap: 8px;
-    }
-
-    .file-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
-    }
-
-    .file-name {
-        font-size: 13px;
-    }
-
-    .file-meta {
-        font-size: 11px;
-        gap: 8px;
-    }
-
-    .detail-grid {
-        grid-template-columns: 1fr;
-        gap: 6px;
-    }
-
-    .file-list-footer {
-        padding: 8px 10px;
-        padding-bottom: calc(8px + env(safe-area-inset-bottom));
-    }
-
-    .footer-left {
-        gap: 10px;
-    }
 
     .operation-btn {
         height: 32px;
@@ -409,46 +373,10 @@
     }
 }
 
-/* 大屏手机适配 (414px+) */
-/* 中等手机屏幕适配 - 使用em单位 */
-@media screen and (min-width: 25.875em) and (max-width: 47.9375em) {
-    .file-list-content {
-        padding: 20px;
-        padding-bottom: calc(90px + env(safe-area-inset-bottom));
-    }
-
-    .file-header {
-        padding: 18px;
-        gap: 14px;
-    }
-
-    .file-icon {
-        width: 44px;
-        height: 44px;
-        font-size: 28px;
-    }
-
-    .file-name {
-        font-size: 16px;
-    }
-
-    .file-list-footer {
-        padding: 16px 20px;
-        padding-bottom: calc(16px + env(safe-area-inset-bottom));
-    }
-
-    .operation-btn {
-        height: 40px;
-        padding: 0 28px;
-        font-size: 15px;
-        min-width: 90px;
-    }
-}
-
-/* 平板竖屏适配 */
-@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+/* 平板适配 */
+@media screen and (min-width: 768px) {
     .file-list-page {
-        max-width: 600px;
+        max-width: 800px;
         margin: 0 auto;
     }
 
@@ -469,18 +397,11 @@
     }
 
     .file-name {
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .file-meta {
         font-size: 14px;
-        gap: 16px;
-    }
-
-    .detail-grid {
-        grid-template-columns: 1fr 1fr;
-        /* 保持2列，避免过度拥挤 */
-        gap: 16px 20px;
     }
 
     .file-list-footer {
@@ -496,272 +417,10 @@
     }
 }
 
-/* 平板横屏适配 - 使用flexbox双列布局 */
-@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    .file-list-content {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        justify-content: space-between !important;
-        align-content: flex-start !important;
-        padding: 16px 24px;
-        padding-bottom: calc(80px + env(safe-area-inset-bottom));
-        gap: 12px;
-    }
-
-    .file-item {
-        width: calc(50% - 6px) !important;
-        /* 两列，减去gap的一半 */
-        margin-bottom: 0 !important;
-        flex-shrink: 0 !important;
-        display: block !important;
-    }
-
-    .file-header {
-        padding: 12px;
-        gap: 10px;
-    }
-
-    .file-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 20px;
-    }
-
-    .file-name {
-        font-size: 14px;
-        -webkit-line-clamp: 2;
-    }
-
-    .file-meta {
-        font-size: 12px;
-    }
-}
-
-/* 大平板适配 (1024px+) - 使用Flex布局替代Grid */
-@media screen and (min-width: 1024px) {
-    .file-list-page {
-        max-width: 900px;
-        margin: 0 auto;
-    }
-
-    .file-list-content {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        justify-content: space-between !important;
-        align-content: flex-start !important;
-        gap: 16px;
-        padding: 32px;
-        padding-bottom: calc(120px + env(safe-area-inset-bottom));
-    }
-
-    .file-item {
-        width: calc(50% - 8px) !important;
-        /* 2列布局，减去gap的一半 */
-        margin-bottom: 0 !important;
-        flex-shrink: 0 !important;
-        display: block !important;
-    }
-
-    .file-header {
-        padding: 24px;
-        gap: 18px;
-    }
-
-    .file-icon {
-        width: 52px;
-        height: 52px;
-        font-size: 36px;
-    }
-
-    .file-name {
-        font-size: 18px;
-    }
-
-    .file-meta {
-        font-size: 15px;
-    }
-
-    .file-list-footer {
-        padding: 24px 32px;
-        padding-bottom: calc(24px + env(safe-area-inset-bottom));
-    }
-
-    .operation-btn {
-        height: 48px;
-        padding: 0 36px;
-        font-size: 17px;
-        min-width: 120px;
-    }
-}
-
-/* 手机横屏适配 */
-@media screen and (max-width: 767px) and (orientation: landscape) {
-    .file-list-content {
-        padding: 8px 12px;
-        padding-bottom: calc(60px + env(safe-area-inset-bottom));
-        columns: 2;
-        column-gap: 12px;
-    }
-
-    .file-item {
-        break-inside: avoid;
-        margin-bottom: 8px;
-    }
-
-    .file-header {
-        padding: 10px 12px;
-        gap: 8px;
-    }
-
-    .file-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 20px;
-    }
-
-    .file-name {
-        font-size: 13px;
-        -webkit-line-clamp: 1;
-    }
-
-    .file-meta {
-        font-size: 11px;
-        gap: 6px;
-    }
-
-    .file-details {
-        padding: 10px 12px;
-    }
-
-    .detail-grid {
-        grid-template-columns: 1fr;
-        gap: 6px;
-    }
-
-    .file-list-footer {
-        padding: 6px 12px;
-        padding-bottom: calc(6px + env(safe-area-inset-bottom));
-    }
-
-    .operation-btn {
-        height: 32px;
-        padding: 0 16px;
-        font-size: 13px;
-    }
-}
-
-/* 安全区域适配 */
-.file-list-page {
-    padding-top: env(safe-area-inset-top);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-}
-
-.file-list-nav {
-    padding-top: env(safe-area-inset-top);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-}
-
-.file-list-content {
-    padding-left: max(16px, env(safe-area-inset-left));
-    padding-right: max(16px, env(safe-area-inset-right));
-}
-
-.file-list-footer {
-    padding-left: max(16px, env(safe-area-inset-left));
-    padding-right: max(16px, env(safe-area-inset-right));
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
-}
-
-/* 特定设备适配 */
-
-/* iPhone SE 1st/2nd gen (320px width) */
-@media screen and (max-width: 320px) {
-    .file-list-content {
-        padding: 6px;
-        padding-bottom: calc(60px + env(safe-area-inset-bottom));
-    }
-
-    .file-header {
-        padding: 8px;
-        gap: 6px;
-    }
-
-    .file-icon {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
-    }
-
-    .file-name {
-        font-size: 12px;
-    }
-
-    .file-meta {
-        font-size: 10px;
-        gap: 4px;
-    }
-
-    .file-list-footer {
-        padding: 6px;
-        padding-bottom: calc(6px + env(safe-area-inset-bottom));
-    }
-
-    .footer-left {
-        gap: 6px;
-    }
-
-    .select-all-btn {
-        font-size: 12px;
-    }
-
-    .selected-count {
-        font-size: 12px;
-    }
-
-    .operation-btn {
-        height: 28px;
-        padding: 0 12px;
-        font-size: 12px;
-        min-width: 50px;
-    }
-}
-
-/* iPhone 6/7/8 Plus (414px width) */
-@media screen and (device-width: 414px) {
-    .file-item {
-        border-radius: 10px;
-    }
-
-    .file-name {
-        font-size: 16px;
-    }
-}
-
-/* 高分辨率屏幕优化 */
-@media screen and (-webkit-min-device-pixel-ratio: 2),
-screen and (min-resolution: 192dpi) {
-    .file-item {
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-    }
-
-    .file-item:hover {
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    }
-
-    .file-list-footer {
-        box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.2);
-    }
-}
-
 /* 触摸设备优化 */
 @media (hover: none) and (pointer: coarse) {
     .file-header {
         min-height: 60px;
-        /* 确保触摸目标足够大 */
     }
 
     .expand-button {
@@ -776,72 +435,5 @@ screen and (min-resolution: 192dpi) {
 
     .operation-btn {
         min-height: 44px;
-    }
-
-    .file-item:active {
-        background-color: rgba(0, 0, 0, 0.02);
-    }
-}
-
-/* Dark mode adaptation */
-@media (prefers-color-scheme: dark) {
-    .file-list-page {
-        background-color: #ffffff;
-    }
-
-    .file-list-nav {
-        background: #ffffff;
-        border-bottom-color: #f0f0f0;
-        --adm-color-text: #333333;
-    }
-
-    .file-item {
-        background: #ffffff;
-        border-color: #f0f0f0;
-    }
-
-    .file-header {
-        border-bottom-color: #f0f0f0;
-    }
-
-    .file-name {
-        color: #333333;
-    }
-
-    .file-meta,
-    .file-type,
-    .file-size {
-        color: #666666;
-    }
-
-    .file-details {
-        background: #f8f9fa;
-        border-top-color: #f0f0f0;
-    }
-
-    .detail-label {
-        color: #666666;
-    }
-
-    .detail-value {
-        color: #333333;
-    }
-
-    .detail-value.highlight {
-        color: #1890ff;
-    }
-
-    .file-list-footer {
-        background: #ffffff;
-        border-top-color: #f0f0f0;
-        box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .selected-count {
-        color: #666666;
-    }
-
-    .selected-count .count {
-        color: #1890ff;
     }
 }

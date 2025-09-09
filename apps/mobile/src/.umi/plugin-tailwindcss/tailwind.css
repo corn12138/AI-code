@@ -610,10 +610,6 @@ video {
   position: absolute;
 }
 
-.sticky {
-  position: sticky;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
