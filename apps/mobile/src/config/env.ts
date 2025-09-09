@@ -111,7 +111,7 @@ export const themeConfig = {
 // 路由配置
 export const routeConfig = {
     // 公开路由（无需登录）
-    publicRoutes: ['/login', '/register', '/forgot-password', '/404'],
+    publicRoutes: ['/login', '/register', '/forgot-password', '/404', '/network-test', '/device-test', '/bridge-test'],
 
     // 默认重定向
     defaultRoute: '/',

@@ -69,6 +69,34 @@ export const routes: RouteConfig[] = [
                     keepAlive: true,
                 },
             },
+            // 混合开发/设备调试页面（隐藏，用于原生容器内验证桥接能力）
+            {
+                path: '/network-test',
+                component: '@/pages/NetworkTest',
+                meta: {
+                    title: '网络/桥接测试',
+                    requireAuth: false,
+                    hidden: true,
+                },
+            },
+            {
+                path: '/device-test',
+                component: '@/pages/DeviceTest',
+                meta: {
+                    title: '设备能力测试',
+                    requireAuth: false,
+                    hidden: true,
+                },
+            },
+            {
+                path: '/bridge-test',
+                component: '@/pages/BridgeTest',
+                meta: {
+                    title: '桥接能力演示',
+                    requireAuth: false,
+                    hidden: true,
+                },
+            },
             {
                 path: '/apps',
                 component: '@/pages/Apps/Apps',

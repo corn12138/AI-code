@@ -142,3 +142,6 @@ testing/orchestrator/.idea/
 
 # 测试目录（使用专门的.gitignore）
 testing/.gitignore
+
+# 临时文件
+www

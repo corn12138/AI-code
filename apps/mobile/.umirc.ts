@@ -7,7 +7,8 @@ export default defineConfig({
 
     // 构建配置
     outputPath: 'dist',
-    publicPath: '/',
+    // 默认用于 Web 部署；若要打包为 iOS 离线包，请设置环境变量 HYBRID_PUBLIC_PATH=./
+    publicPath: process.env.HYBRID_PUBLIC_PATH ?? '/',
     hash: false,
 
     // 开发配置
@@ -42,6 +43,9 @@ export default defineConfig({
         '@store': './src/store',
         '@types': './src/types',
         '@services': './src/services',
+        // 兼容层：修复部分历史用法（图标命名差异与 Spin 别名）
+        'antd-mobile-icons$': '@/shims/antd-mobile-icons-compat',
+        'antd-mobile$': '@/shims/antd-mobile-compat',
     },
 
     // 快速刷新
@@ -49,12 +53,13 @@ export default defineConfig({
 
     // 浏览器兼容性
     targets: {
-        chrome: 70,
-        firefox: 64,
-        safari: 10,
-        edge: 13,
-        ios: 10,
-        android: '4.4',
+        // 提升编译目标，减少 esbuild 压缩兼容问题
+        chrome: 80,
+        firefox: 72,
+        safari: 12,
+        edge: 80,
+        ios: 12,
+        android: '7',
     },
 
     // 环境变量
@@ -66,4 +71,7 @@ export default defineConfig({
     metas: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
     ],
+
+    // 使用 terser 进行压缩以规避 esbuild 压缩兼容问题
+    jsMinifier: 'terser',
 })

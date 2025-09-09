@@ -73,7 +73,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 5
+        "register": 6
       },
       "enableBy": "register",
       "type": "preset",
@@ -90,7 +90,7 @@
             0
           ]
         },
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -138,7 +138,7 @@
       "time": {
         "hooks": {
           "modifyAppData": [
-            19
+            68
           ]
         },
         "register": 12
@@ -171,10 +171,10 @@
             0
           ],
           "onCheck": [
-            0
+            1
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1103,7 +1103,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1116,7 +1116,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 44
+        "register": 41
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1129,7 +1129,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 62
+        "register": 48
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1142,7 +1142,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 14
+        "register": 8
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1159,7 +1159,7 @@
             0
           ]
         },
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1197,12 +1197,8 @@
     "@umijs/preset-umi/dist/features/mock/mock": {
       "config": {},
       "time": {
-        "hooks": {
-          "onStart": [
-            1
-          ]
-        },
-        "register": 19
+        "hooks": {},
+        "register": 18
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/mock/mock.js",
@@ -1252,7 +1248,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1281,7 +1277,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1294,7 +1290,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1307,7 +1303,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1333,7 +1329,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1384,7 +1380,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 2
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1436,7 +1432,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/apiRoute/apiRoute.js",
@@ -1473,9 +1469,8 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
-      "enableBy": "config",
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/clickToComponent/clickToComponent.js",
       "cwd": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile",
@@ -1486,7 +1481,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1499,7 +1494,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "config",
       "type": "plugin",
@@ -1512,7 +1507,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "type": "plugin",
       "path": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/@umijs+preset-umi@4.4.11_@types+node@20.17.46_@types+react@18.3.21_lightningcss@1.22.1__851f75b8885b4be28998b8bb76307693/node_modules/@umijs/preset-umi/dist/features/webpack/webpack.js",
@@ -1616,7 +1611,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 3
+        "register": 2
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1629,7 +1624,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 19
+        "register": 18
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1641,14 +1636,7 @@
     "@umijs/preset-umi/dist/commands/dev/dev": {
       "config": {},
       "time": {
-        "hooks": {
-          "modifyAppData": [
-            8
-          ],
-          "onStart": [
-            0
-          ]
-        },
+        "hooks": {},
         "register": 15
       },
       "type": "plugin",
@@ -1674,7 +1662,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1700,7 +1688,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1752,7 +1740,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1765,7 +1753,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1804,7 +1792,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1817,7 +1805,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1856,7 +1844,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 0
+        "register": 1
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1882,7 +1870,7 @@
       "config": {},
       "time": {
         "hooks": {},
-        "register": 1
+        "register": 0
       },
       "enableBy": "register",
       "type": "plugin",
@@ -1958,7 +1946,7 @@
     }
   },
   "presets": [],
-  "name": "dev",
+  "name": "build",
   "args": {
     "_": []
   },
@@ -2184,7 +2172,7 @@
       }
     ],
     "outputPath": "dist",
-    "publicPath": "/",
+    "publicPath": "./",
     "hash": false,
     "proxy": {
       "/api": {
@@ -2222,7 +2210,7 @@
       "android": "7"
     },
     "define": {
-      "process.env.NODE_ENV": "\"development\""
+      "process.env.NODE_ENV": "\"production\""
     },
     "metas": [
       {
@@ -2243,7 +2231,7 @@
     },
     "base": "/",
     "svgr": {},
-    "publicPath": "/",
+    "publicPath": "./",
     "mfsu": {
       "strategy": "eager"
     },
@@ -2266,7 +2254,7 @@
       "@services": "./src/services",
       "antd-mobile-icons$": "@/shims/antd-mobile-icons-compat",
       "antd-mobile$": "@/shims/antd-mobile-compat",
-      "@@": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/.umi",
+      "@@": "/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/.umi-production",
       "regenerator-runtime": "/Users/huangyuming/Desktop/createProjects/AI-code/node_modules/.pnpm/regenerator-runtime@0.13.11/node_modules/regenerator-runtime"
     },
     "routes": [
@@ -2515,7 +2503,7 @@
       "android": "7"
     },
     "define": {
-      "process.env.NODE_ENV": "\"development\""
+      "process.env.NODE_ENV": "\"production\""
     },
     "metas": [
       {
@@ -2816,7 +2804,7 @@
       "rootContainer"
     ]
   },
-  "locale": "zh-CN",
+  "locale": "en-US",
   "globalCSS": [],
   "globalJS": [],
   "overridesCSS": [],
@@ -2829,8 +2817,5 @@
     "tsVersion": "5.8.3",
     "tslibVersion": "2.8.1"
   },
-  "faviconFiles": [],
-  "port": 8000,
-  "host": "0.0.0.0",
-  "ip": "192.168.1.11"
+  "faviconFiles": []
 }

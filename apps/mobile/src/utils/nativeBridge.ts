@@ -37,12 +37,25 @@ export interface BridgeOptions {
     retryDelay?: number;
 }
 
+export interface ShareOptions {
+    title?: string;
+    text?: string;
+    url?: string;
+}
+
+export interface NavBarOptions {
+    title?: string;
+    showBack?: boolean;
+    rightText?: string;
+}
+
 class NativeBridge {
     private callbacks: Map<string, BridgeCallback> = new Map();
     private isNative = false;
     private platform: 'android' | 'ios' | 'web' = 'web';
     private networkListeners: Set<(info: NetworkInfo) => void> = new Set();
     private lastNetworkInfo: NetworkInfo | null = null;
+    private eventListeners: Map<string, Set<(data: any) => void>> = new Map();
     private defaultOptions: BridgeOptions = {
         timeout: 10000, // 10秒超时
         retries: 3,     // 重试3次
@@ -62,6 +75,7 @@ class NativeBridge {
     private detectPlatform(): void {
         const userAgent = navigator.userAgent.toLowerCase();
 
+        // 1) 首选 UA 标识（规范做法）
         if (userAgent.includes('workbenchapp')) {
             this.isNative = true;
             if (userAgent.includes('android')) {
@@ -69,6 +83,19 @@ class NativeBridge {
             } else if (userAgent.includes('ios')) {
                 this.platform = 'ios';
             }
+            return;
+        }
+
+        // 2) 兜底：根据桥接对象自动识别（减少 UA 配置遗漏导致的问题）
+        const w = (typeof window !== 'undefined') ? (window as any) : {};
+        if (w.webkit?.messageHandlers?.NativeBridge) {
+            this.isNative = true;
+            this.platform = 'ios';
+            return;
+        }
+        if (w.NativeBridge && typeof w.NativeBridge === 'object') {
+            this.isNative = true;
+            this.platform = 'android';
         }
     }
 
@@ -77,18 +104,39 @@ class NativeBridge {
      */
     private setupGlobalCallback(): void {
         if (typeof window !== 'undefined') {
-            (window as any).NativeBridge = {
-                callback: (responseStr: string) => {
-                    try {
-                        const response: BridgeResponse = JSON.parse(responseStr);
-                        const callback = this.callbacks.get(response.callbackId);
-                        if (callback) {
-                            callback(response);
-                            this.callbacks.delete(response.callbackId);
-                        }
-                    } catch (error) {
-                        console.error('解析原生回调失败:', error);
+            const w = window as any;
+            // 避免覆盖原生注入对象（尤其 Android 的 addJavascriptInterface）
+            if (!w.NativeBridge || typeof w.NativeBridge !== 'object') {
+                w.NativeBridge = {};
+            }
+            w.NativeBridge.callback = (responseStr: string) => {
+                try {
+                    const response: BridgeResponse = JSON.parse(responseStr);
+                    const callback = this.callbacks.get(response.callbackId);
+                    if (callback) {
+                        callback(response);
+                        this.callbacks.delete(response.callbackId);
                     }
+                } catch (error) {
+                    console.error('解析原生回调失败:', error);
+                }
+            };
+
+            // 原生事件推送入口：Native 可调用 emitEvent(JSONString) 或 emitEvent(name, data)
+            w.NativeBridge.emitEvent = (arg1: string, arg2?: any) => {
+                try {
+                    if (arg2 !== undefined) {
+                        // 形如 emitEvent('deepLink', { url: '...' })
+                        this.dispatchEvent(arg1, arg2);
+                        return;
+                    }
+                    // 形如 emitEvent('{"event":"deepLink","data":{...}}')
+                    const payload = JSON.parse(arg1);
+                    if (payload && payload.event) {
+                        this.dispatchEvent(payload.event, payload.data);
+                    }
+                } catch (error) {
+                    console.error('解析原生事件失败:', error);
                 }
             };
         }
@@ -168,6 +216,24 @@ class NativeBridge {
      */
     private generateCallbackId(): string {
         return `callback_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    }
+
+    /**
+     * 事件分发/订阅
+     */
+    private dispatchEvent(event: string, data: any): void {
+        const set = this.eventListeners.get(event);
+        if (!set) return;
+        set.forEach(fn => {
+            try { fn(data); } catch (e) { console.error('事件回调执行失败:', e); }
+        });
+    }
+
+    addEventListener(event: string, handler: (data: any) => void): () => void {
+        if (!this.eventListeners.has(event)) this.eventListeners.set(event, new Set());
+        const set = this.eventListeners.get(event)!;
+        set.add(handler);
+        return () => set.delete(handler);
     }
 
     /**
@@ -380,6 +446,113 @@ class NativeBridge {
         }
 
         return this.callNativeWithRetry('showToast', options, message, duration);
+    }
+
+    /**
+     * 剪贴板-写入
+     */
+    async copyToClipboard(text: string, options?: BridgeOptions): Promise<void> {
+        if (!this.isNative) {
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(text);
+                return;
+            }
+            // 兜底
+            const ta = document.createElement('textarea');
+            ta.value = text; document.body.appendChild(ta); ta.select();
+            document.execCommand('copy'); document.body.removeChild(ta);
+            return;
+        }
+        return this.callNativeWithRetry('copyToClipboard', options, text);
+    }
+
+    /**
+     * 剪贴板-读取
+     */
+    async getClipboardText(options?: BridgeOptions): Promise<string | null> {
+        if (!this.isNative) {
+            try { return await navigator.clipboard.readText(); } catch { return null; }
+        }
+        const value = await this.callNativeWithRetry('getClipboardText', options);
+        return value === 'null' ? null : value;
+    }
+
+    /**
+     * 系统分享
+     */
+    async share(data: ShareOptions, options?: BridgeOptions): Promise<void> {
+        if (!this.isNative) {
+            if ((navigator as any).share) {
+                await (navigator as any).share(data);
+                return;
+            }
+            alert(data.text || data.title || data.url || '');
+            return;
+        }
+        return this.callNativeWithRetry('share', options, data);
+    }
+
+    /**
+     * 文件选择
+     * 返回文件列表（Web 下返回 dataURL 数组；原生建议返回文件路径或 base64 数组）
+     */
+    async openFilePicker(accept = '*/*', multiple = false, options?: BridgeOptions): Promise<string[]> {
+        if (!this.isNative) {
+            return new Promise<string[]>((resolve, reject) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = accept; input.multiple = multiple;
+                input.onchange = async () => {
+                    const files = Array.from(input.files || []);
+                    const reads = files.map(f => new Promise<string>((res, rej) => {
+                        const reader = new FileReader();
+                        reader.onload = () => res(String(reader.result));
+                        reader.onerror = rej; reader.readAsDataURL(f);
+                    }));
+                    try { const out = await Promise.all(reads); resolve(out); } catch (e) { reject(e); }
+                };
+                input.click();
+            });
+        }
+        return this.callNativeWithRetry('openFilePicker', options, { accept, multiple });
+    }
+
+    /**
+     * 震动反馈
+     */
+    async vibrate(pattern: number | number[] = 50, options?: BridgeOptions): Promise<void> {
+        if (!this.isNative) {
+            try { navigator.vibrate && navigator.vibrate(pattern as any); } catch {}
+            return;
+        }
+        return this.callNativeWithRetry('vibrate', options, pattern);
+    }
+
+    /**
+     * 设置原生导航栏
+     */
+    async setNavBar(optionsObj: NavBarOptions, options?: BridgeOptions): Promise<void> {
+        if (!this.isNative) return;
+        return this.callNativeWithRetry('setNavBar', options, optionsObj);
+    }
+
+    /**
+     * 关闭 WebView
+     */
+    async closeWebView(options?: BridgeOptions): Promise<void> {
+        if (!this.isNative) {
+            if (window.history.length > 1) window.history.back(); else window.close();
+            return;
+        }
+        return this.callNativeWithRetry('closeWebView', options);
+    }
+
+    /**
+     * 打开深链/外链
+     */
+    async openDeepLink(url: string, options?: BridgeOptions): Promise<void> {
+        if (!this.isNative) { window.location.href = url; return; }
+        return this.callNativeWithRetry('openDeepLink', options, url);
     }
 
     /**

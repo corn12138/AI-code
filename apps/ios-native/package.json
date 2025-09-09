@@ -21,7 +21,7 @@
         "ios:export": "xcodebuild -exportArchive -archivePath build/WorkbenchApp.xcarchive -exportPath build/ipa -exportOptionsPlist ExportOptions.plist"
     },
     "config": {
-        "h5_dev_url": "http://localhost:8002",
+        "h5_dev_url": "http://localhost:8000",
         "h5_prod_url": "https://your-production-domain.com",
         "bundle_id": "com.yourcompany.workbench",
         "app_name": "工作台",
