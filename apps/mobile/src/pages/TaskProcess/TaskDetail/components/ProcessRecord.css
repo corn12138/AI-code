@@ -1,6 +1,6 @@
 /* apps/mobile/src/pages/TaskProcess/TaskDetail/components/ProcessRecord.css */
 /**
- * 流程记录组件样式 - 参考ui2.jpg和ui3.jpg
+ * 流程记录组件样式 - 优化版本
  */
 
 @import '../../../../styles/taskProcess.css';
@@ -10,7 +10,7 @@
     background: #ffffff;
 }
 
-/* 当前处理信息 - 参考ui2.jpg顶部 */
+/* 当前处理信息 */
 .current-process-info {
     background: rgba(24, 144, 255, 0.05);
     border: 1px solid rgba(24, 144, 255, 0.2);
@@ -123,7 +123,7 @@
     font-size: 13px;
 }
 
-/* 时间线 - 参考ui3.jpg */
+/* 时间线 */
 .timeline {
     position: relative;
 }
@@ -196,7 +196,7 @@
     color: #999999;
 }
 
-/* 当前处理节点样式 - 参考ui2.jpg中的蓝色高亮 */
+/* 当前处理节点样式 */
 .timeline-item.current .timeline-dot {
     background-color: #1890ff;
     position: relative;
@@ -307,7 +307,7 @@
     line-height: 1.4;
 }
 
-/* 意见容器 - 参考ui3.jpg */
+/* 意见容器 */
 .opinion-container {
     background: #ffffff;
     border-radius: 6px;
@@ -381,76 +381,5 @@
     100% {
         transform: scale(1);
         opacity: 0.8;
-    }
-}
-
-/* Dark mode adaptation */
-@media (prefers-color-scheme: dark) {
-    .process-record-container {
-        background: #ffffff;
-    }
-
-    .current-process-info {
-        background: rgba(24, 144, 255, 0.08);
-        border-color: rgba(24, 144, 255, 0.3);
-    }
-
-    .current-step-info {
-        border-bottom-color: #f0f0f0;
-    }
-
-    .current-step-label,
-    .user-list-label {
-        color: #666666;
-    }
-
-    .current-step-value {
-        color: #1890ff;
-    }
-
-    .user-count,
-    .user-name,
-    .timeline-action,
-    .handler-name,
-    .opinion-text {
-        color: #333333;
-    }
-
-    .user-icon,
-    .user-id,
-    .timeline-time,
-    .handler-icon,
-    .handler-id {
-        color: #999999;
-    }
-
-    .handler-department {
-        color: #666666;
-    }
-
-    .timeline-dot {
-        box-shadow: 0 0 0 3px #ffffff;
-    }
-
-    .timeline-content {
-        background: #f8f9fa;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .opinion-container {
-        background: #ffffff;
-        border-color: #f0f0f0;
-    }
-
-    .copy-btn {
-        --text-color: #999999;
-    }
-
-    .expand-opinion-btn {
-        --text-color: var(--tp-primary);
-    }
-
-    .attachments-container {
-        color: var(--tp-primary);
     }
 }
