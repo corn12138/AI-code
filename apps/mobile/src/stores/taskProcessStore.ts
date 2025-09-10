@@ -50,6 +50,11 @@ interface TaskProcessState {
     // 知悉人
     notifyUsers: Array<{ id: string; name: string; avatar?: string }>
     usersLoading: boolean
+
+    // 子流程记录
+    subProcessRecords: any[]
+    parentRecord: any | null
+    subProcessLoading: boolean
 }
 
 // Action类型定义
@@ -71,6 +76,9 @@ type TaskProcessAction =
     | { type: 'SET_NEXT_ORG_LOADING'; payload: boolean }
     | { type: 'SET_NOTIFY_USERS'; payload: Array<{ id: string; name: string; avatar?: string }> }
     | { type: 'SET_USERS_LOADING'; payload: boolean }
+    | { type: 'SET_SUB_PROCESS_RECORDS'; payload: any[] }
+    | { type: 'SET_PARENT_RECORD'; payload: any | null }
+    | { type: 'SET_SUB_PROCESS_LOADING'; payload: boolean }
 
 // 初始状态
 const initialState: TaskProcessState = {
@@ -99,7 +107,10 @@ const initialState: TaskProcessState = {
     nextOrganizations: [],
     nextOrgLoading: false,
     notifyUsers: [],
-    usersLoading: false
+    usersLoading: false,
+    subProcessRecords: [],
+    parentRecord: null,
+    subProcessLoading: false
 }
 
 // Reducer函数
@@ -139,6 +150,12 @@ const taskProcessReducer = (state: TaskProcessState, action: TaskProcessAction):
             return { ...state, notifyUsers: action.payload }
         case 'SET_USERS_LOADING':
             return { ...state, usersLoading: action.payload }
+        case 'SET_SUB_PROCESS_RECORDS':
+            return { ...state, subProcessRecords: action.payload }
+        case 'SET_PARENT_RECORD':
+            return { ...state, parentRecord: action.payload }
+        case 'SET_SUB_PROCESS_LOADING':
+            return { ...state, subProcessLoading: action.payload }
         default:
             return state
     }
@@ -178,6 +195,8 @@ interface TaskProcessContextType {
     updateTaskFilter: (filter: Partial<TaskFilter>) => void
     resetTaskList: () => void
     resetTaskDetail: () => void
+    setSubProcessData: (parentRecord: any, subRecords: any[]) => void
+    clearSubProcessData: () => void
 }
 
 const TaskProcessContext = createContext<TaskProcessContextType | undefined>(undefined)
@@ -392,6 +411,20 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
         dispatch({ type: 'SET_PROCESS_RECORDS', payload: [] })
     }, [])
 
+    // 设置子流程数据
+    const setSubProcessData = useCallback((parentRecord: any, subRecords: any[]) => {
+        dispatch({ type: 'SET_PARENT_RECORD', payload: parentRecord })
+        dispatch({ type: 'SET_SUB_PROCESS_RECORDS', payload: subRecords })
+        console.log('📋 设置子流程数据:', { parentRecord, subRecords })
+    }, [])
+
+    // 清除子流程数据
+    const clearSubProcessData = useCallback(() => {
+        dispatch({ type: 'SET_PARENT_RECORD', payload: null })
+        dispatch({ type: 'SET_SUB_PROCESS_RECORDS', payload: [] })
+        console.log('🧹 清除子流程数据')
+    }, [])
+
     const contextValue: TaskProcessContextType = {
         state,
         dispatch,
@@ -407,7 +440,9 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
         saveDraft,
         updateTaskFilter,
         resetTaskList,
-        resetTaskDetail
+        resetTaskDetail,
+        setSubProcessData,
+        clearSubProcessData
     }
 
     return React.createElement(TaskProcessContext.Provider, { value: contextValue }, children)

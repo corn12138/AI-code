@@ -10,7 +10,7 @@ import { createHistory } from './core/history';
 import { ApplyPluginsType } from 'umi';
 import '/Users/huangyuming/Desktop/createProjects/AI-code/apps/mobile/src/.umi-production/plugin-tailwindcss/tailwind.css';
 
-const publicPath = "./";
+const publicPath = "/";
 const runtimePublicPath = false;
 
 async function render() {

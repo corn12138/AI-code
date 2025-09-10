@@ -1,3 +1,4 @@
+import { useTaskProcessStore } from '@/stores/taskProcessStore'
 import { Button, Toast } from 'antd-mobile'
 import {
     RightOutline,
@@ -5,6 +6,7 @@ import {
     UserOutline
 } from 'antd-mobile-icons'
 import React, { useState } from 'react'
+import { history } from 'umi'
 import './ProcessRecord.css'
 
 interface ProcessRecordProps {
@@ -43,7 +45,65 @@ const mockProcessRecords = [
         },
         opinion: '请审核',
         hasAttachments: false,
-        isCurrent: true
+        isCurrent: true,
+        // 添加子流程记录
+        children: [
+            {
+                id: '1-1',
+                step: '会办（提交会办结果）',
+                handler: {
+                    name: '章某某',
+                    userId: '123456',
+                    department: '兴业数字技术服务中心/数字化设计团队',
+                    time: '2023-08-15 16:39:20'
+                },
+                opinion: '请审核请审核'
+            },
+            {
+                id: '1-2',
+                step: '会办（提交会办结果）',
+                handler: {
+                    name: '章某某',
+                    userId: '123456',
+                    department: '兴业数字技术服务中心/数字化设计团队',
+                    time: '2023-08-15 16:39:20'
+                },
+                opinion: '请审核请审核'
+            },
+            {
+                id: '1-3',
+                step: '会办（提交会办结果）',
+                handler: {
+                    name: '章某某',
+                    userId: '123456',
+                    department: '兴业数字技术服务中心/数字化设计团队',
+                    time: '2023-08-15 16:39:20'
+                },
+                opinion: '请审核请审核'
+            },
+            {
+                id: '1-4',
+                step: '会办（提交会办结果）',
+                handler: {
+                    name: '章某某',
+                    userId: '123456',
+                    department: '兴业数字技术服务中心/数字化设计团队',
+                    time: '2023-08-15 16:39:20'
+                },
+                opinion: '请审核请审核'
+            },
+            {
+                id: '1-5',
+                step: '会办（提交会办结果）',
+                handler: {
+                    name: '章某某',
+                    userId: '123456',
+                    department: '兴业数字技术服务中心/数字化设计团队',
+                    time: '2023-08-15 16:39:20'
+                },
+                opinion: '请审核请审核'
+            }
+        ]
     },
     {
         id: '2',
@@ -76,6 +136,7 @@ const mockProcessRecords = [
 ]
 
 const ProcessRecord: React.FC<ProcessRecordProps> = ({ taskId }) => {
+    const { setSubProcessData } = useTaskProcessStore()
     const [expandedHandlers, setExpandedHandlers] = useState(false)
     const [expandedNotifyUsers, setExpandedNotifyUsers] = useState(false)
     const [expandedOpinions, setExpandedOpinions] = useState<string[]>([])
@@ -102,6 +163,15 @@ const ProcessRecord: React.FC<ProcessRecordProps> = ({ taskId }) => {
         }).catch(() => {
             Toast.show('复制失败')
         })
+    }
+
+    // 跳转到子流程记录页面
+    const handleViewSubProcess = (record: any) => {
+        console.log('🔗 跳转到子流程记录页面:', record)
+        // 使用状态管理存储子流程数据
+        setSubProcessData(record, record.children || [])
+        // 跳转到子流程记录页面
+        history.push(`/task-process/sub-records/${record.id}`)
     }
 
     // 渲染当前处理信息 - 参考ui2.jpg顶部信息
@@ -188,6 +258,13 @@ const ProcessRecord: React.FC<ProcessRecordProps> = ({ taskId }) => {
                                 <span>{record.step}</span>
                                 {record.isCurrent && <span className="current-badge">会办</span>}
                             </div>
+                            {/* 如果有子流程记录，显示跳转按钮 */}
+                            {record.children && record.children.length > 0 && (
+                                <div className="sub-process-link" onClick={() => handleViewSubProcess(record)}>
+                                    <span className="sub-process-text">会办记录</span>
+                                    <RightOutline className="sub-process-arrow" />
+                                </div>
+                            )}
                         </div>
 
                         <div className="timeline-body">

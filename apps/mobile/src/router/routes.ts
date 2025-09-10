@@ -195,6 +195,15 @@ export const routes: RouteConfig[] = [
                 },
             },
             {
+                path: '/task-process/sub-records/:id',
+                component: '@/pages/TaskProcess/SubProcessRecord',
+                meta: {
+                    title: '会办记录',
+                    requireAuth: true,
+                    hidden: true,
+                },
+            },
+            {
                 path: '/message/:id',
                 component: '@/pages/Message/MessageDetail',
                 meta: {

@@ -329,13 +329,10 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
 
                     {/* 处理意见 - 永远显示 */}
                     <div className="form-item">
-                        <div className="form-label">处理意见 <span className="required-mark">*</span></div>
+                        <div className="form-row-layout opinion-label-row">
+                            <div className="form-label">处理意见 <span className="required-mark">*</span></div>
+                        </div>
                         <div className="opinion-input-container">
-                            <div className="opinion-actions">
-                                <Button size="mini" color="primary" onClick={() => handleQuickOpinion('同意')}>同意</Button>
-                                <Button size="mini" onClick={() => handleQuickOpinion('请办理')}>请办理</Button>
-                                <Button size="mini" onClick={() => handleQuickOpinion('请审核')}>请审核</Button>
-                            </div>
                             <TextArea
                                 className="opinion-textarea"
                                 placeholder="请输入"
@@ -345,6 +342,11 @@ const ProcessPanel: React.FC<ProcessPanelProps> = ({ task, onSubmit }) => {
                                 maxLength={500}
                             />
                             <div className="char-count">{processOpinion.length}/500</div>
+                            <div className="opinion-actions">
+                                <Button size="mini" color="primary" onClick={() => handleQuickOpinion('同意')}>同意</Button>
+                                <Button size="mini" onClick={() => handleQuickOpinion('请办理')}>请办理</Button>
+                                <Button size="mini" onClick={() => handleQuickOpinion('请审核')}>请审核</Button>
+                            </div>
                         </div>
                     </div>
                 </div>
