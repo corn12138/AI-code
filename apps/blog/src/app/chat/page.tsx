@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
-import ChatPageClient from '../../components/chat/ChatPageClient';
-import TopNavbar from '../../components/layout/TopNavbar';
+import TopNavbar from '@/components/layout/TopNavbar';
+import { ChatShell } from '@/modules/chat/components/ChatShell';
+import { getChatSessionConfig } from '@/modules/chat/server/config';
 
 export const metadata: Metadata = {
     title: 'AI 智能助手 - AI Tech Blog',
@@ -8,10 +9,11 @@ export const metadata: Metadata = {
 };
 
 export default function ChatPage() {
+    const config = getChatSessionConfig();
     return (
-        <div className="h-screen flex flex-col">
+        <div className="min-h-screen bg-slate-950 text-slate-100">
             <TopNavbar />
-            <ChatPageClient />
+            <ChatShell config={config} />
         </div>
     );
-} 
+}

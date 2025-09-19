@@ -3,7 +3,7 @@ import zhCN from 'antd-mobile/es/locales/zh-CN'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 import ToastContainer from './components/Toast/ToastContainer'
 import { appConfig } from './config/env'
-import { TaskProcessProvider } from './stores/taskProcessStore'
+import AppStoreProvider from './stores/AppStoreProvider'
 
 // 全局样式
 import './index.css'
@@ -50,10 +50,10 @@ export function rootContainer(container: any) {
           '--adm-color-text-secondary': '#666666'
         }}
       >
-        <TaskProcessProvider>
+        <AppStoreProvider>
           {container}
           <ToastContainer />
-        </TaskProcessProvider>
+        </AppStoreProvider>
       </ConfigProvider>
     </ErrorBoundary>
   )

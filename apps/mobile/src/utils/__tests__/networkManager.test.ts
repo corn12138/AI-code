@@ -1,5 +1,29 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { nativeBridge } from '../nativeBridge';
+
+const createLocalStorageMock = () => {
+    const store = new Map<string, string>();
+    return {
+        getItem: (key: string) => (store.has(key) ? store.get(key)! : null),
+        setItem: (key: string, value: string) => {
+            store.set(key, String(value));
+        },
+        removeItem: (key: string) => {
+            store.delete(key);
+        },
+        clear: () => {
+            store.clear();
+        }
+    };
+};
+
+const localStorageMock = createLocalStorageMock();
+
+Object.defineProperty(global, 'localStorage', {
+    value: localStorageMock,
+    configurable: true
+});
+
 import { networkManager } from '../networkManager';
 
 // Mock nativeBridge
@@ -16,6 +40,7 @@ vi.mock('../nativeBridge', () => ({
 describe('NetworkManager', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        localStorageMock.clear();
         // Reset networkManager state
         (networkManager as any).networkStatus = {
             isOnline: true,

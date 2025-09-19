@@ -77,6 +77,7 @@ export default defineConfig({
       '@actions': path.resolve(__dirname, './src/actions'),
       '@models': path.resolve(__dirname, './src/models'),
       '@styles': path.resolve(__dirname, './src/styles'),
+      '@corn12138/hooks': path.resolve(__dirname, '../../shared/hooks/src'),
     },
   },
   // 优化构建性能

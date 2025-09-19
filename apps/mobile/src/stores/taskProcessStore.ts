@@ -14,7 +14,7 @@ import type {
     TaskItem,
     TaskStatus
 } from '@/stores/taskProcess/types'
-import React, { createContext, ReactNode, useCallback, useContext, useReducer } from 'react'
+import React, { createContext, ReactNode, useCallback, useContext, useReducer, useRef } from 'react'
 
 // 状态类型定义
 interface TaskProcessState {
@@ -210,6 +210,11 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
     const [state, dispatch] = useReducer(taskProcessReducer, initialState)
 
     // Actions
+    // 并发加载计数器，避免并发请求导致 loading 标记提前关闭
+    const orgPendingRef = useRef(0)
+    const stepsPendingRef = useRef(0)
+    const nextOrgPendingRef = useRef(0)
+    const usersPendingRef = useRef(0)
     const loadTaskList = useCallback(async (reset = false) => {
         try {
             console.log('🔄 开始加载任务列表...', { reset, filter: state.taskFilter, pagination: state.taskPagination })
@@ -291,6 +296,7 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
 
     const loadOrganizations = useCallback(async () => {
         try {
+            orgPendingRef.current += 1
             dispatch({ type: 'SET_ORG_LOADING', payload: true })
             const response = await organizationApi.getOrganizations()
             dispatch({ type: 'SET_ORGANIZATIONS', payload: response })
@@ -298,12 +304,14 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
             console.error('加载组织机构失败:', error)
             dispatch({ type: 'SET_ORGANIZATIONS', payload: [] })
         } finally {
-            dispatch({ type: 'SET_ORG_LOADING', payload: false })
+            orgPendingRef.current = Math.max(0, orgPendingRef.current - 1)
+            dispatch({ type: 'SET_ORG_LOADING', payload: orgPendingRef.current > 0 })
         }
     }, [])
 
     const loadNextStepsByOrg = useCallback(async (orgId: string) => {
         try {
+            stepsPendingRef.current += 1
             dispatch({ type: 'SET_STEPS_LOADING', payload: true })
             const response = await organizationApi.getNextStepsByOrg(orgId)
             dispatch({ type: 'SET_PROCESS_STEPS', payload: response })
@@ -311,12 +319,14 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
             console.error('加载处理步骤失败:', error)
             dispatch({ type: 'SET_PROCESS_STEPS', payload: [] })
         } finally {
-            dispatch({ type: 'SET_STEPS_LOADING', payload: false })
+            stepsPendingRef.current = Math.max(0, stepsPendingRef.current - 1)
+            dispatch({ type: 'SET_STEPS_LOADING', payload: stepsPendingRef.current > 0 })
         }
     }, [])
 
     const loadNextOrgsByStep = useCallback(async (stepId: string) => {
         try {
+            nextOrgPendingRef.current += 1
             dispatch({ type: 'SET_NEXT_ORG_LOADING', payload: true })
             const response = await organizationApi.getNextOrgsByStep(stepId)
             dispatch({ type: 'SET_NEXT_ORGANIZATIONS', payload: response })
@@ -324,12 +334,14 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
             console.error('加载处理机构失败:', error)
             dispatch({ type: 'SET_NEXT_ORGANIZATIONS', payload: [] })
         } finally {
-            dispatch({ type: 'SET_NEXT_ORG_LOADING', payload: false })
+            nextOrgPendingRef.current = Math.max(0, nextOrgPendingRef.current - 1)
+            dispatch({ type: 'SET_NEXT_ORG_LOADING', payload: nextOrgPendingRef.current > 0 })
         }
     }, [])
 
     const loadNotifyUsers = useCallback(async (orgId: string) => {
         try {
+            usersPendingRef.current += 1
             dispatch({ type: 'SET_USERS_LOADING', payload: true })
             const response = await organizationApi.getNotifyUsers(orgId)
             dispatch({ type: 'SET_NOTIFY_USERS', payload: response })
@@ -337,7 +349,8 @@ export const TaskProcessProvider: React.FC<TaskProcessProviderProps> = ({ childr
             console.error('加载知悉人失败:', error)
             dispatch({ type: 'SET_NOTIFY_USERS', payload: [] })
         } finally {
-            dispatch({ type: 'SET_USERS_LOADING', payload: false })
+            usersPendingRef.current = Math.max(0, usersPendingRef.current - 1)
+            dispatch({ type: 'SET_USERS_LOADING', payload: usersPendingRef.current > 0 })
         }
     }, [])
 

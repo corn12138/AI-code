@@ -60,6 +60,17 @@
   - [安全最佳实践](./security.md) - 项目实施的安全措施。
   - [离线功能实现](./offline-features.md) - Service Worker与离线功能详解。
   - [华为云数据库创建指南](./modules/华为云数据库创建.md) - 在华为云上部署PostgreSQL的教程。
+- **运维与报告**
+  - [项目运维与监控](./reports/MONITORING-SETUP.md) - Prometheus/Grafana配置指南。
+  - [测试体系与目录清理](./reports/TESTING_DIRECTORY_CLEANUP.md) - 测试环境维护记录。
+  - [进度与任务汇总](./reports/TODO_LIST.md) - 里程碑与待办追踪。
+- **测试平台文档**
+  - [测试平台概览](./testing/README.md)
+  - [自动化测试快速上手](./testing/QUICK_START.md)
+  - [企业级测试环境搭建](./testing/enterprise-setup.md)
+- **面试与培训资料**
+  - [面试题整理](./interview/README.md)
+  - [面试准备清单](./interview/面试准备清单.md)
 - **Hooks独立化文档** 🎉 **已成功发布**: [`@corn12138/hooks`](https://www.npmjs.com/package/@corn12138/hooks)
   - [📦 NPM发包完整流程总结](./npm-publishing-complete-guide.md) - **最详细**的发包流程记录，包含所有问题和解决方案。
   - [📋 Hooks项目总结](./hooks-project-summary.md) - 完整项目成果、技术架构和未来规划总结。

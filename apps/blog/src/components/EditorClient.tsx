@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic';
 
 // 动态导入写作助手组件
 const WritingAssistant = dynamic(
-    () => import('@/components/chat/WritingAssistant'),
+    () => import('@/modules/chat/components/WritingAssistant'),
     {
         ssr: false,
         loading: () => (

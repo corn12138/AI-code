@@ -1,3 +1,4 @@
+import { AuthProvider } from '@corn12138/hooks';
 import type { Metadata } from 'next';
 import '../styles/globals.css';
 
@@ -14,7 +15,9 @@ export default function RootLayout({
     return (
         <html lang="zh-CN">
             <body>
-                {children}
+                <AuthProvider>
+                    {children}
+                </AuthProvider>
             </body>
         </html>
     );

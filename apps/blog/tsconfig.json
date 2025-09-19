@@ -35,6 +35,9 @@
       "@/services/*": [
         "./src/services/*"
       ],
+      "@/modules/*": [
+        "./src/modules/*"
+      ],
       "@/lib/*": [
         "./src/lib/*"
       ],

@@ -113,8 +113,8 @@ Docker 服务:
   ./test.sh docker logs             # 查看服务日志
 
 更多信息:
-  - 完整文档: testing/README.md
-  - 快速开始: testing/docs/quick-start.md
+  - 完整文档: docs/testing/README.md
+  - 快速开始: docs/testing/QUICK_START.md
   - 故障排除: testing/docs/troubleshooting.md
 EOF
 }
