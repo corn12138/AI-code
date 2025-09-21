@@ -1,4 +1,3 @@
-'use client';
 
 // Import all service modules
 import {

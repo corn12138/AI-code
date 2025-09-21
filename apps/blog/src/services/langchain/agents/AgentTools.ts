@@ -1,4 +1,3 @@
-'use client';
 
 import { ToolRegistry } from '../../tools/ToolRegistry';
 import { AgentTool } from './BaseAgent';

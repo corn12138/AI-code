@@ -1,4 +1,3 @@
-'use client';
 
 import { LLMManager } from '../../llm/LLMManager';
 import { ToolRegistry } from '../../tools/ToolRegistry';

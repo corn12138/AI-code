@@ -1,4 +1,3 @@
-'use client';
 
 import { BaseChain, ChainConfig, ChainInput, ChainOutput } from '../core/BaseChain';
 import { BufferMemory } from '../memory/BaseMemory';

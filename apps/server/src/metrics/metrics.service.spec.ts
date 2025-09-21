@@ -7,12 +7,8 @@ import { register } from 'prom-client';
 describe('MetricsService', () => {
   let service: MetricsService;
 
-  beforeAll(() => {
-    // 清理Prometheus注册表，避免重复注册错误
-    register.clear();
-  });
-
   beforeEach(async () => {
+    register.clear();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         MetricsService,

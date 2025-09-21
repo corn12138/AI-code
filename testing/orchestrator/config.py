@@ -298,19 +298,27 @@ class ConfigManager:
 
     def _find_config_file(self) -> str:
         """查找配置文件"""
+        base_dir = Path(__file__).resolve().parent
+        project_root = base_dir.parent.parent
         possible_paths = [
-            "./testing/config.yml",
-            "./config.yml",
-            "./ai-code-testing.yml",
-            os.path.expanduser("~/.ai-code-testing.yml"),
+            project_root / "testing/config.yml",
+            project_root / "config.yml",
+            project_root / "ai-code-testing.yml",
+            Path("./testing/config.yml"),
+            Path("./config.yml"),
+            Path("./ai-code-testing.yml"),
+            Path(os.path.expanduser("~/.ai-code-testing.yml")),
         ]
 
         for path in possible_paths:
-            if os.path.exists(path):
-                return path
+            try:
+                if path and path.exists():
+                    return str(path)
+            except OSError:
+                continue
 
         # 如果没有找到，返回默认路径
-        return "./testing/config.yml"
+        return str(project_root / "testing/config.yml")
 
     def _load_config(self) -> TestConfig:
         """加载配置文件"""

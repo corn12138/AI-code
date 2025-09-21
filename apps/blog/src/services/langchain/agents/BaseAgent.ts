@@ -1,4 +1,3 @@
-'use client';
 
 import { BaseChain, ChainInput, ChainOutput, ChainConfig } from '../core/BaseChain';
 import { PromptTemplate } from '../prompts/PromptTemplate';

@@ -1,4 +1,3 @@
-'use client';
 
 import { BaseMemory, ChainInput, ChainOutput } from '../core/BaseChain';
 

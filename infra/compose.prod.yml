@@ -1,0 +1,34 @@
+services:
+  blog:
+    image: ghcr.io/OWNER/ai-code-blog:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    env_file:
+      - /opt/envs/blog.env
+
+  lowcode:
+    image: ghcr.io/OWNER/ai-code-lowcode:latest
+    restart: always
+    ports:
+      - "3002:3002"
+    depends_on:
+      - server
+    env_file:
+      - /opt/envs/lowcode.env
+
+  server:
+    image: ghcr.io/OWNER/ai-code-server:latest
+    restart: always
+    ports:
+      - "3001:3001"
+    env_file:
+      - /opt/envs/server.env
+    environment:
+      NODE_ENV: production
+
+networks:
+  default:
+    name: ai-code

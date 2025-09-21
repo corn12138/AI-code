@@ -1,4 +1,3 @@
-'use client';
 
 // Export main enterprise AI system
 export { EnterpriseAISystem } from './EnterpriseAISystem';

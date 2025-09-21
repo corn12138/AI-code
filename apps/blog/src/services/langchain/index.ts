@@ -1,4 +1,3 @@
-'use client';
 
 // Core exports
 export { BaseChain, CompositeChain, createChain } from './core/BaseChain';

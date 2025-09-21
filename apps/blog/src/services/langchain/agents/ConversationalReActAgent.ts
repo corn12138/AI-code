@@ -1,4 +1,3 @@
-'use client';
 
 import { BaseAgent, AgentStep, AgentAction, AgentConfig } from './BaseAgent';
 import { PromptTemplate } from '../prompts/PromptTemplate';

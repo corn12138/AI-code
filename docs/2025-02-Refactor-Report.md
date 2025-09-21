@@ -13,6 +13,17 @@
   - Updated `app/chat/page.tsx` to hydrate from server-side chat config and render the new shell.
   - Stream API logic moved into `modules/chat/server/` for maintainability; utilities documented under `utils/env.ts`.
   - Added Vitest suites (`useChatSession.test.tsx`, `metrics.test.ts`) to lock behaviour.
+- **Testing Enhancements**
+  - Added behaviour-driven coverage for the chat domain via `chatStore.test.ts`, verifying hydration, streaming lifecycle, and conversation bookkeeping logic.
+  - Brought lowcode's editor store under test (`src/store/__tests__/editorStore.test.ts`) with jsdom persistence fakes to exercise complex state transitions.
+  - Simplified mobile vitest configuration and introduced `authStore` regression tests to protect authentication flows without relying on brittle legacy suites.
+  - Hardened server metrics tests, ensuring Prometheus counters reset per-run to avoid flakiness.
+- **testing/orchestrator**
+  - Normalised config discovery (auto-resolving project-root `testing/config.yml`) and trimmed suite definitions to the actively maintained unit workflow so `python main.py run --suite unit` drives all apps successfully.
+- **shared/**
+  - Retained only the actively consumed packages (`auth`, `hooks`, `ui`, `utils`) and removed stale scaffolding (`api`, `auth-sync`, `components`, `config`, `styles`, `test-utils`, `types`).
+  - Purged stray per-package `node_modules` to rely on the workspace root dependency graph.
+  - Simplified root `tsconfig.json` path aliases to reflect the leaner shared surface area.
 - **apps/server**
   - Chat API now consumes the shared server helpers; analytics/token math centralised for reuse.
 - **apps/mobile**

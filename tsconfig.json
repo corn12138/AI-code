@@ -24,23 +24,11 @@
             "@shared/*": [
                 "./shared/*"
             ],
-            "@shared/types": [
-                "./shared/types"
-            ],
             "@shared/utils/*": [
                 "./shared/utils/src/*"
             ],
-            "@shared/components/*": [
-                "./shared/components/*"
-            ],
             "@shared/ui": [
                 "./shared/ui/src"
-            ],
-            "@shared/api": [
-                "./shared/api"
-            ],
-            "@shared/config": [
-                "./shared/config"
             ]
         }
     },

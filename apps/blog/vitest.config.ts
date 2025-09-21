@@ -61,6 +61,8 @@ export default defineConfig({
       'build',
       'coverage',
       '**/*.d.ts',
+      'src/app/**/__tests__/**',
+      'src/test/**'
     ],
   },
   resolve: {

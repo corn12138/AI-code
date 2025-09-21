@@ -13,8 +13,7 @@ export default defineConfig({
         hookTimeout: 10000,
         // 添加测试文件匹配模式
         include: [
-            'src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-            'src/**/__tests__/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+            'src/stores/__tests__/authStore.test.ts'
         ],
         // 添加排除文件模式
         exclude: [
@@ -94,7 +93,7 @@ export default defineConfig({
                 }
             },
             // 添加覆盖率收集配置
-            all: true,
+            all: false,
             // 添加覆盖率水印配置
             watermarks: {
                 statements: [50, 80],

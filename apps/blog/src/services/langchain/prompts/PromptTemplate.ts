@@ -1,4 +1,3 @@
-'use client';
 
 // Base prompt template interface
 export interface PromptTemplateInput {
