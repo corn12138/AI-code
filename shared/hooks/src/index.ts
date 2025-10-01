@@ -3,7 +3,7 @@ export { AuthProvider, useAuth } from './useAuth';
 export type { AuthContextType, AuthState, User } from './useAuth';
 
 // 增强认证相关
-export { apiRequest, AuthSecureProvider, isTokenExpired, secureStorage, useAuthSecure } from './useAuthSecure';
+export { AuthSecureProvider, useAuthSecure } from './useAuthSecure';
 export type { LoginCredentials, RegisterData, AuthContextType as SecureAuthContextType, AuthState as SecureAuthState, User as SecureUser } from './useAuthSecure';
 
 // 防抖相关

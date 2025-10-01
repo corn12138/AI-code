@@ -5,7 +5,8 @@ import { Article } from '../../article/entities/article.entity';
 import { Category } from '../../article/entities/category.entity';
 import { Comment } from '../../article/entities/comment.entity';
 import { Tag } from '../../article/entities/tag.entity';
-import { LowcodePage } from '../../lowcode/entities/lowcode-page.entity';
+import { DATABASE_DEFAULTS } from '../../config/database-defaults';
+import { MobileDoc } from '../../mobile/entities/mobile-doc.entity';
 import { User } from '../../user/entities/user.entity';
 
 // 加载正确的环境变量文件，优先读取生产环境配置
@@ -16,16 +17,16 @@ const envPath = process.env.NODE_ENV === 'production'
 dotenv.config({ path: envPath });
 
 console.log(`数据库迁移配置使用环境: ${process.env.NODE_ENV || 'development'}`);
-console.log(`连接到数据库: ${process.env.DATABASE_HOST || 'localhost'}:${process.env.DATABASE_PORT || '6543'}/${process.env.DATABASE_NAME || 'blogdb'}`);
+console.log(`连接到数据库: ${process.env.DATABASE_HOST || DATABASE_DEFAULTS.HOST}:${process.env.DATABASE_PORT || DATABASE_DEFAULTS.PORT}/${process.env.DATABASE_NAME || DATABASE_DEFAULTS.NAME}`);
 
 // 创建 DataSource 实例用于迁移
 const dataSource = new DataSource({
     type: 'postgres',
-    host: process.env.DATABASE_HOST || 'localhost',
-    port: parseInt(process.env.DATABASE_PORT || '6543', 10),
-    username: process.env.DATABASE_USER || 'app_user',
-    password: process.env.DATABASE_PASSWORD || 'postgres',
-    database: process.env.DATABASE_NAME || 'blogdb',
+    host: process.env.DATABASE_HOST || DATABASE_DEFAULTS.HOST,
+    port: parseInt(process.env.DATABASE_PORT || DATABASE_DEFAULTS.PORT.toString(), 10),
+    username: process.env.DATABASE_USER || DATABASE_DEFAULTS.USER,
+    password: process.env.DATABASE_PASSWORD || DATABASE_DEFAULTS.PASSWORD,
+    database: process.env.DATABASE_NAME || DATABASE_DEFAULTS.NAME,
     // 明确指定实体而不是使用通配符模式
     entities: [
         User,
@@ -33,7 +34,7 @@ const dataSource = new DataSource({
         Category,
         Tag,
         Comment,
-        LowcodePage
+        MobileDoc,
     ],
     migrations: [
         'src/database/migrations/*{.ts,.js}',

@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@corn12138/hooks';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -11,7 +12,7 @@ type LoginMode = 'password' | 'email-code';
 
 export default function LoginForm() {
     const router = useRouter();
-    const { login, isLoading } = useAuth();
+    const { login, refreshToken, isLoading } = useAuth();
     const [loginMode, setLoginMode] = useState<LoginMode>('password');
     const [email, setEmail] = useState('user1@example.com'); // 预填充测试邮箱
     const [password, setPassword] = useState('password123'); // 预填充测试密码
@@ -40,11 +41,12 @@ export default function LoginForm() {
         e.preventDefault();
 
         try {
-            const success = await (login as any)({ email, password });
-            console.log('success', success);
+            const success = await login({ email, password });
             if (success) {
                 toast.success('登录成功');
+                await refreshToken();
                 router.push('/');
+                router.refresh();
             } else {
                 toast.error('登录失败，请检查您的凭据');
             }
@@ -65,10 +67,13 @@ export default function LoginForm() {
         setIsSendingCode(true);
 
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch('/api/auth/send-verification-code', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
+                    ...(csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {}),
                 },
                 body: JSON.stringify({
                     email,
@@ -108,10 +113,13 @@ export default function LoginForm() {
         }
 
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch('/api/auth/email-login', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
+                    ...(csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {}),
                 },
                 body: JSON.stringify({
                     email,
@@ -122,16 +130,10 @@ export default function LoginForm() {
             const data = await response.json();
 
             if (response.ok) {
-                // 使用返回的token更新认证状态
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem('accessToken', data.accessToken);
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    localStorage.setItem('token', data.accessToken); // 兼容性
-                }
-
                 toast.success('登录成功');
+                await refreshToken();
                 router.push('/');
-                window.location.reload(); // 刷新页面以更新认证状态
+                router.refresh();
             } else {
                 toast.error(data.error || '登录失败');
             }

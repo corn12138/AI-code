@@ -18,13 +18,14 @@ export function validateMethod(request: NextRequest, allowedMethods: string[]): 
  * 创建标准化的API响应
  */
 export function createApiResponse(data: any, status: number = 200): Response {
+    const allowOrigin = process.env.NEXT_PUBLIC_APP_ORIGIN || '*';
     return new Response(JSON.stringify(data), {
         status,
         headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': allowOrigin,
             'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token',
         },
     });
 }
@@ -42,6 +43,14 @@ export function handleApiError(error: unknown): Response {
             error: authError.message,
             code: authError.code
         }, authError.status || 401);
+    }
+
+    // CSRF 错误
+    if (error instanceof Error && error.name === 'CsrfError') {
+        return createApiResponse({
+            error: error.message,
+            code: 'CSRF_FAILED'
+        }, 403);
     }
 
     // 验证错误

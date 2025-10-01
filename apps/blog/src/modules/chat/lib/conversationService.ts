@@ -1,3 +1,4 @@
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 import type { ChatConversationSummary, ChatMessage, ChatSessionConfig } from '../types';
 
 interface ConversationResponse {
@@ -21,12 +22,11 @@ interface ConversationDetailResponse {
 }
 
 export async function fetchConversations(
-    config: ChatSessionConfig,
-    token: string
+    config: ChatSessionConfig
 ): Promise<ChatConversationSummary[]> {
     const response = await fetch(config.conversationsEndpoint, {
         method: 'GET',
-        headers: buildAuthHeader(token),
+        credentials: 'include',
     });
 
     if (!response.ok) {
@@ -39,12 +39,11 @@ export async function fetchConversations(
 
 export async function fetchConversationById(
     config: ChatSessionConfig,
-    token: string,
     conversationId: string
 ): Promise<{ messages: ChatMessage[]; summary: ChatConversationSummary } | null> {
     const response = await fetch(config.conversationDetailEndpoint(conversationId), {
         method: 'GET',
-        headers: buildAuthHeader(token),
+        credentials: 'include',
     });
 
     if (response.status === 404) {
@@ -80,12 +79,18 @@ export async function fetchConversationById(
 
 export async function deleteConversation(
     config: ChatSessionConfig,
-    token: string,
     conversationId: string
 ): Promise<void> {
+    const csrfToken = await ensureCsrfToken();
+    const headers: Record<string, string> = {};
+    if (csrfToken) {
+        headers[getCsrfHeaderName()] = csrfToken;
+    }
+
     const response = await fetch(config.conversationDetailEndpoint(conversationId), {
         method: 'DELETE',
-        headers: buildAuthHeader(token),
+        credentials: 'include',
+        headers,
     });
 
     if (response.status === 404) {
@@ -95,16 +100,4 @@ export async function deleteConversation(
     if (!response.ok) {
         throw new Error(`无法删除对话 (HTTP ${response.status})`);
     }
-}
-
-function buildAuthHeader(token: string) {
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-    };
-
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    return headers;
 }

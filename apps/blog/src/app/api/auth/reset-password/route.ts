@@ -6,6 +6,7 @@ import {
     validateFields,
     validateMethod
 } from '@/lib/api-auth';
+import { assertCsrfToken } from '@/lib/security';
 import { PasswordResetService } from '@/lib/verification';
 import { NextRequest } from 'next/server';
 
@@ -25,6 +26,7 @@ export async function POST(request: NextRequest) {
     try {
         // 验证请求方法
         validateMethod(request, ['POST']);
+        assertCsrfToken(request);
 
         // 解析请求体
         const body = await parseRequestBody<SendResetLinkRequest>(request);
@@ -67,6 +69,7 @@ export async function PUT(request: NextRequest) {
     try {
         // 验证请求方法
         validateMethod(request, ['PUT']);
+        assertCsrfToken(request);
 
         // 解析请求体
         const body = await parseRequestBody<ResetPasswordRequest>(request);

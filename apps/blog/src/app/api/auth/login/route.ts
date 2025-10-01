@@ -1,5 +1,4 @@
 import {
-    createApiResponse,
     handleApiError,
     parseRequestBody,
     validateEmail,
@@ -8,37 +7,37 @@ import {
 } from '@/lib/api-auth';
 import { AuthUser, JWTUtils, PasswordUtils } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { NextRequest } from 'next/server';
+import {
+    assertCsrfToken,
+    ensureCsrfToken,
+    setAuthCookies
+} from '@/lib/security';
+import { NextRequest, NextResponse } from 'next/server';
 
 interface LoginRequestBody {
-    email: string; // 可以是邮箱或用户名
+    email: string; // 兼容邮箱或用户名
     password: string;
 }
 
 export async function POST(request: NextRequest) {
     try {
-        // 验证请求方法
         validateMethod(request, ['POST']);
+        assertCsrfToken(request);
 
-        // 解析请求体
         const body = await parseRequestBody<LoginRequestBody>(request);
-
-        // 验证必填字段
         validateFields(body, ['email', 'password']);
 
         const { email: emailOrUsername, password } = body;
-
-        // 判断输入是邮箱还是用户名
+        const normalizedInput = emailOrUsername.toLowerCase();
         const isEmail = validateEmail(emailOrUsername);
 
-        // 查找用户 - 支持邮箱或用户名登录
         const user = await prisma.user.findFirst({
             where: isEmail
-                ? { email: emailOrUsername.toLowerCase() }
+                ? { email: normalizedInput }
                 : {
                     OR: [
-                        { email: emailOrUsername.toLowerCase() },
-                        { username: emailOrUsername.toLowerCase() }
+                        { email: normalizedInput },
+                        { username: normalizedInput }
                     ]
                 },
             select: {
@@ -50,25 +49,15 @@ export async function POST(request: NextRequest) {
             }
         });
 
-        // 检查用户是否存在
         if (!user) {
-            return createApiResponse(
-                { error: 'Invalid credentials' },
-                401
-            );
+            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
 
-        // 验证密码
         const isValidPassword = await PasswordUtils.verifyPassword(password, user.password);
-
         if (!isValidPassword) {
-            return createApiResponse(
-                { error: 'Invalid credentials' },
-                401
-            );
+            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
 
-        // 创建用户信息对象
         const authUser: AuthUser = {
             id: user.id,
             email: user.email,
@@ -76,41 +65,39 @@ export async function POST(request: NextRequest) {
             roles: user.roles as string[]
         };
 
-        // 生成 JWT tokens
         const tokens = JWTUtils.generateTokenPair(authUser);
 
-        // 更新用户最后登录时间
         await prisma.user.update({
             where: { id: user.id },
             data: { updatedAt: new Date() }
         });
 
-        // 返回成功响应
-        return createApiResponse({
+        const response = NextResponse.json({
             message: 'Login successful',
             user: {
                 id: user.id,
                 email: user.email,
                 username: user.username,
                 roles: user.roles
-            },
-            accessToken: tokens.accessToken,
-            refreshToken: tokens.refreshToken
+            }
         });
 
+        setAuthCookies(response, tokens.accessToken, tokens.refreshToken);
+        ensureCsrfToken(request, response);
+
+        return response;
     } catch (error) {
         return handleApiError(error);
     }
 }
 
-// 处理 OPTIONS 请求（CORS）
-export async function OPTIONS(request: NextRequest) {
+export async function OPTIONS() {
     return new Response(null, {
         status: 200,
         headers: {
-            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_APP_ORIGIN || '*',
             'Access-Control-Allow-Methods': 'POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token',
         },
     });
 }

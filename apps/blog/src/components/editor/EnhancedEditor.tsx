@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 import { toast } from 'react-hot-toast';
 
 // 动态导入写作助手组件
@@ -90,9 +91,7 @@ export default function EnhancedEditor({ draftId }: EnhancedEditorProps) {
     const loadDraft = async (id: string) => {
         try {
             const response = await fetch(`/api/articles/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
             });
 
             if (response.ok) {
@@ -137,11 +136,13 @@ export default function EnhancedEditor({ draftId }: EnhancedEditorProps) {
 
         setAutoSaveStatus('saving');
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch('/api/articles/drafts', {
                 method: article.id ? 'PUT' : 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    ...(csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {}),
                 },
                 body: JSON.stringify({
                     id: article.id,
@@ -232,11 +233,13 @@ export default function EnhancedEditor({ draftId }: EnhancedEditorProps) {
         try {
             if (!article.id) {
                 // 新文章：直接创建并发布
+                const csrfToken = await ensureCsrfToken();
                 const response = await fetch('/api/articles', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        ...(csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {}),
                     },
                     body: JSON.stringify({
                         title: article.title,
@@ -261,11 +264,13 @@ export default function EnhancedEditor({ draftId }: EnhancedEditorProps) {
                 }
             } else {
                 // 已存在的文章：使用发布端点
+                const csrfToken = await ensureCsrfToken();
                 const response = await fetch(`/api/articles/${article.id}/publish`, {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        ...(csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {}),
                     },
                     body: JSON.stringify({
                         title: article.title,

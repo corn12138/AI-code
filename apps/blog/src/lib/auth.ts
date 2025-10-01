@@ -2,7 +2,14 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 // JWT Token 配置
-const JWT_SECRET = process.env.JWT_SECRET || 'default-secret';
+const DEFAULT_JWT_SECRET = 'default-secret';
+const resolvedSecret = process.env.JWT_SECRET || DEFAULT_JWT_SECRET;
+
+if (process.env.NODE_ENV === 'production' && resolvedSecret === DEFAULT_JWT_SECRET) {
+    throw new Error('JWT_SECRET must be provided in production for security reasons');
+}
+
+const JWT_SECRET = resolvedSecret;
 const JWT_ACCESS_EXPIRATION = process.env.JWT_ACCESS_EXPIRATION || '15m';
 const JWT_REFRESH_EXPIRATION = process.env.JWT_REFRESH_EXPIRATION || '7d';
 

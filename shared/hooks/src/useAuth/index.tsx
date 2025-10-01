@@ -1,14 +1,18 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+    AuthUser,
+    csrfFetch,
+    getCsrfHeaderName,
+    getCsrfToken,
+    invalidateCsrfToken,
+    loadSessionFromServer,
+    refreshSessionCache,
+    sessionCache
+} from './utils';
 
-export interface User {
-    id: string;
-    username: string;
-    email: string;
-    avatar?: string;
-    roles?: string[];
-}
+export type User = AuthUser;
 
 export interface AuthState {
     user: User | null;
@@ -18,87 +22,99 @@ export interface AuthState {
 }
 
 export interface AuthContextType extends AuthState {
-    // 兼容两种调用方式：
-    // 1) login({ email, password })
-    // 2) login(usernameOrEmail, password)
-    login: (
-        credentialsOrUsername: { email: string; password: string } | string,
-        passwordIfUsername?: string
-    ) => Promise<boolean>;
-    logout: () => void;
+    login: (credentials: { email: string; password: string }) => Promise<boolean>;
+    logout: () => Promise<void>;
     register: (userData: { username: string; email: string; password: string }) => Promise<boolean>;
     updateUser: (userData: Partial<User>) => void;
-    // 刷新accessToken（依赖后端httpOnly refreshToken cookie）
     refreshToken: () => Promise<boolean>;
 }
 
-// Context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Provider组件
+const resolveInitialUser = (): User | null => {
+    try {
+        return sessionCache.get();
+    } catch (error) {
+        return null;
+    }
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const initialUser = resolveInitialUser();
     const [authState, setAuthState] = useState<AuthState>({
-        user: null,
+        user: initialUser,
         token: null,
-        isLoading: true,
-        isAuthenticated: false,
+        isLoading: !initialUser,
+        isAuthenticated: Boolean(initialUser),
     });
 
-    // 只在客户端执行初始化
     useEffect(() => {
-        const initAuth = () => {
-            if (typeof window === 'undefined') return;
+        let isMounted = true;
 
-            const token = localStorage.getItem('accessToken');
-            const userStr = localStorage.getItem('user');
+        const bootstrap = async () => {
+            const user = await loadSessionFromServer();
+            if (!isMounted) return;
 
-            if (token && userStr) {
-                try {
-                    const user = JSON.parse(userStr);
-                    setAuthState({
-                        user,
-                        token,
-                        isLoading: false,
-                        isAuthenticated: true,
-                    });
-                } catch (error) {
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('user');
-                    setAuthState(prev => ({ ...prev, isLoading: false }));
-                }
+            if (user) {
+                setAuthState({
+                    user,
+                    token: null,
+                    isLoading: false,
+                    isAuthenticated: true,
+                });
             } else {
-                setAuthState(prev => ({ ...prev, isLoading: false }));
+                setAuthState(prev => ({
+                    ...prev,
+                    user: null,
+                    token: null,
+                    isAuthenticated: false,
+                    isLoading: false,
+                }));
             }
         };
 
-        initAuth();
+        bootstrap().catch(() => {
+            if (isMounted) {
+                setAuthState(prev => ({ ...prev, isLoading: false }));
+            }
+        });
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
-    const login = useCallback(async (
-        credentialsOrUsername: { email: string; password: string } | string,
-        passwordIfUsername?: string
-    ): Promise<boolean> => {
+    const persistUser = useCallback((user: User) => {
+        sessionCache.set(user);
+        setAuthState({
+            user,
+            token: null,
+            isAuthenticated: true,
+            isLoading: false,
+        });
+    }, []);
+
+    const clearSession = useCallback(() => {
+        sessionCache.clear();
+        setAuthState({
+            user: null,
+            token: null,
+            isAuthenticated: false,
+            isLoading: false,
+        });
+    }, []);
+
+    const login = useCallback(async (credentials: { email: string; password: string }): Promise<boolean> => {
         setAuthState(prev => ({ ...prev, isLoading: true }));
 
         try {
-            // 构造请求体：优先兼容后端Nest接口 { usernameOrEmail, password }
-            let body: any;
-            if (typeof credentialsOrUsername === 'string') {
-                body = {
-                    usernameOrEmail: credentialsOrUsername,
-                    password: passwordIfUsername ?? ''
-                };
-            } else {
-                const { email, password } = credentialsOrUsername;
-                // 同时兼容使用邮箱登录
-                body = { usernameOrEmail: email, password };
-            }
-
-            const response = await fetch('/api/auth/login', {
+            await getCsrfToken();
+            const response = await csrfFetch('/api/auth/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials),
             });
 
             if (!response.ok) {
@@ -107,48 +123,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
 
             const data = await response.json();
-            const { user, accessToken } = data;
-
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('user', JSON.stringify(user));
+            if (data?.user) {
+                persistUser(data.user as User);
+            } else {
+                const user = await refreshSessionCache();
+                if (user) {
+                    persistUser(user);
+                } else {
+                    setAuthState(prev => ({ ...prev, isLoading: false }));
+                    return false;
+                }
             }
 
-            setAuthState({
-                user,
-                token: accessToken,
-                isLoading: false,
-                isAuthenticated: true,
-            });
-
+            invalidateCsrfToken();
+            await getCsrfToken(true);
             return true;
         } catch (error) {
             setAuthState(prev => ({ ...prev, isLoading: false }));
             return false;
         }
-    }, []);
+    }, [persistUser]);
 
-    const logout = useCallback(() => {
-        if (typeof window !== 'undefined') {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('user');
+    const logout = useCallback(async (): Promise<void> => {
+        setAuthState(prev => ({ ...prev, isLoading: true }));
+
+        try {
+            await getCsrfToken();
+            await csrfFetch('/api/auth/logout', {
+                method: 'POST',
+            });
+        } catch (error) {
+            // Swallow errors - logout should always clear client state
+        } finally {
+            invalidateCsrfToken();
+            clearSession();
         }
-        setAuthState({
-            user: null,
-            token: null,
-            isLoading: false,
-            isAuthenticated: false,
-        });
-    }, []);
+    }, [clearSession]);
 
     const register = useCallback(async (userData: { username: string; email: string; password: string }): Promise<boolean> => {
         setAuthState(prev => ({ ...prev, isLoading: true }));
 
         try {
-            const response = await fetch('/api/auth/register', {
+            await getCsrfToken();
+            const response = await csrfFetch('/api/auth/register', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(userData),
             });
 
@@ -158,71 +179,65 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
 
             const data = await response.json();
-            const { user, accessToken } = data;
-
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('accessToken', accessToken);
-                localStorage.setItem('user', JSON.stringify(user));
+            if (data?.user) {
+                persistUser(data.user as User);
+            } else {
+                const user = await refreshSessionCache();
+                if (user) {
+                    persistUser(user);
+                } else {
+                    setAuthState(prev => ({ ...prev, isLoading: false }));
+                    return false;
+                }
             }
 
-            setAuthState({
-                user,
-                token: accessToken,
-                isLoading: false,
-                isAuthenticated: true,
-            });
-
+            invalidateCsrfToken();
+            await getCsrfToken(true);
             return true;
         } catch (error) {
             setAuthState(prev => ({ ...prev, isLoading: false }));
             return false;
         }
-    }, []);
+    }, [persistUser]);
 
     const refreshToken = useCallback(async (): Promise<boolean> => {
         try {
-            const response = await fetch('/api/auth/refresh', {
+            await getCsrfToken();
+            const response = await csrfFetch('/api/auth/refresh', {
                 method: 'POST',
-                credentials: 'include',
             });
 
             if (!response.ok) {
+                clearSession();
                 return false;
             }
 
             const data = await response.json();
-            const { accessToken } = data;
-
-            const userStr = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
-            const user = userStr ? JSON.parse(userStr) as User : null;
-
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('accessToken', accessToken);
+            if (data?.user) {
+                persistUser(data.user as User);
+            } else {
+                const user = await refreshSessionCache();
+                if (user) {
+                    persistUser(user);
+                }
             }
 
-            setAuthState(prev => ({
-                user: user ?? prev.user,
-                token: accessToken,
-                isLoading: false,
-                isAuthenticated: Boolean(user ?? prev.user),
-            }));
-
+            invalidateCsrfToken();
+            await getCsrfToken(true);
             return true;
-        } catch (e) {
+        } catch (error) {
+            clearSession();
             return false;
         }
-    }, []);
+    }, [clearSession, persistUser]);
 
     const updateUser = useCallback((userData: Partial<User>) => {
         setAuthState(prev => {
-            if (!prev.user) return prev;
-
-            const updatedUser = { ...prev.user, ...userData };
-
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('user', JSON.stringify(updatedUser));
+            if (!prev.user) {
+                return prev;
             }
-
+            const updatedUser = { ...prev.user, ...userData };
+            sessionCache.set(updatedUser);
             return {
                 ...prev,
                 user: updatedUser,
@@ -230,14 +245,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
     }, []);
 
-    const value: AuthContextType = {
+    const value = useMemo<AuthContextType>(() => ({
         ...authState,
         login,
         logout,
         register,
         updateUser,
         refreshToken,
-    };
+    }), [authState, login, logout, register, updateUser, refreshToken]);
 
     return (
         <AuthContext.Provider value={value}>
@@ -246,11 +261,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 };
 
-// Hook
 export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (context === undefined) {
         throw new Error('useAuth必须在AuthProvider内部使用');
     }
     return context;
-}; 
+};
+
+export const CSRF_HEADER = getCsrfHeaderName();

@@ -15,6 +15,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 
 interface TestScenario {
     id: string;
@@ -296,17 +297,22 @@ export default function PerformanceTester() {
     };
 
     const makeRequest = async (scenario: TestScenario): Promise<any> => {
-        const token = localStorage.getItem('token');
-
         switch (scenario.type) {
             case 'api':
             case 'database':
+                const needsCsrf = scenario.method !== 'GET';
+                const csrfToken = needsCsrf ? await ensureCsrfToken() : null;
+                const apiHeaders: Record<string, string> = {
+                    'Content-Type': 'application/json'
+                };
+                if (needsCsrf && csrfToken) {
+                    apiHeaders[getCsrfHeaderName()] = csrfToken;
+                }
+
                 const response = await fetch(scenario.endpoint!, {
                     method: scenario.method,
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
+                    credentials: 'include',
+                    headers: apiHeaders,
                 });
 
                 if (!response.ok) {
@@ -316,12 +322,18 @@ export default function PerformanceTester() {
                 return response.json();
 
             case 'ai_chat':
+                const chatCsrf = await ensureCsrfToken();
+                const chatHeaders: Record<string, string> = {
+                    'Content-Type': 'application/json'
+                };
+                if (chatCsrf) {
+                    chatHeaders[getCsrfHeaderName()] = chatCsrf;
+                }
+
                 const chatResponse = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
+                    credentials: 'include',
+                    headers: chatHeaders,
                     body: JSON.stringify({
                         message: '这是一个性能测试消息',
                         conversationId: `test-${Math.random()}`

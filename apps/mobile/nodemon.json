@@ -1,0 +1,15 @@
+{
+    "watch": [
+        "server/**/*"
+    ],
+    "ext": "ts,tsx,js,jsx",
+    "ignore": [
+        "server/**/*.test.ts",
+        "server/**/*.spec.ts"
+    ],
+    "exec": "ts-node --esm server/index.ts",
+    "env": {
+        "NODE_ENV": "development",
+        "API_BASE_URL": "http://localhost:3001"
+    }
+}

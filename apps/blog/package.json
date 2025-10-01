@@ -25,24 +25,11 @@
         "test:performance": "node scripts/test-performance.js",
         "test:optimized": "vitest run --reporter=verbose --maxConcurrency=1",
         "test:fast": "vitest run --reporter=basic --maxConcurrency=1",
-        "test:automated": "node scripts/automated-test-monitor.js",
-        "test:monitor": "node scripts/automated-test-monitor.js --watch",
         "test:ci": "npm run test:coverage && npm run test:performance",
-        "test:trends": "node scripts/test-trend-analyzer.js",
-        "test:full": "npm run test:automated && npm run test:trends",
         "test:helper": "node scripts/test-helper.js",
         "test:create": "node scripts/test-helper.js create-test",
         "test:analyze": "node scripts/test-helper.js analyze",
-        "test:suggestions": "node scripts/test-helper.js suggestions",
-        "test:optimize": "node scripts/test-efficiency-optimizer.js",
-        "test:optimize-full": "node scripts/test-efficiency-optimizer.js full",
-        "test:clean-cache": "node scripts/test-efficiency-optimizer.js clean-cache",
-        "test:training": "node scripts/test-training-manager.js",
-        "test:training-init": "node scripts/test-training-manager.js init",
-        "test:training-status": "node scripts/test-training-manager.js status",
-        "test:certification": "node scripts/skill-certification.js",
-        "test:certification-init": "node scripts/skill-certification.js init",
-        "test:certification-report": "node scripts/skill-certification.js report"
+        "test:suggestions": "node scripts/test-helper.js suggestions"
     },
     "prisma": {
         "seed": "tsx prisma/seed.ts"

@@ -1,18 +1,17 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import {
+    AuthUser,
+    csrfFetch,
+    getCsrfToken,
+    invalidateCsrfToken,
+    loadSessionFromServer,
+    refreshSessionCache,
+    sessionCache
+} from '../useAuth/utils';
 
-// ==================== 类型定义 ====================
-
-export interface User {
-    id: string;
-    username: string;
-    email: string;
-    avatar?: string;
-    roles?: string[];
-    createdAt?: string;
-    updatedAt?: string;
-}
+export type User = AuthUser;
 
 export interface AuthState {
     user: User | null;
@@ -45,96 +44,25 @@ export interface AuthContextType extends AuthState {
     clearError: () => void;
 }
 
-// ==================== 工具函数 ====================
-
-// 安全的localStorage操作
-const secureStorage = {
-    getItem: (key: string): string | null => {
-        if (typeof window === 'undefined') return null;
-        try {
-            return localStorage.getItem(key);
-        } catch (error) {
-            console.warn(`Failed to get item from localStorage: ${key}`, error);
-            return null;
-        }
-    },
-
-    setItem: (key: string, value: string): void => {
-        if (typeof window === 'undefined') return;
-        try {
-            localStorage.setItem(key, value);
-        } catch (error) {
-            console.warn(`Failed to set item in localStorage: ${key}`, error);
-        }
-    },
-
-    removeItem: (key: string): void => {
-        if (typeof window === 'undefined') return;
-        try {
-            localStorage.removeItem(key);
-        } catch (error) {
-            console.warn(`Failed to remove item from localStorage: ${key}`, error);
-        }
-    },
-
-    clear: (): void => {
-        if (typeof window === 'undefined') return;
-        try {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('user');
-            localStorage.removeItem('refreshToken');
-        } catch (error) {
-            console.warn('Failed to clear auth data from localStorage', error);
-        }
-    }
-};
-
-// API请求封装
-const apiRequest = async (
-    url: string,
-    options: RequestInit = {},
-    includeAuth: boolean = false,
-    token?: string
-): Promise<Response> => {
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-        ...(options.headers as Record<string, string>),
-    };
-
-    if (includeAuth && token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    return fetch(url, {
-        credentials: 'include',
-        ...options,
-        headers,
-    });
-};
-
-// Token有效性检查
-const isTokenExpired = (token: string): boolean => {
-    try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const currentTime = Date.now() / 1000;
-        return payload.exp < currentTime;
-    } catch (error) {
-        return true;
-    }
-};
-
-// ==================== Context ====================
-
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// ==================== Provider ====================
+const resolveInitialState = (): Pick<AuthState, 'user' | 'token' | 'isAuthenticated'> => {
+    const user = sessionCache.get();
+    return {
+        user,
+        token: null,
+        isAuthenticated: Boolean(user),
+    };
+};
+
+const ACCESS_TOKEN_WINDOW = 15 * 60 * 1000; // 15 minutes
+const REFRESH_LEEWAY = 2 * 60 * 1000; // refresh 2 minutes before expiry
 
 export const AuthSecureProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const initial = resolveInitialState();
     const [authState, setAuthState] = useState<AuthState>({
-        user: null,
-        token: null,
-        isLoading: true,
-        isAuthenticated: false,
+        ...initial,
+        isLoading: !initial.user,
         isRefreshing: false,
         error: null,
     });
@@ -142,255 +70,248 @@ export const AuthSecureProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const refreshTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const isRefreshingRef = useRef(false);
 
-    // ==================== 认证状态更新 ====================
+    const scheduleTokenRefresh = useCallback(() => {
+        if (refreshTimeoutRef.current) {
+            clearTimeout(refreshTimeoutRef.current);
+        }
 
-    const updateAuthState = useCallback((updates: Partial<AuthState>) => {
+        refreshTimeoutRef.current = setTimeout(() => {
+            void refreshToken();
+        }, Math.max(ACCESS_TOKEN_WINDOW - REFRESH_LEEWAY, 60 * 1000));
+    }, []);
+
+    const updateState = useCallback((updates: Partial<AuthState>) => {
         setAuthState(prev => ({ ...prev, ...updates }));
     }, []);
 
-    const setAuthData = useCallback((user: User, token: string) => {
-        secureStorage.setItem('accessToken', token);
-        secureStorage.setItem('user', JSON.stringify(user));
-
-        updateAuthState({
+    const setAuthData = useCallback((user: User) => {
+        sessionCache.set(user);
+        updateState({
             user,
-            token,
+            token: null,
             isAuthenticated: true,
             isLoading: false,
             error: null,
         });
-    }, [updateAuthState]);
+        scheduleTokenRefresh();
+    }, [updateState, scheduleTokenRefresh]);
 
     const clearAuthData = useCallback(() => {
-        secureStorage.clear();
-
-        updateAuthState({
+        sessionCache.clear();
+        updateState({
             user: null,
             token: null,
             isAuthenticated: false,
             isLoading: false,
             isRefreshing: false,
         });
-
-        // 清除自动刷新定时器
         if (refreshTimeoutRef.current) {
             clearTimeout(refreshTimeoutRef.current);
             refreshTimeoutRef.current = null;
         }
-    }, [updateAuthState]);
-
-    // ==================== 自动Token刷新 ====================
-
-    const scheduleTokenRefresh = useCallback((token: string) => {
-        if (refreshTimeoutRef.current) {
-            clearTimeout(refreshTimeoutRef.current);
-        }
-
-        try {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const expiresIn = payload.exp * 1000 - Date.now();
-
-            // 在token过期前5分钟刷新
-            const refreshTime = Math.max(expiresIn - 5 * 60 * 1000, 60 * 1000);
-
-            refreshTimeoutRef.current = setTimeout(() => {
-                refreshToken();
-            }, refreshTime);
-        } catch (error) {
-            console.warn('Failed to schedule token refresh:', error);
-        }
-    }, []);
+    }, [updateState]);
 
     const refreshToken = useCallback(async (): Promise<boolean> => {
         if (isRefreshingRef.current) return false;
 
         isRefreshingRef.current = true;
-        updateAuthState({ isRefreshing: true });
+        updateState({ isRefreshing: true });
 
         try {
-            const response = await apiRequest('/api/auth/refresh', {
+            await getCsrfToken();
+            const response = await csrfFetch('/api/auth/refresh', {
                 method: 'POST',
             });
 
             if (!response.ok) {
-                throw new Error('Token refresh failed');
+                clearAuthData();
+                return false;
             }
 
             const data = await response.json();
-            const { user, accessToken } = data;
+            if (data?.user) {
+                setAuthData(data.user as User);
+            } else {
+                const user = await refreshSessionCache();
+                if (user) {
+                    setAuthData(user);
+                }
+            }
 
-            setAuthData(user, accessToken);
-            scheduleTokenRefresh(accessToken);
-
+            invalidateCsrfToken();
+            await getCsrfToken(true);
             return true;
         } catch (error) {
-            console.warn('Token refresh failed:', error);
             clearAuthData();
             return false;
         } finally {
             isRefreshingRef.current = false;
-            updateAuthState({ isRefreshing: false });
+            updateState({ isRefreshing: false });
         }
-    }, [updateAuthState, setAuthData, clearAuthData, scheduleTokenRefresh]);
-
-    // ==================== 初始化认证状态 ====================
+    }, [clearAuthData, setAuthData, updateState]);
 
     useEffect(() => {
-        const initAuth = async () => {
-            if (typeof window === 'undefined') return;
+        let isMounted = true;
 
-            const token = secureStorage.getItem('accessToken');
-            const userStr = secureStorage.getItem('user');
+        const init = async () => {
+            const user = await loadSessionFromServer();
+            if (!isMounted) return;
 
-            if (!token || !userStr) {
-                updateAuthState({ isLoading: false });
-                return;
-            }
-
-            try {
-                const user = JSON.parse(userStr) as User;
-
-                // 检查token是否过期
-                if (isTokenExpired(token)) {
-                    // 尝试刷新token
-                    const refreshSuccess = await refreshToken();
-                    if (!refreshSuccess) {
-                        clearAuthData();
-                    }
-                } else {
-                    setAuthData(user, token);
-                    scheduleTokenRefresh(token);
-                }
-            } catch (error) {
-                console.warn('Failed to initialize auth state:', error);
-                clearAuthData();
+            if (user) {
+                setAuthData(user);
+            } else {
+                updateState({ isLoading: false, isAuthenticated: false });
             }
         };
 
-        initAuth();
-    }, [updateAuthState, refreshToken, clearAuthData, setAuthData, scheduleTokenRefresh]);
+        init().catch(() => {
+            if (isMounted) {
+                updateState({ isLoading: false });
+            }
+        });
 
-    // ==================== 认证方法 ====================
+        return () => {
+            isMounted = false;
+        };
+    }, [setAuthData, updateState]);
+
+    useEffect(() => () => {
+        if (refreshTimeoutRef.current) {
+            clearTimeout(refreshTimeoutRef.current);
+        }
+    }, []);
+
+    const resolveCredentials = (credentials: LoginCredentials): { email: string; password: string } => {
+        if (credentials.usernameOrEmail) {
+            return { email: credentials.usernameOrEmail, password: credentials.password };
+        }
+        if (credentials.email) {
+            return { email: credentials.email, password: credentials.password };
+        }
+        if (credentials.username) {
+            return { email: credentials.username, password: credentials.password };
+        }
+        throw new Error('Please provide email or username');
+    };
 
     const login = useCallback(async (credentials: LoginCredentials): Promise<{ success: boolean; error?: string }> => {
-        updateAuthState({ isLoading: true, error: null });
+        updateState({ isLoading: true, error: null });
 
         try {
-            // 构造请求体，兼容博客后端API
-            let body: any;
-            if (credentials.usernameOrEmail) {
-                body = {
-                    email: credentials.usernameOrEmail, // 后端期望email字段
-                    password: credentials.password,
-                };
-            } else if (credentials.email) {
-                body = {
-                    email: credentials.email,
-                    password: credentials.password,
-                };
-            } else if (credentials.username) {
-                body = {
-                    email: credentials.username, // 将username当作email处理
-                    password: credentials.password,
-                };
-            } else {
-                throw new Error('Please provide email or username');
-            }
-
-            const response = await apiRequest('/api/auth/login', {
+            const payload = resolveCredentials(credentials);
+            await getCsrfToken();
+            const response = await csrfFetch('/api/auth/login', {
                 method: 'POST',
-                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                const errorMessage = data.message || data.error || 'Login failed';
-                updateAuthState({ isLoading: false, error: errorMessage });
+                const errorMessage = data?.message || data?.error || 'Login failed';
+                updateState({ isLoading: false, error: errorMessage });
                 return { success: false, error: errorMessage };
             }
 
-            const { user, accessToken } = data;
-            setAuthData(user, accessToken);
-            scheduleTokenRefresh(accessToken);
+            if (data?.user) {
+                setAuthData(data.user as User);
+            } else {
+                const user = await refreshSessionCache();
+                if (user) {
+                    setAuthData(user);
+                }
+            }
+
+            invalidateCsrfToken();
+            await getCsrfToken(true);
 
             return { success: true };
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Login failed';
-            updateAuthState({ isLoading: false, error: errorMessage });
+            updateState({ isLoading: false, error: errorMessage });
             return { success: false, error: errorMessage };
         }
-    }, [updateAuthState, setAuthData, scheduleTokenRefresh]);
+    }, [setAuthData, updateState]);
 
     const logout = useCallback(async (): Promise<void> => {
-        updateAuthState({ isLoading: true });
+        updateState({ isLoading: true });
 
         try {
-            // 调用后端登出接口（可选）
-            await apiRequest('/api/auth/logout', {
-                method: 'POST',
-            }, true, authState.token || undefined);
+            await getCsrfToken();
+            await csrfFetch('/api/auth/logout', { method: 'POST' });
         } catch (error) {
-            console.warn('Logout API call failed:', error);
+            // ignore
         } finally {
+            invalidateCsrfToken();
             clearAuthData();
         }
-    }, [updateAuthState, clearAuthData, authState.token]);
+    }, [clearAuthData, updateState]);
 
     const register = useCallback(async (userData: RegisterData): Promise<{ success: boolean; error?: string }> => {
-        updateAuthState({ isLoading: true, error: null });
+        updateState({ isLoading: true, error: null });
 
         try {
-            const response = await apiRequest('/api/auth/register', {
+            await getCsrfToken();
+            const response = await csrfFetch('/api/auth/register', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(userData),
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                const errorMessage = data.message || data.error || 'Registration failed';
-                updateAuthState({ isLoading: false, error: errorMessage });
+                const errorMessage = data?.message || data?.error || 'Registration failed';
+                updateState({ isLoading: false, error: errorMessage });
                 return { success: false, error: errorMessage };
             }
 
-            const { user, accessToken } = data;
-            setAuthData(user, accessToken);
-            scheduleTokenRefresh(accessToken);
+            if (data?.user) {
+                setAuthData(data.user as User);
+            } else {
+                const user = await refreshSessionCache();
+                if (user) {
+                    setAuthData(user);
+                }
+            }
+
+            invalidateCsrfToken();
+            await getCsrfToken(true);
 
             return { success: true };
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Registration failed';
-            updateAuthState({ isLoading: false, error: errorMessage });
+            updateState({ isLoading: false, error: errorMessage });
             return { success: false, error: errorMessage };
         }
-    }, [updateAuthState, setAuthData, scheduleTokenRefresh]);
+    }, [setAuthData, updateState]);
 
     const updateUser = useCallback((userData: Partial<User>) => {
-        if (!authState.user) return;
-
-        const updatedUser = { ...authState.user, ...userData };
-        secureStorage.setItem('user', JSON.stringify(updatedUser));
-        updateAuthState({ user: updatedUser });
-    }, [authState.user, updateAuthState]);
-
-    const clearError = useCallback(() => {
-        updateAuthState({ error: null });
-    }, [updateAuthState]);
-
-    // ==================== Cleanup ====================
-
-    useEffect(() => {
-        return () => {
-            if (refreshTimeoutRef.current) {
-                clearTimeout(refreshTimeoutRef.current);
+        setAuthState(prev => {
+            if (!prev.user) {
+                return prev;
             }
-        };
+
+            const updatedUser = { ...prev.user, ...userData };
+            sessionCache.set(updatedUser);
+
+            return {
+                ...prev,
+                user: updatedUser,
+            };
+        });
     }, []);
 
-    // ==================== Context Value ====================
+    const clearError = useCallback(() => {
+        updateState({ error: null });
+    }, [updateState]);
 
-    const value: AuthContextType = {
+    const value = useMemo<AuthContextType>(() => ({
         ...authState,
         login,
         logout,
@@ -398,7 +319,7 @@ export const AuthSecureProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         updateUser,
         refreshToken,
         clearError,
-    };
+    }), [authState, login, logout, register, updateUser, refreshToken, clearError]);
 
     return (
         <AuthContext.Provider value={value}>
@@ -407,8 +328,6 @@ export const AuthSecureProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     );
 };
 
-// ==================== Hook ====================
-
 export const useAuthSecure = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (context === undefined) {
@@ -416,8 +335,3 @@ export const useAuthSecure = (): AuthContextType => {
     }
     return context;
 };
-
-// ==================== 工具导出 ====================
-
-export { apiRequest, isTokenExpired, secureStorage };
-

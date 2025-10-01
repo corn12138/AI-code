@@ -6,6 +6,7 @@ import {
     validateFields,
     validateMethod
 } from '@/lib/api-auth';
+import { assertCsrfToken } from '@/lib/security';
 import { prisma } from '@/lib/prisma';
 import { VerificationCodeService } from '@/lib/verification';
 import { VerificationCodeType } from '@prisma/client';
@@ -20,6 +21,7 @@ export async function POST(request: NextRequest) {
     try {
         // 验证请求方法
         validateMethod(request, ['POST']);
+        assertCsrfToken(request);
 
         // 解析请求体
         const body = await parseRequestBody<SendVerificationCodeRequest>(request);

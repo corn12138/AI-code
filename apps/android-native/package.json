@@ -24,11 +24,11 @@
         "android:test": "./gradlew test"
     },
     "config": {
-        "h5_dev_url": "http://10.0.2.2:8002",
-        "h5_dev_url_device": "http://192.168.1.x:8002",
+        "h5_dev_url": "http://10.0.2.2:3000",
+        "h5_dev_url_device": "http://192.168.1.100:3000",
         "h5_prod_url": "https://your-production-domain.com",
-        "application_id": "com.yourcompany.workbench",
-        "app_name": "工作台",
+        "application_id": "com.aicode.mobile",
+        "app_name": "AI技术文章阅读",
         "version_name": "1.0.0",
         "version_code": 1
     },

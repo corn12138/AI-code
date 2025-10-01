@@ -8,17 +8,22 @@ plugins {
 }
 
 android {
-    namespace 'com.yourcompany.workbench'
+    namespace 'com.aicode.mobile'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.yourcompany.workbench"
+        applicationId "com.aicode.mobile"
         minSdk 21
         targetSdk 34
         versionCode 1
         versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // 添加构建配置字段
+        buildConfigField "String", "H5_DEV_URL", "\"http://10.0.2.2:3000\""
+        buildConfigField "String", "H5_PROD_URL", "\"https://your-production-domain.com\""
+        buildConfigField "String", "API_BASE_URL", "\"http://10.0.2.2:3001\""
     }
 
     buildTypes {
@@ -43,6 +48,13 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
+        buildConfig true
+    }
+    
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets']
+        }
     }
 }
 
@@ -100,4 +112,26 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.5.0'
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.5.1'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
+}
+
+// 添加H5资源复制任务
+task copyH5Assets(type: Copy) {
+    description = 'Copy H5 assets from mobile app to Android assets'
+    from '../../../mobile/dist-native'
+    into 'src/main/assets/www'
+    
+    doFirst {
+        println "Copying H5 assets from mobile app..."
+    }
+    
+    doLast {
+        println "H5 assets copied successfully"
+    }
+}
+
+// 构建前自动复制H5资源（仅Release构建）
+tasks.whenTaskAdded { task ->
+    if (task.name == 'processReleaseAssets') {
+        task.dependsOn copyH5Assets
+    }
 }

@@ -1,11 +1,11 @@
-package com.yourcompany.workbench.webview
+package com.aicode.mobile.webview
 
 import android.content.Context
 import android.util.AttributeSet
 import android.webkit.*
 import android.widget.FrameLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.yourcompany.workbench.utils.Logger
+import com.aicode.mobile.utils.Logger
 
 /**
  * 自定义WebView，集成H5加载和原生桥接功能

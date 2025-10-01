@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { Client } from 'pg';
+import { DATABASE_DEFAULTS } from '../config/database-defaults';
 
 // 加载环境变量
 const envPath = process.env.NODE_ENV === 'production'
@@ -11,18 +12,18 @@ dotenv.config({ path: envPath });
 
 async function checkDatabaseData() {
     const client = new Client({
-        host: process.env.DATABASE_HOST || 'localhost',
-        port: parseInt(process.env.DATABASE_PORT || '6543', 10),
-        user: process.env.DATABASE_USER || 'app_user',
-        password: process.env.DATABASE_PASSWORD || 'postgres',
-        database: process.env.DATABASE_NAME || 'blogdb',
+        host: process.env.DATABASE_HOST || DATABASE_DEFAULTS.HOST,
+        port: parseInt(process.env.DATABASE_PORT || DATABASE_DEFAULTS.PORT.toString(), 10),
+        user: process.env.DATABASE_USER || DATABASE_DEFAULTS.USER,
+        password: process.env.DATABASE_PASSWORD || DATABASE_DEFAULTS.PASSWORD,
+        database: process.env.DATABASE_NAME || DATABASE_DEFAULTS.NAME,
         ssl: process.env.DATABASE_SSL === 'true' ? {
             rejectUnauthorized: false
         } : false,
     });
 
     try {
-        console.log(`连接到数据库: ${process.env.DATABASE_HOST || 'localhost'}:${process.env.DATABASE_PORT || '6543'}/${process.env.DATABASE_NAME || 'blogdb'}`);
+        console.log(`连接到数据库: ${process.env.DATABASE_HOST || DATABASE_DEFAULTS.HOST}:${process.env.DATABASE_PORT || DATABASE_DEFAULTS.PORT}/${process.env.DATABASE_NAME || DATABASE_DEFAULTS.NAME}`);
         await client.connect();
         console.log('数据库连接成功');
 

@@ -10,6 +10,7 @@ import {
     UserStatisticsDetail
 } from '@/types/ai-analytics';
 import { useCallback, useEffect, useState } from 'react';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 
 interface UseAIAnalyticsOptions {
     timeRange?: TimeRange;
@@ -24,6 +25,8 @@ interface AnalyticsError {
     code?: string;
     details?: any;
 }
+
+const CSRF_HEADER_NAME = getCsrfHeaderName();
 
 export function useAIAnalytics(options: UseAIAnalyticsOptions = {}) {
     const {
@@ -74,9 +77,7 @@ export function useAIAnalytics(options: UseAIAnalyticsOptions = {}) {
             }
 
             const response = await fetch(`/api/ai-analytics/stats?${params}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -157,9 +158,7 @@ export function useUserStatistics(userId?: string, options: UseAIAnalyticsOption
             });
 
             const response = await fetch(`/api/ai-analytics/stats?${params}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -213,9 +212,7 @@ export function useModelStatistics(model: string, options: UseAIAnalyticsOptions
             });
 
             const response = await fetch(`/api/ai-analytics/model-stats?${params}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -262,9 +259,7 @@ export function useRealTimeStats(options: { autoRefresh?: boolean; refreshInterv
 
         try {
             const response = await fetch('/api/ai-analytics/realtime', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -328,11 +323,13 @@ export function useAIInteractionTracker() {
         timezone?: string;
     }) => {
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch('/api/ai-analytics/collect', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    ...(csrfToken ? { [CSRF_HEADER_NAME]: csrfToken } : {}),
                 },
                 body: JSON.stringify({
                     ...eventData,

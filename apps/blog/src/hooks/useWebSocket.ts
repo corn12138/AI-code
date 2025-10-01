@@ -95,12 +95,9 @@ export const useWebSocket = (config: WebSocketConfig = {}): UseWebSocketReturn =
         setConnectionState('connecting');
         clearTimers();
 
-        // 获取认证token
-        const token = localStorage.getItem('auth_token') || '';
-
         const socket = io(url, {
             transports: ['websocket', 'polling'],
-            auth: { token },
+            withCredentials: true,
             timeout: 20000,
             forceNew: true
         });

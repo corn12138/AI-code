@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth, useChatSSE } from '@corn12138/hooks';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 import { useChatStore } from '../state/chatStore';
 import {
     deleteConversation as deleteConversationRequest,
@@ -19,7 +20,8 @@ function createId(prefix: string) {
 }
 
 export function useChatSession(config: ChatSessionConfig) {
-    const { token, isAuthenticated } = useAuth();
+    const { isAuthenticated } = useAuth();
+    const [csrfToken, setCsrfToken] = useState<string | null>(null);
     const [isLoadingConversations, setIsLoadingConversations] = useState(false);
     const [isFetchingConversation, setIsFetchingConversation] = useState(false);
 
@@ -89,26 +91,41 @@ export function useChatSession(config: ChatSessionConfig) {
     }, [config.availableModels, config.defaultModel]);
 
     const refreshConversations = useCallback(async () => {
-        if (!token) return;
+        if (!isAuthenticated) return;
         setIsLoadingConversations(true);
         try {
-            const items = await fetchConversations(config, token);
+            const items = await fetchConversations(config);
             setConversations(items);
         } catch (refreshError) {
             console.error('刷新对话列表失败:', refreshError);
         } finally {
             setIsLoadingConversations(false);
         }
-    }, [config, setConversations, token]);
+    }, [config, isAuthenticated, setConversations]);
 
     // 初次加载对话列表
     useEffect(() => {
-        if (!token || !isAuthenticated) {
+        if (!isAuthenticated) {
             setConversations([]);
             return;
         }
         void refreshConversations();
-    }, [isAuthenticated, refreshConversations, setConversations, token]);
+    }, [isAuthenticated, refreshConversations, setConversations]);
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            setCsrfToken(null);
+            return;
+        }
+
+        void ensureCsrfToken()
+            .then((tokenValue) => {
+                setCsrfToken(tokenValue);
+            })
+            .catch(() => {
+                setCsrfToken(null);
+            });
+    }, [isAuthenticated]);
 
     const handleStreamMessage = useCallback(
         (content: string, type: string, data?: any) => {
@@ -154,6 +171,10 @@ export function useChatSession(config: ChatSessionConfig) {
         [markAssistantError]
     );
 
+    const sseHeaders = useMemo(() => (
+        csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {}
+    ), [csrfToken]);
+
     const {
         sendMessage: sendStreamMessage,
         reconnect,
@@ -162,8 +183,9 @@ export function useChatSession(config: ChatSessionConfig) {
     } = useChatSSE({
         chatEndpoint: config.chatEndpoint,
         defaultModel: selectedModel ?? config.defaultModel,
-        getAuthToken: () => token ?? null,
-        authType: 'bearer',
+        headers: sseHeaders,
+        credentials: 'include',
+        authType: 'none',
         reconnect: config.reconnect ?? {
             enabled: true,
             maxAttempts: 3,
@@ -191,9 +213,14 @@ export function useChatSession(config: ChatSessionConfig) {
             const trimmed = content.trim();
             if (!trimmed) return;
 
-            if (!token) {
+            if (!isAuthenticated) {
                 setError('请先登录后再使用 AI 对话功能');
                 return;
+            }
+
+            const latestCsrf = await ensureCsrfToken();
+            if (latestCsrf) {
+                setCsrfToken(latestCsrf);
             }
 
             const nowIso = new Date().toISOString();
@@ -221,7 +248,7 @@ export function useChatSession(config: ChatSessionConfig) {
                 pendingSendRef.current = null;
             }
         },
-        [activeConversationId, config.defaultModel, markAssistantError, pushUserMessage, selectedModel, sendStreamMessage, setError, startAssistantMessage, token]
+        [activeConversationId, config.defaultModel, isAuthenticated, markAssistantError, pushUserMessage, selectedModel, sendStreamMessage, setError, startAssistantMessage]
     );
 
     const retryLastMessage = useCallback(() => {
@@ -233,7 +260,7 @@ export function useChatSession(config: ChatSessionConfig) {
 
     const selectConversation = useCallback(
         async (conversationId: string) => {
-            if (!token) {
+            if (!isAuthenticated) {
                 setError('请先登录后再查看历史对话');
                 return;
             }
@@ -243,7 +270,7 @@ export function useChatSession(config: ChatSessionConfig) {
             setActiveConversation(conversationId);
 
             try {
-                const result = await fetchConversationById(config, token, conversationId);
+                const result = await fetchConversationById(config, conversationId);
                 if (!result) {
                     removeConversation(conversationId);
                     resetMessages();
@@ -260,18 +287,18 @@ export function useChatSession(config: ChatSessionConfig) {
                 setIsFetchingConversation(false);
             }
         },
-        [config, removeConversation, resetMessages, setActiveConversation, setError, setMessages, setSelectedModel, token, upsertConversation]
+        [config, isAuthenticated, removeConversation, resetMessages, setActiveConversation, setError, setMessages, setSelectedModel, upsertConversation]
     );
 
     const deleteConversation = useCallback(
         async (conversationId: string) => {
-            if (!token) {
+            if (!isAuthenticated) {
                 setError('请先登录后再删除对话');
                 return;
             }
 
             try {
-                await deleteConversationRequest(config, token, conversationId);
+                await deleteConversationRequest(config, conversationId);
                 removeConversation(conversationId);
                 if (activeConversationId === conversationId) {
                     resetMessages();
@@ -281,7 +308,7 @@ export function useChatSession(config: ChatSessionConfig) {
                 setError('删除对话失败，请稍后再试');
             }
         },
-        [activeConversationId, config, removeConversation, resetMessages, setError, token]
+        [activeConversationId, config, isAuthenticated, removeConversation, resetMessages, setError]
     );
 
     const createDraftConversation = useCallback(() => {

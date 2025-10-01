@@ -7,20 +7,23 @@ import {
     PlusIcon,
     TrashIcon
 } from '@heroicons/react/24/outline';
+import { useAuth } from '@corn12138/hooks';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export function ArticleDraftsWidget() {
     const [drafts, setDrafts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         const fetchDrafts = async () => {
             try {
+                if (!isAuthenticated) return;
+
                 const response = await fetch('/api/articles/drafts', {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    },
+                    credentials: 'include',
                 });
 
                 if (response.ok) {
@@ -35,7 +38,7 @@ export function ArticleDraftsWidget() {
         };
 
         fetchDrafts();
-    }, []);
+    }, [isAuthenticated]);
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -51,11 +54,11 @@ export function ArticleDraftsWidget() {
         if (!confirm('确定要删除这篇草稿吗？')) return;
 
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch(`/api/articles/${id}`, {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
+                headers: csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {},
             });
 
             if (response.ok) {

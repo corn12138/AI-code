@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@corn12138/hooks';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 import { useEffect, useRef, useState } from 'react';
 
 interface Message {
@@ -20,7 +21,8 @@ export default function WritingAssistant({ isVisible = true }: WritingAssistantP
     const [isLoading, setIsLoading] = useState(false);
     const [conversationId, setConversationId] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const { token } = useAuth();
+    const { isAuthenticated } = useAuth();
+    const csrfHeader = getCsrfHeaderName();
 
     const quickPrompts = [
         '优化这段文字',
@@ -79,7 +81,7 @@ export default function WritingAssistant({ isVisible = true }: WritingAssistantP
     };
 
     const sendMessage = async (message: string) => {
-        if (!message.trim() || isLoading || !token) return;
+        if (!message.trim() || isLoading || !isAuthenticated) return;
 
         // 生成或复用conversationId
         const currentConversationId = conversationId || generateConversationId();
@@ -99,11 +101,13 @@ export default function WritingAssistant({ isVisible = true }: WritingAssistantP
         setIsLoading(true);
 
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch('/api/chat', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    ...(csrfToken ? { [csrfHeader]: csrfToken } : {}),
                 },
                 body: JSON.stringify({
                     message: message,

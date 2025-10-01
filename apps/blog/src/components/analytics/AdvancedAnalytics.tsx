@@ -70,8 +70,10 @@ export default function AdvancedAnalytics() {
     const [selectedMetric, setSelectedMetric] = useState<'requests' | 'tokens' | 'cost'>('requests');
 
     useEffect(() => {
-        fetchAnalyticsData();
-    }, [timeRange]);
+        if (user) {
+            void fetchAnalyticsData();
+        }
+    }, [timeRange, user]);
 
     const fetchAnalyticsData = async () => {
         try {
@@ -79,9 +81,7 @@ export default function AdvancedAnalytics() {
 
             // 从真实API获取数据
             const response = await fetch(`/api/analytics?timeRange=${timeRange}`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
             });
 
             if (!response.ok) {

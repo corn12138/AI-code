@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@corn12138/hooks';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 import {
     ArrowLeftIcon,
     ClockIcon,
@@ -42,15 +43,15 @@ export default function DraftsPage() {
     const [filterStatus, setFilterStatus] = useState<'all' | 'DRAFT' | 'PUBLISHED'>('all');
 
     useEffect(() => {
-        fetchDrafts();
-    }, []);
+        void fetchDrafts();
+    }, [user]);
 
     const fetchDrafts = async () => {
         try {
+            if (!user) return;
+
             const response = await fetch('/api/articles/drafts', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
             });
 
             if (response.ok) {
@@ -76,11 +77,11 @@ export default function DraftsPage() {
         if (!confirm(`确定要删除草稿《${title}》吗？此操作不可撤销。`)) return;
 
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch(`/api/articles/${id}`, {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
+                headers: csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {},
             });
 
             if (response.ok) {
@@ -99,11 +100,11 @@ export default function DraftsPage() {
         if (!confirm(`确定要发布文章《${title}》吗？`)) return;
 
         try {
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch(`/api/articles/${id}/publish`, {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+                credentials: 'include',
+                headers: csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {},
             });
 
             if (response.ok) {

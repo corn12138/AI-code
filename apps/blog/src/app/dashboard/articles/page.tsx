@@ -1,6 +1,8 @@
 'use client';
 
 import { formatDate } from '@/utils/date';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
+import { useAuth } from '@corn12138/hooks';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -40,30 +42,27 @@ export default function ArticlesPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
         fetchArticles();
-    }, []);
+    }, [isAuthenticated]);
 
     const fetchArticles = async () => {
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
+            if (!isAuthenticated) {
                 router.push('/login');
                 return;
             }
 
             const response = await fetch('/api/articles?published=true', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
+                credentials: 'include',
             });
 
             if (response.ok) {
                 const data = await response.json();
                 setArticles(data.articles || []);
             } else if (response.status === 401) {
-                localStorage.removeItem('token');
                 router.push('/login');
             } else {
                 throw new Error('获取文章失败');
@@ -81,12 +80,13 @@ export default function ArticlesPage() {
         if (!confirm('确定要取消发布这篇文章吗？')) return;
 
         try {
-            const token = localStorage.getItem('token');
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch(`/api/articles/${articleId}`, {
                 method: 'PUT',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    ...(csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {}),
                 },
                 body: JSON.stringify({
                     published: false,
@@ -110,12 +110,11 @@ export default function ArticlesPage() {
         if (!confirm('确定要删除这篇文章吗？此操作不可撤销。')) return;
 
         try {
-            const token = localStorage.getItem('token');
+            const csrfToken = await ensureCsrfToken();
             const response = await fetch(`/api/articles/${articleId}`, {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
+                credentials: 'include',
+                headers: csrfToken ? { [getCsrfHeaderName()]: csrfToken } : {},
             });
 
             if (response.ok) {

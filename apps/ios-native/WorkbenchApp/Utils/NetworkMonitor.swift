@@ -1,42 +1,33 @@
 import Foundation
 import Network
 
-/// 网络状态监控工具类
-class NetworkMonitor {
+class NetworkMonitor: ObservableObject {
     static let shared = NetworkMonitor()
-
+    
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "NetworkMonitor")
-
-    private(set) var isConnected = false
-    private(set) var connectionType: String = "unknown"
-
-    private init() {}
-
+    
+    @Published var isConnected = false
+    @Published var connectionType = "none"
+    
+    private init() {
+        startMonitoring()
+    }
+    
     func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
             DispatchQueue.main.async {
                 self?.isConnected = path.status == .satisfied
-                self?.connectionType = self?.getConnectionType(path) ?? "unknown"
-
-                NotificationCenter.default.post(
-                    name: .networkStatusChanged,
-                    object: nil,
-                    userInfo: [
-                        "isConnected": self?.isConnected ?? false,
-                        "connectionType": self?.connectionType ?? "unknown",
-                    ]
-                )
+                self?.connectionType = self?.getConnectionType(path) ?? "none"
             }
         }
-
         monitor.start(queue: queue)
     }
-
+    
     func stopMonitoring() {
         monitor.cancel()
     }
-
+    
     private func getConnectionType(_ path: NWPath) -> String {
         if path.usesInterfaceType(.wifi) {
             return "wifi"
@@ -45,13 +36,7 @@ class NetworkMonitor {
         } else if path.usesInterfaceType(.wiredEthernet) {
             return "ethernet"
         } else {
-            return "unknown"
+            return "other"
         }
     }
-}
-
-// MARK: - Notification Extension
-
-extension Notification.Name {
-    static let networkStatusChanged = Notification.Name("networkStatusChanged")
 }

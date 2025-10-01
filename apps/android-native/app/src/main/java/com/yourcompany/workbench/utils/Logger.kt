@@ -1,7 +1,7 @@
-package com.yourcompany.workbench.utils
+package com.aicode.mobile.utils
 
 import android.util.Log
-import com.yourcompany.workbench.BuildConfig
+import com.aicode.mobile.BuildConfig
 
 /**
  * 日志工具类

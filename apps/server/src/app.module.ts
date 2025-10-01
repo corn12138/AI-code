@@ -12,8 +12,8 @@ import { XssProtectionMiddleware } from './common/middleware/xss-protection.midd
 import configuration from './config/configuration';
 import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
-import { LowcodeModule } from './lowcode/lowcode.module';
 import { MetricsModule } from './metrics/metrics.module';
+import { MobileModule } from './mobile/mobile.module';
 import { TagsModule } from './tags/tags.module';
 import { UserModule } from './user/user.module';
 
@@ -44,7 +44,7 @@ import { UserModule } from './user/user.module';
         AuthModule,
         UserModule,
         ArticleModule,
-        LowcodeModule,
+        MobileModule,
         CommonModule,
         HealthModule,
         TagsModule,

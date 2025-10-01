@@ -32,9 +32,7 @@ export default function DashboardPage() {
 
                 // 获取用户统计数据
                 const userResponse = await fetch('/api/statistics/user?period=month', {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    },
+                    credentials: 'include',
                 });
 
                 if (userResponse.ok) {
@@ -44,9 +42,7 @@ export default function DashboardPage() {
 
                 // 获取模型统计数据
                 const modelResponse = await fetch('/api/statistics/model?period=month', {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    },
+                    credentials: 'include',
                 });
 
                 if (modelResponse.ok) {

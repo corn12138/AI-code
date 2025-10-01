@@ -1,3 +1,5 @@
+import { DATABASE_DEFAULTS } from './database-defaults';
+
 interface DatabaseConfig {
     host: string;
     port: number;
@@ -37,11 +39,11 @@ interface AppConfig {
 export default (): AppConfig => ({
     port: parseInt(process.env.PORT || '3001', 10),
     database: {
-        host: process.env.DATABASE_HOST || 'localhost',
-        port: parseInt(process.env.DATABASE_PORT || '6543', 10),
-        username: process.env.DATABASE_USER || 'app_user',
-        password: process.env.DATABASE_PASSWORD || 'blogpassword',
-        name: process.env.DATABASE_NAME || 'blogdb',
+        host: process.env.DATABASE_HOST || DATABASE_DEFAULTS.HOST,
+        port: parseInt(process.env.DATABASE_PORT || DATABASE_DEFAULTS.PORT.toString(), 10),
+        username: process.env.DATABASE_USER || DATABASE_DEFAULTS.USER,
+        password: process.env.DATABASE_PASSWORD || DATABASE_DEFAULTS.PASSWORD,
+        name: process.env.DATABASE_NAME || DATABASE_DEFAULTS.NAME,
         synchronize: process.env.NODE_ENV !== 'production',
         logging: process.env.DATABASE_LOGGING === 'true',
         ssl: process.env.DATABASE_SSL === 'true',

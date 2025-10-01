@@ -1,6 +1,7 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DATABASE_DEFAULTS } from '../config/database-defaults';
 import { HealthService } from './health.service';
 
 @Module({
@@ -12,9 +13,9 @@ import { HealthService } from './health.service';
                 const logger = new Logger('DatabaseModule');
 
                 // SSH隧道连接信息
-                const dbHost = configService.get<string>('DATABASE_HOST', 'localhost'); // 使用localhost连接隧道
-                const dbPort = configService.get<number>('DATABASE_PORT', 6543); // 使用隧道端口6543
-                const dbName = configService.get<string>('DATABASE_NAME', 'blogdb');
+                const dbHost = configService.get<string>('DATABASE_HOST', DATABASE_DEFAULTS.HOST); // 使用localhost连接隧道
+                const dbPort = configService.get<number>('DATABASE_PORT', DATABASE_DEFAULTS.PORT); // 使用隧道端口6543
+                const dbName = configService.get<string>('DATABASE_NAME', DATABASE_DEFAULTS.NAME);
                 const dbUser = configService.get<string>('DATABASE_USER');
 
                 logger.log(`通过SSH隧道连接远程数据库: ${dbHost}:${dbPort}/${dbName} (转发到华为云5432端口)`);

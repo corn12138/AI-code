@@ -1,5 +1,6 @@
 import { Article, Tag } from '@/types';
 import axios from 'axios';
+import { ensureCsrfToken, getCsrfHeaderName } from '@/utils/csrf';
 
 // 安全地使用DOMPurify (避免SSR问题)
 const sanitizeHtml = async (html: string): Promise<string> => {
@@ -43,19 +44,27 @@ const createApiInstance = (isServer = true) => {
             'Content-Type': 'application/json',
         },
         timeout: 10000,
+        withCredentials: true,
+        xsrfCookieName: 'csrf_token',
+        xsrfHeaderName: getCsrfHeaderName(),
     });
 
     // 只在客户端添加拦截器
     if (!isServer && typeof window !== 'undefined') {
         // 添加请求拦截器
-        instance.interceptors.request.use((config) => {
+        instance.interceptors.request.use(async (config) => {
             try {
-                let token = localStorage.getItem('accessToken') || localStorage.getItem('auth-token');
-                if (token) {
-                    config.headers.Authorization = `Bearer ${token}`;
+                if ((config.method || 'GET').toUpperCase() !== 'GET') {
+                    const csrfToken = await ensureCsrfToken();
+                    if (csrfToken) {
+                        config.headers = {
+                            ...config.headers,
+                            [getCsrfHeaderName()]: csrfToken,
+                        };
+                    }
                 }
             } catch (error) {
-                console.error('Error accessing localStorage:', error);
+                console.warn('Failed to attach CSRF token', error);
             }
             return config;
         });

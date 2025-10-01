@@ -2,7 +2,9 @@ import { toast as toastFunction } from '@/components/ui/use-toast';
 import { Article, PaginatedResult, Tag } from '@/models/article';
 // import { API_BASE_PATH, AUTH_TOKEN_KEY } from '@shared/auth/src/constants'; // 暂时注释，模块不存在
 const API_BASE_PATH = '/api';
-const AUTH_TOKEN_KEY = 'auth_token';
+# CSRF配置
+const CSRF_COOKIE_NAME = 'csrf_token';
+const CSRF_HEADER_NAME = 'X-CSRF-Token';
 import axios from 'axios';
 
 // Create a toast function with proper typing
@@ -18,24 +20,40 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true,
+  xsrfCookieName: CSRF_COOKIE_NAME,
+  xsrfHeaderName: CSRF_HEADER_NAME,
 });
+
+const getCookie = (name: string): string | null => {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name.replace(/([\\.$?*|{}()\[\]\\/\+^])/g, '\\$1')}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+};
 
 // 请求拦截器 - 添加认证Token和CSRF令牌
 api.interceptors.request.use(
-  (config) => {
-    // 仅在客户端添加认证token
+  async (config) => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem(AUTH_TOKEN_KEY);
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+      let csrfToken = getCookie(CSRF_COOKIE_NAME);
+      if (!csrfToken) {
+        try {
+          const response = await fetch('/api/auth/csrf', {
+            credentials: 'include',
+          });
+          if (response.ok) {
+            const data = await response.json();
+            csrfToken = data?.csrfToken || getCookie(CSRF_COOKIE_NAME);
+          }
+        } catch (error) {
+          console.warn('Unable to refresh CSRF token', error);
+        }
       }
 
-      // 添加CSRF令牌
-      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
       if (csrfToken) {
-        config.headers['X-CSRF-Token'] = csrfToken;
+        config.headers[CSRF_HEADER_NAME] = csrfToken;
       }
     }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -56,18 +74,9 @@ api.interceptors.response.use(
 
       try {
         // 尝试刷新令牌
-        const refreshResponse = await api.post('/auth/refresh');
-        const { accessToken } = refreshResponse.data;
-
-        localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
-
-        // 使用新令牌重试原请求
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        await api.post('/auth/refresh');
         return api(originalRequest);
       } catch (refreshError) {
-        // 刷新失败，清除认证信息
-        localStorage.removeItem(AUTH_TOKEN_KEY);
-
         // 处理认证错误
         toast({
           title: "会话已过期",

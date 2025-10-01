@@ -1,7 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Article } from '../../article/entities/article.entity';
-import { LowcodePage } from '../../lowcode/entities/lowcode-page.entity';
 
 // 用户角色枚举
 export enum UserRole {
@@ -44,8 +43,6 @@ export class User {
     @OneToMany(() => Article, (article) => article.author)
     articles!: Article[];
 
-    @OneToMany(() => LowcodePage, (page) => page.owner)
-    lowcodePages!: LowcodePage[];
 
     @CreateDateColumn()
     createdAt!: Date;

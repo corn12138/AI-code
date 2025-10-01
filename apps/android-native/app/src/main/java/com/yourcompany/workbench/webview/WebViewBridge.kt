@@ -1,10 +1,11 @@
-package com.yourcompany.workbench.webview
+package com.aicode.mobile.webview
 
 import android.content.Context
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import com.google.gson.Gson
-import com.yourcompany.workbench.utils.Logger
+import com.aicode.mobile.utils.Logger
+import com.aicode.mobile.network.ApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class WebViewBridge(
 ) {
     private val gson = Gson()
     private val scope = CoroutineScope(Dispatchers.Main)
+    private val apiService = ApiService()
 
     /**
      * 获取设备信息
@@ -151,6 +153,58 @@ class WebViewBridge(
                 bridgeCallback.setStorage(key, value)
             } catch (e: Exception) {
                 Logger.e("WebViewBridge", "设置存储数据失败", e)
+            }
+        }
+    }
+
+    /**
+     * 调用API获取文章列表
+     */
+    @JavascriptInterface
+    fun fetchArticles(callbackId: String, category: String? = null, page: Int = 1, pageSize: Int = 10) {
+        scope.launch {
+            try {
+                val result = apiService.fetchArticles(category, page, pageSize)
+                val response = BridgeResponse(
+                    callbackId = callbackId,
+                    success = true,
+                    data = result
+                )
+                callJsCallback(response)
+            } catch (e: Exception) {
+                Logger.e("WebViewBridge", "获取文章列表失败", e)
+                val response = BridgeResponse(
+                    callbackId = callbackId,
+                    success = false,
+                    error = e.message
+                )
+                callJsCallback(response)
+            }
+        }
+    }
+
+    /**
+     * 调用API获取文章详情
+     */
+    @JavascriptInterface
+    fun fetchArticleById(callbackId: String, articleId: String) {
+        scope.launch {
+            try {
+                val result = apiService.fetchArticleById(articleId)
+                val response = BridgeResponse(
+                    callbackId = callbackId,
+                    success = true,
+                    data = result
+                )
+                callJsCallback(response)
+            } catch (e: Exception) {
+                Logger.e("WebViewBridge", "获取文章详情失败", e)
+                val response = BridgeResponse(
+                    callbackId = callbackId,
+                    success = false,
+                    error = e.message
+                )
+                callJsCallback(response)
             }
         }
     }
