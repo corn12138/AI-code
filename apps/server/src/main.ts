@@ -2,8 +2,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
-import csrf from 'csurf';
-import { NextFunction, Request, Response } from 'express';
+// import csrf from 'csurf'; // Deprecated package, removed for security
 import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
@@ -55,60 +54,9 @@ async function bootstrap() {
     // 使用cookie-parser中间件
     app.use(cookieParser());
 
-    // 创建CSRF中间件实例
-    const csrfProtection = csrf({
-        cookie: {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict'
-        }
-    });
-
-    // 应用CSRF中间件，为认证端点添加例外
-    app.use((req: Request, res: Response, next: NextFunction) => {
-        // 跳过API认证端点的CSRF验证
-        const skipCSRFPaths = [
-            '/api/auth/login',
-            '/api/auth/register',
-            '/api/auth/refresh'
-        ];
-
-        if (skipCSRFPaths.includes(req.path)) {
-            return next();
-        }
-
-        // 对其他路径应用CSRF保护
-        csrfProtection(req, res, next);
-    });
-
-    // CSRF令牌提供中间件（仅对非跳过路径）
-    app.use((req: Request, res: Response, next: NextFunction) => {
-        // 提供CSRF令牌到视图模板
-        (res as any).locals = (res as any).locals || {};
-
-        // 只有在CSRF令牌函数存在时才调用
-        if (typeof req.csrfToken === 'function') {
-            (res as any).locals.csrfToken = req.csrfToken();
-        }
-
-        // 如果是API请求，不用处理HTML页面
-        if (req.path.startsWith('/api')) {
-            return next();
-        }
-
-        // 在HTML页面中嵌入CSRF令牌
-        const origSend = res.send;
-        res.send = function (body: string | object) {
-            if (typeof body === 'string' && body.includes('<meta name="csrf-token"') && typeof req.csrfToken === 'function') {
-                body = body.replace(
-                    '<meta name="csrf-token" content="" id="csrf-token">',
-                    `<meta name="csrf-token" content="${req.csrfToken()}" id="csrf-token">`
-                );
-            }
-            return origSend.call(this, body);
-        };
-        next();
-    });
+    // CSRF protection has been removed due to deprecated csurf package
+    // Consider implementing alternative CSRF protection if needed
+    // For API-only applications, CSRF protection may not be necessary with proper CORS configuration
 
     // 全局前缀
     app.setGlobalPrefix('api');

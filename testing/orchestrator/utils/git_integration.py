@@ -51,13 +51,13 @@ class GitManager:
                 affected.add(parts[1])
             elif parts[0] == "shared":
                 # 共享代码影响所有前端，以及可能的后端
-                affected.update({"blog", "lowcode", "mobile", "server"})
+                affected.update({"blog", "mobile", "server"})
         return affected
 
     def expand_with_dependencies(self, apps: Set[str]) -> Set[str]:
         # 简单依赖展开：blog/lowcode/mobile 依赖 server
         expanded = set(apps)
-        deps = {"blog": ["server"], "lowcode": ["server"], "mobile": ["server"]}
+        deps = {"blog": ["server"], "mobile": ["server"]}
         for a in list(expanded):
             for d in deps.get(a, []):
                 expanded.add(d)

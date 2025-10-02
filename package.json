@@ -4,7 +4,6 @@
     "private": true,
     "scripts": {
         "dev:blog": "pnpm --filter blog dev",
-        "dev:lowcode": "pnpm --filter lowcode dev",
         "dev:mobile": "pnpm --filter mobile dev",
         "dev:server": "pnpm --filter server dev",
         "dev": "pnpm -r --parallel dev",
@@ -24,7 +23,7 @@
         "deps:check": "pnpm outdated --recursive",
         "deps:update": "pnpm update --recursive --interactive",
         "cleanup": "bash scripts/cleanup-duplicates.sh",
-        "test:unit": "jest --config testing/jest.config.js --selectProjects 'Blog App' 'Server App' 'Lowcode App' 'Mobile App' 'Shared Libraries'",
+        "test:unit": "jest --config testing/jest.config.js --selectProjects 'Blog App' 'Server App' 'Mobile App' 'Shared Libraries'",
         "test:integration": "jest --config testing/jest.config.js --testPathPattern=integration",
         "test:e2e": "cd testing/e2e && npx playwright test",
         "test:e2e:ui": "cd testing/e2e && npx playwright test --ui",
@@ -57,10 +56,10 @@
         "xss": "^1.0.14"
     },
     "devDependencies": {
-        "@types/dompurify": "^3.0.2",
         "@types/jsdom": "^21.1.1",
         "husky": "^8.0.3",
         "lint-staged": "^13.2.2",
         "prettier": "^2.8.8"
-    }
+    },
+    "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }

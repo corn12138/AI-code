@@ -161,7 +161,7 @@ setup_env_files() {
     log_info "设置环境变量文件..."
     
     # 创建测试环境变量模板
-    local apps=("blog" "server" "lowcode" "mobile")
+    local apps=("blog" "server" "mobile")
     
     for app in "${apps[@]}"; do
         local app_path="apps/$app"

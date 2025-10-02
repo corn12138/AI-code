@@ -1,44 +1,43 @@
-import { config } from 'dotenv'
-import 'reflect-metadata'
-import { afterAll, beforeAll } from 'vitest'
-import { register } from 'prom-client'
-
-// 加载测试环境变量
-config({ path: '.env.test' })
+import 'reflect-metadata';
 
 // 全局测试设置
 beforeAll(async () => {
-  // 清理Prometheus注册表，避免重复注册错误
-  register.clear()
-  
-  // 设置测试环境
-  process.env.NODE_ENV = 'test'
-  process.env.TYPEORM_LOGGING = 'false'
+  // 设置测试环境变量
+  process.env.NODE_ENV = 'test';
+  process.env.TYPEORM_LOGGING = 'false';
+  process.env.TYPEORM_SYNCHRONIZE = 'false';
+  process.env.JWT_SECRET = 'test-jwt-secret-for-testing-only';
+  process.env.JWT_ACCESS_EXPIRATION = '15m';
+  process.env.JWT_REFRESH_EXPIRATION = '7d';
+  process.env.DATABASE_URL = 'postgresql://test_user:test_password@localhost:5432/test_db';
 
-  // 禁用TypeORM日志
-  process.env.TYPEORM_LOGGING = 'false'
-  process.env.TYPEORM_SYNCHRONIZE = 'false'
+  // 设置时区
+  process.env.TZ = 'UTC';
 
-  console.log('🧪 测试环境初始化完成')
-})
+  console.log('🧪 Test environment initialized');
+});
 
 afterAll(async () => {
-  // 清理测试数据
-  // 关闭数据库连接
-  console.log('🧹 测试环境清理完成')
-})
+  console.log('🧹 Test environment cleaned up');
+});
 
-// 全局测试配置
-export const testConfig = {
-  database: {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    username: process.env.DB_USERNAME || 'test',
-    password: process.env.DB_PASSWORD || 'test',
-    database: process.env.DB_DATABASE || 'test_db'
-  },
-  jwt: {
-    secret: process.env.JWT_SECRET || 'test-secret',
-    expiresIn: '1h'
-  }
-}
+// 每个测试前的设置
+beforeEach(() => {
+  // 可以在这里添加每个测试前的设置
+});
+
+// 每个测试后的清理
+afterEach(() => {
+  // 可以在这里添加每个测试后的清理
+});
+
+// 全局错误处理
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+});
+
+export { };

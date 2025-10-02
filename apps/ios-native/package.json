@@ -28,8 +28,6 @@
         "version": "1.0.0",
         "build_number": "1"
     },
-    "dependencies": {},
-    "devDependencies": {},
     "ios": {
         "deployment_target": "13.0",
         "supported_devices": [

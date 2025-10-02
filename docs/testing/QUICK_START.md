@@ -399,11 +399,6 @@ apps:
       seed_command: "npm run db:seed:simple"
       check_command: "npm run db:check"
 
-  # Vite + React 低代码平台
-  lowcode:
-    name: "lowcode"
-    type: "vite-react"
-    path: "./apps/lowcode"
     port: 3002
     dependencies: ["server"]
     
@@ -570,7 +565,7 @@ test_suites:
     description: "完整用户流程测试"
     timeout: 2400
     browsers: ["chromium", "firefox", "webkit"]
-    requires_services: ["server", "blog", "lowcode", "mobile"]
+    requires_services: ["server", "blog", "mobile"]
     parallel: false
     
     targets:

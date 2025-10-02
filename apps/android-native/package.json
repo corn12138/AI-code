@@ -32,8 +32,6 @@
         "version_name": "1.0.0",
         "version_code": 1
     },
-    "dependencies": {},
-    "devDependencies": {},
     "android": {
         "compile_sdk": 34,
         "min_sdk": 21,
