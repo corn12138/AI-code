@@ -25,13 +25,19 @@ export class ExternalServiceAdapter {
         }
 
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
             const response = await fetch(`${this.pythonServiceUrl}/health`, {
                 method: 'GET',
-                timeout: 5000,
+                signal: controller.signal,
             });
+
+            clearTimeout(timeoutId);
             return response.ok;
         } catch (error) {
-            this.logger.warn(`Python service not available: ${error.message}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.warn(`Python service not available: ${errorMessage}`);
             return false;
         }
     }
@@ -45,13 +51,19 @@ export class ExternalServiceAdapter {
         }
 
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
             const response = await fetch(`${this.goServiceUrl}/health`, {
                 method: 'GET',
-                timeout: 5000,
+                signal: controller.signal,
             });
+
+            clearTimeout(timeoutId);
             return response.ok;
         } catch (error) {
-            this.logger.warn(`Go service not available: ${error.message}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.warn(`Go service not available: ${errorMessage}`);
             return false;
         }
     }
@@ -91,7 +103,8 @@ export class ExternalServiceAdapter {
             const result = await response.json();
             return result;
         } catch (error) {
-            this.logger.error(`Python service call failed: ${error.message}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.error(`Python service call failed: ${errorMessage}`);
             throw error;
         }
     }
@@ -131,7 +144,8 @@ export class ExternalServiceAdapter {
             const result = await response.json();
             return result;
         } catch (error) {
-            this.logger.error(`Go service call failed: ${error.message}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.error(`Go service call failed: ${errorMessage}`);
             throw error;
         }
     }
@@ -153,7 +167,8 @@ export class ExternalServiceAdapter {
             try {
                 return await this.callGoService<T>(endpoint, data, options);
             } catch (error) {
-                this.logger.warn(`Go service failed, falling back to Python: ${error.message}`);
+                const errorMessage = error instanceof Error ? error.message : String(error);
+                this.logger.warn(`Go service failed, falling back to Python: ${errorMessage}`);
             }
         }
 
@@ -162,7 +177,8 @@ export class ExternalServiceAdapter {
             try {
                 return await this.callPythonService<T>(endpoint, data, options);
             } catch (error) {
-                this.logger.warn(`Python service failed: ${error.message}`);
+                const errorMessage = error instanceof Error ? error.message : String(error);
+                this.logger.warn(`Python service failed: ${errorMessage}`);
             }
         }
 

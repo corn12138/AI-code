@@ -78,8 +78,8 @@ export class MobileExceptionFilter implements ExceptionFilter {
         const traceId = this.generateTraceId();
         const clientType = this.extractClientType(request);
 
-        let code: string;
-        let message: string;
+        let code: string = this.getDefaultErrorCode(status);
+        let message: string = '服务器内部错误';
         let retryable = false;
 
         if (exception instanceof HttpException) {
@@ -110,7 +110,7 @@ export class MobileExceptionFilter implements ExceptionFilter {
         message = this.adaptErrorMessageForClient(message, clientType);
 
         return {
-            code: code || this.getDefaultErrorCode(status),
+            code,
             message,
             httpStatus: status,
             traceId,

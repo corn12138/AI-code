@@ -72,7 +72,7 @@ async function bootstrap() {
                     imgSrc: [`'self'`, 'data:', 'https://cdn.jsdelivr.net'],
                     connectSrc: [`'self'`, process.env.NODE_ENV === 'production'
                         ? 'https://api.yourdomain.com'
-                        : 'http://localhost:3001'],
+                        : 'http://localhost:3001', 'http://192.168.1.3:3001'],
                     fontSrc: [`'self'`, 'https://cdn.jsdelivr.net'],
                     objectSrc: [`'none'`],
                     mediaSrc: [`'self'`],
@@ -89,6 +89,9 @@ async function bootstrap() {
         origin: [
             'http://localhost:3000',
             'http://localhost:3002',
+            'http://192.168.1.3:3000',
+            'http://192.168.1.3:3001',
+            'http://192.168.1.3:3002',
             // 生产环境下的域名
         ],
         credentials: true, // 允许携带cookies

@@ -1,0 +1,334 @@
+/* 原生环境优化样式 */
+
+/* 防止iOS橡皮筋效果 */
+body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* 主容器 */
+#root {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 优化滚动性能 */
+* {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* 防止双击缩放 */
+* {
+    touch-action: manipulation;
+}
+
+/* 优化字体渲染 */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+}
+
+/* 隐藏滚动条但保持滚动功能 */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* 优化长列表性能 */
+.list-item {
+    contain: layout style paint;
+    will-change: transform;
+}
+
+/* 优化图片加载 */
+img {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* 优化按钮点击 */
+button,
+.btn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    cursor: pointer;
+}
+
+/* 优化输入框 */
+input,
+textarea {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
+
+/* 优化选择文本 */
+::selection {
+    background-color: rgba(0, 122, 255, 0.3);
+}
+
+/* 优化动画性能 */
+.animate {
+    will-change: transform, opacity;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* 优化卡片阴影 */
+.card {
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* 优化模态框 */
+.modal {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 优化加载指示器 */
+.loading {
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 优化Toast提示 */
+.toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 9999;
+    font-size: 14px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+/* 优化导航栏 */
+.navbar {
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* 优化状态栏适配 */
+.status-bar-padding {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* 优化深色模式 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .card {
+        background-color: #1c1c1e;
+        color: #fff;
+    }
+
+    .navbar {
+        background-color: rgba(28, 28, 30, 0.9);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* 优化横屏适配 */
+@media (orientation: landscape) {
+    .landscape-hidden {
+        display: none;
+    }
+}
+
+/* 优化小屏幕适配 */
+@media (max-width: 375px) {
+    .small-screen-optimized {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/* 优化大屏幕适配 */
+@media (min-width: 768px) {
+    .large-screen-optimized {
+        max-width: 768px;
+        margin: 0 auto;
+    }
+}
+
+/* 优化触摸反馈 */
+.touchable {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.touchable:active {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+    opacity: 0.8;
+}
+
+/* 优化列表项 */
+.list-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.list-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.list-item:active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 优化按钮组 */
+.button-group {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007AFF;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.button-group button:active {
+    -webkit-transform: scale(0.98);
+    transform: scale(0.98);
+    opacity: 0.8;
+}
+
+/* 优化表单 */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007AFF;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+/* 优化加载状态 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007AFF;
+    border-radius: 50%;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+/* 优化错误状态 */
+.error-message {
+    color: #ff3b30;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.error-message::before {
+    content: "⚠️ ";
+    margin-right: 4px;
+}
+
+/* 优化成功状态 */
+.success-message {
+    color: #34c759;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.success-message::before {
+    content: "✅ ";
+    margin-right: 4px;
+}

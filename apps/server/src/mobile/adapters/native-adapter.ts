@@ -77,7 +77,8 @@ export class NativeAdapter {
                 return this.adaptExternalDataForNative(clientType, externalData);
             }
         } catch (error) {
-            this.logger.warn(`外部服务不可用，使用本地服务: ${error.message}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.warn(`外部服务不可用，使用本地服务: ${errorMessage}`);
         }
 
         // 回退到本地服务
@@ -100,7 +101,8 @@ export class NativeAdapter {
             const recommendations = await this.externalServiceAdapter.getRecommendations(userId, limit);
             return this.adaptRecommendationsForNative(clientType, recommendations);
         } catch (error) {
-            this.logger.warn(`外部推荐服务不可用，使用本地推荐: ${error.message}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.warn(`外部推荐服务不可用，使用本地推荐: ${errorMessage}`);
 
             // 回退到本地推荐逻辑
             return this.getLocalRecommendations(clientType, limit);
