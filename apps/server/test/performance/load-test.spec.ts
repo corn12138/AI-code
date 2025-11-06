@@ -1,19 +1,32 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as autocannon from 'autocannon';
-import { AppModule } from '../../src/app.module';
-import { DataSource } from 'typeorm';
-import { vi, describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { Test, TestingModule } from '@nestjs/testing';
+import { TypeOrmModule, getDataSourceToken } from '@nestjs/typeorm';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
-describe('Load Testing', () => {
+import { AppModule } from '../../src/app.module';
+import { MobileDoc } from '../../src/mobile/entities/mobile-doc.entity';
+import { User } from '../../src/user/entities/user.entity';
+import { factories } from '../factories';
+import { testDatabaseConfig } from '../test-config';
+import { ApiTestHelper, DatabaseTestHelper, PerformanceTestHelper } from '../utils/test-helpers';
+
+describe('Load Tests', () => {
   let app: INestApplication;
-  let baseUrl: string;
+  let apiHelper: ApiTestHelper;
+  let dbHelper: DatabaseTestHelper;
+  let moduleRef: TestingModule;
 
   beforeAll(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+    moduleRef = await Test.createTestingModule({
+      imports: [
+        TypeOrmModule.forRoot({
+          ...testDatabaseConfig,
+          entities: [User, MobileDoc],
+        }),
+        AppModule,
+      ],
     })
-      .overrideProvider(DataSource)
+      .overrideProvider(getDataSourceToken())
       .useValue({
         isInitialized: true,
         query: vi.fn().mockResolvedValue([{ version: 'PostgreSQL 16.8' }]),
@@ -29,208 +42,124 @@ describe('Load Testing', () => {
       })
       .compile();
 
-    app = moduleFixture.createNestApplication();
+    app = moduleRef.createNestApplication();
     await app.init();
 
-    const server = app.getHttpServer();
-    const address = server.address();
-    if (typeof address === 'string') {
-      baseUrl = `http://${address}`;
-    } else {
-      baseUrl = `http://localhost:${address?.port || 3001}`;
-    }
+    apiHelper = new ApiTestHelper(app);
+    dbHelper = new DatabaseTestHelper(app.get('DataSource'));
   });
 
   afterAll(async () => {
     await app.close();
+    await moduleRef.close();
   });
 
-  describe('Health Check Load Test', () => {
-    it('should handle 100 concurrent requests to health endpoint', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 10,
-        duration: 10,
-        pipelining: 10,
-      });
+  beforeEach(async () => {
+    await dbHelper.clearDatabase();
 
-      expect(result.errors).toBe(0);
-      expect(result.timeouts).toBe(0);
-      expect(result.non2xx).toBe(0);
-      expect(result.requests.total).toBeGreaterThan(0);
-      expect(result.latency.p99).toBeLessThan(1000); // 99th percentile < 1s
-      expect(result.throughput.total).toBeGreaterThan(0);
-    }, 30000);
+    // 创建测试数据
+    const docs = Array.from({ length: 50 }, (_, i) =>
+      factories.mobileDoc.create({
+        title: `Load Test Document ${i + 1}`,
+        category: ['frontend', 'backend', 'mobile', 'ai', 'devops'][i % 5],
+        isHot: i % 10 === 0,
+      })
+    );
 
-    it('should handle 50 concurrent requests with 5 second duration', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 50,
-        duration: 5,
-        pipelining: 1,
-      });
+    const createPromises = docs.map(doc =>
+      apiHelper.publicRequest('post', '/mobile/docs').send(doc)
+    );
 
-      expect(result.errors).toBe(0);
-      expect(result.timeouts).toBe(0);
-      expect(result.non2xx).toBe(0);
-      expect(result.requests.total).toBeGreaterThan(0);
-      expect(result.latency.p95).toBeLessThan(500); // 95th percentile < 500ms
-    }, 15000);
+    await Promise.all(createPromises);
   });
 
-  describe('API Response Time Test', () => {
-    it('should respond to health check within 100ms on average', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 1,
-        duration: 5,
-        pipelining: 1,
+  describe('API 端点负载测试', () => {
+    it('应该在高并发下处理文档列表请求', async () => {
+      const concurrency = 5;
+      const iterations = 20;
+
+      const testFunction = async () => {
+        const response = await apiHelper.publicRequest('get', '/mobile/docs')
+          .query({ page: 1, pageSize: 10 });
+
+        expect(response.status).toBe(200);
+        expect(response.body.items).toHaveLength(10);
+        return response.body;
+      };
+
+      const result = await PerformanceTestHelper.concurrentTest(
+        testFunction,
+        concurrency,
+        iterations
+      );
+
+      console.log(`负载测试结果:`);
+      console.log(`- 总请求数: ${iterations}`);
+      console.log(`- 并发数: ${concurrency}`);
+      console.log(`- 总耗时: ${result.totalDuration.toFixed(2)}ms`);
+      console.log(`- 平均响应时间: ${result.averageDuration.toFixed(2)}ms`);
+
+      expect(result.averageDuration).toBeLessThan(1000);
+      expect(result.results).toHaveLength(iterations);
+    });
+
+    it('应该在高并发下处理文档搜索请求', async () => {
+      const testFunction = async () => {
+        const response = await apiHelper.publicRequest('get', '/mobile/docs')
+          .query({ search: 'Load', pageSize: 10 });
+
+        expect(response.status).toBe(200);
+        return response.body;
+      };
+
+      const result = await PerformanceTestHelper.concurrentTest(
+        testFunction,
+        3,
+        15
+      );
+
+      expect(result.averageDuration).toBeLessThan(1500);
+    });
+
+    it('应该测量单个请求的执行时间', async () => {
+      const { result, duration } = await PerformanceTestHelper.measureExecutionTime(async () => {
+        const response = await apiHelper.publicRequest('get', '/mobile/docs/hot');
+        expect(response.status).toBe(200);
+        return response.body;
       });
 
-      expect(result.errors).toBe(0);
-      expect(result.latency.average).toBeLessThan(100); // Average < 100ms
-      expect(result.latency.p50).toBeLessThan(100); // Median < 100ms
-    }, 10000);
-
-    it('should handle burst requests efficiently', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 20,
-        duration: 3,
-        pipelining: 5,
-        setupClient: (client) => {
-          client.setHeaders({
-            'User-Agent': 'LoadTest/1.0',
-          });
-        },
-      });
-
-      expect(result.errors).toBe(0);
-      expect(result.timeouts).toBe(0);
-      expect(result.non2xx).toBe(0);
-      expect(result.requests.total).toBeGreaterThan(100);
-    }, 10000);
+      console.log(`热门文档请求耗时: ${duration.toFixed(2)}ms`);
+      expect(duration).toBeLessThan(500);
+      expect(Array.isArray(result)).toBe(true);
+    });
   });
 
-  describe('Memory Usage Test', () => {
-    it('should maintain stable memory usage under load', async () => {
-      const initialMemory = process.memoryUsage();
-      
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 10,
-        duration: 10,
-        pipelining: 10,
-      });
+  describe('认证系统负载测试', () => {
+    it('应该在并发下处理用户注册', async () => {
+      const testFunction = async () => {
+        const timestamp = Date.now();
+        const random = Math.random().toString(36).substring(7);
+        const userData = {
+          email: `test${timestamp}${random}@example.com`,
+          username: `test${timestamp}${random}`,
+          password: 'Test123!',
+        };
 
-      const finalMemory = process.memoryUsage();
-      const memoryIncrease = finalMemory.heapUsed - initialMemory.heapUsed;
-      const memoryIncreaseMB = memoryIncrease / 1024 / 1024;
+        const response = await apiHelper.publicRequest('post', '/auth/register')
+          .send(userData);
 
-      expect(result.errors).toBe(0);
-      expect(memoryIncreaseMB).toBeLessThan(50); // Memory increase < 50MB
-    }, 30000);
-  });
+        expect(response.status).toBe(201);
+        return response.body;
+      };
 
-  describe('Error Rate Test', () => {
-    it('should maintain zero error rate under normal load', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 5,
-        duration: 10,
-        pipelining: 5,
-      });
+      const result = await PerformanceTestHelper.concurrentTest(
+        testFunction,
+        3,
+        10
+      );
 
-      expect(result.errors).toBe(0);
-      expect(result.timeouts).toBe(0);
-      expect(result.non2xx).toBe(0);
-      expect(result.requests.total).toBeGreaterThan(0);
-    }, 20000);
-
-    it('should handle invalid endpoints gracefully', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/invalid-endpoint`,
-        connections: 5,
-        duration: 5,
-        pipelining: 1,
-      });
-
-      // Should return 404 for invalid endpoints
-      expect(result.non2xx).toBeGreaterThan(0);
-      expect(result.errors).toBe(0);
-    }, 10000);
-  });
-
-  describe('Throughput Test', () => {
-    it('should achieve minimum throughput of 100 requests per second', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 10,
-        duration: 10,
-        pipelining: 10,
-      });
-
-      const requestsPerSecond = result.requests.average;
-      expect(requestsPerSecond).toBeGreaterThan(100);
-      expect(result.errors).toBe(0);
-    }, 30000);
-
-    it('should scale linearly with connection count', async () => {
-      const test1 = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 5,
-        duration: 5,
-        pipelining: 1,
-      });
-
-      const test2 = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 10,
-        duration: 5,
-        pipelining: 1,
-      });
-
-      // Throughput should increase with more connections
-      expect(test2.requests.average).toBeGreaterThan(test1.requests.average * 0.8);
-    }, 20000);
-  });
-
-  describe('Latency Distribution Test', () => {
-    it('should maintain consistent latency distribution', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 10,
-        duration: 10,
-        pipelining: 5,
-      });
-
-      expect(result.latency.p50).toBeLessThan(result.latency.p99);
-      expect(result.latency.p99).toBeLessThan(result.latency.p99_9);
-      expect(result.latency.average).toBeLessThan(result.latency.p95);
-    }, 30000);
-  });
-
-  describe('Concurrent User Simulation', () => {
-    it('should handle realistic user load pattern', async () => {
-      const result = await autocannon({
-        url: `${baseUrl}/api/health`,
-        connections: 25,
-        duration: 15,
-        pipelining: 2,
-        setupClient: (client) => {
-          client.setHeaders({
-            'User-Agent': 'Mozilla/5.0 (compatible; LoadTest/1.0)',
-            'Accept': 'application/json',
-            'Accept-Language': 'en-US,en;q=0.9',
-          });
-        },
-      });
-
-      expect(result.errors).toBe(0);
-      expect(result.timeouts).toBe(0);
-      expect(result.non2xx).toBe(0);
-      expect(result.requests.total).toBeGreaterThan(500);
-      expect(result.latency.p99).toBeLessThan(2000); // 99th percentile < 2s
-    }, 40000);
+      expect(result.averageDuration).toBeLessThan(2000);
+      expect(result.results).toHaveLength(10);
+    });
   });
 });

@@ -17,7 +17,7 @@ export class MobileDoc {
     id!: string;
 
     @ApiProperty({ description: '文档标题' })
-    @Column()
+    @Column({ type: 'varchar' })
     title!: string;
 
     @ApiProperty({ description: '文档摘要' })
@@ -37,7 +37,7 @@ export class MobileDoc {
     category!: DocCategory;
 
     @ApiProperty({ description: '作者' })
-    @Column({ default: '系统管理员' })
+    @Column({ default: '系统管理员', type: 'varchar' })
     author!: string;
 
     @ApiProperty({ description: '阅读时间（分钟）' })
@@ -49,15 +49,15 @@ export class MobileDoc {
     tags!: string[];
 
     @ApiProperty({ description: '封面图片URL' })
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'varchar' })
     imageUrl?: string;
 
     @ApiProperty({ description: '是否热门' })
-    @Column({ default: false })
+    @Column({ default: false, type: 'boolean' })
     isHot!: boolean;
 
     @ApiProperty({ description: '是否发布' })
-    @Column({ default: true })
+    @Column({ default: true, type: 'boolean' })
     published!: boolean;
 
     @ApiProperty({ description: '排序权重' })
@@ -65,11 +65,11 @@ export class MobileDoc {
     sortOrder!: number;
 
     @ApiProperty({ description: '文档类型' })
-    @Column({ default: 'markdown' })
+    @Column({ default: 'markdown', type: 'varchar' })
     docType!: string;
 
     @ApiProperty({ description: '文件路径' })
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'varchar' })
     filePath?: string;
 
     @ApiProperty({ description: '创建时间' })

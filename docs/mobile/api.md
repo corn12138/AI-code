@@ -1,21 +1,182 @@
-# 移动端 API 文档
+# 📱 移动端 API 文档
+
+基于 NestJS BFF 三端统一架构的移动端应用 API 文档。
+
+## 🚀 技术栈
+
+- **BFF 服务**: NestJS + TypeScript + PostgreSQL
+- **前端**: React 18 + TypeScript + Vite
+- **状态管理**: Zustand
+- **样式**: Tailwind CSS v4
+- **测试**: Vitest + Testing Library
+- **SSR**: 自定义服务端渲染实现
+- **外部服务**: 预留 Python/Go 高并发服务接口
+
+## 🏗️ 三端统一架构
+
+### API 版本化设计
+- **移动端统一 API**: `/api/mobile/v1/*` - 为 iOS、Android、Web 提供统一接口
+- **Web 端增强 API**: `/api/web/v1/*` - 为 Web 应用提供增强功能
+- **客户端自动识别**: 通过请求头自动识别客户端类型并优化响应
+
+### 客户端识别
+```typescript
+// 请求头配置
+const headers = {
+  'X-Client': 'ios' | 'android' | 'web',        // 客户端类型
+  'X-App-Version': '1.0.0',                     // 应用版本
+  'X-Platform': 'ios' | 'android' | 'web',      // 平台类型
+  'X-Device-Id': 'device-uuid',                 // 设备ID（可选）
+  'X-OS-Version': 'iOS 15.0',                   // 系统版本（可选）
+}
+```
 
 ## API 客户端配置
 
 ### 基础配置
 
 ```typescript
-// src/api/client.ts
+// src/services/api.ts
 import axios from 'axios'
-import { appConfig } from '@/config/env'
 
 const apiClient = axios.create({
-  baseURL: appConfig.apiBaseUrl,
-  timeout: appConfig.apiTimeout,
+  baseURL: process.env.NODE_ENV === 'production' 
+    ? 'https://your-api-server.com' 
+    : 'http://localhost:3001',
+  timeout: 10000,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-Client': 'web',                    // 客户端类型
+    'X-App-Version': '1.0.0',            // 应用版本
+    'X-Platform': 'web',                 // 平台类型
   }
 })
+```
+
+## 📋 API 接口列表
+
+### 移动端统一 API (`/api/mobile/v1/`)
+
+#### 文档相关接口
+```bash
+# 获取文档列表
+GET /api/mobile/v1/docs
+Query: ?page=1&pageSize=10&category=frontend&search=关键词
+
+# 获取文档详情
+GET /api/mobile/v1/docs/:id
+
+# 创建文档
+POST /api/mobile/v1/docs
+Body: { title, content, category, author, tags }
+
+# 更新文档
+PUT /api/mobile/v1/docs/:id
+Body: { title, content, category, tags }
+
+# 删除文档
+DELETE /api/mobile/v1/docs/:id
+
+# 批量创建文档
+POST /api/mobile/v1/docs/batch
+Body: [{ title, content, category }, ...]
+
+# 获取分类列表
+GET /api/mobile/v1/categories
+```
+
+#### 响应格式
+```typescript
+// 成功响应
+{
+  success: true,
+  data: T,
+  traceId: string,
+  timestamp: string
+}
+
+// 分页响应
+{
+  success: true,
+  data: {
+    items: T[],
+    total: number,
+    page: number,
+    pageSize: number,
+    hasMore: boolean
+  },
+  traceId: string,
+  timestamp: string
+}
+```
+
+### Web 端增强 API (`/api/web/v1/`)
+
+#### 增强功能接口
+```bash
+# 获取文档列表（包含编辑链接）
+GET /api/web/v1/docs
+
+# 获取文档详情（包含字数统计、分享链接）
+GET /api/web/v1/docs/:id
+
+# 获取统计信息
+GET /api/web/v1/docs/stats
+
+# 增强搜索功能
+GET /api/web/v1/docs/search?q=关键词&page=1&pageSize=10
+```
+
+### 数据裁剪示例
+
+#### Web 端响应
+```typescript
+{
+  id: "doc-123",
+  title: "文档标题",
+  content: "文档内容",
+  _links: {
+    self: "/api/web/v1/docs/doc-123",
+    edit: "/api/web/v1/docs/doc-123/edit",
+    delete: "/api/web/v1/docs/doc-123"
+  },
+  _meta: {
+    wordCount: 1500,
+    readingProgress: 0,
+    isBookmarked: false
+  }
+}
+```
+
+#### iOS 端响应
+```typescript
+{
+  id: "doc-123",
+  title: "文档标题",
+  content: "文档内容",
+  _ios: {
+    supportsOfflineReading: true,
+    supportsShare: true,
+    supportsBookmark: true,
+    estimatedDataUsage: 2048
+  }
+}
+```
+
+#### Android 端响应
+```typescript
+{
+  id: "doc-123",
+  title: "文档标题",
+  content: "文档内容",
+  _android: {
+    supportsOfflineReading: true,
+    supportsShare: true,
+    supportsBookmark: true,
+    estimatedDataUsage: 2048,
+    supportsMaterialDesign: true
+  }
+}
 ```
 
 ### 请求拦截器

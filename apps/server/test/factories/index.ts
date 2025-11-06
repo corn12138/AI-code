@@ -424,9 +424,9 @@ export class FactoryManager {
 // 导出工厂实例
 export const factories = FactoryManager.getInstance();
 
-// 导出单独的工厂类
-export {
-    ArticleFactory, CommentFactory,
-    MobileDocFactory, TagFactory, UserFactory
-};
+// 导出单独的工厂类 (避免重复导出)
+// export {
+//     ArticleFactory, CommentFactory,
+//     MobileDocFactory, TagFactory, UserFactory
+// };
 

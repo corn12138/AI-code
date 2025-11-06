@@ -10,11 +10,11 @@ export class Article {
     id!: string;
 
     @ApiProperty({ description: '文章标题' })
-    @Column()
+    @Column({ type: 'varchar' })
     title!: string;
 
     @ApiProperty({ description: 'URL友好的标题' })
-    @Column({ unique: true })
+    @Column({ type: 'varchar', unique: true })
     slug!: string;
 
     @ApiProperty({ description: '文章摘要' })
@@ -26,11 +26,11 @@ export class Article {
     content!: string;
 
     @ApiProperty({ description: '文章封面图片' })
-    @Column({ nullable: true })
+    @Column({ type: 'varchar', nullable: true })
     coverImage?: string;
 
     @ApiProperty({ description: '是否已发布' })
-    @Column({ default: false })
+    @Column({ type: 'boolean', default: false })
     published!: boolean;
 
     @ApiProperty({ description: '发布时间' })
@@ -42,7 +42,7 @@ export class Article {
     author!: User;
 
     @ApiProperty({ description: '作者ID' })
-    @Column({ name: 'authorId' })
+    @Column({ type: 'uuid', name: 'authorId' })
     authorId!: string;
 
     @ApiProperty({ description: '文章标签' })

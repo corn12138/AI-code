@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ArticleController } from './article.controller';
 import { ArticleService } from './article.service';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
 
 describe('articleController', () => {
   let controller: ArticleController;
@@ -9,10 +9,10 @@ describe('articleController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [articleController],
+      controllers: [ArticleController],
       providers: [
         {
-          provide: articleService,
+          provide: ArticleService,
           useValue: {
             findAll: vi.fn(),
             findOne: vi.fn(),

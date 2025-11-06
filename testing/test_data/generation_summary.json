@@ -1,0 +1,20 @@
+{
+  "generated_at": "2025-10-03T21:18:45.673893",
+  "total_records": 2000,
+  "data_types": {
+    "users": 100,
+    "articles": 200,
+    "mobile_docs": 150,
+    "api_requests": 500,
+    "test_scenarios": 50,
+    "performance_data": 1000
+  },
+  "config": {
+    "locale": "zh_CN",
+    "seed": null,
+    "output_dir": "./test_data",
+    "batch_size": 100,
+    "include_relations": true,
+    "data_quality": "high"
+  }
+}

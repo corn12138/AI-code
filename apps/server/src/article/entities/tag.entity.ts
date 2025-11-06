@@ -6,7 +6,7 @@ export class Tag {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-    @Column({ unique: true })
+    @Column({ type: 'varchar', unique: true })
     name!: string;
 
     @ManyToMany(() => Article, (article) => article.tags)

@@ -10,18 +10,18 @@ export class User {
     id!: string;
 
     @ApiProperty({ description: '电子邮件' })
-    @Column({ unique: true })
+    @Column({ unique: true, type: 'varchar' })
     email!: string;
 
     @ApiProperty({ description: '用户名' })
-    @Column({ unique: true })
+    @Column({ unique: true, type: 'varchar' })
     username!: string;
 
     @ApiProperty({ description: '姓名' })
-    @Column({ name: 'fullName' })
+    @Column({ name: 'fullName', type: 'varchar' })
     fullName!: string;
 
-    @Column()
+    @Column({ type: 'varchar' })
     password!: string;
 
     @ApiProperty({ description: '头像' })

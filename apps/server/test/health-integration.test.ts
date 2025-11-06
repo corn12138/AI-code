@@ -9,20 +9,22 @@ describe('Health Integration', () => {
   let service: HealthService;
 
   beforeEach(async () => {
+    const mockHealthService = {
+      checkDatabaseHealth: vi.fn().mockResolvedValue(true),
+      getDatabaseStatus: vi.fn().mockResolvedValue({
+        status: 'connected',
+        version: 'PostgreSQL 16.8',
+        connections: 6,
+        driver: 'postgres',
+      }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [HealthController],
       providers: [
         {
           provide: HealthService,
-          useValue: {
-            checkDatabaseHealth: vi.fn().mockResolvedValue(true),
-            getDatabaseStatus: vi.fn().mockResolvedValue({
-              status: 'connected',
-              version: 'PostgreSQL 16.8',
-              connections: 6,
-              driver: 'postgres',
-            }),
-          },
+          useValue: mockHealthService,
         },
         {
           provide: DataSource,
@@ -45,6 +47,9 @@ describe('Health Integration', () => {
 
     controller = module.get<HealthController>(HealthController);
     service = module.get<HealthService>(HealthService);
+
+    // 确保 HealthService 正确注入到 HealthController
+    (controller as any).healthService = service;
   });
 
   it('should be defined', () => {
@@ -73,7 +78,7 @@ describe('Health Integration', () => {
     console.log('Controller:', controller);
     console.log('Service:', service);
     console.log('Controller healthService:', (controller as any).healthService);
-    
+
     const result = await controller.check();
     expect(result).toHaveProperty('status');
     expect(result).toHaveProperty('timestamp');

@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getDataSourceToken } from '@nestjs/typeorm';
+import request from 'supertest';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { AppModule } from '../../src/app.module';
-import { DataSource } from 'typeorm';
-import { vi, describe, it, expect, beforeEach, beforeAll, afterAll } from 'vitest';
 
 describe('User API (e2e)', () => {
   let app: INestApplication;
@@ -13,7 +13,7 @@ describe('User API (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
-      .overrideProvider(DataSource)
+      .overrideProvider(getDataSourceToken())
       .useValue({
         isInitialized: true,
         query: vi.fn().mockResolvedValue([{ version: 'PostgreSQL 16.8' }]),

@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import * as request from 'supertest';
+import request from 'supertest';
 import { DataSource, Repository } from 'typeorm';
 import { vi } from 'vitest';
 import { jwtTestConfig, testUsers } from '../test-config';
@@ -103,21 +103,40 @@ export function createMockRepository<T = any>(): Partial<Repository<T>> {
         remove: vi.fn(),
         count: vi.fn(),
         query: vi.fn(),
-        createQueryBuilder: vi.fn(() => ({
-            select: vi.fn().mockReturnThis(),
-            where: vi.fn().mockReturnThis(),
-            andWhere: vi.fn().mockReturnThis(),
-            orWhere: vi.fn().mockReturnThis(),
-            orderBy: vi.fn().mockReturnThis(),
-            limit: vi.fn().mockReturnThis(),
-            offset: vi.fn().mockReturnThis(),
-            leftJoin: vi.fn().mockReturnThis(),
-            innerJoin: vi.fn().mockReturnThis(),
-            getOne: vi.fn(),
-            getMany: vi.fn(),
-            getManyAndCount: vi.fn(),
-            execute: vi.fn(),
-        })),
+        createQueryBuilder: vi.fn(() => {
+            const queryBuilder = {
+                select: vi.fn(),
+                addSelect: vi.fn(),
+                where: vi.fn(),
+                andWhere: vi.fn(),
+                orWhere: vi.fn(),
+                orderBy: vi.fn(),
+                addOrderBy: vi.fn(),
+                groupBy: vi.fn(),
+                having: vi.fn(),
+                limit: vi.fn(),
+                offset: vi.fn(),
+                take: vi.fn(),
+                skip: vi.fn(),
+                leftJoin: vi.fn(),
+                innerJoin: vi.fn(),
+                getOne: vi.fn(),
+                getMany: vi.fn(),
+                getManyAndCount: vi.fn(),
+                getRawMany: vi.fn(),
+                getRawOne: vi.fn(),
+                execute: vi.fn(),
+            };
+
+            // 设置所有方法都返回 queryBuilder 本身以支持链式调用
+            Object.keys(queryBuilder).forEach(key => {
+                if (typeof queryBuilder[key] === 'function' && !['getOne', 'getMany', 'getManyAndCount', 'getRawMany', 'getRawOne', 'execute'].includes(key)) {
+                    queryBuilder[key].mockReturnValue(queryBuilder);
+                }
+            });
+
+            return queryBuilder;
+        }),
     };
 }
 
@@ -467,9 +486,9 @@ export class TestAssertions {
     }
 }
 
-// 导出所有工具
-export {
-    ApiTestHelper,
-    DatabaseTestHelper, JwtTestHelper, MockDataGenerator, PerformanceTestHelper, TestAppBuilder, TestAssertions
-};
+// 导出所有工具 (避免重复导出)
+// export {
+//     ApiTestHelper,
+//     DatabaseTestHelper, JwtTestHelper, MockDataGenerator, PerformanceTestHelper, TestAppBuilder, TestAssertions
+// };
 

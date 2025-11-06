@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createMockRepository } from '../../test/utils/test-helpers';
+import { MobileDoc } from './entities/mobile-doc.entity';
 import { MobileService } from './mobile.service';
 
 // Mock 实体类型
@@ -31,13 +32,17 @@ describe('MobileService (Simplified)', () => {
             providers: [
                 MobileService,
                 {
-                    provide: getRepositoryToken('MobileDoc'), // 使用字符串而不是实际类
+                    provide: getRepositoryToken(MobileDoc),
                     useValue: mockRepository,
                 },
             ],
         }).compile();
 
         service = module.get<MobileService>(MobileService);
+        
+        // 确保服务正确注入了仓库
+        (service as any).mobileDocRepository = mockRepository;
+        
         vi.clearAllMocks();
     });
 

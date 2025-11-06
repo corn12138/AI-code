@@ -9,7 +9,7 @@ export class Article {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   title!: string;
 
   @Column({ type: 'text' })
@@ -18,13 +18,13 @@ export class Article {
   @Column({ type: 'text', nullable: true })
   summary!: string;
 
-  @Column({ default: false })
+  @Column({ type: 'boolean', default: false })
   published: boolean = false;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   featuredImage!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   slug!: string;
 
   @Column({ type: 'int', default: 0 })
@@ -34,14 +34,14 @@ export class Article {
   @JoinColumn({ name: 'authorId' })
   author: User = new User;
 
-  @Column()
+  @Column({ type: 'uuid' })
   authorId!: string;
 
   @ManyToOne(() => Category, category => category.articles)
   @JoinColumn({ name: 'categoryId' })
   category: Category = new Category;
 
-  @Column({ nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   categoryId!: string;
 
   @ManyToMany(() => Tag, tag => tag.articles)

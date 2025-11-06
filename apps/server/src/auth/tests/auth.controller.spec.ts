@@ -3,7 +3,7 @@ import { UsersService } from '../../users/users.service';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 
-import { vi, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 describe('AuthController', () => {
     let controller: AuthController;
     let authService: AuthService;
@@ -14,10 +14,20 @@ describe('AuthController', () => {
         const mockAuthService = {
             login: vi.fn(),
             logout: vi.fn(),
+            register: vi.fn(),
+            getProfile: vi.fn(),
+            refreshToken: vi.fn(),
+            validateToken: vi.fn(),
         };
 
         const mockUsersService = {
             findOne: vi.fn(),
+            findById: vi.fn(),
+            findByEmail: vi.fn(),
+            findByUsername: vi.fn(),
+            findByUsernameOrEmail: vi.fn(),
+            create: vi.fn(),
+            updateRefreshToken: vi.fn(),
         };
 
         // 创建测试模块
@@ -33,6 +43,9 @@ describe('AuthController', () => {
         controller = module.get<AuthController>(AuthController);
         authService = module.get<AuthService>(AuthService);
         usersService = module.get<UsersService>(UsersService);
+
+        // 确保依赖注入正确
+        (controller as any).authService = authService;
     });
 
     // 简单测试确保控制器存在

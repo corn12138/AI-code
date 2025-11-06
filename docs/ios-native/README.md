@@ -1,633 +1,257 @@
-# iOS 原生应用文档
+# 🍎 iOS 原生应用文档
 
-## 项目概述
+基于 Swift 的 iOS 原生应用，支持与 H5 移动端的混合开发模式。
 
-iOS 原生应用是一个使用 Swift 和 SwiftUI 构建的现代化 iOS 应用，主要功能是作为移动工作台的原生容器，通过 WKWebView 嵌入 H5 应用，并提供丰富的原生功能支持。
+## 🚀 应用特性
 
-## 技术栈
+### 核心功能
+- **原生性能**: 基于 Swift 的高性能原生应用
+- **混合开发**: 支持 H5 页面嵌入和原生页面切换
+- **WebView 集成**: 无缝的 Web 内容展示
+- **原生功能**: 访问设备原生功能（相机、相册、推送通知）
+- **离线支持**: 本地缓存和离线功能
+- **三端统一**: 与 Android、Web 端共享同一套 NestJS BFF API
+- **推送通知**: 原生推送通知支持
 
-### 核心技术
-- **语言**: Swift 5.0+
-- **UI 框架**: SwiftUI
-- **WebView**: WKWebView
-- **桥接**: WKScriptMessageHandler
-- **网络**: URLSession
-- **存储**: UserDefaults, Keychain
-- **推送**: UserNotifications
-- **最低支持**: iOS 14.0+
+### 技术亮点
+- **Swift**: 现代化的 iOS 开发语言
+- **SwiftUI**: 声明式 UI 框架
+- **WebKit**: 现代 Web 内容展示
+- **Combine**: 响应式编程框架
+- **Core Data**: 本地数据存储
+- **URLSession**: 网络请求处理
+- **UserNotifications**: 推送通知框架
+- **AVFoundation**: 相机和媒体功能
 
-### 架构特点
-- 🏗️ MVVM 架构模式
-- 🌉 JavaScript Bridge 通信
-- 📱 原生 UI + H5 内容混合
-- 🔄 自动更新机制
-- 🛡️ 安全存储
-- 📊 性能监控
-
-## 项目结构
-
-```
-apps/ios-native/WorkbenchApp/
-├── WorkbenchApp/
-│   ├── App/
-│   │   ├── WorkbenchApp.swift      # 应用入口
-│   │   └── ContentView.swift       # 主视图
-│   ├── Views/                      # UI 视图
-│   │   ├── HomeView.swift          # 首页视图
-│   │   ├── WebViewContainer.swift  # WebView 容器
-│   │   └── SplashView.swift        # 启动页
-│   ├── ViewModels/                 # 视图模型
-│   │   ├── AppViewModel.swift      # 应用状态管理
-│   │   └── WebViewModel.swift      # WebView 状态管理
-│   ├── Services/                   # 服务层
-│   │   ├── WebBridgeService.swift  # 桥接服务
-│   │   ├── NetworkService.swift    # 网络服务
-│   │   ├── StorageService.swift    # 存储服务
-│   │   └── NotificationService.swift # 通知服务
-│   ├── Models/                     # 数据模型
-│   │   ├── AppConfig.swift         # 应用配置
-│   │   ├── User.swift              # 用户模型
-│   │   └── BridgeMessage.swift     # 桥接消息模型
-│   ├── Utils/                      # 工具类
-│   │   ├── Extensions.swift        # 扩展方法
-│   │   ├── Constants.swift         # 常量定义
-│   │   └── Logger.swift            # 日志工具
-│   └── Resources/                  # 资源文件
-│       ├── Assets.xcassets         # 图片资源
-│       ├── Localizable.strings     # 本地化文件
-│       └── Info.plist              # 应用配置
-├── WorkbenchApp.xcodeproj/         # Xcode 项目文件
-├── README.md                       # 项目说明
-└── package.json                    # 依赖管理
-```
-
-## 核心功能
-
-### 1. 应用启动与初始化
-
-```swift
-// WorkbenchApp.swift
-@main
-struct WorkbenchApp: App {
-    @StateObject private var appViewModel = AppViewModel()
-    
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environmentObject(appViewModel)
-                .onAppear {
-                    appViewModel.initialize()
-                }
-        }
-    }
-}
-```
-
-### 2. WebView 容器
-
-```swift
-// WebViewContainer.swift
-struct WebViewContainer: UIViewRepresentable {
-    @ObservedObject var webViewModel: WebViewModel
-    
-    func makeUIView(context: Context) -> WKWebView {
-        let configuration = WKWebViewConfiguration()
-        
-        // 配置 JavaScript Bridge
-        let userContentController = WKUserContentController()
-        userContentController.add(context.coordinator, name: "nativeBridge")
-        configuration.userContentController = userContentController
-        
-        let webView = WKWebView(frame: .zero, configuration: configuration)
-        webView.navigationDelegate = context.coordinator
-        
-        return webView
-    }
-    
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        if let url = webViewModel.currentURL {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-}
-```
-
-### 3. JavaScript Bridge
-
-```swift
-// WebBridgeService.swift
-class WebBridgeService: NSObject, WKScriptMessageHandler {
-    weak var webView: WKWebView?
-    
-    func userContentController(_ userContentController: WKUserContentController, 
-                             didReceive message: WKScriptMessage) {
-        guard let body = message.body as? [String: Any],
-              let method = body["method"] as? String else { return }
-        
-        switch method {
-        case "getDeviceInfo":
-            handleGetDeviceInfo(body)
-        case "showToast":
-            handleShowToast(body)
-        case "openCamera":
-            handleOpenCamera(body)
-        case "getLocation":
-            handleGetLocation(body)
-        default:
-            print("未知的桥接方法: \(method)")
-        }
-    }
-    
-    // 调用 JavaScript 方法
-    func callJavaScript(method: String, data: [String: Any]) {
-        let jsonData = try? JSONSerialization.data(withJSONObject: data)
-        let jsonString = String(data: jsonData ?? Data(), encoding: .utf8) ?? "{}"
-        
-        let script = """
-            if (window.nativeBridge && window.nativeBridge.onNativeMessage) {
-                window.nativeBridge.onNativeMessage('\(method)', \(jsonString));
-            }
-        """
-        
-        DispatchQueue.main.async {
-            self.webView?.evaluateJavaScript(script)
-        }
-    }
-}
-```
-
-### 4. 设备信息获取
-
-```swift
-// DeviceInfo 扩展
-extension WebBridgeService {
-    private func handleGetDeviceInfo(_ params: [String: Any]) {
-        let deviceInfo: [String: Any] = [
-            "platform": "iOS",
-            "version": UIDevice.current.systemVersion,
-            "model": UIDevice.current.model,
-            "name": UIDevice.current.name,
-            "isNative": true,
-            "appVersion": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0",
-            "bundleId": Bundle.main.bundleIdentifier ?? "",
-            "screenSize": [
-                "width": UIScreen.main.bounds.width,
-                "height": UIScreen.main.bounds.height
-            ]
-        ]
-        
-        if let callbackId = params["callbackId"] as? String {
-            callJavaScript(method: "callback", data: [
-                "callbackId": callbackId,
-                "data": deviceInfo
-            ])
-        }
-    }
-}
-```
-
-### 5. 原生功能实现
-
-#### Toast 提示
-```swift
-private func handleShowToast(_ params: [String: Any]) {
-    guard let message = params["message"] as? String else { return }
-    
-    DispatchQueue.main.async {
-        // 使用原生 Toast 实现
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        
-        if let topController = UIApplication.shared.windows.first?.rootViewController {
-            topController.present(alert, animated: true)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                alert.dismiss(animated: true)
-            }
-        }
-    }
-}
-```
-
-#### 相机访问
-```swift
-private func handleOpenCamera(_ params: [String: Any]) {
-    DispatchQueue.main.async {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .camera
-        imagePickerController.delegate = self
-        
-        if let topController = UIApplication.shared.windows.first?.rootViewController {
-            topController.present(imagePickerController, animated: true)
-        }
-    }
-}
-```
-
-#### 位置服务
-```swift
-private func handleGetLocation(_ params: [String: Any]) {
-    let locationManager = CLLocationManager()
-    locationManager.delegate = self
-    locationManager.requestWhenInUseAuthorization()
-    locationManager.requestLocation()
-}
-```
-
-## 应用配置
-
-### Info.plist 配置
-
-```xml
-<dict>
-    <!-- 应用基本信息 -->
-    <key>CFBundleName</key>
-    <string>工作台</string>
-    <key>CFBundleDisplayName</key>
-    <string>移动工作台</string>
-    <key>CFBundleVersion</key>
-    <string>1.0.0</string>
-    
-    <!-- 权限配置 -->
-    <key>NSCameraUsageDescription</key>
-    <string>需要访问相机以拍摄照片</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>需要访问相册以选择照片</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>需要获取位置信息</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>需要访问麦克风以录制音频</string>
-    
-    <!-- 网络安全配置 -->
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-    
-    <!-- URL Schemes -->
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLName</key>
-            <string>com.workbench.app</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>workbench</string>
-            </array>
-        </dict>
-    </array>
-</dict>
-```
-
-### 应用配置模型
-
-```swift
-// AppConfig.swift
-struct AppConfig {
-    static let shared = AppConfig()
-    
-    let h5BaseURL: String
-    let apiBaseURL: String
-    let appScheme: String
-    let enableDebug: Bool
-    
-    private init() {
-        #if DEBUG
-        self.h5BaseURL = "http://localhost:8000"
-        self.enableDebug = true
-        #else
-        self.h5BaseURL = "https://app.example.com"
-        self.enableDebug = false
-        #endif
-        
-        self.apiBaseURL = "https://api.example.com"
-        self.appScheme = "workbench"
-    }
-}
-```
-
-## 状态管理
-
-### AppViewModel
-
-```swift
-// AppViewModel.swift
-class AppViewModel: ObservableObject {
-    @Published var isLoading = false
-    @Published var isLoggedIn = false
-    @Published var currentUser: User?
-    @Published var networkStatus: NetworkStatus = .unknown
-    
-    private let storageService = StorageService()
-    private let networkService = NetworkService()
-    
-    func initialize() {
-        checkLoginStatus()
-        setupNetworkMonitoring()
-    }
-    
-    private func checkLoginStatus() {
-        if let token = storageService.getToken() {
-            isLoggedIn = true
-            // 验证 token 有效性
-        }
-    }
-    
-    private func setupNetworkMonitoring() {
-        // 网络状态监控
-    }
-}
-```
-
-### WebViewModel
-
-```swift
-// WebViewModel.swift
-class WebViewModel: ObservableObject {
-    @Published var currentURL: URL?
-    @Published var isLoading = false
-    @Published var canGoBack = false
-    @Published var canGoForward = false
-    @Published var title = ""
-    
-    private let bridgeService = WebBridgeService()
-    
-    func loadURL(_ urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-        currentURL = url
-    }
-    
-    func reload() {
-        // 重新加载当前页面
-    }
-    
-    func goBack() {
-        // 返回上一页
-    }
-    
-    func goForward() {
-        // 前进下一页
-    }
-}
-```
-
-## 本地化支持
-
-### Localizable.strings (中文)
+## 📁 项目结构
 
 ```
-// zh-Hans.lproj/Localizable.strings
-"app_name" = "移动工作台";
-"loading" = "加载中...";
-"network_error" = "网络连接失败";
-"permission_camera" = "需要相机权限";
-"permission_location" = "需要位置权限";
-"ok" = "确定";
-"cancel" = "取消";
-"retry" = "重试";
+ios-native/
+├── WorkbenchApp/           # 📱 应用代码
+│   ├── App/                # 🏠 应用入口
+│   │   ├── WorkbenchApp.swift
+│   │   ├── ContentView.swift
+│   │   └── WorkbenchAppApp.swift
+│   ├── Network/            # 🌐 网络层
+│   │   └── NetworkManager.swift
+│   ├── Resources/          # 🎨 资源文件
+│   │   └── Info.plist
+│   ├── Utils/              # 🔧 工具类
+│   │   └── Utils.swift
+│   ├── Views/              # 👁️ 视图组件
+│   │   ├── HomeView.swift
+│   │   └── WebView.swift
+│   ├── WebView/            # 🌐 WebView 组件
+│   │   ├── WebView.swift
+│   │   ├── WebViewCoordinator.swift
+│   │   └── WebViewDelegate.swift
+│   └── www/                # 🌐 Web 资源
+├── package.json            # 📦 包管理
+├── README.md               # 📋 项目说明
+├── RUN_IOS_QUICKSTART.md   # 🚀 快速开始指南
+└── run-ios.sh              # 🚀 运行脚本
 ```
 
-### Localizable.strings (英文)
+## 🛠️ 技术栈详情
 
-```
-// en.lproj/Localizable.strings
-"app_name" = "Mobile Workbench";
-"loading" = "Loading...";
-"network_error" = "Network connection failed";
-"permission_camera" = "Camera permission required";
-"permission_location" = "Location permission required";
-"ok" = "OK";
-"cancel" = "Cancel";
-"retry" = "Retry";
-```
+### 开发环境
+- **Xcode**: 15.0+ (官方开发环境)
+- **Swift**: 5.9+ (编程语言)
+- **iOS SDK**: 17.0+ (系统 SDK)
+- **macOS**: 12.0+ (开发系统要求)
 
-## 开发与调试
+### 核心框架
+- **SwiftUI**: 声明式 UI 框架
+- **WebKit**: Web 内容展示框架
+- **Combine**: 响应式编程框架
+- **Foundation**: 基础框架
+- **UIKit**: UI 组件框架 (兼容性)
 
-### 开发环境设置
+### 网络和存储
+- **URLSession**: 网络请求处理
+- **Core Data**: 本地数据存储
+- **UserDefaults**: 轻量级数据存储
+- **Keychain**: 安全数据存储
 
-1. **Xcode 要求**: Xcode 14.0+
-2. **iOS 模拟器**: iOS 14.0+
-3. **开发者账号**: 用于真机调试
+### 系统功能
+- **UserNotifications**: 推送通知
+- **AVFoundation**: 相机和媒体
+- **PhotosUI**: 相册访问
+- **Network**: 网络状态监控
+- **BackgroundTasks**: 后台任务
 
-### 调试功能
+### 测试框架
+- **XCTest**: 单元测试框架
+- **XCUITest**: UI 测试框架
+- **Quick/Nimble**: BDD 测试框架 (可选)
 
-```swift
-// Logger.swift
-class Logger {
-    static func debug(_ message: String) {
-        #if DEBUG
-        print("🐛 [DEBUG] \(message)")
-        #endif
-    }
-    
-    static func info(_ message: String) {
-        print("ℹ️ [INFO] \(message)")
-    }
-    
-    static func warning(_ message: String) {
-        print("⚠️ [WARNING] \(message)")
-    }
-    
-    static func error(_ message: String) {
-        print("❌ [ERROR] \(message)")
-    }
-}
-```
+### 部署和分发
+- **TestFlight**: 测试分发
+- **App Store Connect**: 应用商店管理
+- **Fastlane**: 自动化部署 (可选)
 
-### WebView 调试
+## 🛠️ 快速开始
 
-```swift
-// 启用 WebView 调试
-#if DEBUG
-if #available(iOS 16.4, *) {
-    webView.isInspectable = true
-}
-#endif
-```
+### 环境要求
+- **Xcode**: >= 15.0
+- **iOS**: >= 13.0 (deployment_target)
+- **macOS**: >= 12.0
+- **Node.js**: >= 16 (用于混合开发)
 
-## 构建与发布
-
-### 开发构建
-
+### 安装依赖
 ```bash
-# 安装依赖
-npm install
+# 安装 Node.js 依赖
+pnpm install
 
+# 同步移动端代码
+./sync-mobile-to-ios.sh
+```
+
+### 开发模式
+
+#### 启动 Xcode
+```bash
 # 打开 Xcode 项目
-open WorkbenchApp.xcodeproj
+open WorkbenchApp.xcworkspace
 ```
 
-### 生产构建
+#### 运行应用
+```bash
+# 使用脚本运行
+./run-ios.sh
 
-1. 更新版本号
-2. 配置签名证书
-3. 选择 Release 配置
-4. Archive 构建
-5. 上传到 App Store Connect
-
-### 自动化构建
-
-```yaml
-# .github/workflows/ios.yml
-name: iOS Build
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  build:
-    runs-on: macos-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest-stable
-    
-    - name: Build
-      run: |
-        cd apps/ios-native
-        xcodebuild -project WorkbenchApp.xcodeproj \
-                   -scheme WorkbenchApp \
-                   -configuration Release \
-                   -destination 'generic/platform=iOS' \
-                   build
+# 或使用 xcodebuild
+cd WorkbenchApp && xcodebuild -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp build
 ```
 
-## 性能优化
+### 构建发布
+```bash
+# 构建调试版本
+cd WorkbenchApp && xcodebuild -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp build
 
-### WebView 优化
-
-```swift
-// 预加载 WebView
-private func preloadWebView() {
-    let configuration = WKWebViewConfiguration()
-    configuration.processPool = WKProcessPool()
-    
-    // 禁用不必要的功能
-    configuration.allowsInlineMediaPlayback = false
-    configuration.allowsPictureInPictureMediaPlayback = false
-}
-
-// 内存管理
-private func optimizeMemory() {
-    webView.configuration.websiteDataStore.removeData(
-        ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
-        modifiedSince: Date(timeIntervalSince1970: 0)
-    ) { }
-}
+# 构建发布版本
+cd WorkbenchApp && xcodebuild -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -configuration Release build
 ```
 
-### 启动优化
+## 📚 详细文档
 
-```swift
-// 延迟初始化
-private lazy var expensiveService = ExpensiveService()
+### 🏗️ 架构设计
+- **混合架构**: H5 + 原生混合开发模式
+- **WebKit 集成**: 现代 Web 内容展示
+- **原生功能**: 设备功能访问
+- **性能优化**: 内存和渲染优化
 
-// 后台任务
-private func initializeInBackground() {
-    DispatchQueue.global(qos: .utility).async {
-        // 耗时初始化操作
-        DispatchQueue.main.async {
-            // 更新 UI
-        }
-    }
-}
+### 🔧 开发指南
+- **Swift 开发**: 现代化 iOS 开发
+- **SwiftUI**: 声明式 UI 开发
+- **WebKit**: Web 内容集成
+- **测试开发**: 单元测试和 UI 测试
+
+## 🎯 技术栈
+
+### 开发语言
+- **Swift**: 主要开发语言
+- **SwiftUI**: 声明式 UI 框架
+- **Objective-C**: 兼容性支持
+
+### 框架和库
+- **UIKit**: 传统 UI 框架
+- **SwiftUI**: 现代 UI 框架
+- **WebKit**: Web 内容展示
+- **Combine**: 响应式编程
+
+### 开发工具
+- **Xcode**: 官方 IDE
+- **Swift Package Manager**: 包管理
+- **Instruments**: 性能分析
+- **Simulator**: 模拟器测试
+
+## 🚀 部署
+
+### 调试版本
+```bash
+# 在模拟器中运行
+cd WorkbenchApp && xcodebuild test -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -destination 'platform=iOS Simulator,name=iPhone 14'
 ```
 
-## 测试
+### 发布版本
+```bash
+# 构建发布版本
+cd WorkbenchApp && xcodebuild -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -configuration Release build
+
+# 归档应用
+cd WorkbenchApp && xcodebuild archive -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -configuration Release
+```
+
+## 🧪 测试
 
 ### 单元测试
-
-```swift
-// WorkbenchAppTests.swift
-import XCTest
-@testable import WorkbenchApp
-
-class WebBridgeServiceTests: XCTestCase {
-    var bridgeService: WebBridgeService!
-    
-    override func setUp() {
-        super.setUp()
-        bridgeService = WebBridgeService()
-    }
-    
-    func testDeviceInfoRetrieval() {
-        // 测试设备信息获取
-    }
-    
-    func testJavaScriptExecution() {
-        // 测试 JavaScript 执行
-    }
-}
+```bash
+cd WorkbenchApp && xcodebuild test -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -destination 'platform=iOS Simulator,name=iPhone 14'
 ```
 
 ### UI 测试
-
-```swift
-// WorkbenchAppUITests.swift
-import XCTest
-
-class WorkbenchAppUITests: XCTestCase {
-    func testLaunchScreenDisplay() {
-        let app = XCUIApplication()
-        app.launch()
-        
-        XCTAssertTrue(app.staticTexts["移动工作台"].exists)
-    }
-    
-    func testWebViewLoading() {
-        let app = XCUIApplication()
-        app.launch()
-        
-        // 等待 WebView 加载
-        let webView = app.webViews.firstMatch
-        XCTAssertTrue(webView.waitForExistence(timeout: 10))
-    }
-}
+```bash
+cd WorkbenchApp && xcodebuild test -workspace WorkbenchApp.xcworkspace -scheme WorkbenchApp -destination 'platform=iOS Simulator,name=iPhone 14' -only-testing:WorkbenchAppUITests
 ```
 
-## 故障排除
+### 代码检查
+```bash
+# 使用 SwiftLint
+swiftlint
 
-### 常见问题
+# 使用 SwiftFormat
+swift-format lint --recursive .
+```
 
-1. **WebView 无法加载**
-   - 检查网络权限配置
-   - 确认 H5 地址可访问
-   - 查看控制台错误信息
+## 📱 混合开发
 
-2. **桥接通信失败**
-   - 验证方法名称正确
-   - 检查参数格式
-   - 确认回调机制
+### H5 集成
+- **WebKit 配置**: 支持现代 Web 标准
+- **JavaScript 桥接**: 原生与 Web 通信
+- **资源管理**: 本地资源缓存
+- **性能优化**: WebKit 性能调优
 
-3. **权限获取失败**
-   - 检查 Info.plist 配置
-   - 确认用户授权流程
-   - 测试权限申请时机
+### 原生功能
+- **设备访问**: 相机、位置、存储等
+- **系统集成**: 通知、分享、设置等
+- **性能监控**: 应用性能指标
+- **错误处理**: 异常捕获和处理
 
-4. **内存泄漏**
-   - 检查循环引用
-   - 使用 weak 引用
-   - 及时释放资源
+## 📈 项目状态
 
-### 调试工具
+- ✅ **基础架构**: 完整的项目结构
+- ✅ **混合开发**: H5 集成支持
+- ✅ **构建系统**: Xcode 项目配置
+- ✅ **开发工具**: Xcode 支持
+- ✅ **测试框架**: 单元测试和 UI 测试
 
-- Xcode Debugger
-- Instruments
-- Safari Web Inspector
-- Console.app
+## 🔗 相关链接
 
-## 许可证
+- [应用根目录](../../apps/ios-native/)
+- [快速开始指南](../../apps/ios-native/RUN_IOS_QUICKSTART.md)
+- [运行脚本](../../apps/ios-native/run-ios.sh)
+- [移动端应用](../../apps/mobile/) - H5 移动端应用
 
-MIT License
+## 📝 开发注意事项
+
+### 性能优化
+- 合理使用内存，避免内存泄漏
+- 优化 WebKit 性能
+- 使用异步处理避免主线程阻塞
+
+### 兼容性
+- 支持 iOS 14.0+
+- 测试不同设备尺寸
+- 处理不同 iOS 版本差异
+
+### 安全考虑
+- 网络安全配置
+- 数据加密存储
+- 权限管理
+- App Transport Security
+
+---
+
+*最后更新: 2025-01-03*
+*维护者: AI Assistant*

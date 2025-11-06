@@ -1,28 +1,35 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { Tag } from './tag.entity';
 import { TagsService } from './tags.service';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
 
 describe('tagsService', () => {
   let service: TagsService;
+  let repository: Repository<Tag>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TagsService,
+      providers: [
+        TagsService,
         {
-          provide: 'Repository',
+          provide: getRepositoryToken(Tag),
           useValue: {
+            find: vi.fn(),
             findOne: vi.fn(),
             save: vi.fn(),
             create: vi.fn(),
             update: vi.fn(),
             delete: vi.fn(),
-            find: vi.fn(),
+            query: vi.fn(),
           },
         },
       ],
     }).compile();
 
     service = module.get<TagsService>(TagsService);
+    repository = module.get<Repository<Tag>>(getRepositoryToken(Tag));
   });
 
   it('should be defined', () => {

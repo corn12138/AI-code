@@ -1,44 +1,46 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import * as request from 'supertest';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { MobileDoc } from '../../src/mobile/entities/mobile-doc.entity';
 import { MobileModule } from '../../src/mobile/mobile.module';
 import { factories } from '../factories';
-import { performanceTestConfig, testDatabaseConfig } from '../test-config';
-import { DatabaseTestHelper, PerformanceTestHelper } from '../utils/test-helpers';
+import { createMockRepository, PerformanceTestHelper } from '../utils/test-helpers';
 
 describe('Mobile Performance Tests', () => {
     let app: INestApplication;
-    let dbHelper: DatabaseTestHelper;
     let moduleRef: TestingModule;
+    let mockRepository: ReturnType<typeof createMockRepository>;
 
     beforeAll(async () => {
+        mockRepository = createMockRepository<MobileDoc>();
+
         moduleRef = await Test.createTestingModule({
-            imports: [
-                TypeOrmModule.forRoot({
-                    ...testDatabaseConfig,
-                    entities: [MobileDoc],
-                }),
-                MobileModule,
+            imports: [MobileModule],
+            providers: [
+                {
+                    provide: getRepositoryToken(MobileDoc),
+                    useValue: mockRepository,
+                },
             ],
         }).compile();
 
         app = moduleRef.createNestApplication();
         await app.init();
-
-        dbHelper = new DatabaseTestHelper(app.get('DataSource'));
     });
 
     afterAll(async () => {
-        await app.close();
-        await moduleRef.close();
+        if (app) {
+            await app.close();
+        }
+        if (moduleRef) {
+            await moduleRef.close();
+        }
     });
 
     beforeEach(async () => {
-        await dbHelper.clearDatabase();
+        vi.clearAllMocks();
     });
 
     describe('创建操作性能测试', () => {

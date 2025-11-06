@@ -1,0 +1,338 @@
+# AI-Code 企业级测试系统配置
+# 这是一个简化的测试配置，用于快速启动
+
+# 项目基础信息
+project:
+  name: "AI-Code Monorepo"
+  version: "2.0.0"
+  description: "企业级全栈应用 Monorepo"
+
+# 执行配置
+execution:
+  parallel_workers: 4
+  test_timeout: 1800
+  task_timeout: 600
+  retry_failed: 2
+  fail_fast: false
+  max_concurrent_apps: 2
+  resource_threshold:
+    cpu_percent: 80
+    memory_percent: 85
+  smart_testing:
+    enabled: true
+    changed_only: false
+    dependency_analysis: true
+  flaky_management:
+    enabled: true
+    max_retries: 3
+    quarantine_after: 3
+    skip_quarantined: false
+
+# 应用配置
+apps:
+  # 博客应用
+  blog:
+    name: "AI-Code Blog"
+    type: "nextjs"
+    path: "./apps/blog"
+    port: 3000
+    dependencies: ["server"]
+    priority: 1
+    enabled: true
+    
+    commands:
+      dev: "pnpm dev"
+      build: "pnpm build"
+      test_unit: "pnpm test:run"
+      test_integration: "echo 'Blog integration tests pending'"
+      test_e2e: "echo 'Blog e2e tests pending'"
+      lint: "pnpm lint"
+      type_check: "pnpm exec tsc --noEmit"
+      security_scan: "pnpm exec npm audit --audit-level=moderate"
+    
+    env_file: "./apps/blog/.env.test"
+    test_timeout: 600
+    startup_wait: 15
+    health_check:
+      url: "http://localhost:3000/api/health"
+      timeout: 30
+      retries: 5
+    
+    database:
+      required: true
+      setup_command: "pnpm db:setup"
+      seed_command: "pnpm db:seed"
+      reset_command: "pnpm db:reset"
+    
+    coverage:
+      unit: 80
+      integration: 70
+
+  # 服务端应用
+  server:
+    name: "AI-Code Server"
+    type: "nestjs"
+    path: "./apps/server"
+    port: 3001
+    dependencies: []
+    priority: 0
+    enabled: true
+    
+    commands:
+      dev: "pnpm dev"
+      build: "pnpm build"
+      test_unit: "pnpm test:unit"
+      test_integration: "pnpm test:integration"
+      test_e2e: "pnpm test:e2e"
+      test_performance: "pnpm test:performance"
+      test_security: "pnpm test:security"
+      lint: "pnpm lint"
+      type_check: "pnpm exec tsc --noEmit"
+      security_scan: "pnpm exec npm audit --audit-level=moderate"
+    
+    env_file: "./apps/server/.env.test"
+    test_timeout: 900
+    startup_wait: 20
+    health_check:
+      url: "http://localhost:3001/health"
+      timeout: 30
+      retries: 5
+    
+    database:
+      required: true
+      setup_command: "pnpm db:setup"
+      seed_command: "pnpm db:seed"
+      check_command: "pnpm db:check"
+    
+    coverage:
+      unit: 85
+      integration: 75
+
+  # 移动端应用
+  mobile:
+    name: "AI-Code Mobile"
+    type: "umi-react"
+    path: "./apps/mobile"
+    port: 8000
+    dependencies: ["server"]
+    priority: 2
+    enabled: true
+    
+    commands:
+      dev: "pnpm dev"
+      build: "pnpm build"
+      test_unit: "pnpm test:run"
+      test_integration: "echo 'Mobile integration tests pending'"
+      test_e2e: "echo 'Mobile e2e tests pending'"
+      lint: "pnpm lint"
+      type_check: "pnpm type-check"
+      security_scan: "pnpm exec npm audit --audit-level=moderate"
+    
+    env_file: "./apps/mobile/.env.test"
+    test_timeout: 600
+    startup_wait: 12
+    health_check:
+      url: "http://localhost:8000"
+      timeout: 30
+      retries: 3
+    
+    coverage:
+      unit: 75
+      integration: 60
+
+# 共享库配置
+shared_libraries:
+  hooks:
+    name: "Shared Hooks"
+    path: "./shared/hooks"
+    test_command: "jest --coverage --passWithNoTests"
+    build_command: "pnpm build"
+    coverage_threshold: 85
+    
+  auth:
+    name: "Shared Auth"
+    path: "./shared/auth"
+    test_command: "jest --coverage --passWithNoTests"
+    build_command: "pnpm build"
+    coverage_threshold: 90
+    
+  ui:
+    name: "Shared UI"
+    path: "./shared/ui"
+    test_command: "jest --coverage --passWithNoTests"
+    build_command: "pnpm build"
+    coverage_threshold: 80
+    
+  utils:
+    name: "Shared Utils"
+    path: "./shared/utils"
+    test_command: "jest --coverage --passWithNoTests"
+    build_command: "pnpm build"
+    coverage_threshold: 88
+
+# 数据库配置
+database:
+  local:
+    host: "localhost"
+    port: 5432
+    database: "test_db"
+    username: "test_user"
+    password: "test_password"
+    ssl: false
+    pool_size: 10
+    
+  ci:
+    host: "postgres"
+    port: 5432
+    database: "ci_test_db"
+    username: "ci_user"
+    password: "ci_password"
+    ssl: false
+    pool_size: 5
+
+# 测试套件配置
+test_suites:
+  unit:
+    name: "单元测试"
+    description: "核心功能单元测试"
+    timeout: 900
+    parallel: true
+    coverage_required: true
+    coverage_threshold: 80
+    targets:
+      - apps: ["blog", "server", "mobile"]
+        command: "test_unit"
+
+  integration:
+    name: "集成测试"
+    description: "模块间集成测试"
+    timeout: 1800
+    parallel: true
+    coverage_required: true
+    coverage_threshold: 70
+    targets:
+      - apps: ["blog", "server", "mobile"]
+        command: "test_integration"
+
+  e2e:
+    name: "端到端测试"
+    description: "完整用户流程测试"
+    timeout: 3600
+    parallel: false
+    coverage_required: false
+    targets:
+      - apps: ["blog", "server", "mobile"]
+        command: "test_e2e"
+
+# 环境配置
+environments:
+  development:
+    database_url: "postgresql://test_user:test_password@localhost:5432/test_db"
+    node_env: "development"
+    log_level: "debug"
+    debug: true
+    
+  test:
+    database_url: "postgresql://test_user:test_password@localhost:5432/test_db"
+    node_env: "test"
+    log_level: "error"
+    debug: false
+    
+  ci:
+    database_url: "postgresql://ci_user:ci_password@postgres:5432/ci_db"
+    node_env: "test"
+    log_level: "error"
+    debug: false
+    parallel_workers: 4
+    timeout_multiplier: 1.5
+
+# 报告配置
+reporting:
+  enabled: true
+  formats: ["html", "json", "junit"]
+  output_directory: "./testing/reports"
+  coverage_threshold: 75.0
+  
+  html:
+    template: "enterprise"
+    include_coverage: true
+    include_timeline: true
+    include_charts: true
+    
+  json:
+    pretty_print: true
+    include_metadata: true
+    
+  junit:
+    include_properties: true
+    include_skipped: true
+
+# 通知配置
+notification:
+  enabled: true
+  
+  dingtalk:
+    enabled: false
+    webhook_url: "${DINGTALK_WEBHOOK_URL}"
+    secret: "${DINGTALK_SECRET}"
+    notify_on: ["failure", "success", "flaky"]
+    mention_users: []
+    
+  wechat:
+    enabled: false
+    webhook_url: "${WECHAT_WEBHOOK_URL}"
+    notify_on: ["failure", "fixed"]
+    
+  email:
+    enabled: false
+    smtp_host: "smtp.163.com"
+    smtp_port: 587
+    username: "${SMTP_USERNAME}"
+    password: "${SMTP_PASSWORD}"
+    from: "AI-Code 测试平台 <noreply@aicode.com>"
+    to: ["dev-team@company.com", "qa-team@company.com"]
+    notify_on: ["failure", "fixed"]
+
+# CI/CD 配置
+ci_cd:
+  github:
+    enabled: true
+    trigger_on: ["push", "pull_request"]
+    branches: ["main", "develop"]
+    
+  deployment:
+    staging:
+      auto_deploy: true
+      requires_tests: ["unit", "integration"]
+      
+    production:
+      auto_deploy: false
+      requires_tests: ["unit", "integration", "e2e", "security"]
+      approval_required: true
+
+# 高级功能配置
+advanced:
+  caching:
+    enabled: true
+    cache_dependencies: true
+    cache_build_artifacts: true
+    cache_test_results: true
+    ttl: "7d"
+    
+  monitoring:
+    enabled: true
+    metrics_collection: true
+    performance_tracking: true
+    flaky_test_detection: true
+    resource_monitoring: true
+    
+  quality_gates:
+    enabled: true
+    coverage_threshold: 75
+    performance_threshold: 2000
+    security_threshold: 0
+    
+  experimental:
+    ai_test_generation: false
+    visual_regression: false
+    mutation_testing: false

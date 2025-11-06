@@ -14,20 +14,20 @@ export class User {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-    @Column({ unique: true })
+    @Column({ unique: true, type: 'varchar' })
     email!: string;
 
-    @Column()
+    @Column({ type: 'varchar' })
     username!: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'varchar' })
     fullName!: string;
 
-    @Column()
+    @Column({ type: 'varchar' })
     @Exclude({ toPlainOnly: true })
     password!: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'varchar' })
     avatar!: string;
 
     @Column({ nullable: true, type: 'text' })

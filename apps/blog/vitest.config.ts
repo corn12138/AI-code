@@ -1,38 +1,44 @@
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import { defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from 'vitest/config'
 
 export default defineConfig({
   plugins: [react()],
   test: {
-        cache: {
-        dir: ".vitest",
-      },
+    // 基础配置
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    // 优化测试性能
-    pool: 'forks', // 使用fork模式提高性能
+
+    // 性能优化配置
+    pool: 'forks',
     poolOptions: {
       forks: {
-        singleFork: true, // 单进程模式减少开销
+        singleFork: true,
+        isolate: true,
       },
     },
-    // 减少测试超时时间
+
+    // 超时配置
     testTimeout: 10000,
     hookTimeout: 10000,
-    // 优化覆盖率收集
+
+    // 覆盖率配置
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov'],
+      reportsDirectory: './coverage',
       exclude: [
+        ...(configDefaults.coverage.exclude || []),
         'node_modules/',
         'src/test/',
         '**/*.d.ts',
         '**/*.config.*',
         '**/coverage/**',
+        '.next/',
+        'dist/',
+        'build/',
       ],
-      // 设置覆盖率阈值
       thresholds: {
         global: {
           branches: 70,
@@ -42,19 +48,25 @@ export default defineConfig({
         },
       },
     },
-    // 优化测试执行
-    maxConcurrency: 1, // 减少并发以避免资源竞争
-    // 优化报告输出
-    reporters: ['verbose', 'html'],
+
+    // 测试执行配置
+    maxConcurrency: 2,
+    retry: 2,
+
+    // 报告配置
+    reporters: ['verbose', 'html', 'json'],
     outputFile: {
       html: './test-results/index.html',
+      json: './test-results/results.json',
     },
-    // 添加包含和排除规则
+
+    // 包含和排除规则
     include: [
       'src/**/*.{test,spec}.{js,ts,jsx,tsx}',
       'src/__tests__/**/*.{js,ts,jsx,tsx}',
     ],
     exclude: [
+      ...configDefaults.exclude,
       'node_modules',
       '.next',
       'dist',
@@ -64,7 +76,13 @@ export default defineConfig({
       'src/app/**/__tests__/**',
       'src/test/**'
     ],
+
+    // 缓存配置
+    cache: {
+      dir: '.vitest',
+    },
   },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -82,17 +100,22 @@ export default defineConfig({
       '@corn12138/hooks': path.resolve(__dirname, '../../shared/hooks/src'),
     },
   },
-  // 优化构建性能
+
+  // 构建配置
   build: {
     target: 'esnext',
     minify: false,
+    sourcemap: true,
   },
-  // 添加环境变量
+
+  // 环境变量
   define: {
     'process.env.NODE_ENV': '"test"',
   },
-  // 优化依赖处理
+
+  // 依赖优化
   optimizeDeps: {
     exclude: ['@shared/hooks'],
+    include: ['react', 'react-dom'],
   },
 })

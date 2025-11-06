@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../../users/users.service';
 import { AuthService } from '../auth.service';
 
-import { vi, describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 // 正确地模拟bcrypt
 vi.mock('bcrypt');
 
@@ -53,6 +53,11 @@ describe('AuthService', () => {
         usersService = module.get<UsersService>(UsersService);
         jwtService = module.get<JwtService>(JwtService);
         configService = module.get<ConfigService>(ConfigService);
+
+        // 手动注入依赖
+        (service as any).usersService = usersService;
+        (service as any).jwtService = jwtService;
+        (service as any).configService = configService;
 
         // 为 getTokens 方法提供一个简单的实现
         vi.spyOn(service as any, 'getTokens').mockImplementation(() => {

@@ -2,6 +2,40 @@
 
 一个完整的 Monorepo 自动化测试解决方案，支持多技术栈、智能调度、实时监控和企业级集成。
 
+## 🚀 最新技术栈
+
+### 核心测试框架
+- **Vitest**: 3.2.4 (统一 JavaScript/TypeScript 测试框架)
+- **Python**: 3.11+ (测试编排和自动化)
+- **Jest**: 兼容性支持 (遗留项目)
+
+### 测试库和工具
+- **Testing Library**: React 组件测试
+- **Supertest**: HTTP API 测试
+- **Playwright**: E2E 测试框架
+- **Pytest**: Python 测试框架
+
+### 覆盖率和分析
+- **c8/v8**: 代码覆盖率收集
+- **HTML 报告**: 可视化覆盖率报告
+- **Allure**: 测试报告生成
+- **JUnit**: XML 格式报告
+
+### 模拟和容器
+- **Vitest Mock**: 测试模拟
+- **Testcontainers**: 集成测试容器
+- **Mock Service Worker**: API 模拟
+
+### 编排和调度
+- **Python 编排器**: 智能测试调度
+- **并发执行**: 并行测试执行
+- **依赖分析**: 智能依赖识别
+
+### 监控和报告
+- **实时监控**: WebSocket 实时状态
+- **性能分析**: 测试性能监控
+- **告警系统**: 测试失败告警
+
 ## 🏗️ 系统架构
 
 ```mermaid

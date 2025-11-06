@@ -50,6 +50,18 @@ export class AuthService {
         }
     }
 
+    /**
+     * 用户登出
+     */
+    async logout(userId: string): Promise<void> {
+        this.logger.log(`用户登出: ${userId}`);
+
+        // 清除用户的刷新令牌
+        await this.usersService.updateRefreshToken(userId, null);
+
+        this.logger.log(`用户 ${userId} 登出成功`);
+    }
+
     async login(loginDto: LoginDto) {
         try {
             this.logger.log(`开始登录流程: ${loginDto.usernameOrEmail}`);
@@ -96,35 +108,6 @@ export class AuthService {
             }
             throw new UnauthorizedException('登录失败，请稍后重试');
         }
-    }
-
-    // 令牌刷新方法
-    async refreshToken(refreshToken: string): Promise<{ accessToken: string, refreshToken: string }> {
-        try {
-            // 验证刷新令牌
-            const payload = this.jwtService.verify(refreshToken, {
-                secret: this.configService.get('JWT_REFRESH_SECRET')
-            });
-
-            // 确保令牌未被撤销
-            const isRevoked = await this.isTokenRevoked(refreshToken);
-            if (isRevoked) {
-                throw new UnauthorizedException('刷新令牌已被撤销');
-            }
-
-            // 生成新的令牌对
-            const user = await this.usersService.findOne(payload.sub);
-            const tokens = await this.getTokens(user!.id, user!.username, user!.email, user!.roles);
-            await this.usersService.updateRefreshToken(user!.id, tokens.refreshToken);
-            return tokens;
-        } catch (error) {
-            throw new UnauthorizedException('无效的刷新令牌');
-        }
-    }
-
-    async logout(userId: string) {
-        await this.usersService.updateRefreshToken(userId, null);
-        return { success: true };
     }
 
     async refreshTokens(userId: string, refreshToken: string) {
@@ -244,5 +227,75 @@ export class AuthService {
             refreshToken: tokens.refreshToken,
             csrfToken,
         };
+    }
+
+    /**
+     * 获取用户资料
+     */
+    async getProfile(userId: string): Promise<any> {
+        this.logger.log(`获取用户资料: ${userId}`);
+
+        const user = await this.usersService.findById(userId);
+        if (!user) {
+            throw new UnauthorizedException('用户不存在');
+        }
+
+        const { password, refreshToken, ...result } = user;
+        return result;
+    }
+
+    /**
+     * 刷新令牌
+     */
+    async refreshToken(refreshToken: string): Promise<any> {
+        this.logger.log('刷新令牌请求');
+
+        try {
+            const payload = this.jwtService.verify(refreshToken, {
+                secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+            });
+
+            const user = await this.usersService.findById(payload.sub);
+            if (!user || user.refreshToken !== refreshToken) {
+                throw new UnauthorizedException('无效的刷新令牌');
+            }
+
+            const tokens = await this.getTokens(user.id, user.username, user.email, user.roles);
+
+            // 更新刷新令牌
+            await this.usersService.updateRefreshToken(user.id, tokens.refreshToken);
+
+            return {
+                accessToken: tokens.accessToken,
+                refreshToken: tokens.refreshToken,
+            };
+        } catch (error) {
+            this.logger.error('刷新令牌失败', error);
+            throw new UnauthorizedException('无效的刷新令牌');
+        }
+    }
+
+    /**
+     * 验证令牌
+     */
+    async validateToken(token: string): Promise<any> {
+        this.logger.log('验证令牌请求');
+
+        try {
+            const payload = this.jwtService.verify(token, {
+                secret: this.configService.get<string>('JWT_SECRET'),
+            });
+
+            const user = await this.usersService.findById(payload.sub);
+            if (!user) {
+                throw new UnauthorizedException('用户不存在');
+            }
+
+            const { password, refreshToken, ...result } = user;
+            return result;
+        } catch (error) {
+            this.logger.error('令牌验证失败', error);
+            throw new UnauthorizedException('无效的令牌');
+        }
     }
 }

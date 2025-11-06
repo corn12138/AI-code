@@ -1,0 +1,65 @@
+# AI-Code 企业级测试系统依赖
+
+# 核心依赖
+asyncio-mqtt==0.16.1
+aiofiles==23.2.1
+aiohttp==3.9.1
+websockets==12.0
+pyyaml==6.0.1
+jinja2==3.1.2
+psutil==5.9.6
+requests==2.31.0
+
+# 数据库支持
+psycopg2-binary==2.9.9
+pymysql==1.1.0
+redis==5.0.1
+
+# 测试工具
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+pytest-html==4.1.1
+pytest-xdist==3.5.0
+pytest-mock==3.12.0
+
+# 数据生成
+faker==20.1.0
+
+# 安全扫描
+bandit==1.7.5
+safety==2.3.5
+
+# 性能分析
+matplotlib==3.8.2
+seaborn==0.13.0
+pandas==2.1.4
+
+# 报告生成
+allure-pytest==2.13.2
+junit-xml==1.9
+
+# 监控和告警
+prometheus-client==0.19.0
+grafana-api==1.0.3
+
+# 开发工具
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
+mypy==1.7.1
+
+# 文档生成
+sphinx==7.2.6
+sphinx-rtd-theme==1.3.0
+
+# 可选依赖
+# 如果需要特定的数据库支持，可以取消注释
+# pymongo==4.6.0
+# elasticsearch==8.11.0
+# minio==7.2.0
+
+# 如果需要特定的测试框架支持，可以取消注释
+# selenium==4.15.2
+# playwright==1.40.0
+# appium-python-client==3.1.0

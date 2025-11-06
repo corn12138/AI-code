@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
@@ -8,7 +9,7 @@ export default defineConfig(({ command, mode }) => {
   const isNativeBuild = mode === 'native';
 
   return {
-    plugins: [react(), tsconfigPaths()],
+    plugins: [react(), tsconfigPaths(), tailwindcss()],
     base: isNativeBuild ? './' : '/',
     resolve: {
       alias: {

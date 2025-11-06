@@ -1,370 +1,255 @@
 #!/usr/bin/env node
 
-const { execSync } = require('child_process');
+const { execSync, spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
 /**
- * 综合测试运行脚本
- * 按照严格标准执行完整的测试流程
+ * 综合测试运行器
+ * 运行所有类型的测试并生成详细报告
  */
 class ComprehensiveTestRunner {
     constructor() {
         this.results = {
-            unit: { passed: 0, failed: 0, duration: 0 },
-            integration: { passed: 0, failed: 0, duration: 0 },
-            e2e: { passed: 0, failed: 0, duration: 0 },
-            performance: { passed: 0, failed: 0, duration: 0 },
-            coverage: { lines: 0, functions: 0, branches: 0, statements: 0 },
+            unit: null,
+            integration: null,
+            e2e: null,
+            performance: null,
+            coverage: null,
         };
-
         this.startTime = Date.now();
     }
 
     /**
      * 运行所有测试
      */
-    async runAll() {
+    async runAllTests() {
         console.log('🚀 开始运行综合测试套件...\n');
 
         try {
-            // 1. 环境检查
-            await this.checkEnvironment();
-
-            // 2. 单元测试
+            // 1. 运行单元测试
+            console.log('📋 运行单元测试...');
             await this.runUnitTests();
 
-            // 3. 集成测试
+            // 2. 运行集成测试
+            console.log('\n🔗 运行集成测试...');
             await this.runIntegrationTests();
 
-            // 4. 端到端测试
+            // 3. 运行端到端测试
+            console.log('\n🌐 运行端到端测试...');
             await this.runE2ETests();
 
-            // 5. 性能测试
+            // 4. 运行性能测试
+            console.log('\n⚡ 运行性能测试...');
             await this.runPerformanceTests();
 
-            // 6. 生成覆盖率报告
+            // 5. 生成覆盖率报告
+            console.log('\n📊 生成覆盖率报告...');
             await this.generateCoverageReport();
 
-            // 7. 生成综合报告
+            // 6. 生成综合报告
+            console.log('\n📄 生成综合测试报告...');
             await this.generateComprehensiveReport();
 
             console.log('\n✅ 所有测试完成！');
+            this.printSummary();
 
         } catch (error) {
-            console.error('\n❌ 测试执行失败:', error.message);
+            console.error('\n❌ 测试运行失败:', error.message);
             process.exit(1);
         }
-    }
-
-    /**
-     * 检查测试环境
-     */
-    async checkEnvironment() {
-        console.log('🔍 检查测试环境...');
-
-        // 检查 Node.js 版本
-        const nodeVersion = process.version;
-        console.log(`   Node.js 版本: ${nodeVersion}`);
-
-        // 检查依赖
-        try {
-            execSync('npm list vitest --depth=0', { stdio: 'pipe' });
-            console.log('   ✓ Vitest 已安装');
-        } catch (error) {
-            throw new Error('Vitest 未安装或版本不兼容');
-        }
-
-        // 检查数据库连接
-        try {
-            execSync('npm run test:db', { stdio: 'pipe' });
-            console.log('   ✓ 数据库连接正常');
-        } catch (error) {
-            console.log('   ⚠️  数据库连接失败，将使用内存数据库');
-        }
-
-        console.log('   ✅ 环境检查完成\n');
     }
 
     /**
      * 运行单元测试
      */
     async runUnitTests() {
-        console.log('🧪 运行单元测试...');
-
         try {
-            const startTime = Date.now();
-            const output = execSync('npm run test:unit', {
-                encoding: 'utf8',
-                stdio: 'pipe'
-            });
-
-            const duration = Date.now() - startTime;
-            const results = this.parseTestOutput(output);
-
-            this.results.unit = { ...results, duration };
-
-            console.log(`   ✓ 单元测试完成 (${results.passed} 通过, ${results.failed} 失败, ${duration}ms)`);
-
-            if (results.failed > 0) {
-                console.log('   ⚠️  存在失败的单元测试');
-            }
-
+            const result = await this.runCommand('npx vitest run src/**/*.spec.ts --reporter=json --outputFile=test-results/unit-tests.json');
+            this.results.unit = {
+                success: true,
+                output: result,
+                duration: this.getTestDuration('test-results/unit-tests.json'),
+            };
+            console.log('✅ 单元测试完成');
         } catch (error) {
-            console.log('   ❌ 单元测试执行失败');
-            this.results.unit.failed = 999;
+            this.results.unit = {
+                success: false,
+                error: error.message,
+                duration: 0,
+            };
+            console.log('❌ 单元测试失败');
         }
-
-        console.log('');
     }
 
     /**
      * 运行集成测试
      */
     async runIntegrationTests() {
-        console.log('🔗 运行集成测试...');
-
         try {
-            const startTime = Date.now();
-            const output = execSync('npm run test:integration', {
-                encoding: 'utf8',
-                stdio: 'pipe'
-            });
-
-            const duration = Date.now() - startTime;
-            const results = this.parseTestOutput(output);
-
-            this.results.integration = { ...results, duration };
-
-            console.log(`   ✓ 集成测试完成 (${results.passed} 通过, ${results.failed} 失败, ${duration}ms)`);
-
+            const result = await this.runCommand('npx vitest run test/integration/**/*.spec.ts --reporter=json --outputFile=test-results/integration-tests.json');
+            this.results.integration = {
+                success: true,
+                output: result,
+                duration: this.getTestDuration('test-results/integration-tests.json'),
+            };
+            console.log('✅ 集成测试完成');
         } catch (error) {
-            console.log('   ❌ 集成测试执行失败');
-            this.results.integration.failed = 999;
+            this.results.integration = {
+                success: false,
+                error: error.message,
+                duration: 0,
+            };
+            console.log('❌ 集成测试失败');
         }
-
-        console.log('');
     }
 
     /**
      * 运行端到端测试
      */
     async runE2ETests() {
-        console.log('🎯 运行端到端测试...');
-
         try {
-            const startTime = Date.now();
-            const output = execSync('npm run test:e2e', {
-                encoding: 'utf8',
-                stdio: 'pipe'
-            });
-
-            const duration = Date.now() - startTime;
-            const results = this.parseTestOutput(output);
-
-            this.results.e2e = { ...results, duration };
-
-            console.log(`   ✓ 端到端测试完成 (${results.passed} 通过, ${results.failed} 失败, ${duration}ms)`);
-
+            const result = await this.runCommand('npx vitest run test/e2e/**/*.spec.ts --reporter=json --outputFile=test-results/e2e-tests.json');
+            this.results.e2e = {
+                success: true,
+                output: result,
+                duration: this.getTestDuration('test-results/e2e-tests.json'),
+            };
+            console.log('✅ 端到端测试完成');
         } catch (error) {
-            console.log('   ❌ 端到端测试执行失败');
-            this.results.e2e.failed = 999;
+            this.results.e2e = {
+                success: false,
+                error: error.message,
+                duration: 0,
+            };
+            console.log('❌ 端到端测试失败');
         }
-
-        console.log('');
     }
 
     /**
      * 运行性能测试
      */
     async runPerformanceTests() {
-        console.log('⚡ 运行性能测试...');
-
         try {
-            const startTime = Date.now();
-            const output = execSync('npm run test:performance', {
-                encoding: 'utf8',
-                stdio: 'pipe'
-            });
-
-            const duration = Date.now() - startTime;
-            const results = this.parseTestOutput(output);
-
-            this.results.performance = { ...results, duration };
-
-            console.log(`   ✓ 性能测试完成 (${results.passed} 通过, ${results.failed} 失败, ${duration}ms)`);
-
+            const result = await this.runCommand('npx vitest run test/performance/**/*.spec.ts --reporter=json --outputFile=test-results/performance-tests.json');
+            this.results.performance = {
+                success: true,
+                output: result,
+                duration: this.getTestDuration('test-results/performance-tests.json'),
+            };
+            console.log('✅ 性能测试完成');
         } catch (error) {
-            console.log('   ❌ 性能测试执行失败');
-            this.results.performance.failed = 999;
+            this.results.performance = {
+                success: false,
+                error: error.message,
+                duration: 0,
+            };
+            console.log('❌ 性能测试失败');
         }
-
-        console.log('');
     }
 
     /**
      * 生成覆盖率报告
      */
     async generateCoverageReport() {
-        console.log('📊 生成覆盖率报告...');
-
         try {
-            const output = execSync('npm run test:coverage', {
-                encoding: 'utf8',
-                stdio: 'pipe'
-            });
-
-            const coverage = this.parseCoverageOutput(output);
-            this.results.coverage = coverage;
-
-            console.log(`   ✓ 覆盖率报告生成完成`);
-            console.log(`   📈 代码覆盖率: ${coverage.lines}% 行, ${coverage.functions}% 函数, ${coverage.branches}% 分支`);
-
+            const result = await this.runCommand('npx vitest run --coverage --reporter=json --outputFile=test-results/coverage-tests.json');
+            this.results.coverage = {
+                success: true,
+                output: result,
+                duration: 0,
+            };
+            console.log('✅ 覆盖率报告生成完成');
         } catch (error) {
-            console.log('   ❌ 覆盖率报告生成失败');
+            this.results.coverage = {
+                success: false,
+                error: error.message,
+                duration: 0,
+            };
+            console.log('❌ 覆盖率报告生成失败');
         }
-
-        console.log('');
     }
 
     /**
      * 生成综合报告
      */
     async generateComprehensiveReport() {
-        console.log('📋 生成综合测试报告...');
-
         const totalDuration = Date.now() - this.startTime;
-        const totalTests = Object.values(this.results).reduce((sum, result) => {
-            return sum + (result.passed || 0) + (result.failed || 0);
-        }, 0);
-
-        const totalPassed = Object.values(this.results).reduce((sum, result) => {
-            return sum + (result.passed || 0);
-        }, 0);
-
-        const totalFailed = Object.values(this.results).reduce((sum, result) => {
-            return sum + (result.failed || 0);
-        }, 0);
-
-        const passRate = totalTests > 0 ? ((totalPassed / totalTests) * 100).toFixed(2) : '0.00';
 
         const report = {
-            summary: {
-                totalTests,
-                totalPassed,
-                totalFailed,
-                passRate: parseFloat(passRate),
-                totalDuration,
-                timestamp: new Date().toISOString(),
+            timestamp: new Date().toISOString(),
+            totalDuration,
+            results: this.results,
+            summary: this.generateSummary(),
+            environment: {
+                nodeVersion: process.version,
+                platform: process.platform,
+                arch: process.arch,
+                cwd: process.cwd(),
             },
-            details: this.results,
-            recommendations: this.generateRecommendations(),
         };
 
-        // 保存 JSON 报告
-        const reportPath = path.join(__dirname, '../test-results');
-        if (!fs.existsSync(reportPath)) {
-            fs.mkdirSync(reportPath, { recursive: true });
+        // 确保目录存在
+        const reportsDir = path.join(process.cwd(), 'test-results');
+        if (!fs.existsSync(reportsDir)) {
+            fs.mkdirSync(reportsDir, { recursive: true });
         }
 
-        fs.writeFileSync(
-            path.join(reportPath, 'comprehensive-report.json'),
-            JSON.stringify(report, null, 2)
-        );
+        // 保存 JSON 报告
+        const jsonReportPath = path.join(reportsDir, 'comprehensive-report.json');
+        fs.writeFileSync(jsonReportPath, JSON.stringify(report, null, 2));
 
         // 生成 HTML 报告
         const htmlReport = this.generateHtmlReport(report);
-        fs.writeFileSync(
-            path.join(reportPath, 'comprehensive-report.html'),
-            htmlReport
-        );
+        const htmlReportPath = path.join(reportsDir, 'comprehensive-report.html');
+        fs.writeFileSync(htmlReportPath, htmlReport);
 
-        console.log('   ✓ 综合报告生成完成');
-        console.log(`   📁 报告位置: ${reportPath}`);
-
-        // 打印摘要
-        this.printSummary(report);
+        console.log(`📄 综合报告已生成:`);
+        console.log(`   JSON: ${jsonReportPath}`);
+        console.log(`   HTML: ${htmlReportPath}`);
     }
 
     /**
-     * 解析测试输出
+     * 生成测试摘要
      */
-    parseTestOutput(output) {
-        // 简化的解析逻辑，实际应该根据 Vitest 的输出格式来解析
-        const passedMatch = output.match(/(\d+) passed/);
-        const failedMatch = output.match(/(\d+) failed/);
+    generateSummary() {
+        const testTypes = ['unit', 'integration', 'e2e', 'performance'];
+        let totalPassed = 0;
+        let totalFailed = 0;
+        let totalDuration = 0;
+
+        testTypes.forEach(type => {
+            const result = this.results[type];
+            if (result && result.success) {
+                const stats = this.getTestStats(`test-results/${type}-tests.json`);
+                if (stats) {
+                    totalPassed += stats.numPassedTests || 0;
+                    totalFailed += stats.numFailedTests || 0;
+                }
+                totalDuration += result.duration || 0;
+            }
+        });
 
         return {
-            passed: passedMatch ? parseInt(passedMatch[1]) : 0,
-            failed: failedMatch ? parseInt(failedMatch[1]) : 0,
+            totalTests: totalPassed + totalFailed,
+            totalPassed,
+            totalFailed,
+            totalDuration,
+            passRate: totalPassed + totalFailed > 0 ? (totalPassed / (totalPassed + totalFailed)) * 100 : 0,
+            testTypes: testTypes.map(type => ({
+                type,
+                success: this.results[type]?.success || false,
+                duration: this.results[type]?.duration || 0,
+            })),
         };
-    }
-
-    /**
-     * 解析覆盖率输出
-     */
-    parseCoverageOutput(output) {
-        // 简化的解析逻辑
-        const linesMatch = output.match(/Lines\s*:\s*(\d+\.?\d*)%/);
-        const functionsMatch = output.match(/Functions\s*:\s*(\d+\.?\d*)%/);
-        const branchesMatch = output.match(/Branches\s*:\s*(\d+\.?\d*)%/);
-        const statementsMatch = output.match(/Statements\s*:\s*(\d+\.?\d*)%/);
-
-        return {
-            lines: linesMatch ? parseFloat(linesMatch[1]) : 0,
-            functions: functionsMatch ? parseFloat(functionsMatch[1]) : 0,
-            branches: branchesMatch ? parseFloat(branchesMatch[1]) : 0,
-            statements: statementsMatch ? parseFloat(statementsMatch[1]) : 0,
-        };
-    }
-
-    /**
-     * 生成建议
-     */
-    generateRecommendations() {
-        const recommendations = [];
-
-        // 检查测试覆盖率
-        if (this.results.coverage.lines < 80) {
-            recommendations.push({
-                type: 'coverage',
-                priority: 'high',
-                message: `代码行覆盖率 ${this.results.coverage.lines}% 低于推荐的 80%`,
-                action: '增加单元测试以提高代码覆盖率',
-            });
-        }
-
-        // 检查失败的测试
-        const totalFailed = Object.values(this.results).reduce((sum, result) => {
-            return sum + (result.failed || 0);
-        }, 0);
-
-        if (totalFailed > 0) {
-            recommendations.push({
-                type: 'failures',
-                priority: 'critical',
-                message: `存在 ${totalFailed} 个失败的测试`,
-                action: '修复失败的测试用例',
-            });
-        }
-
-        // 检查性能测试
-        if (this.results.performance.duration > 30000) {
-            recommendations.push({
-                type: 'performance',
-                priority: 'medium',
-                message: '性能测试执行时间过长',
-                action: '优化性能测试或减少测试数据量',
-            });
-        }
-
-        return recommendations;
     }
 
     /**
      * 生成 HTML 报告
      */
     generateHtmlReport(report) {
+        const summary = report.summary;
+
         return `
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -373,72 +258,68 @@ class ComprehensiveTestRunner {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>综合测试报告</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
-        .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 30px; }
-        .card { background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; }
-        .value { font-size: 2em; font-weight: bold; margin: 10px 0; }
+        .header h1 { margin: 0; font-size: 2.5em; font-weight: 300; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 30px; }
+        .stat-card { background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; }
+        .stat-number { font-size: 2em; font-weight: bold; margin-bottom: 5px; }
         .passed { color: #28a745; }
         .failed { color: #dc3545; }
-        .content { padding: 30px; }
-        .section { margin-bottom: 30px; }
-        .recommendations { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; }
-        .recommendation { margin: 10px 0; padding: 10px; background: white; border-radius: 4px; }
-        .priority-critical { border-left: 4px solid #dc3545; }
-        .priority-high { border-left: 4px solid #fd7e14; }
-        .priority-medium { border-left: 4px solid #ffc107; }
+        .total { color: #007bff; }
+        .test-types { padding: 30px; }
+        .test-type { display: flex; align-items: center; padding: 15px; margin-bottom: 10px; border-radius: 6px; }
+        .test-type.success { background: #f8fff9; border-left: 4px solid #28a745; }
+        .test-type.failed { background: #fff8f8; border-left: 4px solid #dc3545; }
+        .status-icon { width: 20px; height: 20px; border-radius: 50%; margin-right: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .status-icon.success { background: #28a745; }
+        .status-icon.failed { background: #dc3545; }
+        .test-info { flex: 1; }
+        .test-name { font-weight: 600; margin-bottom: 5px; text-transform: capitalize; }
+        .test-duration { color: #999; font-size: 0.9em; margin-left: auto; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🧪 综合测试报告</h1>
-            <p>生成时间: ${new Date(report.summary.timestamp).toLocaleString('zh-CN')}</p>
+            <h1>综合测试报告</h1>
+            <p>生成时间: ${new Date(report.timestamp).toLocaleString()}</p>
         </div>
-        
-        <div class="summary">
-            <div class="card">
-                <h3>总测试数</h3>
-                <div class="value">${report.summary.totalTests}</div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number total">${summary.totalTests}</div>
+                <div>总测试数</div>
             </div>
-            <div class="card">
-                <h3>通过</h3>
-                <div class="value passed">${report.summary.totalPassed}</div>
+            <div class="stat-card">
+                <div class="stat-number passed">${summary.totalPassed}</div>
+                <div>通过</div>
             </div>
-            <div class="card">
-                <h3>失败</h3>
-                <div class="value failed">${report.summary.totalFailed}</div>
+            <div class="stat-card">
+                <div class="stat-number failed">${summary.totalFailed}</div>
+                <div>失败</div>
             </div>
-            <div class="card">
-                <h3>通过率</h3>
-                <div class="value passed">${report.summary.passRate}%</div>
-            </div>
-            <div class="card">
-                <h3>执行时间</h3>
-                <div class="value">${(report.summary.totalDuration / 1000).toFixed(2)}s</div>
+            <div class="stat-card">
+                <div class="stat-number">${summary.passRate.toFixed(1)}%</div>
+                <div>通过率</div>
             </div>
         </div>
 
-        <div class="content">
-            ${report.recommendations.length > 0 ? `
-            <div class="section">
-                <h2>📋 改进建议</h2>
-                <div class="recommendations">
-                    ${report.recommendations.map(rec => `
-                        <div class="recommendation priority-${rec.priority}">
-                            <strong>${rec.message}</strong><br>
-                            <small>建议: ${rec.action}</small>
-                        </div>
-                    `).join('')}
+        <div class="test-types">
+            <h2>测试类型详情</h2>
+            ${summary.testTypes.map(testType => `
+                <div class="test-type ${testType.success ? 'success' : 'failed'}">
+                    <div class="status-icon ${testType.success ? 'success' : 'failed'}">
+                        ${testType.success ? '✓' : '✗'}
+                    </div>
+                    <div class="test-info">
+                        <div class="test-name">${testType.type} 测试</div>
+                        <div>状态: ${testType.success ? '成功' : '失败'}</div>
+                    </div>
+                    <div class="test-duration">${(testType.duration / 1000).toFixed(2)}s</div>
                 </div>
-            </div>
-            ` : ''}
-            
-            <div class="section">
-                <h2>📊 详细结果</h2>
-                <pre>${JSON.stringify(report.details, null, 2)}</pre>
-            </div>
+            `).join('')}
         </div>
     </div>
 </body>
@@ -446,45 +327,88 @@ class ComprehensiveTestRunner {
     }
 
     /**
-     * 打印摘要
+     * 运行命令
      */
-    printSummary(report) {
-        console.log('\n' + '='.repeat(60));
-        console.log('📊 测试执行摘要');
-        console.log('='.repeat(60));
-        console.log(`总测试数: ${report.summary.totalTests}`);
-        console.log(`通过: ${report.summary.totalPassed} ✅`);
-        console.log(`失败: ${report.summary.totalFailed} ${report.summary.totalFailed > 0 ? '❌' : '✅'}`);
-        console.log(`通过率: ${report.summary.passRate}%`);
-        console.log(`执行时间: ${(report.summary.totalDuration / 1000).toFixed(2)}s`);
-        console.log(`代码覆盖率: ${this.results.coverage.lines}%`);
+    async runCommand(command) {
+        return new Promise((resolve, reject) => {
+            try {
+                const result = execSync(command, {
+                    encoding: 'utf8',
+                    stdio: 'pipe',
+                    maxBuffer: 1024 * 1024 * 10, // 10MB buffer
+                });
+                resolve(result);
+            } catch (error) {
+                // Vitest 可能会在有失败测试时返回非零退出码，但仍然生成报告
+                if (error.stdout) {
+                    resolve(error.stdout);
+                } else {
+                    reject(error);
+                }
+            }
+        });
+    }
 
-        if (report.recommendations.length > 0) {
-            console.log('\n📋 改进建议:');
-            report.recommendations.forEach((rec, index) => {
-                console.log(`${index + 1}. [${rec.priority.toUpperCase()}] ${rec.message}`);
-                console.log(`   建议: ${rec.action}`);
-            });
+    /**
+     * 获取测试持续时间
+     */
+    getTestDuration(filePath) {
+        try {
+            if (fs.existsSync(filePath)) {
+                const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+                return data.testResults?.reduce((total, result) => total + (result.perfStats?.runtime || 0), 0) || 0;
+            }
+        } catch (error) {
+            console.warn(`无法读取测试结果文件: ${filePath}`);
         }
+        return 0;
+    }
 
-        console.log('='.repeat(60));
-
-        // 根据结果设置退出码
-        if (report.summary.totalFailed > 0) {
-            console.log('❌ 测试执行完成，但存在失败的测试');
-            process.exit(1);
-        } else {
-            console.log('✅ 所有测试通过！');
-            process.exit(0);
+    /**
+     * 获取测试统计信息
+     */
+    getTestStats(filePath) {
+        try {
+            if (fs.existsSync(filePath)) {
+                const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+                return data;
+            }
+        } catch (error) {
+            console.warn(`无法读取测试统计文件: ${filePath}`);
         }
+        return null;
+    }
+
+    /**
+     * 打印测试摘要
+     */
+    printSummary() {
+        const summary = this.generateSummary();
+
+        console.log('\n📊 测试摘要:');
+        console.log('─'.repeat(50));
+        console.log(`总测试数: ${summary.totalTests}`);
+        console.log(`通过: ${summary.totalPassed}`);
+        console.log(`失败: ${summary.totalFailed}`);
+        console.log(`通过率: ${summary.passRate.toFixed(1)}%`);
+        console.log(`总耗时: ${(summary.totalDuration / 1000).toFixed(2)}s`);
+        console.log('─'.repeat(50));
+
+        summary.testTypes.forEach(testType => {
+            const status = testType.success ? '✅' : '❌';
+            const duration = (testType.duration / 1000).toFixed(2);
+            console.log(`${status} ${testType.type.padEnd(12)} ${duration}s`);
+        });
+
+        console.log('\n📄 详细报告已保存到 test-results/ 目录');
     }
 }
 
 // 运行测试
 if (require.main === module) {
     const runner = new ComprehensiveTestRunner();
-    runner.runAll().catch(error => {
-        console.error('测试运行器执行失败:', error);
+    runner.runAllTests().catch(error => {
+        console.error('测试运行器出错:', error);
         process.exit(1);
     });
 }

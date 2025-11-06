@@ -1,5 +1,6 @@
 import {
     Body, Controller,
+    Get,
     HttpCode,
     Logger,
     Post,
@@ -10,7 +11,9 @@ import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { LoginDto } from './dto/login.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RegisterDto } from './dto/register.dto';
+import { ValidateTokenDto } from './dto/validate-token.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshAuthGuard } from './guards/jwt-refresh-auth.guard';
 
@@ -113,6 +116,35 @@ export class AuthController {
         });
 
         return { accessToken: tokens.accessToken };
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('profile')
+    @ApiOperation({ summary: '获取用户资料' })
+    @ApiBearerAuth()
+    async getProfile(@Req() req: Request) {
+        if (!req.user) {
+            throw new UnauthorizedException('用户未认证');
+        }
+
+        const user = req.user as any;
+        return await this.authService.getProfile(user.userId);
+    }
+
+    @Post('refresh-token')
+    @HttpCode(200)
+    @ApiOperation({ summary: '刷新访问令牌' })
+    async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+        const result = await this.authService.refreshToken(refreshTokenDto.refreshToken);
+        return result;
+    }
+
+    @Post('validate-token')
+    @HttpCode(200)
+    @ApiOperation({ summary: '验证访问令牌' })
+    async validateToken(@Body() validateTokenDto: ValidateTokenDto) {
+        const user = await this.authService.validateToken(validateTokenDto.token);
+        return user;
     }
 
     @Public()

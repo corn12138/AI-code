@@ -14,14 +14,14 @@ export class Comment {
     @JoinColumn({ name: 'authorId' })
     author!: User;
 
-    @Column()
+    @Column({ type: 'uuid' })
     authorId!: string;
 
     @ManyToOne(() => Article, article => article.comments, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'articleId' })
     article!: Article;
 
-    @Column()
+    @Column({ type: 'uuid' })
     articleId!: string;
 
     @CreateDateColumn()

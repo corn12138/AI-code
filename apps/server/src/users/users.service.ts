@@ -50,6 +50,22 @@ export class UsersService {
         }
     }
 
+    /**
+     * 根据ID查找用户
+     */
+    async findById(id: string): Promise<User | null> {
+        try {
+            this.logger.debug(`根据ID查找用户: ${id}`);
+            return await this.usersRepository.findOne({ where: { id } });
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            this.logger.error(`根据ID查找用户时出错: ${id} - ${errorMessage}`, errorStack);
+            throw error;
+        }
+    }
+
+
     async findByUsername(username: string): Promise<User | null> {
         try {
             return await this.usersRepository.findOne({ where: { username } });

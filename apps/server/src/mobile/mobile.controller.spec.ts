@@ -17,11 +17,13 @@ describe('MobileController', () => {
         create: vi.fn(),
         findAll: vi.fn(),
         findOne: vi.fn(),
-        findHot: vi.fn(),
-        findRelated: vi.fn(),
+        getHotDocs: vi.fn(),
+        getRelatedDocs: vi.fn(),
         update: vi.fn(),
         remove: vi.fn(),
         getStatsByCategory: vi.fn(),
+        findHot: vi.fn(),
+        findRelated: vi.fn(),
     };
 
     beforeEach(async () => {
@@ -37,6 +39,9 @@ describe('MobileController', () => {
 
         controller = module.get<MobileController>(MobileController);
         mobileService = module.get<MobileService>(MobileService);
+
+        // 确保控制器正确注入了服务
+        (controller as any).mobileService = mobileService;
 
         vi.clearAllMocks();
     });
@@ -197,11 +202,11 @@ describe('MobileController', () => {
         it('应该返回热门文档', async () => {
             const hotDocs = factories.mobileDoc.createMany(5, { isHot: true });
 
-            mockMobileService.findHot.mockResolvedValue(hotDocs);
+            mockMobileService.getHotDocs.mockResolvedValue(hotDocs);
 
-            const result = await controller.findHot();
+            const result = await controller.getHotDocs();
 
-            expect(mockMobileService.findHot).toHaveBeenCalledWith(10);
+            expect(mockMobileService.getHotDocs).toHaveBeenCalledWith(undefined);
             expect(result).toEqual(hotDocs);
         });
 
@@ -209,11 +214,11 @@ describe('MobileController', () => {
             const limit = 5;
             const hotDocs = factories.mobileDoc.createMany(limit, { isHot: true });
 
-            mockMobileService.findHot.mockResolvedValue(hotDocs);
+            mockMobileService.getHotDocs.mockResolvedValue(hotDocs);
 
-            const result = await controller.findHot(limit);
+            const result = await controller.getHotDocs(limit);
 
-            expect(mockMobileService.findHot).toHaveBeenCalledWith(limit);
+            expect(mockMobileService.getHotDocs).toHaveBeenCalledWith(limit);
             expect(result).toEqual(hotDocs);
         });
     });
@@ -223,11 +228,11 @@ describe('MobileController', () => {
             const docId = 'doc-id-123';
             const relatedDocs = factories.mobileDoc.createMany(3);
 
-            mockMobileService.findRelated.mockResolvedValue(relatedDocs);
+            mockMobileService.getRelatedDocs.mockResolvedValue(relatedDocs);
 
-            const result = await controller.findRelated(docId);
+            const result = await controller.getRelatedDocs(docId);
 
-            expect(mockMobileService.findRelated).toHaveBeenCalledWith(docId, 5);
+            expect(mockMobileService.getRelatedDocs).toHaveBeenCalledWith(docId, undefined);
             expect(result).toEqual(relatedDocs);
         });
 
@@ -236,11 +241,11 @@ describe('MobileController', () => {
             const limit = 10;
             const relatedDocs = factories.mobileDoc.createMany(limit);
 
-            mockMobileService.findRelated.mockResolvedValue(relatedDocs);
+            mockMobileService.getRelatedDocs.mockResolvedValue(relatedDocs);
 
-            const result = await controller.findRelated(docId, limit);
+            const result = await controller.getRelatedDocs(docId, limit);
 
-            expect(mockMobileService.findRelated).toHaveBeenCalledWith(docId, limit);
+            expect(mockMobileService.getRelatedDocs).toHaveBeenCalledWith(docId, limit);
             expect(result).toEqual(relatedDocs);
         });
 
@@ -248,9 +253,9 @@ describe('MobileController', () => {
             const docId = 'non-existent-id';
             const error = new NotFoundException('Mobile document not found');
 
-            mockMobileService.findRelated.mockRejectedValue(error);
+            mockMobileService.getRelatedDocs.mockRejectedValue(error);
 
-            await expect(controller.findRelated(docId)).rejects.toThrow(error);
+            await expect(controller.getRelatedDocs(docId)).rejects.toThrow(error);
         });
     });
 

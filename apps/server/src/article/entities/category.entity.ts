@@ -6,13 +6,13 @@ export class Category {
     @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-    @Column({ unique: true })
+    @Column({ unique: true, type: 'varchar' })
     name!: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'text' })
     description!: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'varchar' })
     slug!: string;
 
     @OneToMany(() => Article, article => article.category)

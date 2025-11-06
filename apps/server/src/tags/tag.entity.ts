@@ -9,11 +9,11 @@ export class Tag {
     id!: string;
 
     @ApiProperty({ description: '标签名称' })
-    @Column({ unique: true })
+    @Column({ unique: true, type: 'varchar' })
     name!: string;
 
     @ApiProperty({ description: '标签别名/URL友好名称' })
-    @Column({ unique: true })
+    @Column({ unique: true, type: 'varchar' })
     slug!: string;
 
     @ApiProperty({ description: '标签描述', required: false })
@@ -21,7 +21,7 @@ export class Tag {
     description?: string;
 
     @ApiProperty({ description: '标签颜色', required: false })
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: 'varchar' })
     color?: string;
 
     @ApiProperty({ description: '关联的文章' })

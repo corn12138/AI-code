@@ -2,19 +2,28 @@
 
 ## 🏗️ 整体架构
 
-这是一个完整的混合开发解决方案，包含了H5移动端应用和iOS/Android原生容器应用。
+这是一个完整的混合开发解决方案，现已升级为三端统一的 BFF 架构，包含了H5移动端应用、iOS/Android原生容器应用，以及统一的 NestJS 后端服务。
 
 ```
-Apps 生态系统
-├── 📱 mobile (H5移动端)        - React + Umi + antd-mobile
+Apps 生态系统 (三端统一 BFF 架构)
+├── 📱 mobile (H5移动端)        - React + Vite + SSR
 ├── 🍎 ios-native (iOS原生)     - Swift + SwiftUI + WKWebView  
 ├── 🤖 android-native (Android原生) - Kotlin + WebView
-├── 📊 blog (博客系统)          - Next.js
-├── 🔧 lowcode (低代码平台)     - React + Vite
-└── ⚙️ server (后端服务)        - NestJS + TypeORM
+├── 📊 blog (博客系统)          - Next.js 14 + AI 聊天
+└── ⚙️ server (后端服务)        - NestJS BFF + TypeORM + PostgreSQL
+    ├── 📡 mobile/v1 API        - 三端统一接口
+    ├── 🌐 web/v1 API           - Web 端增强接口
+    ├── 🔗 外部服务适配器        - Python/Go 高并发服务
+    └── 🎯 客户端数据裁剪        - 智能数据优化
 ```
 
 ## 🎯 核心理念
+
+### "三端统一 BFF"概念
+- **统一数据服务**: NestJS BFF 为三端提供统一的数据服务
+- **智能数据裁剪**: 根据客户端类型自动优化数据传输
+- **版本化 API**: 支持 API 版本管理和向后兼容
+- **外部服务集成**: 预留 Python/Go 高并发服务接口
 
 ### "工作台"概念
 - **原生应用入口**: iOS/Android原生应用作为主要入口
@@ -239,6 +248,120 @@ nativeBridge.getDeviceInfo().then(info => {
 - 🧪 自动化测试
 - 📦 CI/CD流水线
 - 🏪 应用商店发布
+
+## 🏗️ 三端统一 BFF 架构详解
+
+### BFF 架构优势
+- **统一数据服务**: 三端共享同一套 NestJS 后端服务
+- **智能数据裁剪**: 根据客户端类型自动优化数据传输
+- **版本化管理**: 支持 API 版本管理和向后兼容
+- **外部服务集成**: 预留 Python/Go 高并发服务接口
+- **统一异常处理**: 标准化的错误响应和调试信息
+
+### 核心组件架构
+
+#### 1. 版本化控制器层
+```
+Controllers/
+├── MobileV1Controller     # 移动端统一 API v1
+├── WebV1Controller        # Web 端增强 API v1
+└── BaseController         # 基础控制器
+```
+
+#### 2. 数据适配器层
+```
+Adapters/
+├── ClientAdapter          # 客户端数据裁剪适配器
+├── ExternalServiceAdapter # 外部服务适配器
+└── NativeAdapter         # 原生应用适配器
+```
+
+#### 3. 拦截器和过滤器
+```
+Interceptors/
+└── ClientTrimInterceptor  # 客户端数据裁剪拦截器
+
+Filters/
+└── MobileExceptionFilter  # 统一异常处理过滤器
+```
+
+### API 接口设计
+
+#### 移动端统一接口 (`/api/mobile/v1/`)
+```bash
+# 文档管理
+GET    /api/mobile/v1/docs           # 获取文档列表
+GET    /api/mobile/v1/docs/:id       # 获取文档详情
+POST   /api/mobile/v1/docs           # 创建文档
+PUT    /api/mobile/v1/docs/:id       # 更新文档
+DELETE /api/mobile/v1/docs/:id       # 删除文档
+POST   /api/mobile/v1/docs/batch     # 批量创建文档
+GET    /api/mobile/v1/categories     # 获取分类列表
+```
+
+#### Web 端增强接口 (`/api/web/v1/`)
+```bash
+# Web 端增强功能
+GET    /api/web/v1/docs              # 获取文档列表（包含编辑链接）
+GET    /api/web/v1/docs/:id          # 获取文档详情（包含字数统计）
+GET    /api/web/v1/docs/stats        # 获取统计信息
+GET    /api/web/v1/docs/search       # 增强搜索功能
+```
+
+### 客户端识别机制
+```typescript
+// 请求头自动识别
+'X-Client': 'ios' | 'android' | 'web'
+'X-App-Version': '1.0.0'
+'X-Platform': 'ios' | 'android' | 'web'
+
+// 自动数据裁剪
+switch (clientType) {
+  case 'web': return adaptForWeb(data);
+  case 'ios': return adaptForIOS(data);
+  case 'android': return adaptForAndroid(data);
+}
+```
+
+### 外部服务集成
+```typescript
+// 预留的高并发服务接口
+await externalService.getHighConcurrencyDocs(query);
+await externalService.getRecommendations(userId);
+await externalService.optimizedSearch(query);
+
+// 智能路由：优先 Go 服务，回退 Python 服务
+async smartRoute(endpoint, data) {
+  if (await isGoServiceAvailable()) {
+    return await callGoService(endpoint, data);
+  }
+  if (await isPythonServiceAvailable()) {
+    return await callPythonService(endpoint, data);
+  }
+  throw new Error('All external services unavailable');
+}
+```
+
+### 架构演进规划
+
+#### 当前阶段（已完成）
+- ✅ NestJS BFF 架构实施
+- ✅ 三端统一 API 设计
+- ✅ 客户端数据裁剪系统
+- ✅ 外部服务适配器预留
+- ✅ 统一异常处理机制
+
+#### 下一阶段（计划中）
+- 🔄 认证和授权集成
+- 🔄 Redis 缓存系统
+- 🔄 监控和日志系统
+- 🔄 性能优化和测试
+
+#### 未来阶段（长期规划）
+- 📋 Python 高并发服务部署
+- 📋 Go 高性能服务部署
+- 📋 AI 推荐算法集成
+- 📋 实时数据同步（WebSocket）
 
 ## 📞 联系方式
 

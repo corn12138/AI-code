@@ -80,9 +80,9 @@ export class MobileService {
         }
 
         // 排序：热门优先，然后按排序权重和创建时间
-        queryBuilder.orderBy('doc.isHot', 'DESC')
-            .addOrderBy('doc.sortOrder', 'DESC')
-            .addOrderBy('doc.createdAt', 'DESC');
+        queryBuilder.orderBy('doc.isHot', 'DESC');
+        queryBuilder.addOrderBy('doc.sortOrder', 'DESC');
+        queryBuilder.addOrderBy('doc.createdAt', 'DESC');
 
         // 分页
         const offset = (page - 1) * pageSize;
@@ -122,13 +122,13 @@ export class MobileService {
     async getStatsByCategory(): Promise<Record<string, number>> {
         this.logger.log('获取分类统计');
 
-        const stats = await this.mobileDocRepository
-            .createQueryBuilder('doc')
-            .select('doc.category', 'category')
-            .addSelect('COUNT(*)', 'count')
-            .where('doc.published = :published', { published: true })
-            .groupBy('doc.category')
-            .getRawMany();
+        const queryBuilder = this.mobileDocRepository.createQueryBuilder('doc');
+        queryBuilder.select('doc.category', 'category');
+        queryBuilder.addSelect('COUNT(*)', 'count');
+        queryBuilder.where('doc.published = :published', { published: true });
+        queryBuilder.groupBy('doc.category');
+
+        const stats = await queryBuilder.getRawMany();
 
         const result: Record<string, number> = {};
         stats.forEach(stat => {
@@ -152,6 +152,13 @@ export class MobileService {
     }
 
     /**
+     * 获取热门文档（别名方法）
+     */
+    async findHot(limit: number = 5): Promise<MobileDoc[]> {
+        return await this.getHotDocs(limit);
+    }
+
+    /**
      * 获取相关文档
      */
     async getRelatedDocs(id: string, limit: number = 5): Promise<MobileDoc[]> {
@@ -159,18 +166,25 @@ export class MobileService {
 
         const currentDoc = await this.findOne(id);
 
-        return await this.mobileDocRepository
-            .createQueryBuilder('doc')
-            .where('doc.id != :id', { id })
-            .andWhere('doc.published = :published', { published: true })
-            .andWhere('(doc.category = :category OR doc.tags && :tags)', {
-                category: currentDoc.category,
-                tags: JSON.stringify(currentDoc.tags),
-            })
-            .orderBy('doc.isHot', 'DESC')
-            .addOrderBy('doc.createdAt', 'DESC')
-            .take(limit)
-            .getMany();
+        const queryBuilder = this.mobileDocRepository.createQueryBuilder('doc');
+        queryBuilder.where('doc.id != :id', { id });
+        queryBuilder.andWhere('doc.published = :published', { published: true });
+        queryBuilder.andWhere('(doc.category = :category OR doc.tags && :tags)', {
+            category: currentDoc.category,
+            tags: JSON.stringify(currentDoc.tags),
+        });
+        queryBuilder.orderBy('doc.isHot', 'DESC');
+        queryBuilder.addOrderBy('doc.createdAt', 'DESC');
+        queryBuilder.take(limit);
+
+        return await queryBuilder.getMany();
+    }
+
+    /**
+     * 获取相关文档（别名方法）
+     */
+    async findRelated(id: string, limit: number = 5): Promise<MobileDoc[]> {
+        return await this.getRelatedDocs(id, limit);
     }
 
     /**
@@ -220,5 +234,66 @@ export class MobileService {
         return await this.mobileDocRepository.findOne({
             where: { filePath },
         });
+    }
+
+    /**
+     * 获取分类列表
+     */
+    async getCategories(): Promise<any[]> {
+        this.logger.log('获取分类列表');
+
+        const categories = await this.mobileDocRepository
+            .createQueryBuilder('doc')
+            .select('doc.category', 'category')
+            .addSelect('COUNT(doc.id)', 'count')
+            .where('doc.published = :published', { published: true })
+            .groupBy('doc.category')
+            .orderBy('count', 'DESC')
+            .getRawMany();
+
+        return categories.map(item => ({
+            value: item.category,
+            label: this.getCategoryLabel(item.category),
+            count: parseInt(item.count),
+        }));
+    }
+
+    /**
+     * 获取统计信息
+     */
+    async getStats(): Promise<any> {
+        this.logger.log('获取统计信息');
+
+        const [totalCount, publishedCount, hotCount, categoryStats] = await Promise.all([
+            this.mobileDocRepository.count(),
+            this.mobileDocRepository.count({ where: { published: true } }),
+            this.mobileDocRepository.count({ where: { isHot: true } }),
+            this.getCategories(),
+        ]);
+
+        return {
+            total: totalCount,
+            published: publishedCount,
+            draft: totalCount - publishedCount,
+            hot: hotCount,
+            categories: categoryStats,
+            lastUpdated: new Date(),
+        };
+    }
+
+    /**
+     * 获取分类标签
+     */
+    private getCategoryLabel(category: string): string {
+        const labels: Record<string, string> = {
+            latest: '最新',
+            frontend: '前端',
+            backend: '后端',
+            ai: 'AI',
+            mobile: '移动端',
+            design: '设计',
+        };
+
+        return labels[category] || category;
     }
 }

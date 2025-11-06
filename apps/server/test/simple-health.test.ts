@@ -56,6 +56,9 @@ describe('HealthController', () => {
 
         controller = module.get<HealthController>(HealthController);
         service = module.get<HealthService>(HealthService);
+        
+        // 确保控制器正确注入了服务
+        (controller as any).healthService = service;
     });
 
     it('should be defined', () => {
